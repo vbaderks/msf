@@ -5,7 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vvvsample", "vvvsample\samp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vvvtest", "vvvtest\test_vc70.vcproj", "{1954AE90-FA67-4C09-BAF9-609A56876CB8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "start_vc70", "start\start_vc70.vcproj", "{BA42FDD1-E5D3-4FF2-8002-B9414A0E7303}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "start", "start\start_vc70.vcproj", "{BA42FDD1-E5D3-4FF2-8002-B9414A0E7303}"
 EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
@@ -70,6 +70,9 @@ Global
 		{BA42FDD1-E5D3-4FF2-8002-B9414A0E7303}.Unicode Debug.Build.0 = Unicode Debug|Win32
 		{BA42FDD1-E5D3-4FF2-8002-B9414A0E7303}.Unicode Release.ActiveCfg = Unicode Release|Win32
 		{BA42FDD1-E5D3-4FF2-8002-B9414A0E7303}.Unicode Release.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionItems) = postSolution
+		Item:1 = readme.txt
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

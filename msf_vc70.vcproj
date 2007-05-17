@@ -303,9 +303,6 @@
 				RelativePath="include\cftargetclsid.h">
 			</File>
 			<File
-				RelativePath="include\changeditem.h">
-			</File>
-			<File
 				RelativePath="include\clipboarddataobjectimpl.h">
 			</File>
 			<File
@@ -321,9 +318,6 @@
 				RelativePath="include\contextcommand.h">
 			</File>
 			<File
-				RelativePath="include\contextmenu.h">
-			</File>
-			<File
 				RelativePath="include\contextmenuimpl.h">
 			</File>
 			<File
@@ -334,9 +328,6 @@
 			</File>
 			<File
 				RelativePath="include\dataobjectptr.h">
-			</File>
-			<File
-				RelativePath="include\debug.h">
 			</File>
 			<File
 				RelativePath="include\defview.h">
@@ -533,9 +524,6 @@
 				RelativePath="include\shell32missing.lib">
 			</File>
 		</Filter>
-		<File
-			RelativePath="readme.txt">
-		</File>
 		<File
 			RelativePath="Undocumented Shell Interfaces.reg">
 		</File>
