@@ -1,0 +1,88 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vvvtest", "vvvtest\test_vc71.vcproj", "{98A68B8C-7103-4E9F-B90C-971665F2CD80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E} = {792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vvvsample", "vvvsample\sample_vc71.vcproj", "{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "msf", "msf_vc71.vcproj", "{6FF3313B-6166-49A3-B179-C4355EEADC3F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "start", "start\start_vc71.vcproj", "{D25450AD-3D76-47B9-AB82-57A202A0ADB1}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 5
+		SccLocalPath0 = .
+		CanCheckoutShared = true
+		SolutionUniqueID = {742FEE19-7F4A-4F10-972B-FEC0DB335A1B}
+		SccProjectUniqueName1 = vvvtest\\test_vc71.vcproj
+		SccProjectName1 = \u0022$/msf/vvvtest\u0022,\u0020VNEAAAAA
+		SccLocalPath1 = vvvtest
+		CanCheckoutShared = true
+		SccProjectUniqueName2 = vvvsample\\sample_vc71.vcproj
+		SccLocalPath2 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection2 = vvvsample\\
+		SccProjectUniqueName3 = msf_vc71.vcproj
+		SccLocalPath3 = .
+		CanCheckoutShared = true
+		SccProjectUniqueName4 = start\\start_vc71.vcproj
+		SccProjectName4 = \u0022$/msf/start\u0022,\u0020XWEAAAAA
+		SccLocalPath4 = start
+		CanCheckoutShared = true
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+		Unicode Debug = Unicode Debug
+		Unicode Release = Unicode Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Debug.ActiveCfg = Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Debug.Build.0 = Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Release.ActiveCfg = Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Release.Build.0 = Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Release.Build.0 = Unicode Release|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Debug.ActiveCfg = Debug|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Debug.Build.0 = Debug|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Release.ActiveCfg = Release|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Release.Build.0 = Release|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Unicode Release.Build.0 = Unicode Release|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Debug.ActiveCfg = Debug|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Debug.Build.0 = Debug|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Release.ActiveCfg = Release|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Release.Build.0 = Release|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Unicode Release.Build.0 = Unicode Release|Win32
+		{D25450AD-3D76-47B9-AB82-57A202A0ADB1}.Debug.ActiveCfg = Debug|Win32
+		{D25450AD-3D76-47B9-AB82-57A202A0ADB1}.Debug.Build.0 = Debug|Win32
+		{D25450AD-3D76-47B9-AB82-57A202A0ADB1}.Release.ActiveCfg = Release|Win32
+		{D25450AD-3D76-47B9-AB82-57A202A0ADB1}.Release.Build.0 = Release|Win32
+		{D25450AD-3D76-47B9-AB82-57A202A0ADB1}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{D25450AD-3D76-47B9-AB82-57A202A0ADB1}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{D25450AD-3D76-47B9-AB82-57A202A0ADB1}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{D25450AD-3D76-47B9-AB82-57A202A0ADB1}.Unicode Release.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
