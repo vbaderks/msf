@@ -1,0 +1,75 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "msf", "msf_vc80.vcproj", "{6FF3313B-6166-49A3-B179-C4355EEADC3F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vvvtest", "vvvtest\test_vc80.vcproj", "{98A68B8C-7103-4E9F-B90C-971665F2CD80}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vvvsample", "vvvsample\sample_vc80.vcproj", "{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "start", "start\start_vc80.vcproj", "{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs02.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = msf_vc80.vcproj
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = start\\start_vc80.vcproj
+		SccProjectName2 = start
+		SccLocalPath2 = start
+		SccProjectUniqueName3 = vvvsample\\sample_vc80.vcproj
+		SccProjectName3 = vvvsample
+		SccLocalPath3 = vvvsample
+		SccProjectUniqueName4 = vvvtest\\test_vc80.vcproj
+		SccProjectName4 = vvvtest
+		SccLocalPath4 = vvvtest
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+		Unicode Debug|Win32 = Unicode Debug|Win32
+		Unicode Release|Win32 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Debug|Win32.Build.0 = Debug|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Release|Win32.ActiveCfg = Release|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Release|Win32.Build.0 = Release|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{6FF3313B-6166-49A3-B179-C4355EEADC3F}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Debug|Win32.ActiveCfg = Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Debug|Win32.Build.0 = Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Release|Win32.ActiveCfg = Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Release|Win32.Build.0 = Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Debug|Win32.Build.0 = Debug|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Release|Win32.ActiveCfg = Release|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Release|Win32.Build.0 = Release|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{792683CA-5CAB-4145-A9A1-1AFFBBA7EF3E}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Debug|Win32.Build.0 = Debug|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Release|Win32.ActiveCfg = Release|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Release|Win32.Build.0 = Release|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+EndGlobal

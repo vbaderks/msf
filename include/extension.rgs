@@ -1,0 +1,6 @@
+HKCR
+{
+	NoRemove '%EXTENSION%' = s '%ROOTTYPE%'
+	{
+	}
+}

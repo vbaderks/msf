@@ -1,0 +1,25 @@
+HKCR
+{
+	ForceRemove '%EXTENSION%' = s 'CLSID\%CLSID%'
+	{
+	}
+
+	NoRemove CLSID
+	{
+		'%CLSID%' = s '%DESCRIPTION%'
+		{
+			ForceRemove InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			DefaultIcon = s '%MODULE%'
+			ForceRemove Shell
+			{
+				ForceRemove open = s 'View'
+				{
+					Command = s 'explorer /root,%CLSID%,%%1'
+				}
+			}
+		}
+	}
+}

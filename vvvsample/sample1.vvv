@@ -1,0 +1,39 @@
+[directory]
+label=Sample One
+filecount=4
+
+[file0]
+name=File One
+size=45386
+active=1
+
+[file1]
+name=File Two
+size=12900
+active=1
+
+[file2]
+name=Directory One
+size=0
+active=1
+folder=1
+
+[file3]
+name=Directory Two
+size=0
+active=1
+folder=1
+
+[2\directory]
+label=Folder 1
+filecount=0
+
+[3\directory]
+label=Folder 2
+filecount=1
+
+[3\File0]
+name=File 1
+size=2999
+active=1
+

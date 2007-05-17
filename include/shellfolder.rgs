@@ -1,0 +1,72 @@
+HKCR
+{
+	ForceRemove '%EXTENSION%' = s 'CLSID\%CLSID%'
+	{
+	}
+
+	NoRemove CLSID
+	{
+		'%CLSID%' = s '%DESCRIPTION%'
+		{
+			ForceRemove InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+
+			ForceRemove CLSID = s '%CLSID%'
+			val FriendlyTypeName = s '@%MODULE%,-%FRIENDLYTYPENAME%'
+			DefaultIcon = s '%MODULE%'
+			ForceRemove Shell
+			{
+				ForceRemove open
+				{
+					Command = s 'explorer /idlist,%%I,%%L'
+					ForceRemove ddeexec = s '[ViewFolder("%%l", %%I, %%S)]'
+					{
+						val NoActivateHandler = s ''
+						ForceRemove application = s 'Folders'
+						{
+						}
+						ForceRemove ifexec = s '[]'
+						{
+						}
+						ForceRemove topic = s 'AppProperties'
+						{
+						}
+					}
+				}
+			}
+			ForceRemove ShellFolder
+			{
+				val Attributes = d 1744830896
+			}
+			ForceRemove 'Implemented Categories'
+			{
+				{00021490-0000-0000-C000-000000000046}
+			}
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+			NoRemove Windows
+			{
+				NoRemove CurrentVersion
+				{
+					NoRemove 'Shell Extensions'
+					{
+						NoRemove Approved
+						{
+							ForceRemove val '%CLSID%' = s '%DESCRIPTION%'
+						}
+					}
+				}
+			}
+		}
+	}
+}

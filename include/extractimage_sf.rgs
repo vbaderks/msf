@@ -1,0 +1,53 @@
+HKCR
+{
+	ForceRemove '%EXTENSION%' = s 'CLSID\%CLSIDSHELLFOLDER%'
+	{
+	}
+
+	NoRemove CLSID
+	{
+		ForceRemove '%CLSID%' = s '%DESCRIPTION%'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		}
+	}
+
+	NoRemove CLSID
+	{
+		NoRemove '%CLSIDSHELLFOLDER%'
+		{
+			ForceRemove CLSID = s '%CLSIDSHELLFOLDER%'
+
+			NoRemove ShellEx
+			{
+				{BB2E617C-0920-11d1-9A0B-00C04FC2D6C1} = s '%CLSID%'
+			}
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+			NoRemove Windows
+			{
+				NoRemove CurrentVersion
+				{
+					NoRemove 'Shell Extensions'
+					{
+						NoRemove Approved
+						{
+							ForceRemove val '%CLSID%' = s '%DESCRIPTION%'
+						}
+					}
+				}
+			}
+		}
+	}
+}
