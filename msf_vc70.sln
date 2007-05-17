@@ -13,24 +13,24 @@ Global
 	EndGlobalSection
 	GlobalSection(SourceCodeControl) = preSolution
 		SccNumberOfProjects = 5
+		SccProjectUniqueName0 = msf_vc70.vcproj
 		SccLocalPath0 = .
 		CanCheckoutShared = true
-		SolutionUniqueID = {A3E04A54-8D43-4A9A-A6A5-5C3F1F5119CC}
-		SccProjectUniqueName1 = msf_vc70.vcproj
 		SccLocalPath1 = .
 		CanCheckoutShared = true
+		SolutionUniqueID = {C208C337-52B5-428C-8BC2-FF853DCDBB75}
 		SccProjectUniqueName2 = vvvsample\\sample_vc70.vcproj
-		SccProjectName2 = \u0022$/msf/vvvsample\u0022,\u0020FLEAAAAA
+		SccProjectName2 = $/msf/vvvsample
 		SccLocalPath2 = vvvsample
 		CanCheckoutShared = true
 		SccProjectUniqueName3 = vvvtest\\test_vc70.vcproj
-		SccProjectName3 = \u0022$/msf/vvvtest\u0022,\u0020VNEAAAAA
+		SccProjectName3 = $/msf/vvvtest
 		SccLocalPath3 = vvvtest
 		CanCheckoutShared = true
 		SccProjectUniqueName4 = start\\start_vc70.vcproj
-		SccLocalPath4 = .
+		SccProjectName4 = $/msf/start
+		SccLocalPath4 = start
 		CanCheckoutShared = true
-		SccProjectFilePathRelativizedFromConnection4 = start\\
 	EndGlobalSection
 	GlobalSection(SolutionConfiguration) = preSolution
 		ConfigName.0 = Debug
