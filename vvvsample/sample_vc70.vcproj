@@ -365,9 +365,6 @@
 				RelativePath="shellfolderclsid.h">
 			</File>
 			<File
-				RelativePath="shellfolderview.h">
-			</File>
-			<File
 				RelativePath="shellpropsheetextclsid.h">
 			</File>
 			<File
