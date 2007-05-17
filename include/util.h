@@ -18,7 +18,7 @@ namespace MSF
 inline CString GetModuleDirectory()
 {
 	TCHAR sz[MAX_PATH];
-	ATLVERIFY(::GetModuleFileName(GetModuleHandle(NULL), sz,  MAX_PATH));
+	ATLVERIFY(::GetModuleFileName(GetModuleHandle(NULL), sz, MAX_PATH));
 
 	PathRemoveFileSpec(sz);
 
@@ -232,7 +232,7 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
 	if (regkey.QueryMultiStringValue(pszValueName, NULL, &ulLength) != ERROR_SUCCESS)
 		return;
 
-	std::vector<wchar_t> buffer(ulLength);
+	std::vector<TCHAR> buffer(ulLength);
 	if (regkey.QueryMultiStringValue(pszValueName, &(buffer[0]), &ulLength) != ERROR_SUCCESS)
 		return;
 
