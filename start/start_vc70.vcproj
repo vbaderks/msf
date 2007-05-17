@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="start_vc70"
+	Name="start"
 	ProjectGUID="{BA42FDD1-E5D3-4FF2-8002-B9414A0E7303}"
 	SccProjectName="SAK"
 	SccAuxPath="SAK"
