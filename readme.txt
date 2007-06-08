@@ -8,10 +8,9 @@ MSF is a collection of C++ template classes that can be
 used under the LGPL licence to create shell extensions.
 
 The supported compilers are:
-
- - Microsoft Visual Studio .NET 2002 (needs latest platform SDK)
+ - Microsoft Visual Studio 2005
  - Microsoft Visual Studio .NET 2003
- - Microsoft Visual Studio 2005 RC1
+ - Microsoft Visual Studio .NET 2002 (needs latest platform SDK)
 
 Shell Extensions are COM objects. MSF depends on ATL (7.0/7.1/8.0) to
 provide this support.
@@ -19,10 +18,11 @@ provide this support.
 
 Validated Operating systems
 ---------------------------
-- Windows 98
-- Windows ME
-- Windows 2000
+- Windows Vista
 - Windows XP
+- Windows 2000
+- Windows ME
+- Windows 98
 
 
 Documentation
