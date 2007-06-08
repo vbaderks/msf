@@ -1,5 +1,5 @@
 //
-// (C) Copyright by Victor Derks <vba64@xs4all.nl>
+// (C) Copyright by Victor Derks
 //
 // See README.TXT for the details of the software licence.
 //
@@ -19,48 +19,48 @@ namespace MSF
 class CCfShellIdList
 {
 public:
-	CCfShellIdList(IDataObjectPtr dataobject)
-	{
-		CFormatEtc formatetc(RegisterCf(CFSTR_SHELLIDLIST));
+    CCfShellIdList(IDataObjectPtr dataobject)
+    {
+        CFormatEtc formatetc(RegisterCf(CFSTR_SHELLIDLIST));
 
-		dataobject.GetData(formatetc, m_stgmedium);
+        dataobject.GetData(formatetc, m_stgmedium);
 
-		m_globallock.Attach(m_stgmedium.hGlobal);
-	}
-
-
-	~CCfShellIdList() throw()
-	{
-		m_globallock.Dispose();
-	}
+        m_globallock.Attach(m_stgmedium.hGlobal);
+    }
 
 
-	bool empty() const throw()
-	{
-		return GetItemCount() == 0;
-	}
+    ~CCfShellIdList() throw()
+    {
+        m_globallock.Dispose();
+    }
 
 
-	unsigned int GetItemCount() const throw()
-	{
-		return m_globallock.get()->cidl;
-	}
+    bool empty() const throw()
+    {
+        return GetItemCount() == 0;
+    }
 
 
-	const ITEMIDLIST* GetItem(UINT nIdex) const throw()
-	{
-		const CIDA* pcida = m_globallock.get();
+    unsigned int GetItemCount() const throw()
+    {
+        return m_globallock.get()->cidl;
+    }
 
-		return reinterpret_cast<const ITEMIDLIST*>
-			(reinterpret_cast<const BYTE*>(pcida) + pcida->aoffset[nIdex + 1]);
-	}
+
+    const ITEMIDLIST* GetItem(UINT nIdex) const throw()
+    {
+        const CIDA* pcida = m_globallock.get();
+
+        return reinterpret_cast<const ITEMIDLIST*>
+            (reinterpret_cast<const BYTE*>(pcida) + pcida->aoffset[nIdex + 1]);
+    }
 
 private:
 
-	CCfShellIdList& operator=(const CCfShellIdList&); // not implemented by design.
+    CCfShellIdList& operator=(const CCfShellIdList&); // not implemented by design.
 
-	CGlobalLock<CIDA> m_globallock;
-	CStgMedium        m_stgmedium;
+    CGlobalLock<CIDA> m_globallock;
+    CStgMedium        m_stgmedium;
 };
 
 } // namespace MSF

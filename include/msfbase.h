@@ -1,5 +1,5 @@
 //
-// (C) Copyright by Victor Derks <vba64@xs4all.nl>
+// (C) Copyright by Victor Derks
 //
 // See README.TXT for the details of the software licence.
 //
@@ -97,11 +97,15 @@
 // Standard C++ library
 #pragma warning(push)
 
+#pragma warning(disable: 4619) // #pragma warning : there is no warning number 'xxx'
+
 #if _MSC_VER < 1400
 #pragma warning(disable: 4217) // member template functions cannot be used for copy-assignment or copy-construction
 #endif
 
-#pragma warning(disable: 4619) // #pragma warning : there is no warning number 'xxx'
+#if _MSC_VER == 1400
+#pragma warning(disable: 4548) // expression before comma has no effect; expected expression with side-effect
+#endif
 
 #include <vector>
 #include <algorithm>

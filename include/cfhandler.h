@@ -1,5 +1,5 @@
 //
-// (C) Copyright by Victor Derks <vba64@xs4all.nl>
+// (C) Copyright by Victor Derks
 //
 // See README.TXT for the details of the software licence.
 //
@@ -16,81 +16,81 @@ namespace MSF
 class CCfHandler
 {
 public:
-	CCfHandler(CLIPFORMAT clipformat, bool bCanGetData, bool bCanSetData) :
-		_clipformat(clipformat),
-		_bCanGetData(bCanGetData),
-		_bCanSetData(bCanSetData)
-	{
-	}
+    CCfHandler(CLIPFORMAT clipformat, bool bCanGetData, bool bCanSetData) :
+        m_clipformat(clipformat),
+        m_bCanGetData(bCanGetData),
+        m_bCanSetData(bCanSetData)
+    {
+    }
 
 
-	CCfHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
-		_clipformat(RegisterCf(lpszFormat)),
-		_bCanGetData(bCanGetData),
-		_bCanSetData(bCanSetData)
-	{
-	}
+    CCfHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
+        m_clipformat(RegisterCf(lpszFormat)),
+        m_bCanGetData(bCanGetData),
+        m_bCanSetData(bCanSetData)
+    {
+    }
 
 
-	virtual ~CCfHandler() throw()
-	{
-	}
+    virtual ~CCfHandler() throw()
+    {
+    }
 
 
-	CLIPFORMAT GetClipFormat() const throw()
-	{
-		return _clipformat;
-	}
+    CLIPFORMAT GetClipFormat() const throw()
+    {
+        return m_clipformat;
+    }
 
 
-	bool CanGetData() const throw()
-	{
-		return _bCanGetData;
-	}
+    bool CanGetData() const throw()
+    {
+        return m_bCanGetData;
+    }
 
 
-	bool CanSetData() const throw()
-	{
-		return _bCanSetData;
-	}
+    bool CanSetData() const throw()
+    {
+        return m_bCanSetData;
+    }
 
 
-	virtual HRESULT Validate(const FORMATETC& formatetc) const throw()
-	{
-		if (formatetc.dwAspect != DVASPECT_CONTENT)
-			return DV_E_DVASPECT;
+    virtual HRESULT Validate(const FORMATETC& formatetc) const throw()
+    {
+        if (formatetc.dwAspect != DVASPECT_CONTENT)
+            return DV_E_DVASPECT;
 
-		if (!IsBitSet(formatetc.tymed, TYMED_HGLOBAL))
-			return DV_E_TYMED;
+        if (!IsBitSet(formatetc.tymed, TYMED_HGLOBAL))
+            return DV_E_TYMED;
 
-		if (formatetc.lindex != -1)
-			return DV_E_LINDEX;
+        if (formatetc.lindex != -1)
+            return DV_E_LINDEX;
 
-		return S_OK;
-	}
-
-
-	virtual void GetData(const FORMATETC&, STGMEDIUM&) const
-	{
-	}
+        return S_OK;
+    }
 
 
-	virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*bRelease*/)
-	{
-	}
+    virtual void GetData(const FORMATETC&, STGMEDIUM&) const
+    {
+    }
 
 
-	bool IsValid(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) const
-	{
-		return SUCCEEDED(Validate(formatetc)) && formatetc.tymed == stgmedium.tymed;
-	}
+    virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*bRelease*/)
+    {
+    }
+
+
+    bool IsValid(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) const
+    {
+        return SUCCEEDED(Validate(formatetc)) && formatetc.tymed == stgmedium.tymed;
+    }
 
 private:
 
-	// Member variables.
-	CLIPFORMAT _clipformat;
-	bool       _bCanGetData;
-	bool       _bCanSetData;
+    // Member variables.
+    CLIPFORMAT m_clipformat;
+    bool       m_bCanGetData;
+    bool       m_bCanSetData;
 };
 
 }
