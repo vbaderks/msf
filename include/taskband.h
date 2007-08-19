@@ -19,7 +19,7 @@ struct IEnumShellItems : public IUnknown
     STDMETHOD(Clone)(IEnumShellItems** ppenum) = 0;
 };
 
-
+#ifndef __IShellItemArray_INTERFACE_DEFINED__
 struct IShellItemArray : public IUnknown
 {
     STDMETHOD(BindToHandler)(IBindCtx* pbc, REFGUID rbhid, REFIID riid, void** ppvOut) = 0;
@@ -28,7 +28,7 @@ struct IShellItemArray : public IUnknown
     STDMETHOD(GetItemAt)(UINT nIndex, IShellItem** ppItem) = 0;
     STDMETHOD(EnumItems)(IEnumShellItems**) = 0;
 };
-
+#endif
 
 struct IUIElement : public IUnknown
 {

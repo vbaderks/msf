@@ -63,6 +63,7 @@
 #pragma warning(disable: 4100) // unreferenced formal parameter
 #pragma warning(disable: 4127) // conditional expression is constant
 #pragma warning(disable: 4512) // assignment operator could not be generated
+#pragma warning(disable: 4619) // #pragma warning : there is no warning number 'xxx'
 
 #if _MSC_VER == 1300
 #pragma warning(disable: 4191) // 'type cast' : unsafe conversion from 'FARPROC' to 'DLLGETVERSIONPROC'
@@ -70,16 +71,11 @@
 #pragma warning(disable: 4302) // 'type cast' : truncation from 'LPSTR' to 'TCHAR'
 #pragma warning(disable: 4529) // forming a pointer-to-member requires explicit use of the address-of operator ('&') and a qualified name
 #pragma warning(disable: 4555) // expression has no effect; expected expression with side-effect
-#pragma warning(disable: 4619) // #pragma warning : there is no warning number 'xxx'
 #pragma warning(disable: 4640) // construction of local static object is not thread-safe
 #endif
 
 #if _MSC_VER == 1310 && defined(NDEBUG)
 #pragma warning(disable: 4548) //  warning C4548: expression before comma has no effect; expected expression with side-effect
-#endif
-
-#if _MSC_VER == 1400
-#pragma warning(disable: 4619) // #pragma warning : there is no warning number 'xxx'
 #endif
 
 #ifdef _PREFAST_ // defined for the static analyser in VC 2005

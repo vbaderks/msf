@@ -58,10 +58,16 @@
 
 #if _MSC_VER == 1400
 #pragma warning(disable: 4548) // expression before comma has no effect; expected expression with side-effect
-#pragma warning(disable: 4127) // warning C4127: conditional expression is constant
+#pragma warning(disable: 4127) // conditional expression is constant
 #pragma warning(disable: 4350) // behavior change
 #pragma warning(disable: 4365) // conversion from signed to unsigned (also complains about long a = 34L;, useless warning)
 #pragma warning(disable: 4626) // assignment operator could not be generated because a base class assignment operator is inaccessible
+#endif
+
+#if _MSC_VER == 1500
+#pragma warning(disable: 4127) // conditional expression is constant
+#pragma warning(disable: 4365) // conversion from signed to unsigned (also complains about long a = 34L;, useless warning)
+#pragma warning(disable: 4548) // expression before comma has no effect; expected expression with side-effect
 #endif
 
 #ifdef NDEBUG
