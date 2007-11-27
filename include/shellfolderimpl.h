@@ -443,23 +443,27 @@ public:
 	// Purpose: The shell uses this function to retrieve info about what can be done with an item.
 	STDMETHOD(GetAttributesOf)(UINT cidl, const ITEMIDLIST** ppidl, SFGAOF* prgfInOut)
 	{
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetAttributesOf (cidl=%d, rgfInOut=%X)\n"), cidl, *prgfInOut);
-
-		SFGAOF sfgaof = static_cast<T*>(this)->GetAttributesOfGlobal(cidl, *prgfInOut);
-
-		if (sfgaof == SFGAO_UNDEFINED)
+		try
 		{
-			sfgaof = 0xFFFFFFFF;
+			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetAttributesOf (cidl=%d, rgfInOut=%X)\n"), cidl, *prgfInOut);
 
-			for (UINT i = 0; i < cidl; ++i)
+			SFGAOF sfgaof = static_cast<T*>(this)->GetAttributesOfGlobal(cidl, *prgfInOut);
+
+			if (sfgaof == SFGAO_UNDEFINED)
 			{
-				sfgaof &= static_cast<T*>(this)->GetAttributeOf(cidl, TItem(ppidl[i]), *prgfInOut);
-			}
-		}
+				sfgaof = 0xFFFFFFFF;
 
-		// Mask and return the requested attributes;
-		*prgfInOut = sfgaof & *prgfInOut;
-		return S_OK;
+				for (UINT i = 0; i < cidl; ++i)
+				{
+					sfgaof &= static_cast<T*>(this)->GetAttributeOf(cidl, TItem(ppidl[i]), *prgfInOut);
+				}
+			}
+
+			// Mask and return the requested attributes;
+			*prgfInOut = sfgaof & *prgfInOut;
+			return S_OK;
+		}
+		MSF_COM_CATCH_HANDLER()
 	}
 
 

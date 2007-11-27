@@ -33,6 +33,10 @@
 		{ \
 			return E_OUTOFMEMORY; \
 		} \
+		catch (const std::exception&) \
+		{ \
+			return E_UNEXPECTED; \
+		}
 		catch (...) \
 		{ \
 			ATLASSERT(!"Catched unexpected exception"); \
@@ -47,6 +51,10 @@
 		catch (const std::bad_alloc&) \
 		{ \
 			return OnErrorHandler(E_OUTOFMEMORY, arg1, arg2); \
+		}
+		catch (const std::exception&) \
+		{ \
+			return OnErrorHandler(E_UNEXPECTED, arg1, arg2); \
 		}
 		catch (...) \
 		{ \
