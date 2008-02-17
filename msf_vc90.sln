@@ -5,6 +5,17 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample_vc90", "vvvsample\sample_vc90.vcproj", "{4F99D866-93BF-4731-9031-2D783763AB53}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs02.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = msf_vc90.vcproj
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = vvvsample\\sample_vc90.vcproj
+		SccProjectName2 = vvvsample
+		SccLocalPath2 = vvvsample
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
@@ -31,23 +42,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs02.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = msf_vc80.vcproj
-		SccLocalPath1 = .
-		SccProjectUniqueName2 = start\\start_vc80.vcproj
-		SccProjectName2 = start
-		SccLocalPath2 = start
-		SccProjectUniqueName3 = vvvsample\\sample_vc80.vcproj
-		SccProjectName3 = vvvsample
-		SccLocalPath3 = vvvsample
-		SccProjectUniqueName4 = vvvtest\\test_vc80.vcproj
-		SccProjectName4 = vvvtest
-		SccLocalPath4 = vvvtest
 	EndGlobalSection
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}

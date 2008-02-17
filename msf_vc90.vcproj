@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="msf"
 	ProjectGUID="{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}"
 	RootNamespace="msf"
+	SccProjectName="SAK"
+	SccAuxPath="SAK"
+	SccLocalPath="SAK"
+	SccProvider="SAK"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
