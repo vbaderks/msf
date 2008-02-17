@@ -9,7 +9,7 @@
 // Purpose: base include file for msf header files. Includes most common header files.
 
 
-// As MSF targets VC 7.0, 7.1 and 8.0 it cannot use the CRT secure versions of 8.0
+// As MSF targets VC 7.0, 7.1, 8.0 and 8.0 it cannot use the CRT secure versions of 8.0 or 9.0
 // as these functions are not available on 7.0 and 7.1. Disable the warning.
 #define _CRT_SECURE_NO_DEPRECATE
 
@@ -64,9 +64,9 @@
 #pragma warning(disable: 4127) // conditional expression is constant
 #pragma warning(disable: 4512) // assignment operator could not be generated
 #pragma warning(disable: 4619) // #pragma warning : there is no warning number 'xxx'
+#pragma warning(disable: 4191) // 'type cast' : unsafe conversion from 'FARPROC' to '....PROC'
 
 #if _MSC_VER == 1300
-#pragma warning(disable: 4191) // 'type cast' : unsafe conversion from 'FARPROC' to 'DLLGETVERSIONPROC'
 #pragma warning(disable: 4217) // member template functions cannot be used for copy-assignment or copy-construction
 #pragma warning(disable: 4302) // 'type cast' : truncation from 'LPSTR' to 'TCHAR'
 #pragma warning(disable: 4529) // forming a pointer-to-member requires explicit use of the address-of operator ('&') and a qualified name
