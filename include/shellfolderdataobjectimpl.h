@@ -44,7 +44,8 @@ public:
 		m_pidldata =
 			static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl));
 
-		RegisterCfHandler(auto_ptr<CCfHandler>(new CCfPerformedDropEffectHandler(pperformeddropeffectsink, this)));
+		auto_ptr<CCfHandler> qcfhandler(new CCfPerformedDropEffectHandler(pperformeddropeffectsink, this));
+		RegisterCfHandler(qcfhandler);
 	}
 
 
