@@ -274,6 +274,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\shellfoldervista.rgs"
+				>
+			</File>
+			<File
 				RelativePath=".\include\shellfolderwin98.rgs"
 				>
 			</File>

@@ -37,6 +37,7 @@
 #define IDR_SHELLFOLDER_WIN98           1005
 #define IDR_EXTRACTIMAGE                1006
 #define IDR_COPYHOOK                    1007
+#define IDR_SHELLFOLDER_VISTA           1008
 #define IDD_PROPERTY_PAGE_VVV           2000
 #define IDC_STATIC_LABEL                2001
 #define IDC_EDIT_LABEL                  2002

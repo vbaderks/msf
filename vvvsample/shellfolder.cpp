@@ -37,7 +37,7 @@ public:
 	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
 	{
 		return IShellFolderImpl<CShellFolder, CVVVItem>::UpdateRegistry(
-			IDR_SHELLFOLDER, IDR_SHELLFOLDER_WIN98, bRegister,
+			IDR_SHELLFOLDER_VISTA, IDR_SHELLFOLDER, IDR_SHELLFOLDER_WIN98, bRegister,
 			L"Sample ShellExtension ShellFolder", wszVVVExtension, IDS_SHELLFOLDER_TYPE);
 	}
 
@@ -121,7 +121,7 @@ public:
 	{
 		CCfShellIdList itemlist(pdataobject);
 
-		if (itemlist.GetItemCount() == 1)
+		if (itemlist.GetItemCount() == 1 && !CVVVItem(itemlist.GetItem(0)).IsFolder())
 		{
 			// Add 'open' if only 1 item is selected.
 			CMenu menu(true);

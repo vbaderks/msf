@@ -32,6 +32,7 @@ IDR_PROPERTYSHEETEXT    REGISTRY                "../include/propertysheetext_sf.
 IDR_COLUMNPROVIDER      REGISTRY                "../include/columnprovider.rgs"
 IDR_SHELLFOLDER         REGISTRY                "../include/shellfolder.rgs"
 IDR_SHELLFOLDER_WIN98   REGISTRY                "../include/shellfolderwin98.rgs"
+IDR_SHELLFOLDER_VISTA   REGISTRY                "../include/shellfoldervista.rgs"
 IDR_EXTRACTIMAGE        REGISTRY                "../include/extractimage_sf.rgs"
 IDR_COPYHOOK            REGISTRY                "../include/copyhookfolder.rgs"
 

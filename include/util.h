@@ -376,6 +376,10 @@ inline bool IsShell5OrHigher()
 	return GetDllVersion(_T("shell32.dll")) >= MSF_PACKVERSION(5, 00);
 }
 
+inline bool IsShell6OrHigher()
+{
+	return GetDllVersion(_T("shell32.dll")) >= MSF_PACKVERSION(6, 00);
+}
 
 // Source: Effective STL, by Scott Meyers. ISBN: 0-201-74968-9, Item 7, page 38
 class CDeleteObject
