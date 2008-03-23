@@ -136,6 +136,20 @@ public:
 	}
 
 
+	static HRESULT WINAPI UpdateRegistry(UINT nResIdVista, UINT nResIdStd, UINT nResIdWin98, BOOL bRegister,
+		PCWSTR szDescription, PCWSTR szExtension, UINT nFriendlyTypeNameId) throw()
+	{
+		if (IsShell6OrHigher())
+		{
+			return UpdateRegistry(nResIdVista, bRegister, szDescription, szExtension, nFriendlyTypeNameId);
+		}
+		else
+		{
+			return UpdateRegistry(nResIdStd, nResIdWin98, bRegister, szDescription, szExtension, nFriendlyTypeNameId);
+		}
+	}
+
+
 	static CString SHGetPathFromIDList(const ITEMIDLIST* pidl)
 	{
 		CString strPath;
@@ -199,7 +213,7 @@ public:
 	// IPersistFolder
 	STDMETHOD(GetClassID)(CLSID* pClassID)
 	{
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetClassID\n"));
+		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetClassID (instance=%p)\n"), this);
 
 		if (pClassID == NULL)
 			return E_POINTER;
@@ -213,7 +227,7 @@ public:
 	{
 		try
 		{
-			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::Initialize, instance=%p, pidl=%p\n"), this, pidl);
+			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::Initialize (instance=%p, pidl=%p)\n"), this, pidl);
 
 			if (pidl == NULL)
 				return E_INVALIDARG;
@@ -230,7 +244,7 @@ public:
 	{
 		try
 		{
-			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetCurFolder, instance=%p\n"), this);
+			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetCurFolder (instance=%p)\n"), this);
 
 			*ppidl = m_pidlFolder.Clone();
 			return S_OK;
@@ -242,7 +256,7 @@ public:
 	// IPersistFolder3
 	STDMETHOD(InitializeEx)(IBindCtx* pbc, const ITEMIDLIST* pidlRoot, const PERSIST_FOLDER_TARGET_INFO* /*ppfti*/)
 	{
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::InitializeEx, instance=%p, pcb=%p\n"), this, pbc);
+		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::InitializeEx (instance=%p, pcb=%p)\n"), this, pbc);
 		(pbc);
 		return Initialize(pidlRoot);
 	}
@@ -272,7 +286,7 @@ public:
 	// IShellDetails
 	STDMETHOD(ColumnClick)(UINT uiColumn)
 	{
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::ColumnClick (column=%d)\n"), uiColumn);
+		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::ColumnClick (instance=%p, column=%d)\n"), this, uiColumn);
 
 		if (IsShell5OrHigher())
 		{
@@ -340,22 +354,22 @@ public:
 
 			if (riid == __uuidof(IShellDetails))
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (IShellDetails)\n"));
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (instance=%p, riid=IShellDetails)\n"), this);
 				return static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
 			} 
 			else if (riid == __uuidof(IShellView))
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (IShellView)\n"));
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (instance=%p, riid=IShellView)\n"), this);
 				*ppRetVal = static_cast<T*>(this)->CreateShellFolderView().Detach();
 			}
 			else if (riid == __uuidof(IDropTarget))
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (IDropTarget)\n"));
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (instance=%p, riid=IDropTarget)\n"), this);
 				*ppRetVal = static_cast<T*>(this)->CreateDropTarget().Detach();
 			}
 			else if (riid == __uuidof(IContextMenu))
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (IContextMenu)\n"));
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (instance=%p, riid=IContextMenu)\n"), this);
 				*ppRetVal = static_cast<T*>(this)->CreateFolderContextMenu().Detach();
 			}
 			else
@@ -381,17 +395,17 @@ public:
 		{
 			if (riid == __uuidof(IContextMenu))
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (cidl=%d, riid=IContextMenu)\n"), cidl);
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IContextMenu)\n"), this, cidl);
 				*ppv = static_cast<T*>(this)->CreateItemContextMenu(hwnd, cidl, ppidl).Detach();
 			}
 			else if (riid == __uuidof(IDataObject))
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (cidl=%d, riid=IDataObject)\n"), cidl);
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IDataObject)\n"), this, cidl);
 				*ppv = static_cast<T*>(this)->CreateDataObject(m_pidlFolder, cidl, ppidl).Detach();
 			}
 			else if (riid == __uuidof(IQueryInfo))
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (cidl=%d, riid=IQueryInfo)\n"), cidl);
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IQueryInfo)\n"), this, cidl);
 
 				if (cidl != 1)
 					return E_FAIL; // can only request a tooltip for 1 selected item!
@@ -400,7 +414,7 @@ public:
 			}
 			else if (riid == __uuidof(IExtractIcon))
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (cidl=%d, riid=IExtractIcon)\n"), cidl);
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IExtractIcon)\n"), this, cidl);
 
 				if (cidl != 1)
 					return E_FAIL; // can only request a icon for 1 selected item!
@@ -409,7 +423,7 @@ public:
 			}
 			else
 			{
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (cidl=%d, riid=?)\n"), cidl);
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=?)\n"), this, cidl);
 				#ifdef _ATL_DEBUG_QI
 				AtlDumpIID(riid, _T("IShellFolderImpl(GetUIObjectOf)"), E_NOINTERFACE);
 				#endif //  _ATL_DEBUG_QI
@@ -432,8 +446,8 @@ public:
 			TItem item(pidl);
 			StrToStrRet(item.GetDisplayName(shgdnf), lpname);
 
-			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetDisplayNameOf (shgdnf=%x, name=%s)\n"),
-			          shgdnf, item.GetDisplayName(shgdnf).GetString());
+			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetDisplayNameOf (instance=%p, shgdnf=%x, name=%s)\n"),
+			          this, shgdnf, item.GetDisplayName(shgdnf).GetString());
 			return S_OK;
 		}
 		MSF_COM_CATCH_HANDLER()
@@ -568,7 +582,7 @@ public:
 	{
 		try
 		{
-			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::EnumObjects hwnd=%d, grfFlags=%d, path=%s\n"),
+			ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::EnumObjects (hwnd=%d, grfFlags=%d, path=%s)\n"),
 			          hwnd, grfFlags, GetPathFolderFile().GetString());
 			if (ppRetVal == NULL)
 				return E_POINTER;
@@ -675,7 +689,7 @@ public:
 	// IDropTarget
 	STDMETHOD(DragEnter)(IDataObject* pdataobject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
 	{
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragEnter grfKeyState=%d, dwEffect=%d\n"), grfKeyState, *pdwEffect);
+		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragEnter (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
 
 		try
 		{
@@ -698,7 +712,7 @@ public:
 
 	STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
 	{
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragOver, grfKeyState=%d, dwEffect=%d\n"), grfKeyState, *pdwEffect);
+		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragOver (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
 
 		try
 		{
@@ -727,7 +741,7 @@ public:
 	STDMETHOD(Drop)(IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
 	{
 		(grfKeyState);
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::Drop grfKeyState=%d, dwEffect=%d\n"), grfKeyState, *pdwEffect);
+		ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::Drop (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
 
 		try
 		{
@@ -751,7 +765,7 @@ public:
 
 	void InitializeSubFolder(const TItems& /*items*/)
 	{
-		ATLASSERT(!"Derived class needs to implement this function, if subfolder are used");
+		ATLASSERT(!"Derived class needs to implement this function, if subfolders are used");
 		RaiseException();
 	}
 
@@ -1006,7 +1020,7 @@ protected:
 				return static_cast<T*>(this)->OnDfmCmdCreateShortcut(hwnd, pdataobject);
 
 			default:
-				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand, id=%d\n"), nId);
+				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand (id=%d)\n"), nId);
 				errorcontext = EC_ON_INVOKE_ADDED_CMD;
 				return static_cast<T*>(this)->OnDfmInvokeAddedCommand(hwnd, pdataobject, nId);
 			}
