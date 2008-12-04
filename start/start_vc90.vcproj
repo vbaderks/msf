@@ -55,7 +55,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
@@ -152,7 +151,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
 				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				RuntimeLibrary="2"
@@ -248,7 +246,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
@@ -347,7 +344,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
 				Optimization="3"
 				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"

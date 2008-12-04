@@ -6,6 +6,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample_vc90", "vvvsample\sa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "start_vc90", "start\start_vc90.vcproj", "{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_vc90", "vvvtest\test_vc90.vcproj", "{98A68B8C-7103-4E9F-B90C-971665F2CD80}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 4
@@ -52,6 +54,14 @@ Global
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Debug|Win32.ActiveCfg = Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Debug|Win32.Build.0 = Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Release|Win32.ActiveCfg = Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Release|Win32.Build.0 = Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

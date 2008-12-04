@@ -87,25 +87,25 @@ public:
 
 	STDMETHOD(IsDirty)()
 	{
-		ATLTRACENOTIMPL(_T("IExtractImageImpl::IsDirty"));
+		MSF_TRACENOTIMPL(_T("IExtractImageImpl::IsDirty"));
 	}
 
 
 	STDMETHOD(Save)(LPCOLESTR, BOOL)
 	{
-		ATLTRACENOTIMPL(_T("IExtractImageImpl::Save"));
+		MSF_TRACENOTIMPL(_T("IExtractImageImpl::Save"));
 	}
 
 
 	STDMETHOD(SaveCompleted)(LPCOLESTR)
 	{
-		ATLTRACENOTIMPL(_T("IExtractImageImpl::SaveCompleted"));
+		MSF_TRACENOTIMPL(_T("IExtractImageImpl::SaveCompleted"));
 	}
 
 
 	STDMETHOD(GetCurFile)(LPOLESTR*)
 	{
-		ATLTRACENOTIMPL(_T("IExtractImageImpl::GetCurFile"));
+		MSF_TRACENOTIMPL(_T("IExtractImageImpl::GetCurFile"));
 	}
 
 

@@ -16,7 +16,7 @@ namespace MSF
 class CPidl
 {
 public:
-	static ITEMIDLIST* Clone(const ITEMIDLIST* pidlSrc)
+	static ITEMIDLIST* Clone(__in const ITEMIDLIST* pidlSrc)
 	{
 		ATLASSERT(pidlSrc != NULL && "Why clone a NULL pointer?");
 

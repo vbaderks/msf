@@ -31,7 +31,7 @@ public:
 	// IQueryInfo
 	STDMETHOD(GetInfoFlags)(DWORD* /* pdwFlags */)
 	{
-		ATLTRACENOTIMPL(_T("IInfoTipImpl::GetInfoFlags"));
+		MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetInfoFlags"));
 	}
 
 

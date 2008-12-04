@@ -62,31 +62,31 @@ public:
 	// Note: A lot of functions are defined by the interface, but not for infotip objects.
 	STDMETHOD(GetClassID)(LPCLSID)
 	{
-		ATLTRACENOTIMPL(_T("IInfoTipImpl::GetClassID"));
+		MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetClassID"));
 	}
 
 
 	STDMETHOD(IsDirty)()
 	{
-		ATLTRACENOTIMPL(_T("IInfoTipImpl::IsDirty"));
+		MSF_TRACENOTIMPL(_T("IInfoTipImpl::IsDirty"));
 	}
 
 
 	STDMETHOD(Save)(LPCOLESTR, BOOL)
 	{
-		ATLTRACENOTIMPL(_T("IInfoTipImpl::Save"));
+		MSF_TRACENOTIMPL(_T("IInfoTipImpl::Save"));
 	}
 
 
 	STDMETHOD(SaveCompleted)(LPCOLESTR)
 	{
-		ATLTRACENOTIMPL(_T("IInfoTipImpl::SaveCompleted"));
+		MSF_TRACENOTIMPL(_T("IInfoTipImpl::SaveCompleted"));
 	}
 
 
 	STDMETHOD(GetCurFile)(LPOLESTR*)
 	{
-		ATLTRACENOTIMPL(_T("IInfoTipImpl::GetCurFile"));
+		MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetCurFile"));
 	}
 
 

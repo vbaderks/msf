@@ -264,7 +264,7 @@ public:
 
 	STDMETHOD(GetFolderTargetInfo)(PERSIST_FOLDER_TARGET_INFO* /* ppfti */)
 	{
-		ATLTRACENOTIMPL(_T("IShellFolderImpl::GetFolderTargetInfo"));
+		MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetFolderTargetInfo"));
 	}
 
 
@@ -338,7 +338,7 @@ public:
 	STDMETHOD(BindToStorage)(LPCITEMIDLIST, LPBC, REFIID, LPVOID* ppRetVal)
 	{
 		*ppRetVal = NULL;
-		ATLTRACENOTIMPL(_T("IShellFolderImpl::BindToStorage"));
+		MSF_TRACENOTIMPL(_T("IShellFolderImpl::BindToStorage"));
 	}
 
 
@@ -596,13 +596,13 @@ public:
 
 	STDMETHOD(GetDefaultSearchGUID)(GUID* /*pguid*/)
 	{
-		ATLTRACENOTIMPL(_T("IShellFolderImpl::GetDefaultSearchGUID"));
+		MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetDefaultSearchGUID"));
 	}
 
 
 	STDMETHOD(EnumSearches)(IEnumExtraSearch** /*ppenum */)
 	{
-		ATLTRACENOTIMPL(_T("IShellFolderImpl::EnumSearches"));
+		MSF_TRACENOTIMPL(_T("IShellFolderImpl::EnumSearches"));
 	}
 
 
@@ -631,13 +631,13 @@ public:
 
 	STDMETHOD(GetDetailsEx)(LPCITEMIDLIST /*pidl*/, const SHCOLUMNID* /*pscid*/, VARIANT* /*pv*/)
 	{
-		ATLTRACENOTIMPL(_T("IShellFolderImpl::GetDetailsEx"));
+		MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetDetailsEx"));
 	}
 
 
 	STDMETHOD(MapColumnToSCID)(UINT /*iColumn*/, SHCOLUMNID* /*pscid*/)
 	{
-		ATLTRACENOTIMPL(_T("IShellFolderImpl::MapColumnToSCID"));
+		MSF_TRACENOTIMPL(_T("IShellFolderImpl::MapColumnToSCID"));
 	}
 
 
@@ -829,10 +829,11 @@ protected:
 	CComPtr<IContextMenu> CreateItemContextMenu(HWND hwnd, UINT cidl, const ITEMIDLIST** ppidl)
 	{
 		CComPtr<IContextMenu> contextmenu;
+		HKEY ahkeyClsKeys;
 
 		RaiseExceptionIfFailed(
 			CDefFolderMenu_Create2(m_pidlFolder, hwnd, cidl, ppidl, this,
-			                       IShellFolderImpl::OnDfmCommand, 0, NULL, &contextmenu));
+			                       IShellFolderImpl::OnDfmCommand, 0, &ahkeyClsKeys, &contextmenu));
 
 		return contextmenu;
 	}

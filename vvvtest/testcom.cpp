@@ -24,17 +24,20 @@ void CallDllFunction(const CString& strDllname, const char* pszFunction)
 	typedef HRESULT (STDAPICALLTYPE* LPFNDLL)();
 
 	HINSTANCE hLib = LoadLibrary(strDllname);
-	RaiseExceptionIf(hLib == NULL);
+	if (hLib == NULL)
+		RaiseException();
 
 	try
 	{
 		LPFNDLL lpDllEntryPoint;
 
 		lpDllEntryPoint = (LPFNDLL)GetProcAddress(hLib, pszFunction);
-		RaiseExceptionIf(lpDllEntryPoint == NULL);
+		if (lpDllEntryPoint == NULL)
+			RaiseException();
 
 		HRESULT hr = (*lpDllEntryPoint)();
-		RaiseExceptionIf(FAILED(hr));
+		if (FAILED(hr))
+			RaiseException();
 	}
 	catch (const _com_error&)
 	{

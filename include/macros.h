@@ -8,6 +8,9 @@
 
 #define MSF_ARRAY_SIZE(t) (sizeof(t) / sizeof(t[0]))
 
+// Replacement macro for ATLTRACENOTIMPL that will generate C4217 (conditional expression is constant) warning under VS90.
+#define MSF_TRACENOTIMPL(funcname)  for (;;){ ATLTRACE(ATL::atlTraceNotImpl, 0, _T("MSF: %s not implemented.\n"), funcname); return E_NOTIMPL; }
+
 
 namespace MSF
 {

@@ -2,14 +2,14 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="sample_vc90"
-	ProjectGUID="{4F99D866-93BF-4731-9031-2D783763AB53}"
-	RootNamespace="sample"
+	Name="test_vc90"
+	ProjectGUID="{98A68B8C-7103-4E9F-B90C-971665F2CD80}"
+	RootNamespace="test"
 	SccProjectName="SAK"
 	SccAuxPath="SAK"
 	SccLocalPath="SAK"
 	SccProvider="SAK"
-	Keyword="AtlProj"
+	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -24,9 +24,8 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(ConfigurationName)_90"
 			IntermediateDirectory="$(ConfigurationName)_90"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			UseOfATL="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
 			<Tool
@@ -43,24 +42,16 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="1"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/sample.tlb"
-				HeaderFileName="sample.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="sample_i.c"
-				ProxyFileName="sample_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
-				BasicRuntimeChecks="0"
-				RuntimeLibrary="3"
+				ExceptionHandling="2"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
 				TreatWChar_tAsBuiltInType="true"
 				ForceConformanceInForLoopScope="true"
 				WarningLevel="4"
@@ -71,24 +62,19 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				OutputFile="$(OutDir)/sampled.dll"
-				AdditionalLibraryDirectories="&quot;..\include&quot;"
-				ModuleDefinitionFile=".\sample.def"
+				OutputFile="$(OutDir)/test.exe"
+				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				ProgramDatabaseFile="$(OutDir)/test.pdb"
+				SubSystem="1"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(OutDir)/sample.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -111,17 +97,14 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(ConfigurationName)_90"
 			IntermediateDirectory="$(ConfigurationName)_90"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			UseOfATL="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
 			<Tool
@@ -138,21 +121,13 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="1"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/sample.tlb"
-				HeaderFileName="sample.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="sample_i.c"
-				ProxyFileName="sample_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
-				RuntimeLibrary="2"
+				AdditionalOptions="/Wall"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				ExceptionHandling="2"
+				RuntimeLibrary="0"
 				TreatWChar_tAsBuiltInType="true"
 				ForceConformanceInForLoopScope="true"
 				WarningLevel="4"
@@ -163,27 +138,20 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				OutputFile="$(OutDir)/sample.dll"
+				OutputFile="$(OutDir)/test.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\include&quot;"
-				ModuleDefinitionFile=".\sample.def"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(OutDir)/sample.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -206,17 +174,14 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug|Win32"
-			OutputDirectory="$(ConfigurationName)_80"
-			IntermediateDirectory="$(ConfigurationName)_80"
-			ConfigurationType="2"
+			OutputDirectory="$(ConfigurationName)_90"
+			IntermediateDirectory="$(ConfigurationName)_90"
+			ConfigurationType="1"
 			UseOfATL="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
 			>
 			<Tool
@@ -233,27 +198,18 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="1"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/sample.tlb"
-				HeaderFileName="sample.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="sample_i.c"
-				ProxyFileName="sample_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
-				BasicRuntimeChecks="0"
-				RuntimeLibrary="3"
+				ExceptionHandling="2"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
 				TreatWChar_tAsBuiltInType="true"
 				ForceConformanceInForLoopScope="true"
-				UsePrecompiledHeader="2"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -262,25 +218,19 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;NO_MANIFEST"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				OutputFile="$(OutDir)/sampleud.dll"
+				OutputFile="$(OutDir)/test.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\include&quot;"
-				ModuleDefinitionFile=".\sample.def"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				ProgramDatabaseFile="$(OutDir)/test.pdb"
+				SubSystem="1"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(OutDir)/sample.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -288,7 +238,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				SuppressStartupBanner="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -304,17 +253,14 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Unicode Release|Win32"
 			OutputDirectory="$(ConfigurationName)_80"
 			IntermediateDirectory="$(ConfigurationName)_80"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			UseOfATL="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
 			>
 			<Tool
@@ -331,22 +277,13 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="1"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/sample.tlb"
-				HeaderFileName="sample.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="sample_i.c"
-				ProxyFileName="sample_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
-				RuntimeLibrary="2"
+				AdditionalOptions="/Wall"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				ExceptionHandling="2"
+				RuntimeLibrary="0"
 				TreatWChar_tAsBuiltInType="true"
 				ForceConformanceInForLoopScope="true"
 				WarningLevel="4"
@@ -357,27 +294,20 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				OutputFile="$(OutDir)/sampleu.dll"
+				OutputFile="$(OutDir)/test.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\include&quot;"
-				ModuleDefinitionFile=".\sample.def"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(OutDir)/sample.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -400,8 +330,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -414,39 +342,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\columnprovider.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\contextmenu.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\copyhook.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\extractimage.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\infotip.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\sample.def"
-				>
-			</File>
-			<File
-				RelativePath=".\shellfolder.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\shellpropsheetext.cpp"
 				>
 			</File>
 			<File
@@ -486,11 +382,27 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\vvvfile.cpp"
+				RelativePath=".\testcolumnprovider.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\vvvitem.cpp"
+				RelativePath=".\testcom.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\testcontextmenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\testinfotip.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\testpropsheetext.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\testshellfolder.cpp"
 				>
 			</File>
 		</Filter>
@@ -500,79 +412,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\aboutmsfcommand.h"
-				>
-			</File>
-			<File
-				RelativePath=".\cffilecontentshandler.h"
-				>
-			</File>
-			<File
-				RelativePath=".\cffiledescriptorhandler.h"
-				>
-			</File>
-			<File
-				RelativePath=".\columnproviderclsid.h"
-				>
-			</File>
-			<File
-				RelativePath=".\columns.h"
-				>
-			</File>
-			<File
-				RelativePath=".\contextmenuclsid.h"
-				>
-			</File>
-			<File
-				RelativePath=".\copyhookclsid.h"
-				>
-			</File>
-			<File
-				RelativePath=".\editwithnotepadcommand.h"
-				>
-			</File>
-			<File
-				RelativePath=".\enumidlist.h"
-				>
-			</File>
-			<File
-				RelativePath=".\extractimageclsid.h"
-				>
-			</File>
-			<File
-				RelativePath=".\infotipclsid.h"
-				>
-			</File>
-			<File
 				RelativePath=".\module.h"
-				>
-			</File>
-			<File
-				RelativePath=".\propertypageitem.h"
-				>
-			</File>
-			<File
-				RelativePath=".\propertypagevvv.h"
-				>
-			</File>
-			<File
-				RelativePath=".\resource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\shellfolderclsid.h"
-				>
-			</File>
-			<File
-				RelativePath=".\shellfolderdataobject.h"
-				>
-			</File>
-			<File
-				RelativePath=".\shellfolderviewcb.h"
-				>
-			</File>
-			<File
-				RelativePath=".\shellpropsheetextclsid.h"
 				>
 			</File>
 			<File
@@ -580,49 +420,159 @@
 				>
 			</File>
 			<File
-				RelativePath=".\vvvfile.h"
+				RelativePath=".\testcolumnprovider.h"
 				>
 			</File>
 			<File
-				RelativePath=".\vvvitem.h"
+				RelativePath=".\testcom.h"
 				>
 			</File>
 			<File
-				RelativePath=".\vvvpropertysheet.h"
+				RelativePath=".\testcontextmenu.h"
+				>
+			</File>
+			<File
+				RelativePath=".\testinfotip.h"
+				>
+			</File>
+			<File
+				RelativePath=".\testpropsheetext.h"
+				>
+			</File>
+			<File
+				RelativePath=".\testshellfolder.h"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			Name="Data Files"
 			>
 			<File
-				RelativePath=".\menuicon.bmp"
+				RelativePath=".\sample.yyy"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\sample.manifest"
-				>
-			</File>
-			<File
-				RelativePath=".\sample.rc"
-				>
-			</File>
-			<File
-				RelativePath=".\vvv.ico"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="VVV Files"
-			>
 			<File
 				RelativePath=".\sample1.vvv"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\sample2.vvv"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+						Outputs="$(TargetDir)$(InputFileName)"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>
 	<Globals>
+		<Global
+			Name="DevPartner_IsInstrumented"
+			Value="0"
+		/>
 	</Globals>
 </VisualStudioProject>

@@ -46,7 +46,7 @@ public:
 		HRESULT hr = GetInterfacePtr()->QueryContextMenu(hmenu, indexMenu, idCmdFirst, idCmdLast, uFlags);
 		RaiseExceptionIfFailed(hr);
 
-		return HRESULT_CODE(hr);
+		return static_cast<UINT>(HRESULT_CODE(hr));
 	}
 
 

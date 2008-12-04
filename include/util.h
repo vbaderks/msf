@@ -197,11 +197,11 @@ inline void CreateProcess(LPCTSTR szApplicationName, LPTSTR szCmdLine, LPCTSTR l
 //          and true if string could be obtained.
 inline bool QueryRegKeyStringValue(CRegKey& regkey, LPCTSTR pszValueName, CString& strValue) throw()
 {
-	unsigned long ulLength;
-	if (regkey.QueryStringValue(pszValueName, NULL, &ulLength) != ERROR_SUCCESS)
+	unsigned long ulLength = 0;
+	if (regkey.QueryStringValue(pszValueName, NULL, &ulLength) != ERROR_MORE_DATA)
 		return false;
 
-	if (regkey.QueryStringValue(pszValueName, strValue.GetBuffer(ulLength), &ulLength) != ERROR_SUCCESS)
+	if (regkey.QueryStringValue(pszValueName, strValue.GetBuffer(static_cast<int>(ulLength)), &ulLength) != ERROR_SUCCESS)
 		return false;
 
 	strValue.ReleaseBuffer();
@@ -228,8 +228,8 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
 {
 	rgStrings.clear();
 
-	unsigned long ulLength;
-	if (regkey.QueryMultiStringValue(pszValueName, NULL, &ulLength) != ERROR_SUCCESS)
+	unsigned long ulLength = 0;
+	if (regkey.QueryMultiStringValue(pszValueName, NULL, &ulLength) != ERROR_MORE_DATA)
 		return;
 
 	std::vector<TCHAR> buffer(ulLength);
