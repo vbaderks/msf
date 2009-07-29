@@ -26,6 +26,7 @@ public:
 
 	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
 	{
+        // TODO: update to new reg model.
 		return IExtractImageImpl<CExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,
 			L"Sample ShellExtension ExtractImage", __uuidof(CShellFolder), wszVVVExtension);
 	}

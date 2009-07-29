@@ -13,7 +13,7 @@ HKCR
 
 	NoRemove Folder
 	{
-		NoRemove Shellex
+		NoRemove ShellEx
 		{
 			NoRemove ColumnHandlers
 			{

@@ -5,7 +5,6 @@
 //
 #pragma once
 
-
 #include "updateregistry.h"
 #include "catchhandler.h"
 #include "queryinfoimpl.h"
@@ -15,99 +14,118 @@
 namespace MSF
 {
 
+/// <summary>Basic implementation functionality for a InfoTip shell extension COM object.</summary>
+/// <remarks>
+/// Classes can use this mix-in implementation class to add support to act as an InfoTip COM object.
+/// Standard ATL template classes can be used for the generic COM implementation (addref, release, etc).
+/// The actual InfoTip class need to setup the COM interface map.
+/// The following interfaces should be enabled:
+///  - IQueryInfo 
+/// One of the following for initialization (Vista and up):
+///  - IInitializeWithFile
+///  - IInitializeWithStream
+/// To support XP, Win98, ME:
+///  - IPersistFile
+/// </remarks>
 template <typename T>
 class ATL_NO_VTABLE IInfoTipImpl :
-	public IPersistFile,
-	public IQueryInfoImpl
+    public IInitializeWithFile,
+    public IPersistFile,
+    public IQueryInfoImpl<T>
 {
 public:
-	// Registration function to register the infotip with a common shellfolder.
-	static HRESULT WINAPI UpdateRegistry(UINT nResId, BOOL bRegister,
-		PCWSTR szDescription, const CLSID& clsidShellFolder, PCWSTR szExtension) throw()
-	{
-		return UpdateRegistryFromResource(nResId, bRegister,
-			szDescription, T::GetObjectCLSID(), clsidShellFolder, szExtension);
-	}
+    /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
+        PCWSTR szDescription, PCWSTR szRootKey) throw()
+    {
+        return UpdateRegistryFromResource(nResId, bRegister,
+            szDescription, T::GetObjectCLSID(), szRootKey);
+    }
 
 
-	// Registration function to register the COM object + the root extension.
-	static HRESULT WINAPI UpdateRegistryForRootExt(UINT nResId, BOOL bRegister,
-		PCWSTR szDescription, PCWSTR szRootExt) throw()
-	{
-		return UpdateRegistryForRootExt(nResId, bRegister,
-			szDescription, T::GetObjectCLSID(), szRootExt);
-	}
+    IInfoTipImpl() : m_bInitialized(false)
+    {
+        ATLTRACE2(atlTraceCOM, 0, _T("IInfoTipImpl::IInfoTipImpl (instance=%p)\n"), this);
+    }
 
-
-	// Registration function to register the extension based on the root extension.
-	static HRESULT WINAPI UpdateRegistryForExt(UINT nResId, BOOL bRegister,
-		PCWSTR szRootType, PCWSTR szExtension) throw()
-	{
-		return ::UpdateRegistryForExt(nResId, bRegister,
-			szRootType, szExtension);
-	}
-
-
-	// All-in-one registration function for 1 extenstion, call 'ForExt' to register
-	// aditional functions.
-	static HRESULT WINAPI UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,
-		PCWSTR szDescription, PCWSTR szRootExt, PCWSTR szExtension) throw()
-	{
-		return ::UpdateRegistry(nResIdRoot, nResIdExt, bRegister,
-			szDescription, T::GetObjectCLSID(), szRootExt, szExtension);
-	}
-
-
-	// IPersistFile
-	// Note: A lot of functions are defined by the interface, but not for infotip objects.
-	STDMETHOD(GetClassID)(LPCLSID)
-	{
-		MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetClassID"));
-	}
-
-
-	STDMETHOD(IsDirty)()
-	{
-		MSF_TRACENOTIMPL(_T("IInfoTipImpl::IsDirty"));
-	}
-
-
-	STDMETHOD(Save)(LPCOLESTR, BOOL)
-	{
-		MSF_TRACENOTIMPL(_T("IInfoTipImpl::Save"));
-	}
-
-
-	STDMETHOD(SaveCompleted)(LPCOLESTR)
-	{
-		MSF_TRACENOTIMPL(_T("IInfoTipImpl::SaveCompleted"));
-	}
-
-
-	STDMETHOD(GetCurFile)(LPOLESTR*)
-	{
-		MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetCurFile"));
-	}
-
-
-	STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode)
-	{
-		(dwMode); // unused in release.
-
+    // IInitializeWithFile
+    STDMETHOD(Initialize)(LPCWSTR pszFilePath, DWORD dwMode)
+    {
 #ifdef UNICODE
-		ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
+        ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, filename=%s)\n", this, dwMode, pszFilePath);
 #else
-		ATLTRACE2(atlTraceCOM, 0, "IInfoTipImpl::Load (instance=%p, mode=%d, , filename=%S)\n", this, dwMode, wszFilename);
+        ATLTRACE2(atlTraceCOM, 0, "IInfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, , filename=%S)\n", this, dwMode, pszFilePath);
 #endif
 
-		try
-		{
-			// Note: CreateInfoTipText must be implemented by the derived class.
-			SetInfoTipText(static_cast<T*>(this)->CreateInfoTipText(CW2T(wszFilename)));
-			return S_OK;
-		}
-		MSF_COM_CATCH_HANDLER()
-	}
+        try
+        {
+            if (m_bInitialized)
+                return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
+
+            // Note: InitializeImpl must be implemented by the derived class.
+            static_cast<T*>(this)->InitializeImpl(CW2T(pszFilePath), dwMode);
+            m_bInitialized = true;
+            return S_OK;
+        }
+        MSF_COM_CATCH_HANDLER()
+    }
+
+    // IPersistFile (used by XP and older)
+    // Note: A lot of functions are defined by the interface, but not for infotip objects.
+    STDMETHOD(GetClassID)(LPCLSID)
+    {
+        MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetClassID"));
+    }
+
+
+    STDMETHOD(IsDirty)()
+    {
+        MSF_TRACENOTIMPL(_T("IInfoTipImpl::IsDirty"));
+    }
+
+
+    STDMETHOD(Save)(LPCOLESTR, BOOL)
+    {
+        MSF_TRACENOTIMPL(_T("IInfoTipImpl::Save"));
+    }
+
+
+    STDMETHOD(SaveCompleted)(LPCOLESTR)
+    {
+        MSF_TRACENOTIMPL(_T("IInfoTipImpl::SaveCompleted"));
+    }
+
+
+    STDMETHOD(GetCurFile)(LPOLESTR*)
+    {
+        MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetCurFile"));
+    }
+
+
+    STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode)
+    {
+#ifdef UNICODE
+        ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
+#else
+        ATLTRACE2(atlTraceCOM, 0, "IInfoTipImpl::Load (instance=%p, mode=%d, , filename=%S)\n", this, dwMode, wszFilename);
+#endif
+
+        try
+        {
+            if (m_bInitialized)
+                return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
+
+            // Note: InitializeImpl must be implemented by the derived class.
+            static_cast<T*>(this)->InitializeImpl(CW2T(wszFilename), dwMode);
+            m_bInitialized = true;
+            return S_OK;
+        }
+        MSF_COM_CATCH_HANDLER()
+    }
+
+
+private:
+    bool m_bInitialized;
 };
 
 } // namespace MSF

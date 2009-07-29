@@ -13,7 +13,7 @@ HKCR
 
 	NoRemove '%ROOTTYPE%' = s '%DESCRIPTION%'
 	{
-		NoRemove shellex
+		NoRemove ShellEx
 		{
 			NoRemove ContextMenuHandlers
 			{

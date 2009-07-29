@@ -1,6 +1,6 @@
 HKCR
 {
-	NoRemove '%EXTENSION%' = s '%ROOTTYPE%'
+	NoRemove '%EXTENSION%' = s '%PROGID%'
 	{
 	}
 }

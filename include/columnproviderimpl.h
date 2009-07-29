@@ -89,10 +89,11 @@ public:
 	};
 
 
-	static HRESULT WINAPI UpdateRegistry(UINT nResId, BOOL bRegister, PCWSTR wszDescription) throw()
-	{
-		return UpdateRegistryFromResource(nResId, bRegister, wszDescription, T::GetObjectCLSID());
-	}
+    /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId, PCWSTR szDescription) throw()
+    {
+        return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), _T(""));
+    }
 
 
 	IColumnProviderImpl() :

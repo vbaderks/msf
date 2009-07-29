@@ -24,7 +24,7 @@ public:
 
 	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
 	{
-		return ICopyHookImpl<CCopyHook>::UpdateRegistry(IDR_COPYHOOK, bRegister,
+		return ICopyHookImpl<CCopyHook>::UpdateRegistry(bRegister, IDR_COPYHOOK,
 			L"Sample ShellExtension CopyHook", L"VVV CopyHook");
 	}
 

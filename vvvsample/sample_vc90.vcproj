@@ -111,8 +111,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -212,8 +211,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug|Win32"
-			OutputDirectory="$(ConfigurationName)_80"
-			IntermediateDirectory="$(ConfigurationName)_80"
+			OutputDirectory="$(ConfigurationName)_90"
+			IntermediateDirectory="$(ConfigurationName)_90"
 			ConfigurationType="2"
 			UseOfATL="2"
 			ATLMinimizesCRunTimeLibraryUsage="false"
@@ -256,6 +255,7 @@
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
 				DebugInformationFormat="3"
+				EnablePREfast="false"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -304,14 +304,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Unicode Release|Win32"
-			OutputDirectory="$(ConfigurationName)_80"
-			IntermediateDirectory="$(ConfigurationName)_80"
+			OutputDirectory="$(ConfigurationName)_90"
+			IntermediateDirectory="$(ConfigurationName)_90"
 			ConfigurationType="2"
 			UseOfATL="2"
 			ATLMinimizesCRunTimeLibraryUsage="false"
@@ -400,8 +399,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
@@ -416,18 +414,46 @@
 			<File
 				RelativePath=".\columnprovider.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\contextmenu.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\copyhook.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\extractimage.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\infotip.cpp"
@@ -448,6 +474,14 @@
 			<File
 				RelativePath=".\shellpropsheetext.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp"
@@ -619,6 +653,10 @@
 			>
 			<File
 				RelativePath=".\sample1.vvv"
+				>
+			</File>
+			<File
+				RelativePath=".\sample2.xml"
 				>
 			</File>
 		</Filter>

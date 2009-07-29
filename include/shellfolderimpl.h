@@ -98,15 +98,6 @@ public:
 	}
 
 
-	// Registration function to register the extension based on the root extension.
-	static HRESULT WINAPI UpdateRegistryForExt(UINT nResId, BOOL bRegister,
-		PCWSTR szRootType, PCWSTR szExtension) throw()
-	{
-		return ::UpdateRegistryForExt(nResId, bRegister,
-			szRootType, szExtension);
-	}
-
-
 	// All-in-one registration function for 1 extenstion, call 'ForExt' to register
 	// aditional extensions.
 	static HRESULT WINAPI UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,

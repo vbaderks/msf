@@ -16,56 +16,56 @@
 
 
 class ATL_NO_VTABLE CContextMenu :
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CContextMenu, &__uuidof(CContextMenu)>,
-	public IContextMenuImpl<CContextMenu>
+    public CComObjectRootEx<CComSingleThreadModel>,
+    public CComCoClass<CContextMenu, &__uuidof(CContextMenu)>,
+    public IContextMenuImpl<CContextMenu>
 {
 public:
-	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
-	{
-		return IContextMenuImpl<CContextMenu>::UpdateRegistry(IDR_CONTEXTMENU, 
-			bRegister, L"Sample ShellExtension ContextMenu", __uuidof(CShellFolder), wszVVVExtension);
-	}
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    {
+        return IContextMenuImpl<CContextMenu>::UpdateRegistry(bRegister, IDR_CONTEXTMENU,
+            L"VVV Sample ShellExtension", wszVVVFileRootExt);
+    }
 
-	BEGIN_COM_MAP(CContextMenu)
-		COM_INTERFACE_ENTRY(IShellExtInit)
-		COM_INTERFACE_ENTRY(IContextMenu)
-		COM_INTERFACE_ENTRY(IContextMenu2)
-		COM_INTERFACE_ENTRY(IContextMenu3)
-	END_COM_MAP()
+    BEGIN_COM_MAP(CContextMenu)
+        COM_INTERFACE_ENTRY(IShellExtInit)
+        COM_INTERFACE_ENTRY(IContextMenu)
+        COM_INTERFACE_ENTRY(IContextMenu2)
+        COM_INTERFACE_ENTRY(IContextMenu3)
+    END_COM_MAP()
 
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
-
-
-	CContextMenu()
-	{
-		RegisterExtension(tszVVVExtension);
-	}
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
 
-	// Purpose: called by the 'impl' class. Request to configure the menu
-	void OnQueryContextMenu(IContextMenuImpl<CContextMenu>::CMenu& menu,
-	                        const vector<CString>& filenames)
-	{
-		if (ContainsUnknownExtension(filenames))
-			return; // only extend the menu when only .vvv files are selected.
+    CContextMenu()
+    {
+        RegisterExtension(tszVVVExtension);
+    }
 
-		if (filenames.size() != 1)
-			return; // only add to the context menu when 1 file is selected.
 
-		CCustomMenuHandlerPtr qsmallbitmaphandler(new CSmallBitmapHandler(IDS_CONTEXTMENU_VVV_SUBMENU, IDB_MENUICON));
-		CMenu menuVVV = menu.AddSubMenu(IDS_CONTEXTMENU_VVV_SUBMENU_HELP, qsmallbitmaphandler);
+    // Purpose: called by the 'impl' class. Request to configure the menu
+    void OnQueryContextMenu(IContextMenuImpl<CContextMenu>::CMenu& menu,
+                            const vector<CString>& filenames)
+    {
+        if (ContainsUnknownExtension(filenames))
+            return; // only extend the menu when only .vvv files are selected.
 
-		CContextCommandPtr qeditwithnotepadcommand(new CEditWithNotepadCommand());
-		menuVVV.AddItem(IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD,
-		                IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD_HELP, qeditwithnotepadcommand);
+        if (filenames.size() != 1)
+            return; // only add to the context menu when 1 file is selected.
 
-		CContextCommandPtr qaboutmsfcommand(new CAboutMSFCommand());
-		CCustomMenuHandlerPtr qsmallbitmaphandler2(new CSmallBitmapHandler(IDS_CONTEXTMENU_ABOUT_MSF, IDB_MENUICON));
-		menuVVV.AddItem(IDS_CONTEXTMENU_ABOUT_MSF_HELP, qaboutmsfcommand, qsmallbitmaphandler2);
+        CCustomMenuHandlerPtr qsmallbitmaphandler(new CSmallBitmapHandler(IDS_CONTEXTMENU_VVV_SUBMENU, IDB_MENUICON));
+        CMenu menuVVV = menu.AddSubMenu(IDS_CONTEXTMENU_VVV_SUBMENU_HELP, qsmallbitmaphandler);
 
-		// ... optional add more submenu's or more menu items.
-	}
+        CContextCommandPtr qeditwithnotepadcommand(new CEditWithNotepadCommand());
+        menuVVV.AddItem(IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD,
+                        IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD_HELP, qeditwithnotepadcommand);
+
+        CContextCommandPtr qaboutmsfcommand(new CAboutMSFCommand());
+        CCustomMenuHandlerPtr qsmallbitmaphandler2(new CSmallBitmapHandler(IDS_CONTEXTMENU_ABOUT_MSF, IDB_MENUICON));
+        menuVVV.AddItem(IDS_CONTEXTMENU_ABOUT_MSF_HELP, qaboutmsfcommand, qsmallbitmaphandler2);
+
+        // ... optional add more submenu's or more menu items.
+    }
 };
 
 

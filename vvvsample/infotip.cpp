@@ -13,37 +13,46 @@
 
 
 class ATL_NO_VTABLE CInfoTip :
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CInfoTip, &__uuidof(CInfoTip)>,
-	public IInfoTipImpl<CInfoTip>
+    public CComObjectRootEx<CComSingleThreadModel>,
+    public CComCoClass<CInfoTip, &__uuidof(CInfoTip)>,
+    public IInfoTipImpl<CInfoTip>
 {
 public:
-	BEGIN_COM_MAP(CInfoTip)
-		COM_INTERFACE_ENTRY(IPersistFile)
-		COM_INTERFACE_ENTRY(IQueryInfo)
-	END_COM_MAP()
+    BEGIN_COM_MAP(CInfoTip)
+        COM_INTERFACE_ENTRY(IQueryInfo)
+        COM_INTERFACE_ENTRY(IInitializeWithFile) // Used and prefered by Vista and up.
+        COM_INTERFACE_ENTRY(IPersistFile)        // Used by XP and older.
+    END_COM_MAP()
 
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
-	{
-		return IInfoTipImpl<CInfoTip>::UpdateRegistry(IDR_INFOTIP, bRegister,
-			L"Sample ShellExtension InfoTip", __uuidof(CShellFolder), wszVVVExtension);
-	}
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    {
+        return IInfoTipImpl<CInfoTip>::UpdateRegistry(bRegister, IDR_INFOTIP,
+            L"VVV Sample ShellExtension", wszVVVFileRootExt);
+    }
 
 
-	// Purpose: called by the shell/MSF when it needs the text for the infotip.
-	//          The string is used for the tooltip and the text in the statusbar.
-	CString CreateInfoTipText(const TCHAR* szFilename)
-	{
-		CVVVFile vvvfile(szFilename);
+    void InitializeImpl(const TCHAR* szFilename, DWORD /*dwMode*/)
+    {
+        CVVVFile vvvfile(szFilename);
 
-		CString strTip = LoadString(IDS_SHELLEXT_LABEL) + _T(": ") + vvvfile.GetLabel() + _T("\n");
-		strTip += LoadString(IDS_SHELLEXT_FILECOUNT) + _T(": ") +
-			MSF::ToString(vvvfile.GetFileCount());
+        m_strLabel = vvvfile.GetLabel();
+        m_strFileCount = MSF::ToString(vvvfile.GetFileCount());
+    }
 
-		return strTip;
-	}
+
+    // Purpose: called by the shell/MSF when it needs the text for the infotip.
+    //          The string is used for the tooltip and the text in the statusbar.
+    CString GetInfoTip(DWORD /* dwFlags */)
+    {
+        return LoadString(IDS_SHELLEXT_LABEL) + _T(": ") + m_strLabel + _T("\n") +
+               LoadString(IDS_SHELLEXT_FILECOUNT) + _T(": ") + m_strFileCount;
+    }
+
+private:
+    CString m_strLabel;
+    CString m_strFileCount;
 };
 
 

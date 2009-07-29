@@ -30,7 +30,7 @@ class ATL_NO_VTABLE ICopyHookImpl :
 {
 public:
 
-	static HRESULT WINAPI UpdateRegistry(UINT nResId, BOOL bRegister,
+	static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
 		PCWSTR szDescription, PCWSTR szCopyHookName) throw()
 	{
 		COleString olestrCLSID;
@@ -38,10 +38,10 @@ public:
 
 		_ATL_REGMAP_ENTRY regmapEntries[] =
 		{
-			{L"CLSID", olestrCLSID},
-			{L"DESCRIPTION", szDescription},
-			{L"COPYHOOKNAME", szCopyHookName},
-			{NULL, NULL}
+			{ L"CLSID", olestrCLSID },
+			{ L"DESCRIPTION", szDescription },
+			{ L"COPYHOOKNAME", szCopyHookName },
+			{ NULL, NULL }
 		};
 
 		return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);

@@ -41,15 +41,7 @@ public:
 	}
 
 
-	static HRESULT WINAPI UpdateRegistryForExt(UINT nResId, BOOL bRegister,
-		PCWSTR szRootExt, PCWSTR szExtension) throw()
-	{
-		return ::UpdateRegistryForExt(nResId, bRegister,
-			szRootExt, szExtension);
-	}
-
-
-	static HRESULT WINAPI UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,
+    static HRESULT WINAPI UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,
 		PCWSTR szDescription, PCWSTR szRootExt, PCWSTR szExtension) throw()
 	{
 		return ::UpdateRegistry(nResIdRoot, nResIdExt, bRegister,

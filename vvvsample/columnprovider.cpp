@@ -20,8 +20,12 @@ class ATL_NO_VTABLE CColumnProvider :
 public:
 	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
 	{
+        // TODO: replace IsShell6OrHigher with correct os version check.
+        if (IsShell6OrHigher())
+            return S_OK; // Vista and up don't support column providers anymore (replaces by property system)
+
 		return IColumnProviderImpl<CColumnProvider>::UpdateRegistry(
-			IDR_COLUMNPROVIDER, bRegister, L"Sample ShellExtension ColumnProvider");
+			bRegister, IDR_COLUMNPROVIDER, L"VVV Sample ShellExtension");
 	}
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()

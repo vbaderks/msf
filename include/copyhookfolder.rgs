@@ -13,7 +13,7 @@ HKCR
 
 	NoRemove Directory
 	{
-		NoRemove shellex
+		NoRemove ShellEx
 		{
 			NoRemove CopyHookHandlers
 			{

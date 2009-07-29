@@ -18,22 +18,10 @@ HKCR
 			DefaultIcon = s '%MODULE%'
 			ForceRemove Shell
 			{
-				ForceRemove open
+				ForceRemove Open
 				{
 					Command = s 'explorer /idlist,%%I,%%L'
-					ForceRemove ddeexec = s '[ViewFolder("%%l", %%I, %%S)]'
-					{
-						val NoActivateHandler = s ''
-						ForceRemove application = s 'Folders'
-						{
-						}
-						ForceRemove ifexec = s '[]'
-						{
-						}
-						ForceRemove topic = s 'AppProperties'
-						{
-						}
-					}
+					val DelegateExecute = s '{11dbb47c-a525-400b-9e80-a54615a090c0}'
 				}
 			}
 			ForceRemove ShellFolder
