@@ -28,11 +28,9 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 IDR_INFOTIP             REGISTRY                "../include/infotip.rgs"
 IDR_CONTEXTMENU         REGISTRY                "../include/contextmenu.rgs"
-IDR_PROPERTYSHEETEXT    REGISTRY                "../include/propertysheetext_sf.rgs"
+IDR_PROPERTYSHEETEXT    REGISTRY                "../include/propertysheetext.rgs"
 IDR_COLUMNPROVIDER      REGISTRY                "../include/columnprovider.rgs"
 IDR_SHELLFOLDER         REGISTRY                "../include/shellfolder.rgs"
-IDR_SHELLFOLDER_WIN98   REGISTRY                "../include/shellfolderwin98.rgs"
-IDR_SHELLFOLDER_VISTA   REGISTRY                "../include/shellfoldervista.rgs"
 IDR_EXTRACTIMAGE        REGISTRY                "../include/extractimage_sf.rgs"
 IDR_COPYHOOK            REGISTRY                "../include/copyhookfolder.rgs"
 IDR_EXTENSION           REGISTRY                "../include/extension.rgs"
@@ -69,8 +67,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -85,14 +83,14 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Victor Derks"
+            VALUE "CompanyName", "Sample Company"
             VALUE "FileDescription", "MSF VVV Sample Shell extension"
-            VALUE "FileVersion", "1.0.0.1"
-            VALUE "LegalCopyright", "(c) Victor Derks.  All rights reserved."
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "LegalCopyright", "(c) Sample Company.  All rights reserved."
             VALUE "InternalName", "sample.dll"
             VALUE "OriginalFilename", "sample.dll"
             VALUE "ProductName", "MSF VVV Sample Shell extension"
-            VALUE "ProductVersion", "1.0.0.1"
+            VALUE "ProductVersion", "1.0.0.0"
         END
     END
     BLOCK "VarFileInfo"

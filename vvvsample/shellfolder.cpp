@@ -37,10 +37,9 @@ public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
     {
         return IShellFolderImpl<CShellFolder, CVVVItem>::UpdateRegistry(
-            IDR_SHELLFOLDER_VISTA, IDR_SHELLFOLDER, IDR_SHELLFOLDER_WIN98, bRegister,
-            L"Sample ShellExtension ShellFolder", wszVVVExtension, IDS_SHELLFOLDER_TYPE);
+            bRegister, IDR_SHELLFOLDER,
+            L"Sample ShellExtension ShellFolder", wszVVVFileRootExt, IDS_SHELLFOLDER_TYPE);
     }
-
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
@@ -49,9 +48,9 @@ public:
         COM_INTERFACE_ENTRY(IPersistFolder)
         COM_INTERFACE_ENTRY(IPersistFolder2)
         COM_INTERFACE_ENTRY(IPersistIDList)
-        COM_INTERFACE_ENTRY(IShellFolder)  // included for backwards (win9x) compatiblity.
+        COM_INTERFACE_ENTRY(IShellFolder)  // included in this sample for backwards (win9x) compatiblity.
         COM_INTERFACE_ENTRY(IShellFolder2)
-        COM_INTERFACE_ENTRY(IShellDetails) // included for backwards (win9x) compatiblity.
+        COM_INTERFACE_ENTRY(IShellDetails) // included in this sample for backwards (win9x) compatiblity.
         COM_INTERFACE_ENTRY(IBrowserFrameOptions)
         COM_INTERFACE_ENTRY(IShellIcon)
         COM_INTERFACE_ENTRY(IItemNameLimits)

@@ -5,7 +5,6 @@
 //
 #pragma once
 
-
 #include "msfbase.h"
 #include "updateregistry.h"
 #include "shellextinitimpl.h"
@@ -20,99 +19,83 @@ namespace MSF
 
 template <typename T>
 class ATL_NO_VTABLE IShellPropSheetExtImpl :
-	public IShellExtInitImpl,
-	public IShellPropSheetExt
+    public IShellExtInitImpl,
+    public IShellPropSheetExt
 {
 public:
-	// Registration function to register with a common shellfolder.
-	static HRESULT WINAPI UpdateRegistry(UINT nResId, BOOL bRegister,
-		PCWSTR szDescription, const CLSID& clsidShellFolder, PCWSTR szExtension) throw()
-	{
-		return UpdateRegistryFromResource(nResId, bRegister,
-			szDescription, T::GetObjectCLSID(), clsidShellFolder, szExtension);
-	}
+    /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
+        PCWSTR szDescription, PCWSTR szRootKey) throw()
+    {
+        return UpdateRegistryFromResource(nResId, bRegister,
+            szDescription, T::GetObjectCLSID(), szRootKey);
+    }
 
 
-	static HRESULT WINAPI UpdateRegistryForRootExt(UINT nResId, BOOL bRegister,
-		PCWSTR szDescription, PCWSTR szRootExt) throw()
-	{
-		return ::UpdateRegistryForRootExt(nResId, bRegister,
-			szDescription, T::GetObjectCLSID(), szRootExt);
-	}
+    IShellPropSheetExtImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::Constructor (instance=%p)\n"), this);
+    }
 
 
-    static HRESULT WINAPI UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,
-		PCWSTR szDescription, PCWSTR szRootExt, PCWSTR szExtension) throw()
-	{
-		return ::UpdateRegistry(nResIdRoot, nResIdExt, bRegister,
-			szDescription, T::GetObjectCLSID(), szRootExt, szExtension);
-	}
+    ~IShellPropSheetExtImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::~Destructor (instance=%p)\n"), this);
+    }
 
 
-	IShellPropSheetExtImpl()
-	{
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::Constructor (instance=%p)\n"), this);
-	}
+    class CAddPage
+    {
+    public:
+        CAddPage(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) :
+            m_pfnAddPage(pfnAddPage),
+            m_lParam(lParam)
+        {
+        }
 
 
-	~IShellPropSheetExtImpl()
-	{
-		ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::~Destructor (instance=%p)\n"), this);
-	}
+        void operator()(HPROPSHEETPAGE hPage) const
+        {
+            if (!m_pfnAddPage(hPage, m_lParam))
+            {
+                ATLVERIFY(::DestroyPropertySheetPage(hPage));
+                RaiseException(E_FAIL);
+            }
+        }
+
+    private:
+
+        // Member variables.
+        LPFNSVADDPROPSHEETPAGE m_pfnAddPage;
+        LPARAM                 m_lParam;
+    };
 
 
-	class CAddPage
-	{
-	public:
-		CAddPage(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) :
-			m_pfnAddPage(pfnAddPage),
-			m_lParam(lParam)
-		{
-		}
+    // IShellPropSheetExt
+    STDMETHOD(AddPages)(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam)
+    {
+        try
+        {
+            CAddPage addpage(pfnAddPage, lParam);
+
+            static_cast<T*>(this)->OnAddPages(addpage, GetFilenames());
+            return S_OK;
+        }
+        MSF_COM_CATCH_HANDLER()
+    }
 
 
-		void operator()(HPROPSHEETPAGE hPage) const
-		{
-			if (!m_pfnAddPage(hPage, m_lParam))
-			{
-				ATLVERIFY(::DestroyPropertySheetPage(hPage));
-				RaiseException(E_FAIL);
-			}
-		}
-
-	private:
-
-		// Member variables.
-		LPFNSVADDPROPSHEETPAGE m_pfnAddPage;
-		LPARAM                 m_lParam;
-	};
-
-
-	// IShellPropSheetExt
-	STDMETHOD(AddPages)(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam)
-	{
-		try
-		{
-			CAddPage addpage(pfnAddPage, lParam);
-
-			static_cast<T*>(this)->OnAddPages(addpage, GetFilenames());
-			return S_OK;
-		}
-		MSF_COM_CATCH_HANDLER()
-	}
-
-
-	STDMETHOD(ReplacePage)(EXPPS /*uPageID*/, LPFNSVADDPROPSHEETPAGE /*pfnReplaceWith*/, LPARAM /*lParam*/)
-	{
-		// The Shell doesn't call this function for file class Property Sheets.
-		// Only for control panel objects.
-		MSF_TRACENOTIMPL(_T("CPropSheetExtImpl::ReplacePage"));
-	}
+    STDMETHOD(ReplacePage)(EXPPS /*uPageID*/, LPFNSVADDPROPSHEETPAGE /*pfnReplaceWith*/, LPARAM /*lParam*/)
+    {
+        // The Shell doesn't call this function for file class Property Sheets.
+        // Only for control panel objects.
+        MSF_TRACENOTIMPL(_T("CPropSheetExtImpl::ReplacePage"));
+    }
 
 protected:
 
-	// OnAddPages must be implemented by derived classes.
-	void OnAddPages(const CAddPage& /*addpages*/, const std::vector<CString>& /*filenames*/);
+    // OnAddPages must be implemented by derived classes.
+    void OnAddPages(const CAddPage& /*addpages*/, const std::vector<CString>& /*filenames*/);
 };
 
 } // namespace MSF

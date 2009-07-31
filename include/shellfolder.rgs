@@ -1,72 +1,63 @@
 HKCR
 {
-	ForceRemove '%EXTENSION%' = s 'CLSID\%CLSID%'
-	{
-	}
-
-	NoRemove CLSID
-	{
-		'%CLSID%' = s '%DESCRIPTION%'
-		{
-			ForceRemove InprocServer32 = s '%MODULE%'
-			{
-				val ThreadingModel = s 'Apartment'
-			}
-
-			ForceRemove CLSID = s '%CLSID%'
-			val FriendlyTypeName = s '@%MODULE%,-%FRIENDLYTYPENAME%'
-			DefaultIcon = s '%MODULE%'
-			ForceRemove Shell
-			{
-				ForceRemove open
-				{
-					Command = s 'explorer /idlist,%%I,%%L'
-					ForceRemove ddeexec = s '[ViewFolder("%%l", %%I, %%S)]'
-					{
-						val NoActivateHandler = s ''
-						ForceRemove application = s 'Folders'
-						{
-						}
-						ForceRemove ifexec = s '[]'
-						{
-						}
-						ForceRemove topic = s 'AppProperties'
-						{
-						}
-					}
-				}
-			}
-			ForceRemove ShellFolder
-			{
-				val Attributes = d 1744830896
-			}
+    NoRemove CLSID
+    {
+        ForceRemove '%CLSID%' = s '%DESCRIPTION%'
+        {
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Apartment'
+            }
+            
+            ShellFolder
+            {
+				val Attributes = d 1744830880
+            }
 			ForceRemove 'Implemented Categories'
 			{
 				{00021490-0000-0000-C000-000000000046}
 			}
-		}
-	}
+        }
+    }
+
+    NoRemove '%ROOTTYPE%' = s '%DESCRIPTION%'
+    {
+        ForceRemove CLSID = s '%CLSID%'
+        val FriendlyTypeName = s '@%MODULE%,-%FRIENDLYTYPENAME%'
+        DefaultIcon = s '%MODULE%'
+        ForceRemove Shell
+        {
+            ForceRemove open
+            {
+                MultiSelectModel = s 'Document'
+                ForceRemove Command = s 'explorer /idlist,%%I,%%L'
+                {
+                    val DelegateExecute = s '{11dbb47c-a525-400b-9e80-a54615a090c0}'
+                }
+            }
+        }
+    }
 }
 
 HKLM
 {
-	NoRemove Software
-	{
-		NoRemove Microsoft
-		{
-			NoRemove Windows
-			{
-				NoRemove CurrentVersion
-				{
-					NoRemove 'Shell Extensions'
-					{
-						NoRemove Approved
-						{
-							ForceRemove val '%CLSID%' = s '%DESCRIPTION%'
-						}
-					}
-				}
-			}
-		}
-	}
+    NoRemove Software
+    {
+        NoRemove Microsoft
+        {
+            NoRemove Windows
+            {
+                NoRemove CurrentVersion
+                {
+                    NoRemove 'Shell Extensions'
+                    {
+                        NoRemove Approved
+                        {
+                            ForceRemove val '%CLSID%' = s '%DESCRIPTION%'
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
