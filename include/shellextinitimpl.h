@@ -5,11 +5,9 @@
 //
 #pragma once
 
-
 #include "cfhdrop.h"
 #include "dataobjectptr.h"
 #include "catchhandler.h"
-
 
 namespace MSF
 {
@@ -31,14 +29,11 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
 protected:
-
     void RegisterExtension(CString strExtension)
     {
         m_extensions.push_back(strExtension.MakeLower());
     }
-
 
     void CacheFiles(IDataObject* pDataObject)
     {
@@ -56,7 +51,6 @@ protected:
         }
     }
 
-
     // Purpose: helper function, can be used to filter unsupported filename in a collection.
     bool ContainsUnknownExtension(const std::vector<CString>& filenames) const
     {
@@ -69,7 +63,6 @@ protected:
         return false;
     }
 
-
     bool IsUnknownExtension(const TCHAR* szFileName) const
     {
         CString strExtension(PathFindExtension(szFileName));
@@ -81,14 +74,12 @@ protected:
         return result == m_extensions.end();
     }
 
-
     const std::vector<CString>& GetFilenames() const
     {
         return m_filenames;
     }
 
 private:
-
     // Member variables.
     std::vector<CString> m_extensions;
     std::vector<CString> m_filenames;

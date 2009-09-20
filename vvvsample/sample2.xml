@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<directory name="Sample One">
+<contents label="Sample One">
   <file name="File One" size="45386"></file>
-</directory>
+  <folder name="Directory One">
+    <file name="File inside Directory One" size="1111"></file>
+  </folder>
+</contents>

@@ -10,9 +10,7 @@
 #include "shellextinitimpl.h"
 #include "catchhandler.h"
 
-
 #pragma comment(lib, "comctl32")
-
 
 namespace MSF
 {
@@ -31,18 +29,15 @@ public:
             szDescription, T::GetObjectCLSID(), szRootKey);
     }
 
-
     IShellPropSheetExtImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::Constructor (instance=%p)\n"), this);
     }
 
-
     ~IShellPropSheetExtImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::~Destructor (instance=%p)\n"), this);
     }
-
 
     class CAddPage
     {
@@ -52,7 +47,6 @@ public:
             m_lParam(lParam)
         {
         }
-
 
         void operator()(HPROPSHEETPAGE hPage) const
         {
@@ -64,12 +58,9 @@ public:
         }
 
     private:
-
-        // Member variables.
         LPFNSVADDPROPSHEETPAGE m_pfnAddPage;
         LPARAM                 m_lParam;
     };
-
 
     // IShellPropSheetExt
     STDMETHOD(AddPages)(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam)
@@ -84,7 +75,6 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     STDMETHOD(ReplacePage)(EXPPS /*uPageID*/, LPFNSVADDPROPSHEETPAGE /*pfnReplaceWith*/, LPARAM /*lParam*/)
     {
         // The Shell doesn't call this function for file class Property Sheets.
@@ -93,7 +83,6 @@ public:
     }
 
 protected:
-
     // OnAddPages must be implemented by derived classes.
     void OnAddPages(const CAddPage& /*addpages*/, const std::vector<CString>& /*filenames*/);
 };

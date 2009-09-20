@@ -5,9 +5,7 @@
 //
 #pragma once
 
-
 #include "msfbase.h"
-
 
 namespace MSF
 {
@@ -22,12 +20,10 @@ public:
         ATLTRACE2(atlTraceCOM, 0, _T("IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n"), this);
     }
 
-
     ~IQueryInfoImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n"), this);
     }
-
 
     // IQueryInfo
     STDMETHOD(GetInfoFlags)(DWORD* /* pdwFlags */)
@@ -39,7 +35,6 @@ public:
 
         MSF_TRACENOTIMPL(_T("IQueryInfoImpl::GetInfoFlags"));
     }
-
 
     STDMETHOD(GetInfoTip)(DWORD dwFlags, WCHAR** ppwszTip)
     {

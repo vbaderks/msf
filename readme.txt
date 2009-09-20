@@ -5,19 +5,45 @@ README.TXT for the Mini Shell extension Framework (MSF)
 Introduction
 ------------
 MSF is a collection of C++ template classes that can be 
-used under the LGPL licence to create shell extensions.
+used under the LGPL licence to create shell extensions
+for the Window Explorer.
 
-The supported compilers are:
- - Microsoft Visual Studio 2005
- - Microsoft Visual Studio .NET 2003
- - Microsoft Visual Studio .NET 2002 (needs latest platform SDK)
 
-Shell Extensions are COM objects. MSF depends on ATL (7.0/7.1/8.0) to
+To reduce maintaince effort MSF has 2 support levels:
+ - Supported. This is the compiler \ OS used to validate MSF.
+   In practice this will be latest available RTM versions.
+   The vision is that most people that create shell extensions are
+   using the latest available compiler and target the latest OS.
+
+ - On-demand support. MSF includes support for older and beta 
+   MS compiler versions and operating systems. These versions are 
+   not longer activly maintained. If people are using MSF to create shell 
+   extensions and find blocking problems work items can be created
+   for these issues.
+
+Shell Extensions are COM objects. MSF depends on ATL (9.0/8.0/7.1/7.0) to
 provide this support.
 
 
-Validated Operating systems
+Supported Compilers
+-------------------
+The supported compiler is:
+ - Microsoft Visual Studio 2008 SP1 + Windows SDK 7
+
+The on-demand supported compilers are:
+ - Microsoft Visual Studio 2010 RC1
+ - Microsoft Visual Studio 2005 SP1
+ - Microsoft Visual Studio .NET 2003
+ - Microsoft Visual Studio .NET 2002
+
+
+
+Supported Operating systems
 ---------------------------
+The supported operating system is:
+- Windows 7
+
+The on-demand supported operating systems are:
 - Windows Vista
 - Windows XP
 - Windows 2000
@@ -29,9 +55,14 @@ Documentation
 -------------
 I have writen a couple of articles on www.codeproject.com how to use MSF.
 
-TODO: link
+TODO: add links
 
-
+The visual studio solution includes 2 sample projects and 1 start project:
+- bhosample: demonstrates how to create a Internet Explorer Browser Helper Object.
+- sample: demonstrates a infotip, contextmenu, propertysheet extension, 
+          shellfolder, copyhook and a columnprovider shell extension.
+- start: this project can be used to create your own shell extension.
+         TODO keyword mark the places where custom implementation is required.
 
 Licence
 -------
@@ -52,7 +83,7 @@ This library is free software; you can redistribute it and/or
 
 Version History
 ---------------
-0.92 : TODO: describe TItems change
+0.92 : Added the concept of TItem in IShellFolderImpl.
 
 0.91 : Added support for sub folders in IShellFolderImpl.
        Extended the columnproviderimpl to support standard column uuids.
@@ -82,7 +113,7 @@ Version History
 
 Contact
 -------
-Please feel free to contact me by email: vba64@xs4all.nl
+Please reports issues at www.codeplex.com/msf
 
 
 

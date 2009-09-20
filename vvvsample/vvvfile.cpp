@@ -34,6 +34,10 @@ void CVVVFile::SetLabel(const CString& strLabel) const
 
 unsigned int CVVVFile::GetFileCount() const
 {
+	//CComPtr<IStream> rFileStream;
+	//HRESULT hr = SHCreateStreamOnFile(_strFilename, STGM_READ, &rFileStream);
+	//RaiseExceptionIfFailed(hr);
+
 	unsigned int nCount = GetPrivateProfileInt(TSZ_APP_NAME_DIRECTORY, TSZ_FILE_COUNT);
 	RaiseExceptionIf(nCount == static_cast<UINT>(-1));
 
