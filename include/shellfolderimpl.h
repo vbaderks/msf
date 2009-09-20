@@ -5,7 +5,6 @@
 //
 #pragma once
 
-
 #include "msfbase.h"
 #include "updateregistry.h"
 #include "pidl.h"
@@ -24,11 +23,9 @@
 #include "shellbrowserptr.h"
 #include "extracticon.h"
 
-
 #if (!defined(_WIN32_IE) || _WIN32_IE < 0x0501)
     #error _WIN32_IE needs to be at least 0x501 for IShellFolder2 definition.
 #endif
-
 
 namespace MSF
 {
@@ -38,7 +35,6 @@ namespace MSF
 #endif
 
 const SFGAOF SFGAO_UNDEFINED = 0xFFFFFFFF;
-
 
 template <typename T, typename TItem>
 class ATL_NO_VTABLE IShellFolderImpl :
@@ -88,7 +84,6 @@ public:
         return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
     }
 
-
     static CString SHGetPathFromIDList(const ITEMIDLIST* pidl)
     {
         CString strPath;
@@ -98,20 +93,17 @@ public:
         return strPath;
     }
 
-
     // Purpose: small helper to support 'type' system. 
     static void ChangeNotifyPidl(long wEventId, UINT uFlags, const ITEMIDLIST* pidl1, const ITEMIDLIST* pidl2 = NULL)
     {
         ::SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
     }
 
-
     static void StrToStrRet(const TCHAR* sz, STRRET* pstrret)
     {
         pstrret->uType = STRRET_WSTR;
         RaiseExceptionIfFailed(SHStrDup(sz, &pstrret->pOleStr));
     }
-
 
     static void MergeMenus(QCMINFO& qcminfo, HMENU hmenu,
         ULONG uFlags = MM_ADDSEPARATOR | MM_SUBMENUSHAVEIDS | MM_DONTREMOVESEPS)
@@ -120,7 +112,6 @@ public:
             Shell_MergeMenus(qcminfo.hmenu, hmenu, qcminfo.indexMenu,
                              qcminfo.idCmdFirst, qcminfo.idCmdLast, uFlags);
     }
-
 
     static CComPtr<T> CreateInstance()
     {
@@ -132,7 +123,6 @@ public:
         return rshellfolder;
     }
 
-
     IShellFolderImpl(ULONG ulSort = 0, ULONG ulDisplay = 0) :
         m_ulSort(ulSort),
         m_ulDisplay(ulDisplay),
@@ -142,12 +132,10 @@ public:
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolderImpl (instance=%p)\n"), this);
     }
 
-
     ~IShellFolderImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::~IShellFolderImpl (instance=%p)\n"), this);
     }
-
 
     // IPersistFolder
     STDMETHOD(GetClassID)(CLSID* pClassID)
@@ -160,7 +148,6 @@ public:
         *pClassID = T::GetObjectCLSID();
         return S_OK;
     }
-
 
     STDMETHOD(Initialize)(const ITEMIDLIST* pidl)
     {
@@ -177,7 +164,6 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     // IPersistFolder2
     STDMETHOD(GetCurFolder)(ITEMIDLIST** ppidl)
     {
@@ -191,7 +177,6 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     // IPersistFolder3
     STDMETHOD(InitializeEx)(IBindCtx* pbc, const ITEMIDLIST* pidlRoot, const PERSIST_FOLDER_TARGET_INFO* /*ppfti*/)
     {
@@ -200,12 +185,10 @@ public:
         return Initialize(pidlRoot);
     }
 
-
     STDMETHOD(GetFolderTargetInfo)(PERSIST_FOLDER_TARGET_INFO* /* ppfti */)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetFolderTargetInfo"));
     }
-
 
     // IPersistIDList
     STDMETHOD(SetIDList)(const ITEMIDLIST* pidl)
@@ -214,13 +197,11 @@ public:
         return Initialize(pidl);
     }
 
-
     STDMETHOD(GetIDList)(ITEMIDLIST** ppidl)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetIDList (instance=%p)\n"), this);
         return GetCurFolder(ppidl);
     }
-
 
     // IShellDetails
     STDMETHOD(ColumnClick)(UINT uiColumn)
@@ -238,7 +219,6 @@ public:
             return S_OK;
         }
     }
-
 
     // IShellFolder
 
@@ -273,13 +253,11 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     STDMETHOD(BindToStorage)(LPCITEMIDLIST, LPBC, REFIID, LPVOID* ppRetVal)
     {
         *ppRetVal = NULL;
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::BindToStorage"));
     }
-
 
     // Purpose: the shell calls this function to get interfaces to objects such as:
     //          IShellFolder, IContextMenu or IExtractIcon for the complete folder.
@@ -324,7 +302,6 @@ public:
         }
         MSF_COM_CATCH_HANDLER()
     }
-
 
     // Purpose: The shell will call this function to get an object that can be applied
     //          to a collection of items contained in the folder.
@@ -375,7 +352,6 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     // Purpose: The Shell will call this function to get the name (string) of the item.
     //          (column 0 in details view mode).
     STDMETHOD(GetDisplayNameOf)(const ITEMIDLIST* pidl, SHGDNF shgdnf, LPSTRRET lpname)
@@ -391,7 +367,6 @@ public:
         }
         MSF_COM_CATCH_HANDLER()
     }
-
 
     // Purpose: The shell uses this function to retrieve info about what can be done with an item.
     STDMETHOD(GetAttributesOf)(UINT cidl, const ITEMIDLIST** ppidl, SFGAOF* prgfInOut)
@@ -419,7 +394,6 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     STDMETHOD(ParseDisplayName)(HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, DWORD*, ITEMIDLIST**, DWORD* pdwAttributes)
     {
         // mark parameters as not used in release build.
@@ -431,14 +405,13 @@ public:
         #ifdef _DEBUG
 
         DWORD dwAttributes = pdwAttributes == NULL ? 0 : *pdwAttributes;
-        
+
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n"), hwnd, pbc, pwszDisplayName, dwAttributes);
-        
+
         #endif
-        
+
         return E_NOTIMPL;
     }
-
 
     STDMETHOD(SetNameOf)(HWND hwndOwner, const ITEMIDLIST* pidl, const OLECHAR* pszNewName, SHGDNF uFlags, ITEMIDLIST** ppidlOut)
     {
@@ -466,7 +439,6 @@ public:
         }
         MSF_COM_CATCH_HANDLER_ON_ERROR(hwndOwner, EC_ON_SET_NAME_OF)
     }
-
 
     // Purpose: This function is called to sort items in details view mode.
     STDMETHOD(CompareIDs)(LPARAM lParam, const ITEMIDLIST* pidl1, const ITEMIDLIST* pidl2)
@@ -515,7 +487,6 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     // IShellFolder2
     STDMETHOD(EnumObjects)(HWND hwnd, DWORD grfFlags, IEnumIDList** ppRetVal)
     {
@@ -532,18 +503,15 @@ public:
         MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, EC_CREATE_ENUMIDLIST)
     }
 
-
     STDMETHOD(GetDefaultSearchGUID)(GUID* /*pguid*/)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetDefaultSearchGUID"));
     }
 
-
     STDMETHOD(EnumSearches)(IEnumExtraSearch** /*ppenum */)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::EnumSearches"));
     }
-
 
     STDMETHOD(GetDefaultColumn)(DWORD /*dwReserved*/, ULONG* pSort, ULONG* pDisplay)
     {
@@ -554,7 +522,6 @@ public:
 
         return S_OK;
     }
-
 
     STDMETHOD(GetDefaultColumnState)(UINT iColumn, SHCOLSTATEF* pcsFlags)
     {
@@ -567,18 +534,15 @@ public:
         return S_OK;
     }
 
-
     STDMETHOD(GetDetailsEx)(LPCITEMIDLIST /*pidl*/, const SHCOLUMNID* /*pscid*/, VARIANT* /*pv*/)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetDetailsEx"));
     }
 
-
     STDMETHOD(MapColumnToSCID)(UINT /*iColumn*/, SHCOLUMNID* /*pscid*/)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::MapColumnToSCID"));
     }
-
 
     // Purpose: The Shell will call this function to retrieve column header names and 
     //          the individual names of the items in the folder.
@@ -607,7 +571,6 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     // IShellIcon
     // Purpose: There are 2 ways for the shell to get a icon for the 'view.'
     //          This functions call is prefered by the shell as it slightly faster.
@@ -623,7 +586,6 @@ public:
         }
         MSF_COM_CATCH_HANDLER()
     }
-
 
     // IDropTarget
     STDMETHOD(DragEnter)(IDataObject* pdataobject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
@@ -648,7 +610,6 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragOver (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
@@ -668,14 +629,12 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-
     STDMETHOD(DragLeave)()
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragLeave\n"));
         m_bCachedIsSupportedClipboardFormat = false;
         return S_OK;
     }
-
 
     STDMETHOD(Drop)(IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
     {
@@ -689,7 +648,6 @@ public:
         }
         MSF_COM_CATCH_HANDLER_ON_ERROR(m_hwndOwner, EC_ON_DROP)
     }
-
 
     // IShellFolderContextMenuSink
     virtual HRESULT OnPasteCmCmd()
@@ -734,7 +692,6 @@ protected:
         }
     }
 
-
     // Note: override this function to get different compare functionality.
     int CompareItems(LPARAM lParam, const TItem& item1, const TItem& item2) const
     {
@@ -749,18 +706,15 @@ protected:
         }
     }
 
-
     CString GetPathFolderFile() const
     {
         return SHGetPathFromIDList(m_pidlFolder.get());
     }
 
-
     const ITEMIDLIST* GetRootFolder() const
     {
         return m_pidlFolder.get();
     }
-
 
     // Purpose: called by the shell when it needs a contextmenu. There are 2 reasons for this:
     // 1) To display the context menu
@@ -777,14 +731,12 @@ protected:
         return contextmenu;
     }
 
-
     // Purpose: Called by the shell when it needs to pack a IDlist into a dataobject.
     //          Override this function to provide your own DataObject.
     CComPtr<IDataObject> CreateDataObject(const ITEMIDLIST* pidlFolder, UINT cidl, const ITEMIDLIST** ppidl)
     {
         return CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl);
     }
-
 
     // Purpose: Called by the shell/MSF when it needs an object that support an IQueryInfo
     //          interface to display a tooltip for an item.
@@ -798,12 +750,10 @@ protected:
         return CQueryInfo::CreateInstance(strText);
     }
 
-
     CComPtr<IExtractIcon> CreateExtractIcon(const TItem& item)
     {
         return CExtractIcon<TItem>::CreateInstance(item);
     }
-
 
     // Purpose: Called by shell/MSF through the CompareItems function.
     //          MSF will compare column by column.
@@ -822,14 +772,12 @@ protected:
         return nResult;
     }
 
-
     // Purpose: default callback, used to receive cmd from CDefFolderMenu_Create2.
     static HRESULT CALLBACK OnDfmCommand(IShellFolder* psf, HWND hwnd, IDataObject* pdtobj,
                                          UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         return static_cast<T*>(psf)->OnDfmCommand(hwnd, pdtobj, uMsg, wParam, lParam);
     }
-
 
     HRESULT OnDfmCommand(HWND hwnd, IDataObject* pdataobject,
                          UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -912,13 +860,11 @@ protected:
         MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, EC_UNKNOWN);
     }
 
-
     // Purpose: override this function to extend the default DFM menu.
     HRESULT OnDfmMergeContextMenu(IDataObject* /*pdataobject*/, UINT /*uFlags*/, QCMINFO& /*qcminfo*/)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnDfmInvokeCommand(HWND hwnd, IDataObject* pdataobject, int nId, wchar_t* /*wszArgs*/)
     {
@@ -968,7 +914,6 @@ protected:
         MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, errorcontext)
     }
 
-
     // Purpose: called to ask the default menu item.
     // Note: if the menu has no default menu item, the shell will make
     //       the first item the default when the user double clicks it or
@@ -978,12 +923,10 @@ protected:
         return E_NOTIMPL;
     }
 
-
     HRESULT OnDfmCreate()
     {
         return E_NOTIMPL;
     }
-
 
     // Purpose: called to get the help string for added menu items.
     //          (on win9x or if HelpTextW failed).
@@ -1005,7 +948,6 @@ protected:
         return S_OK;
     }
 
-
     // Purpose: called to get the help string for added menu items.
     //          (on Win 2K, XP or if HelpTextA failed).
     HRESULT OnDfmGetHelpTextW(unsigned short nCmdId, wchar_t* pBuffer, unsigned short nBufferMax)
@@ -1026,44 +968,38 @@ protected:
         return S_OK;
     }
 
-
     CString OnDfmGetHelpText(unsigned short /*nCmdId*/)
     {
         return CString();
     }
-
 
     HRESULT OnDfmMeasureItem()
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnDfmDrawItem()
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnGetVerbW()
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnGetVerbA()
     {
         return E_NOTIMPL;
     }
 
-
-    HRESULT OnDfmCmdProperties(HWND hwnd, IDataObject* pdataobject)
+    HRESULT OnDfmCmdProperties(HWND hwnd, _In_ IDataObject* pdataobject)
     {
         try
         {
             CCfShellIdList cfshellidlist(pdataobject);
 
-            if (cfshellidlist.empty())
+            if (cfshellidlist.IsEmpty())
             {
                 ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCmdProperties (nothing to do, list is empty)\n"));
             }
@@ -1094,14 +1030,13 @@ protected:
         MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, EC_ON_PROPERTIES)
     }
 
-
     // Purpose: provides a simple delete loop.
     //          Override this function to handle special delete requirements.
-    void OnDeleteFromDataObject(HWND hwnd, IDataObject* pdataobject)
+    void OnDeleteFromDataObject(HWND hwnd, _In_ IDataObject* pdataobject)
     {
         CCfShellIdList cfshellidlist(pdataobject);
 
-        if (cfshellidlist.empty())
+        if (cfshellidlist.IsEmpty())
         {
             ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDeleteFromDataObject (nothing to do, list is empty)\n"));
         }
@@ -1128,14 +1063,12 @@ protected:
         }
     }
 
-
     // Purpose: override this function to enable item delete support.
     long OnDelete(HWND /*hwnd*/, const TItems& /*items*/)
     {
         ATLASSERT(!"If SFGAO_CANDELETE is true this function must be implemented!");
         return 0;
     }
-
 
     // Purpose: called by MSF/shell when items (selected earlier with GetUIObjectOf)
     //          must be copied to the clipboard.
@@ -1147,7 +1080,6 @@ protected:
 
         RaiseExceptionIfFailed(OleSetClipboard(pdataobject));
     }
-
 
     // Purpose: called by MSF/shell when the user has selected 'cut'.
     //          (with ctrl-x or menu). Items were are selected with GetUIObjectOf.
@@ -1166,18 +1098,15 @@ protected:
         ShellFolderView_SetClipboard(GetHwndOwner(), DFM_CMD_MOVE);
     }
 
-
     HRESULT OnDfmCmdPaste(HWND /*hwnd*/, IDataObject* /*pdataobject*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnDfmCmdCreateShortcut(HWND /*hwnd*/, IDataObject* /*pdataobject*/)
     {
         return E_NOTIMPL;
     }
-
 
     // Purpose: this function handles 'added' commands.
     HRESULT OnDfmInvokeAddedCommand(HWND /*hwnd*/, IDataObject* /*pdataobject*/, int /*nId*/)
@@ -1185,13 +1114,11 @@ protected:
         return E_NOTIMPL;
     }
 
-
     // IPerformedDropEffectSink
     virtual void OnDeleteAfterPaste(IDataObject* pdataobject)
     {
         OnDeleteFromDataObject(NULL, pdataobject);
     }
-
 
     // Purpose: override this function to enable paste and drop into the shellfolder.
     DWORD AddItemsFromDataObject(DWORD /*dwEffect*/, IDataObject* /*pdataobject*/)
@@ -1199,13 +1126,11 @@ protected:
         return DROPEFFECT_NONE;
     }
 
-
     // Purpose: override this function to enable item property support.
     long OnProperties(HWND /*hwnd*/, const TItems& /*items*/)
     {
         return 0;
     }
-
 
     void GetColumnDetailsOf(UINT iColumn, SHELLDETAILS* psd) throw()
     {
@@ -1214,7 +1139,6 @@ protected:
         psd->fmt = m_columninfos[iColumn].m_fmt;
         StrToStrRet(m_columninfos[iColumn].m_strName, &psd->str);
     }
-
 
     void GetItemDetailsOf(UINT iColumn, const ITEMIDLIST* pidl, SHELLDETAILS* psd)
     {
@@ -1226,7 +1150,6 @@ protected:
 
         StrToStrRet(item.GetItemDetailsOf(iColumn), &psd->str);
     }
-
 
     // The ShellFolderImpl uses the system provided shellfolderview.
     // Override this function if you want to use your own shellfolderview object.
@@ -1243,7 +1166,6 @@ protected:
         return rshellview;
     }
 
-
     // Override this function to handle drop functionality in a separate object.
     CComPtr<IDropTarget> CreateDropTarget()
     {
@@ -1253,14 +1175,12 @@ protected:
         return rdroptarget;
     }
 
-
     // Override to support own context menu when the user clicks in the folder.
     // The system folder view has a default impl that will be displayed (if NULL is returned).
     CComPtr<IContextMenu> CreateFolderContextMenu()
     {
         return CShellFolderContextMenu::CreateInstance(this);
     }
-
 
     // IShellFolderImpl override functions: derived class must implement these functions.
     CComPtr<IShellFolderViewCB> CreateShellFolderViewCB()
@@ -1269,7 +1189,6 @@ protected:
         // It just makes it impossible to catch events.
         return NULL;
     }
-
 
     // Purpose: Standard 'ondragover' handler. Override if special drag handling is required.
     DWORD OnDragOver(DWORD grfKeyState, POINTL /*pt*/, DWORD dwEffect)
@@ -1282,7 +1201,6 @@ protected:
 
         return DROPEFFECT_NONE;
     }
-
 
     // Purpose: called when the user drops the 'thing' on the shellfolder.
     DWORD OnDrop(IDataObject* pdataobject, DWORD grfKeyState, POINTL /*pt*/, DWORD dwEffect)
@@ -1303,13 +1221,11 @@ protected:
         return DROPEFFECT_COPY;
     }
 
-
     // Purpose: override this function to control which clipboards formats are supported.
     bool IsSupportedClipboardFormat(IDataObject* /*pdataobject*/)
     {
         return false;
     }
-
 
     // Purpose: override this function to control what the source should do after a move.
     //          See SDK 'Handling Shell Data Transfer Scenarios' for more info.
@@ -1317,7 +1233,6 @@ protected:
     {
         return false;
     }
-
 
     class CColumnInfo
     {
@@ -1332,19 +1247,16 @@ protected:
         SHCOLSTATEF m_csFlags;
     };
 
-
     void RegisterColumn(const TCHAR* szName, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
     {
         CColumnInfo columninfo(szName, fmt, csFlags);
         m_columninfos.push_back(columninfo);
     }
 
-
     void RegisterColumn(UINT nResourceID, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
     {
         RegisterColumn(MSF::LoadString(nResourceID), fmt, csFlags);
     }
-
 
     // Implement this function and return the attributes or SFGAO_UNDEFINED
     SFGAOF GetAttributesOfGlobal(UINT /*cidl*/, SFGAOF /*sfgofMask*/) const
@@ -1354,14 +1266,12 @@ protected:
         return SFGAO_UNDEFINED;
     }
 
-
     // If GetAttributesOfGlobal returns SFGAO_UNDEFINED MSF will call explicit
     // for every selected item this function.
     SFGAOF GetAttributeOf(unsigned int /*cidl*/, const TItem& /*item*/, SFGAOF /*sfgofMask*/) const
     {
         return 0;
     }
-
 
     // Purpose: derived classes need to implement this function if they want to support
     //          renaming of items.
@@ -1370,7 +1280,6 @@ protected:
     {
         RaiseException();
     }
-
 
     HRESULT OnErrorHandler(HRESULT hr, HWND hwnd, EErrorContext errorcontext)
     {
@@ -1382,12 +1291,10 @@ protected:
         return hr;
     }
 
-
     // Purpose: derive this function to report error to the user.
     void OnError(HRESULT /*hr*/, HWND /*hwnd*/, EErrorContext /*errorcontext*/)
     {
     }
-
 
     void RetrieveItems(IDataObject* pdataobject, TItems& items) const
     {
@@ -1395,7 +1302,6 @@ protected:
 
         RetrieveItems(cfshellidlist, items);
     }
-
 
     void RetrieveItems(const CCfShellIdList& cfshellidlist, TItems& items) const
     {
@@ -1407,14 +1313,12 @@ protected:
         }
     }
 
-
     void VerifyAttribute(IDataObject* pdataobject, SFGAOF sfgaofMask) const
     {
         CCfShellIdList cfshellidlist(pdataobject);
 
         VerifyAttribute(cfshellidlist, sfgaofMask);
     }
-
 
     void VerifyAttribute(const CCfShellIdList& cfshellidlist, SFGAOF sfgaofMask) const
     {
@@ -1424,7 +1328,6 @@ protected:
             RaiseException(E_INVALIDARG);
         }
     }
-
 
     bool HasAttributesOf(const CCfShellIdList& cfshellidlist, SFGAOF sfgaofMask) const
     {
@@ -1453,12 +1356,10 @@ protected:
         }
     }
 
-
     void ReportAddItem(const ITEMIDLIST* pidlItem) const
     {
         ChangeNotifyPidl(SHCNE_CREATE, SHCNF_FLUSH, CPidl(m_pidlFolder, pidlItem));
     }
-
 
     void ReportChangeNotify(const TItems& items, long wEventId, UINT uFlags = SHCNF_FLUSH) const
     {
@@ -1467,7 +1368,6 @@ protected:
             ChangeNotifyPidl(wEventId, uFlags, CPidl(m_pidlFolder, it->GetItemIdList()));
         }
     }
-
 
     void ReportChangeNotify(const CCfShellIdList& cfshellidlist, long wEventId, UINT uFlags = SHCNF_FLUSH) const
     {
@@ -1478,7 +1378,6 @@ protected:
             ChangeNotifyPidl(wEventId, uFlags, CPidl(m_pidlFolder, pidl));
         }
     }
-
 
     void ReportUpdateItemChangeNotify(IDataObject* pdataobject) const
     {
@@ -1492,7 +1391,6 @@ protected:
         }
     }
 
-
     void ReportRenameChangeNotify(const CCfShellIdList& cfshellidlist, const TItems& itemsNew) const
     {
         for (UINT i = 0; i < cfshellidlist.GetItemCount(); ++i)
@@ -1504,22 +1402,19 @@ protected:
         }
     }
 
-
     // Note: if hwndOwner is NULL, errors should only be returned as COM failures.
     HWND GetHwndOwner() const throw()
     {
         return m_hwndOwner;
     }
 
-
     IShellBrowserPtr GetShellBrowser()
     {
-        IShellBrowser* pshellbrowser = 
+        IShellBrowser* pshellbrowser =
             (IShellBrowser*) SendMessage(m_hwndOwner, WM_GETISHELLBROWSER, 0, 0);
         RaiseExceptionIf(pshellbrowser == NULL);
         return pshellbrowser;
     }
-
 
     // Update these members if dynamic behavior is required.
     ULONG m_ulSort;    // initial column used for sorting.
@@ -1527,7 +1422,6 @@ protected:
 
 private:
 
-    // Member variables.
     CPidl                    m_pidlFolder;
     std::vector<CColumnInfo> m_columninfos;
     HWND                     m_hwndOwner;

@@ -12,6 +12,7 @@
 namespace MSF
 {
 
+
 class CCfPerformedDropEffect
 {
 public:

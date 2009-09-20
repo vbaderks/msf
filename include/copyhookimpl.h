@@ -5,12 +5,10 @@
 //
 #pragma once
 
-
 #include <shlobj.h>
 #include "shelluuids.h"
 #include "olestring.h"
 #include "updateregistry.h"
-
 
 namespace MSF
 {
@@ -26,41 +24,38 @@ namespace MSF
 
 template <typename T>
 class ATL_NO_VTABLE ICopyHookImpl :
-	public ICopyHook
+    public ICopyHook
 {
 public:
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
+        PCWSTR szDescription, PCWSTR szCopyHookName) throw()
+    {
+        COleString olestrCLSID;
+        StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
 
-	static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-		PCWSTR szDescription, PCWSTR szCopyHookName) throw()
-	{
-		COleString olestrCLSID;
-		StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
+        _ATL_REGMAP_ENTRY regmapEntries[] =
+        {
+            { L"CLSID", olestrCLSID },
+            { L"DESCRIPTION", szDescription },
+            { L"COPYHOOKNAME", szCopyHookName },
+            { NULL, NULL }
+        };
 
-		_ATL_REGMAP_ENTRY regmapEntries[] =
-		{
-			{ L"CLSID", olestrCLSID },
-			{ L"DESCRIPTION", szDescription },
-			{ L"COPYHOOKNAME", szCopyHookName },
-			{ NULL, NULL }
-		};
+        return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
+    }
 
-		return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
-	}
+    ICopyHookImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, _T("ICopyHookImpl::Constructor (instance=%p)\n"), this);
+    }
 
+    ~ICopyHookImpl() throw()
+    {
+        ATLTRACE2(atlTraceCOM, 0, _T("ICopyHookImpl::Destructor (instance=%p)\n"), this);
+    }
 
-	ICopyHookImpl()
-	{
-		ATLTRACE2(atlTraceCOM, 0, _T("ICopyHookImpl::Constructor (instance=%p)\n"), this);
-	}
-
-
-	~ICopyHookImpl() throw()
-	{
-		ATLTRACE2(atlTraceCOM, 0, _T("ICopyHookImpl::Destructor (instance=%p)\n"), this);
-	}
-
-	// ICopyHookImpl only consists of 1 function. So there is little to provide.
-	// As a derived class, just implement the CopyCallback function.
+    // ICopyHookImpl only consists of 1 function. So there is little to provide.
+    // As a derived class, just implement the CopyCallback function.
 };
 
 } // end namespace MSF

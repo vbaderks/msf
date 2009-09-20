@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="msf"
 	ProjectGUID="{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}"
 	RootNamespace="msf"
@@ -212,6 +212,26 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Checked|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="10"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -695,6 +715,15 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""
+						Outputs=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Checked|Win32"
 					>
 					<Tool
 						Name="VCCustomBuildTool"

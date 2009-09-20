@@ -11,6 +11,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bhosample_vc90", "bhosample\bhosample_vc90.vcproj", "{176A10BA-B88A-4164-9DE1-DC116088316A}"
 EndProject
 Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
@@ -32,12 +35,15 @@ Global
 		SccLocalPath5 = bhosample
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Checked|Win32 = Checked|Win32
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 		Unicode Debug|Win32 = Unicode Debug|Win32
 		Unicode Release|Win32 = Unicode Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}.Checked|Win32.ActiveCfg = Checked|Win32
+		{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}.Checked|Win32.Build.0 = Checked|Win32
 		{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}.Debug|Win32.Build.0 = Debug|Win32
 		{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}.Release|Win32.ActiveCfg = Release|Win32
@@ -46,6 +52,8 @@ Global
 		{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
 		{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
 		{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{4F99D866-93BF-4731-9031-2D783763AB53}.Checked|Win32.ActiveCfg = Checked|Win32
+		{4F99D866-93BF-4731-9031-2D783763AB53}.Checked|Win32.Build.0 = Checked|Win32
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Debug|Win32.ActiveCfg = Debug|Win32
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Debug|Win32.Build.0 = Debug|Win32
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Release|Win32.ActiveCfg = Release|Win32
@@ -54,6 +62,8 @@ Global
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Checked|Win32.ActiveCfg = Checked|Win32
+		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Checked|Win32.Build.0 = Checked|Win32
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Debug|Win32.ActiveCfg = Debug|Win32
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Debug|Win32.Build.0 = Debug|Win32
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Release|Win32.ActiveCfg = Release|Win32
@@ -62,6 +72,8 @@ Global
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
 		{03B43A34-AED0-4C75-A88C-E0D6DD95BAB9}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Checked|Win32.ActiveCfg = Checked|Win32
+		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Checked|Win32.Build.0 = Checked|Win32
 		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Debug|Win32.ActiveCfg = Debug|Win32
 		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Debug|Win32.Build.0 = Debug|Win32
 		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Release|Win32.ActiveCfg = Release|Win32
@@ -70,6 +82,8 @@ Global
 		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
 		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
 		{98A68B8C-7103-4E9F-B90C-971665F2CD80}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{176A10BA-B88A-4164-9DE1-DC116088316A}.Checked|Win32.ActiveCfg = Checked|Win32
+		{176A10BA-B88A-4164-9DE1-DC116088316A}.Checked|Win32.Build.0 = Checked|Win32
 		{176A10BA-B88A-4164-9DE1-DC116088316A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{176A10BA-B88A-4164-9DE1-DC116088316A}.Debug|Win32.Build.0 = Debug|Win32
 		{176A10BA-B88A-4164-9DE1-DC116088316A}.Release|Win32.ActiveCfg = Release|Win32
@@ -81,8 +95,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
-		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
 	EndGlobalSection
 EndGlobal

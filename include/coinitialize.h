@@ -11,23 +11,22 @@
 
 #include <objbase.h>
 
-
 namespace MSF
 {
 
+/// <summary>Scope based COM initialization class (based on RAII pattern).</summary>
 class CCoInitialize
 {
 public:
-	CCoInitialize()
-	{
-		ATLVERIFY(SUCCEEDED(::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)));
-	}
+    CCoInitialize()
+    {
+        ATLVERIFY(SUCCEEDED(::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)));
+    }
 
-
-	~CCoInitialize() throw()
-	{
-		::CoUninitialize();
-	}
+    ~CCoInitialize() throw()
+    {
+        ::CoUninitialize();
+    }
 };
 
 } // end namespace MSF.

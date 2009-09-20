@@ -16,9 +16,7 @@
 #include "../include/htmlelementptr.h"
 #include <exdispid.h>
 
-
 class DECLSPEC_UUID("37163A65-1E85-45AA-92F9-95E8E4D2F743") CSampleBho;
-
 
 class ATL_NO_VTABLE CSampleBho :
     public CComObjectRootEx<CComSingleThreadModel>,
@@ -60,7 +58,7 @@ public:
                 return; // Document is not a HTML document.
             }
 
-            // TODO: do something with the loaded page.
+            // a real implementation would do something with the loaded page...
         }
         catch (const _com_error& e)
         {

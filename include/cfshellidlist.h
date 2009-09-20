@@ -5,52 +5,44 @@
 //
 #pragma once
 
-
 #include "dataobjectptr.h"
 #include "stgmedium.h"
 #include "globallock.h"
 #include "formatetc.h"
 #include "util.h"
 
-
 namespace MSF
 {
 
+/// <summary>Wraps a data object as a collection of ITEMIDLIST pointers.</summary>
 class CCfShellIdList
 {
 public:
-    CCfShellIdList(IDataObjectPtr dataobject)
+    CCfShellIdList(IDataObjectPtr dataObject)
     {
         CFormatEtc formatetc(RegisterCf(CFSTR_SHELLIDLIST));
-
-        dataobject.GetData(formatetc, m_stgmedium);
-
-        m_globallock.Attach(m_stgmedium.hGlobal);
+        dataObject.GetData(formatetc, m_medium);
+        m_globalLock.Attach(m_medium.hGlobal);
     }
-
 
     ~CCfShellIdList() throw()
     {
-        m_globallock.Dispose();
+        m_globalLock.Dispose();
     }
 
-
-    bool empty() const throw()
+    bool IsEmpty() const throw()
     {
         return GetItemCount() == 0;
     }
 
-
     unsigned int GetItemCount() const throw()
     {
-        return m_globallock.get()->cidl;
+        return m_globalLock.get()->cidl;
     }
-
 
     const ITEMIDLIST* GetItem(UINT nIdex) const throw()
     {
-        const CIDA* pcida = m_globallock.get();
-
+        const CIDA* pcida = m_globalLock.get();
         return reinterpret_cast<const ITEMIDLIST*>
             (reinterpret_cast<const BYTE*>(pcida) + pcida->aoffset[nIdex + 1]);
     }
@@ -59,8 +51,8 @@ private:
 
     CCfShellIdList& operator=(const CCfShellIdList&); // not implemented by design.
 
-    CGlobalLock<CIDA> m_globallock;
-    CStgMedium        m_stgmedium;
+    CGlobalLock<CIDA> m_globalLock;
+    CStgMedium        m_medium;
 };
 
 } // namespace MSF

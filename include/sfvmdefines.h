@@ -5,12 +5,10 @@
 //
 #pragma once
 
-
 #include <shlobj.h>
 
-
 // Undocumented IShellFolderViewCB callback notifications.
-// Most info was collected from public domain info on the internet.
+// Most info was collected from public domain info on the Internet.
 const UINT SFVM_SELECTIONCHANGED  =  8;
 const UINT SFVM_DRAWMENUITEM      =  9;
 const UINT SFVM_MEASUREMENUITEM   = 10;

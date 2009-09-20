@@ -5,14 +5,12 @@
 //
 #pragma once
 
-
 #include "util.h"
-
 
 namespace MSF
 {
 
-// Purpose: base class for Clipboard format handlers.
+/// <summary>Base class for the Clipboard format handlers.</summary>
 class CCfHandler
 {
 public:
@@ -23,7 +21,6 @@ public:
     {
     }
 
-
     CCfHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
         m_clipformat(RegisterCf(lpszFormat)),
         m_bCanGetData(bCanGetData),
@@ -31,29 +28,24 @@ public:
     {
     }
 
-
     virtual ~CCfHandler() throw()
     {
     }
-
 
     CLIPFORMAT GetClipFormat() const throw()
     {
         return m_clipformat;
     }
 
-
     bool CanGetData() const throw()
     {
         return m_bCanGetData;
     }
 
-
     bool CanSetData() const throw()
     {
         return m_bCanSetData;
     }
-
 
     virtual HRESULT Validate(const FORMATETC& formatetc) const throw()
     {
@@ -69,16 +61,13 @@ public:
         return S_OK;
     }
 
-
     virtual void GetData(const FORMATETC&, STGMEDIUM&) const
     {
     }
 
-
     virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*bRelease*/)
     {
     }
-
 
     bool IsValid(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) const
     {
@@ -86,8 +75,6 @@ public:
     }
 
 private:
-
-    // Member variables.
     CLIPFORMAT m_clipformat;
     bool       m_bCanGetData;
     bool       m_bCanSetData;
