@@ -21,10 +21,8 @@
 #include "vvvpropertysheet.h"
 #include "resource.h"
 
-
 // Defines for the item context menu.
 const UINT ID_DFM_CMD_OPEN = 0;
-
 
 class ATL_NO_VTABLE CShellFolder :
     public CComObjectRootEx<CComSingleThreadModel>,

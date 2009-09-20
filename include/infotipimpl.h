@@ -10,7 +10,6 @@
 #include "queryinfoimpl.h"
 #include "shelluuids.h"
 
-
 namespace MSF
 {
 
@@ -41,7 +40,6 @@ public:
         return UpdateRegistryFromResource(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), szRootKey);
     }
-
 
     IInfoTipImpl() : m_bInitialized(false)
     {
@@ -77,30 +75,25 @@ public:
         MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetClassID"));
     }
 
-
     STDMETHOD(IsDirty)()
     {
         MSF_TRACENOTIMPL(_T("IInfoTipImpl::IsDirty"));
     }
-
 
     STDMETHOD(Save)(LPCOLESTR, BOOL)
     {
         MSF_TRACENOTIMPL(_T("IInfoTipImpl::Save"));
     }
 
-
     STDMETHOD(SaveCompleted)(LPCOLESTR)
     {
         MSF_TRACENOTIMPL(_T("IInfoTipImpl::SaveCompleted"));
     }
 
-
     STDMETHOD(GetCurFile)(LPOLESTR*)
     {
         MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetCurFile"));
     }
-
 
     STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode)
     {
@@ -109,7 +102,6 @@ public:
 #else
         ATLTRACE2(atlTraceCOM, 0, "IInfoTipImpl::Load (instance=%p, mode=%d, , filename=%S)\n", this, dwMode, wszFilename);
 #endif
-
         try
         {
             if (m_bInitialized)
@@ -122,7 +114,6 @@ public:
         }
         MSF_COM_CATCH_HANDLER()
     }
-
 
 private:
     bool m_bInitialized;

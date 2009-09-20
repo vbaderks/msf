@@ -11,7 +11,6 @@
 #include "vvvfile.h"
 #include "resource.h"
 
-
 class ATL_NO_VTABLE CInfoTip :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CInfoTip, &__uuidof(CInfoTip)>,
@@ -32,7 +31,6 @@ public:
             L"VVV Sample ShellExtension", wszVVVFileRootExt);
     }
 
-
     void InitializeImpl(const TCHAR* szFilename, DWORD /*dwMode*/)
     {
         CVVVFile vvvfile(szFilename);
@@ -40,7 +38,6 @@ public:
         m_strLabel = vvvfile.GetLabel();
         m_strFileCount = MSF::ToString(vvvfile.GetFileCount());
     }
-
 
     // Purpose: called by the shell/MSF when it needs the text for the infotip.
     //          The string is used for the tooltip and the text in the statusbar.
@@ -54,6 +51,5 @@ private:
     CString m_strLabel;
     CString m_strFileCount;
 };
-
 
 OBJECT_ENTRY_AUTO(__uuidof(CInfoTip), CInfoTip)

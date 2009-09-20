@@ -14,7 +14,6 @@
 #include "aboutmsfcommand.h"
 #include "resource.h"
 
-
 class ATL_NO_VTABLE CContextMenu :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CContextMenu, &__uuidof(CContextMenu)>,
@@ -36,12 +35,10 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-
     CContextMenu()
     {
         RegisterExtension(tszVVVExtension);
     }
-
 
     // Purpose: called by the 'impl' class. Request to configure the menu
     void OnQueryContextMenu(IContextMenuImpl<CContextMenu>::CMenu& menu,
