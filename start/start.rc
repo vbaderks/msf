@@ -34,6 +34,7 @@ IDR_SHELLFOLDER         REGISTRY                "../include/shellfolder.rgs"
 IDR_SHELLFOLDER_WIN98   REGISTRY                "../include/shellfolderwin98.rgs"
 IDR_EXTRACTIMAGE        REGISTRY                "../include/extractimage_sf.rgs"
 IDR_COPYHOOK            REGISTRY                "../include/copyhookfolder.rgs"
+IDR_EXTENSION           REGISTRY                "../include/extension.rgs"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

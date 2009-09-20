@@ -11,6 +11,7 @@
 #define IDR_SHELLFOLDER_WIN98           1005
 #define IDR_EXTRACTIMAGE                1006
 #define IDR_COPYHOOK                    1007
+#define IDR_EXTENSION                   1008
 #define IDD_PROPERTY_PAGE               2000
 
 

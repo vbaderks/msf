@@ -1,9 +1,3 @@
-//
-// (C) Copyright by Victor Derks
-//
-// See README.TXT for the details of the software licence.
-//
-
 // Enabled improved type checking of the Win32 SDK header files.
 #define STRICT
 

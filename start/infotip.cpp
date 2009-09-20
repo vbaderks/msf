@@ -24,8 +24,8 @@ public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
     {
         // Note: Add a description and an extension
-        return IInfoTipImpl<CInfoTip>::UpdateRegistry(IDR_INFOTIP, bRegister,
-            L"<description>", __uuidof(CShellFolder), L"<.extension>");
+        return IInfoTipImpl<CInfoTip>::UpdateRegistry(bRegister, IDR_INFOTIP,
+            L"<description>", L"<.extension>");
     }
 
     // Purpose: called by the shell/MSF to initialize the instance from a filename.
