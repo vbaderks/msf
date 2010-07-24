@@ -1,13 +1,11 @@
 // Enabled improved type checking of the Win32 SDK header files.
 #define STRICT
 
-// Allow use of features specific to Windows 95 and Windows NT 4 or later.
-// Change this to the appropriate value to target Windows 98 and Windows 2000 or later.
-#define WINVER 0x0400
+// Allow use of features specific to Windows XP or later.
+#define WINVER 0x0501
 
-// Allow use of features specific to Windows NT 4 or later.
-// Change this to the appropriate value to target Windows 2000 or later.
-#define _WIN32_WINNT 0x0400
+// Allow use of features specific to Windows XP or later.
+#define _WIN32_WINNT 0x0501
 
 // Allow use of features specific to Windows 98 or later.
 // Change this to the appropriate value to target Windows Me or later.
