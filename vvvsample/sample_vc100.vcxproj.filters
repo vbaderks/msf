@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="VVV Files">
+      <UniqueIdentifier>{87dd3706-f745-4fe7-a713-23bf379b4609}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="columnprovider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="contextmenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="copyhook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractimage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="infotip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shellfolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shellpropsheetext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vvvfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vvvitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sample.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="menuicon.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="vvv.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sample1.vvv">
+      <Filter>VVV Files</Filter>
+    </None>
+    <None Include="sample2.xml">
+      <Filter>VVV Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="aboutmsfcommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cffilecontentshandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cffiledescriptorhandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="columnproviderclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="columns.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="contextmenuclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="copyhookclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="editwithnotepadcommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enumidlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extractimageclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="infotipclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="module.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propertypageitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propertypagevvv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shellfolderclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shellfolderdataobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shellfolderviewcb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shellpropsheetextclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vvvfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vvvitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vvvpropertysheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="sample.manifest">
+      <Filter>Resource Files</Filter>
+    </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sample.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
