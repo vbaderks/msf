@@ -27,7 +27,7 @@
     <ProjectGuid>{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}</ProjectGuid>
     <RootNamespace>msf</RootNamespace>
     <SccProjectName>$/msf</SccProjectName>
-    <SccAuxPath>https://tfs02.codeplex.com</SccAuxPath>
+    <SccAuxPath>https://tfs.codeplex.com/tfs/tfs02</SccAuxPath>
     <SccLocalPath>.</SccLocalPath>
     <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
     <Keyword>Win32Proj</Keyword>
