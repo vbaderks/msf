@@ -33,9 +33,9 @@ public:
 	}
 
 
-	void Initialize(const ITEMIDLIST* pidl)
+	void Initialize(LPCITEMIDLIST pidl)
 	{
-		RaiseExceptionIfFailed(GetInterfacePtr()->Initialize(const_cast<ITEMIDLIST*>(pidl)));
+		RaiseExceptionIfFailed(GetInterfacePtr()->Initialize(const_cast<LPCITEMIDLIST>(pidl)));
 	}
 
 

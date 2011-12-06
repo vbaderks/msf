@@ -22,9 +22,9 @@ public:
 	}
 
 
-	static ITEMIDLIST* CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const CString& strName)
+	static LPITEMIDLIST CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const CString& strName)
 	{
-		ITEMIDLIST* pidl = CPidl::CreateItemIdListWithTerminator(sizeof(SItemData));
+		LPITEMIDLIST pidl = CPidl::CreateItemIdListWithTerminator(sizeof(SItemData));
 
 		InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
 			nId, nSize, bFolder, strName);
@@ -33,7 +33,7 @@ public:
 	}
 
 
-	explicit CVVVItem(const ITEMIDLIST* pidl) : CItemBase(pidl)
+	explicit CVVVItem(LPCITEMIDLIST pidl) : CItemBase(pidl)
 	{
 		// Shell item IDs can be passed from external sources, validate
 		// It is valid to pass a PIDL that is larger then the original (done by Search functionality in XP).

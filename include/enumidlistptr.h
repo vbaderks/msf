@@ -41,7 +41,7 @@ public:
 	}
 
 
-	bool Next(ITEMIDLIST** ppidl)
+	bool Next(LPITEMIDLIST* ppidl)
 	{
 		HRESULT hr = GetInterfacePtr()->Next(1, ppidl, NULL);
 		RaiseExceptionIfFailed(hr);

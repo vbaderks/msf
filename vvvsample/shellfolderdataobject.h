@@ -12,41 +12,41 @@
 
 
 class CShellFolderDataObject :
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CShellFolderDataObjectImpl<CShellFolderDataObject>
+    public CComObjectRootEx<CComSingleThreadModel>,
+    public CShellFolderDataObjectImpl<CShellFolderDataObject>
 {
 public:
-	DECLARE_NOT_AGGREGATABLE(CShellFolderDataObject)
+    DECLARE_NOT_AGGREGATABLE(CShellFolderDataObject)
 
-	BEGIN_COM_MAP(CShellFolderDataObject)
-		COM_INTERFACE_ENTRY(IDataObject)
-	END_COM_MAP()
-
-
-	static CComPtr<IDataObject> CreateInstance(const ITEMIDLIST* pidlFolder, UINT cidl, 
-		const ITEMIDLIST** ppidl, IPerformedDropEffectSink* pperformeddropeffectsink)
-	{
-		CComObject<CShellFolderDataObject>* pinstance;
-		RaiseExceptionIfFailed(
-			CComObject<CShellFolderDataObject>::CreateInstance(&pinstance));
-
-		CComPtr<IDataObject> rdataobject(pinstance);
-
-		pinstance->Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
-
-		return rdataobject;
-	}
+    BEGIN_COM_MAP(CShellFolderDataObject)
+        COM_INTERFACE_ENTRY(IDataObject)
+    END_COM_MAP()
 
 
-	void Init(const ITEMIDLIST* pidlFolder, UINT cidl, const ITEMIDLIST** ppidl,
-		IPerformedDropEffectSink* pperformeddropeffectsink)
-	{
-		__super::Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
+    static CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl, 
+        LPCITEMIDLIST* ppidl, IPerformedDropEffectSink* pperformeddropeffectsink)
+    {
+        CComObject<CShellFolderDataObject>* pinstance;
+        RaiseExceptionIfFailed(
+            CComObject<CShellFolderDataObject>::CreateInstance(&pinstance));
 
-		auto_ptr<CCfHandler> qfiledescriptorhandler(new CCfFileDescriptorHandler(this));
-		RegisterCfHandler(qfiledescriptorhandler);
+        CComPtr<IDataObject> rdataobject(pinstance);
 
-		auto_ptr<CCfHandler> qfilecontentshandler(new CCfFileContentsHandler(this));
-		RegisterCfHandler(qfilecontentshandler);
-	}
+        pinstance->Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
+
+        return rdataobject;
+    }
+
+
+    void Init(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
+        IPerformedDropEffectSink* pperformeddropeffectsink)
+    {
+        __super::Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
+
+        auto_ptr<CCfHandler> qfiledescriptorhandler(new CCfFileDescriptorHandler(this));
+        RegisterCfHandler(qfiledescriptorhandler);
+
+        auto_ptr<CCfHandler> qfilecontentshandler(new CCfFileContentsHandler(this));
+        RegisterCfHandler(qfilecontentshandler);
+    }
 };

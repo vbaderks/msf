@@ -40,10 +40,10 @@ public:
         return m_globalLock.get()->cidl;
     }
 
-    const ITEMIDLIST* GetItem(UINT nIdex) const throw()
+    LPCITEMIDLIST GetItem(UINT nIdex) const throw()
     {
         const CIDA* pcida = m_globalLock.get();
-        return reinterpret_cast<const ITEMIDLIST*>
+        return reinterpret_cast<LPCITEMIDLIST>
             (reinterpret_cast<const BYTE*>(pcida) + pcida->aoffset[nIdex + 1]);
     }
 

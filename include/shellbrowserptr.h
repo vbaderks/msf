@@ -36,7 +36,7 @@ public:
 	}
 
 
-	void BrowseObject(const ITEMIDLIST* pidl, UINT wFlags)
+	void BrowseObject(LPCITEMIDLIST pidl, UINT wFlags)
 	{
 		RaiseExceptionIfFailed(GetInterfacePtr()->BrowseObject(pidl, wFlags));
 	}

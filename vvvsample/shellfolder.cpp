@@ -91,7 +91,7 @@ public:
 
     // Purpose: called by MSF/shell when a number of items are selected and a IDataObject
     //          that contains the items is required.
-    CComPtr<IDataObject> CreateDataObject(const ITEMIDLIST* pidlFolder, UINT cidl, const ITEMIDLIST** ppidl)
+    CComPtr<IDataObject> CreateDataObject(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl)
     {
         return CShellFolderDataObject::CreateInstance(pidlFolder, cidl, ppidl, this);
     }
@@ -179,7 +179,7 @@ public:
 
 
     // Purpose: Called by the shell/MSF when an item must be renamed.
-    ITEMIDLIST* OnSetNameOf(HWND /*hwnd*/, const CVVVItem& item, const TCHAR* szNewName, SHGDNF shgndf)
+    LPITEMIDLIST OnSetNameOf(HWND /*hwnd*/, const CVVVItem& item, const TCHAR* szNewName, SHGDNF shgndf)
     {
         RaiseExceptionIf(shgndf != SHGDN_NORMAL && shgndf != SHGDN_INFOLDER); // not supported 'name'.
 

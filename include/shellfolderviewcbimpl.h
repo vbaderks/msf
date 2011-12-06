@@ -92,7 +92,7 @@ public:
 
 			case SFVM_FSNOTIFY:
 				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderViewCB::MessageSFVCB (OnFSNotify)\n"));
-				return static_cast<T*>(this)->OnFSNotify(reinterpret_cast<const ITEMIDLIST*>(wParam), static_cast<DWORD>(lParam));
+				return static_cast<T*>(this)->OnFSNotify(reinterpret_cast<LPCITEMIDLIST>(wParam), static_cast<DWORD>(lParam));
 
 			case SFVM_WINDOWCREATED:
 				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderViewCB::MessageSFVCB (OnWindowCreated hwnd=%d)\n"), wParam);
@@ -140,7 +140,7 @@ public:
 
 			case SFVM_THISIDLIST:
 				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderViewCB::MessageSFVCB (OnThisIDList)\n"));
-				return static_cast<T*>(this)->OnThisIDList(reinterpret_cast<ITEMIDLIST*>(lParam));
+				return static_cast<T*>(this)->OnThisIDList(reinterpret_cast<LPITEMIDLIST>(lParam));
 
 			case SFVM_ADDPROPERTYPAGES:
 				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderViewCB::MessageSFVCB (OnAddPropertyPages)\n"));
@@ -152,7 +152,7 @@ public:
 
 			case SFVM_GETNOTIFY:
 				ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderViewCB::MessageSFVCB (OnGetNotify)\n"));
-				return static_cast<T*>(this)->OnGetNotify(reinterpret_cast<ITEMIDLIST**>(wParam),
+				return static_cast<T*>(this)->OnGetNotify(reinterpret_cast<LPITEMIDLIST*>(wParam),
 				                                          reinterpret_cast<long*>(lParam));
 
 			case SFVM_GETSORTDEFAULTS:
@@ -316,7 +316,7 @@ public:
 protected:
 
 	// Purpose: Controls which folder (file) is watched for change events.
-	void SetFolder(const ITEMIDLIST* pidlFolder)
+	void SetFolder(LPCITEMIDLIST pidlFolder)
 	{
 		_pidlFolder.CloneFrom(pidlFolder);
 	}
@@ -370,7 +370,7 @@ protected:
 	}
 
 
-	HRESULT OnFSNotify(const ITEMIDLIST* /*pidl*/, DWORD /*lEvent*/)
+	HRESULT OnFSNotify(LPCITEMIDLIST /*pidl*/, DWORD /*lEvent*/)
 	{
 		return E_NOTIMPL;
 	}
@@ -469,7 +469,7 @@ protected:
 	}
 
 
-	HRESULT OnThisIDList(ITEMIDLIST* /*pidl*/)
+	HRESULT OnThisIDList(LPITEMIDLIST /*pidl*/)
 	{
 		return E_NOTIMPL;
 	}
@@ -514,7 +514,7 @@ protected:
 	}
 
 
-	HRESULT OnFindItem(WPARAM /*wParam*/, ITEMIDLIST* /*ppidlToFind*/)
+	HRESULT OnFindItem(WPARAM /*wParam*/, LPITEMIDLIST /*ppidlToFind*/)
 	{
 		// Note: wParam seems to be int* pItemIndex.
 		return E_NOTIMPL;

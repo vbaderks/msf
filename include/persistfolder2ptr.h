@@ -35,7 +35,7 @@ public:
 	}
 
 
-	void Initialize(ITEMIDLIST* pidl)
+	void Initialize(LPITEMIDLIST pidl)
 	{
 		RaiseExceptionIfFailed(GetInterfacePtr()->Initialize(pidl));
 	}
@@ -51,7 +51,7 @@ public:
 
 	CPidl GetCurFolder()
 	{
-		ITEMIDLIST* pidl;
+		LPITEMIDLIST pidl;
 		RaiseExceptionIfFailed(GetInterfacePtr()->GetCurFolder(&pidl));
 
 		return pidl;

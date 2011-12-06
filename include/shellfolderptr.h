@@ -77,7 +77,7 @@ public:
 	}
 
 
-	void GetAttributesOf(const ITEMIDLIST* apidl, SFGAOF* rgfInOut)
+	void GetAttributesOf(LPCITEMIDLIST apidl, SFGAOF* rgfInOut)
 	{
 		GetAttributesOf(1, &apidl, rgfInOut);
 	}
@@ -102,7 +102,7 @@ public:
 	};
 
 
-	CString GetDisplayNameOf(ITEMIDLIST* pidl, DWORD uFlags)
+	CString GetDisplayNameOf(LPITEMIDLIST pidl, DWORD uFlags)
 	{
 		STRRET name;
 

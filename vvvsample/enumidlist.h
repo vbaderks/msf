@@ -35,7 +35,7 @@ public:
 	}
 
 
-	ITEMIDLIST* GetNextItem()
+	LPITEMIDLIST GetNextItem()
 	{
 		return m_qfile->GetNextItem(m_grfFlags, m_nItemIterator);
 	}

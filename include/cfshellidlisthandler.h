@@ -21,7 +21,7 @@ class CCfShellIdListHandler : public CCfHandler
 public:
 	typedef std::vector<CPidl> CPidls;
 
-	CCfShellIdListHandler(const ITEMIDLIST* pidlFolder, CPidls& pidls) :
+	CCfShellIdListHandler(LPCITEMIDLIST pidlFolder, CPidls& pidls) :
 		CCfHandler(CFSTR_SHELLIDLIST, true, false),
 		m_pidlFolder(pidlFolder),
 		m_pidls(pidls)

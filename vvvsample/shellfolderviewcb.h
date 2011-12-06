@@ -16,7 +16,7 @@ class ATL_NO_VTABLE CShellFolderViewCB :
 	public IShellFolderViewCBImpl<CShellFolderViewCB>
 {
 public:
-	static CComPtr<IShellFolderViewCB> CreateInstance(const ITEMIDLIST* pidlFolder)
+	static CComPtr<IShellFolderViewCB> CreateInstance(LPCITEMIDLIST pidlFolder)
 	{
 		CComObject<CShellFolderViewCB>* pinstance;
 		RaiseExceptionIfFailed(

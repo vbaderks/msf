@@ -84,7 +84,7 @@ public:
         return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
     }
 
-    static CString SHGetPathFromIDList(const ITEMIDLIST* pidl)
+    static CString SHGetPathFromIDList(LPCITEMIDLIST pidl)
     {
         CString strPath;
         RaiseExceptionIf(!::SHGetPathFromIDList(pidl, strPath.GetBufferSetLength(MAX_PATH)));
@@ -94,7 +94,7 @@ public:
     }
 
     // Purpose: small helper to support 'type' system. 
-    static void ChangeNotifyPidl(long wEventId, UINT uFlags, const ITEMIDLIST* pidl1, const ITEMIDLIST* pidl2 = NULL)
+    static void ChangeNotifyPidl(long wEventId, UINT uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = NULL)
     {
         ::SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
     }
@@ -149,7 +149,7 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(Initialize)(const ITEMIDLIST* pidl)
+    STDMETHOD(Initialize)(LPCITEMIDLIST pidl)
     {
         try
         {
@@ -165,7 +165,7 @@ public:
     }
 
     // IPersistFolder2
-    STDMETHOD(GetCurFolder)(ITEMIDLIST** ppidl)
+    STDMETHOD(GetCurFolder)(LPITEMIDLIST* ppidl)
     {
         try
         {
@@ -178,7 +178,7 @@ public:
     }
 
     // IPersistFolder3
-    STDMETHOD(InitializeEx)(IBindCtx* pbc, const ITEMIDLIST* pidlRoot, const PERSIST_FOLDER_TARGET_INFO* /*ppfti*/)
+    STDMETHOD(InitializeEx)(IBindCtx* pbc, LPCITEMIDLIST pidlRoot, const PERSIST_FOLDER_TARGET_INFO* /*ppfti*/)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::InitializeEx (instance=%p, pcb=%p)\n"), this, pbc);
         (pbc);
@@ -191,13 +191,13 @@ public:
     }
 
     // IPersistIDList
-    STDMETHOD(SetIDList)(const ITEMIDLIST* pidl)
+    STDMETHOD(SetIDList)(LPCITEMIDLIST pidl)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::SetIDList (instance=%p, pidl=%p)\n"), this, pidl);
         return Initialize(pidl);
     }
 
-    STDMETHOD(GetIDList)(ITEMIDLIST** ppidl)
+    STDMETHOD(GetIDList)(LPITEMIDLIST* ppidl)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetIDList (instance=%p)\n"), this);
         return GetCurFolder(ppidl);
@@ -223,7 +223,7 @@ public:
     // IShellFolder
 
     // Purpose: The shell calls this function to get the IShellFolder interface of a subfolder.
-    STDMETHOD(BindToObject)(const ITEMIDLIST* pidlSubFolder, LPBC, REFIID riid, void** ppRetVal)
+    STDMETHOD(BindToObject)(LPCITEMIDLIST pidlSubFolder, LPBC, REFIID riid, void** ppRetVal)
     {
         try
         {
@@ -305,7 +305,7 @@ public:
 
     // Purpose: The shell will call this function to get an object that can be applied
     //          to a collection of items contained in the folder.
-    STDMETHOD(GetUIObjectOf)(HWND hwnd, UINT cidl, const ITEMIDLIST** ppidl, REFIID riid, UINT* /*reserved*/, void** ppv)
+    STDMETHOD(GetUIObjectOf)(HWND hwnd, UINT cidl, LPCITEMIDLIST* ppidl, REFIID riid, UINT* /*reserved*/, void** ppv)
     {
         try
         {
@@ -354,7 +354,7 @@ public:
 
     // Purpose: The Shell will call this function to get the name (string) of the item.
     //          (column 0 in details view mode).
-    STDMETHOD(GetDisplayNameOf)(const ITEMIDLIST* pidl, SHGDNF shgdnf, LPSTRRET lpname)
+    STDMETHOD(GetDisplayNameOf)(LPCITEMIDLIST pidl, SHGDNF shgdnf, LPSTRRET lpname)
     {
         try
         {
@@ -369,7 +369,7 @@ public:
     }
 
     // Purpose: The shell uses this function to retrieve info about what can be done with an item.
-    STDMETHOD(GetAttributesOf)(UINT cidl, const ITEMIDLIST** ppidl, SFGAOF* prgfInOut)
+    STDMETHOD(GetAttributesOf)(UINT cidl, LPCITEMIDLIST* ppidl, SFGAOF* prgfInOut)
     {
         try
         {
@@ -394,7 +394,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(ParseDisplayName)(HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, DWORD*, ITEMIDLIST**, DWORD* pdwAttributes)
+    STDMETHOD(ParseDisplayName)(HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, DWORD*, LPITEMIDLIST*, DWORD* pdwAttributes)
     {
         // mark parameters as not used in release build.
         (hwnd);
@@ -413,7 +413,7 @@ public:
         return E_NOTIMPL;
     }
 
-    STDMETHOD(SetNameOf)(HWND hwndOwner, const ITEMIDLIST* pidl, const OLECHAR* pszNewName, SHGDNF uFlags, ITEMIDLIST** ppidlOut)
+    STDMETHOD(SetNameOf)(HWND hwndOwner, LPCITEMIDLIST pidl, const OLECHAR* pszNewName, SHGDNF uFlags, LPITEMIDLIST* ppidlOut)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::SetNameOf (hwnd=%d, szName=%s)\n"), hwndOwner, pszNewName);
 
@@ -441,7 +441,7 @@ public:
     }
 
     // Purpose: This function is called to sort items in details view mode.
-    STDMETHOD(CompareIDs)(LPARAM lParam, const ITEMIDLIST* pidl1, const ITEMIDLIST* pidl2)
+    STDMETHOD(CompareIDs)(LPARAM lParam, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2)
     {
         try
         {
@@ -547,7 +547,7 @@ public:
     // Purpose: The Shell will call this function to retrieve column header names and 
     //          the individual names of the items in the folder.
     // Note: Some windows versions use GetDisplayName to get column 0.
-    STDMETHOD(GetDetailsOf)(const ITEMIDLIST* pidl, UINT iColumn, SHELLDETAILS* psd)
+    STDMETHOD(GetDetailsOf)(LPCITEMIDLIST pidl, UINT iColumn, SHELLDETAILS* psd)
     {
         try
         {
@@ -574,7 +574,7 @@ public:
     // IShellIcon
     // Purpose: There are 2 ways for the shell to get a icon for the 'view.'
     //          This functions call is prefered by the shell as it slightly faster.
-    STDMETHOD(GetIconOf)(const ITEMIDLIST* pidl, UINT flags, int* pIconIndex)
+    STDMETHOD(GetIconOf)(LPCITEMIDLIST pidl, UINT flags, int* pIconIndex)
     {
         try
         {
@@ -711,7 +711,7 @@ protected:
         return SHGetPathFromIDList(m_pidlFolder.get());
     }
 
-    const ITEMIDLIST* GetRootFolder() const
+    LPCITEMIDLIST GetRootFolder() const
     {
         return m_pidlFolder.get();
     }
@@ -719,7 +719,7 @@ protected:
     // Purpose: called by the shell when it needs a contextmenu. There are 2 reasons for this:
     // 1) To display the context menu
     // 2) To act as a command sink for menu commands
-    CComPtr<IContextMenu> CreateItemContextMenu(HWND hwnd, UINT cidl, const ITEMIDLIST** ppidl)
+    CComPtr<IContextMenu> CreateItemContextMenu(HWND hwnd, UINT cidl, LPCITEMIDLIST* ppidl)
     {
         CComPtr<IContextMenu> contextmenu;
         HKEY ahkeyClsKeys;
@@ -733,7 +733,7 @@ protected:
 
     // Purpose: Called by the shell when it needs to pack a IDlist into a dataobject.
     //          Override this function to provide your own DataObject.
-    CComPtr<IDataObject> CreateDataObject(const ITEMIDLIST* pidlFolder, UINT cidl, const ITEMIDLIST** ppidl)
+    CComPtr<IDataObject> CreateDataObject(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl)
     {
         return CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl);
     }
@@ -1140,7 +1140,7 @@ protected:
         StrToStrRet(m_columninfos[iColumn].m_strName, &psd->str);
     }
 
-    void GetItemDetailsOf(UINT iColumn, const ITEMIDLIST* pidl, SHELLDETAILS* psd)
+    void GetItemDetailsOf(UINT iColumn, LPCITEMIDLIST pidl, SHELLDETAILS* psd)
     {
         TItem item(pidl);
 
@@ -1307,7 +1307,7 @@ protected:
     {
         for (unsigned int i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
-            const ITEMIDLIST* pidl = cfshellidlist.GetItem(i);
+            LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
             TItem item(pidl);
             items.push_back(item);
         }
@@ -1340,7 +1340,7 @@ protected:
 
             for (UINT i = 0; i < nItemCount; ++i)
             {
-                const ITEMIDLIST* pidl = cfshellidlist.GetItem(i);
+                LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
                 TItem item(pidl);
                 sfgaof &= static_cast<const T*>(this)->GetAttributeOf(nItemCount, item, sfgaofMask);
 
@@ -1356,7 +1356,7 @@ protected:
         }
     }
 
-    void ReportAddItem(const ITEMIDLIST* pidlItem) const
+    void ReportAddItem(LPCITEMIDLIST pidlItem) const
     {
         ChangeNotifyPidl(SHCNE_CREATE, SHCNF_FLUSH, CPidl(m_pidlFolder, pidlItem));
     }
@@ -1373,7 +1373,7 @@ protected:
     {
         for (unsigned int i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
-            const ITEMIDLIST* pidl = cfshellidlist.GetItem(i);
+            LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
 
             ChangeNotifyPidl(wEventId, uFlags, CPidl(m_pidlFolder, pidl));
         }
@@ -1385,7 +1385,7 @@ protected:
 
         for (unsigned int i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
-            const ITEMIDLIST* pidl = cfshellidlist.GetItem(i);
+            LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
 
             ChangeNotifyPidl(SHCNE_ATTRIBUTES, SHCNF_FLUSH, CPidl(m_pidlFolder, pidl));
         }
@@ -1395,7 +1395,7 @@ protected:
     {
         for (UINT i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
-            const ITEMIDLIST* pidlOld = cfshellidlist.GetItem(i);
+            LPCITEMIDLIST pidlOld = cfshellidlist.GetItem(i);
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, SHCNF_FLUSH, 
                 CPidl(m_pidlFolder, pidlOld), CPidl(m_pidlFolder, itemsNew[i].GetItemIdList()));

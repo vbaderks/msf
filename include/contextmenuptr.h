@@ -43,13 +43,13 @@ public:
         return static_cast<UINT>(HRESULT_CODE(hr));
     }
 
-    void GetCommandString(UINT idCmd, UINT uFlags, LPSTR pszName, UINT cchMax)
+    void GetCommandString(UINT_PTR idCmd, UINT uFlags, LPSTR pszName, UINT cchMax)
     {
         RaiseExceptionIfFailed(
             GetInterfacePtr()->GetCommandString(idCmd, uFlags, 0, pszName, cchMax));
     }
 
-    void GetCommandString(UINT idCmd, UINT uFlags, LPWSTR wszName, UINT cchMax)
+    void GetCommandString(UINT_PTR idCmd, UINT uFlags, LPWSTR wszName, UINT cchMax)
     {
         RaiseExceptionIfFailed(
             GetInterfacePtr()->GetCommandString(idCmd, uFlags, 0, reinterpret_cast<char*>(wszName), cchMax));

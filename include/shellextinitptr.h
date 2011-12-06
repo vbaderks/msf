@@ -34,7 +34,7 @@ public:
 	}
 
 
-	void Initialize(const ITEMIDLIST* pidlFolder, IDataObject* pdtobj, HKEY hkeyProgID)
+	void Initialize(LPCITEMIDLIST pidlFolder, IDataObject* pdtobj, HKEY hkeyProgID)
 	{
 		RaiseExceptionIfFailed(GetInterfacePtr()->Initialize(pidlFolder, pdtobj, hkeyProgID));
 	}

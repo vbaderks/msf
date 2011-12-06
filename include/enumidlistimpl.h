@@ -28,7 +28,7 @@ public:
     class CItemIdListVector
     {
         public:
-            CItemIdListVector(ITEMIDLIST** ppidl) :
+            CItemIdListVector(LPITEMIDLIST* ppidl) :
                 m_nCount(0), m_ppidl(ppidl)
             {
             }
@@ -44,7 +44,7 @@ public:
                 }
             }
 
-            void push_back(ITEMIDLIST* pidl) throw()
+            void push_back(LPITEMIDLIST pidl) throw()
             {
                 m_ppidl[m_nCount] = pidl;
                 ++m_nCount;
@@ -61,12 +61,12 @@ public:
             }
 
         private:
-            ULONG        m_nCount;
-            ITEMIDLIST** m_ppidl;
+            ULONG         m_nCount;
+            LPITEMIDLIST* m_ppidl;
     };
 
     // IEnumIDList
-    STDMETHOD(Next)(ULONG celt, ITEMIDLIST** ppidl, ULONG* pceltFetched)
+    STDMETHOD(Next)(ULONG celt, LPITEMIDLIST* ppidl, ULONG* pceltFetched)
     {
         try
         {
@@ -77,7 +77,7 @@ public:
 
             for (ULONG i = 0; i < celt; ++i)
             {
-                ITEMIDLIST* pidl = static_cast<T*>(this)->GetNextItem();
+                LPITEMIDLIST pidl = static_cast<T*>(this)->GetNextItem();
                 if (pidl == NULL)
                     break; // No more items.
 
