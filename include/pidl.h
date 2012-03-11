@@ -14,51 +14,51 @@ namespace MSF
 class CPidl
 {
 public:
-    static ITEMIDLIST* Clone(_In_ const ITEMIDLIST* pidlSrc)
+    static LPITEMIDLIST Clone(_In_ LPCITEMIDLIST pidlSrc)
     {
         ATLASSERT(pidlSrc != NULL && "Why clone a NULL pointer?");
 
-        ITEMIDLIST* pidl = ILClone(pidlSrc);
+        LPITEMIDLIST pidl = ILClone(pidlSrc);
         RaiseExceptionIf(pidl == NULL, E_OUTOFMEMORY);
         return pidl;
     }
 
-    static ITEMIDLIST* Combine(const ITEMIDLIST* pidl1, const ITEMIDLIST* pidl2)
+    static LPITEMIDLIST Combine(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2)
     {
-        ITEMIDLIST* pidl = ILCombine(pidl1, pidl2);
+        LPITEMIDLIST pidl = ILCombine(pidl1, pidl2);
         RaiseExceptionIf(pidl == NULL && !(pidl1 == NULL && pidl == NULL), E_OUTOFMEMORY);
         return pidl;
     }
 
-    static ITEMIDLIST* CreateFromPath(LPCTSTR pszPath)
+    static LPITEMIDLIST CreateFromPath(LPCTSTR pszPath)
     {
-        ITEMIDLIST* pidl = ILCreateFromPath(pszPath);
+        LPITEMIDLIST pidl = ILCreateFromPath(pszPath);
         RaiseExceptionIf(pidl == NULL, E_OUTOFMEMORY);
         return pidl;
     }
 
-    static ITEMIDLIST* CreateItemIdListWithTerminator(size_t sizeItem)
+    static LPITEMIDLIST CreateItemIdListWithTerminator(size_t sizeItem)
     {
         size_t size = sizeof(short) + sizeItem;
 
-        ITEMIDLIST* pidl = static_cast<ITEMIDLIST*>(CoTaskMemAlloc(size + (sizeof(short))));
+        LPITEMIDLIST pidl = static_cast<LPITEMIDLIST>(CoTaskMemAlloc(size + (sizeof(short))));
         if (pidl == NULL)
             RaiseException(E_OUTOFMEMORY);
 
-        SHITEMID* pshitemid = &(pidl->mkid);
+        LPSHITEMID pshitemid = &(pidl->mkid);
         pshitemid->cb = static_cast<USHORT>(size);
 
-        ITEMIDLIST* pidlTerminator = ILGetNext(pidl);
-        SHITEMID* pItemIdTerminator = &(pidlTerminator->mkid);
+        LPITEMIDLIST pidlTerminator = ILGetNext(pidl);
+        LPSHITEMID pItemIdTerminator = &(pidlTerminator->mkid);
         pItemIdTerminator->cb = 0;
 
         return pidl;
     }
 
     // Purpose: Small helper, returns NULL also for the tail element.
-    static const ITEMIDLIST* GetNextItem(const ITEMIDLIST* pidl)
+    static LPCITEMIDLIST GetNextItem(LPCITEMIDLIST pidl)
     {
-        const ITEMIDLIST* pidlNext = ILGetNext(pidl);
+        LPCITEMIDLIST pidlNext = ILGetNext(pidl);
         if (pidlNext != NULL && pidlNext->mkid.cb == 0)
         {
             pidlNext = NULL;
@@ -78,16 +78,16 @@ public:
         ATLASSERT(null == 0 && "Detected misuse of the special constructor");
     }
 
-    CPidl(ITEMIDLIST* pidl) throw() : m_pidl(pidl)
+    CPidl(LPITEMIDLIST pidl) throw() : m_pidl(pidl)
     {
     }
 
-    CPidl(const ITEMIDLIST* pidl1, const ITEMIDLIST* pidl2) :
+    CPidl(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2) :
         m_pidl(Combine(pidl1, pidl2))
     {
     }
 
-    CPidl(const CPidl& pidl1, const ITEMIDLIST* pidl2) :
+    CPidl(const CPidl& pidl1, LPCITEMIDLIST pidl2) :
         m_pidl(Combine(pidl1.m_pidl, pidl2))
     {
     }
@@ -102,48 +102,48 @@ public:
         ILFree(m_pidl);
     }
 
-    void Attach(ITEMIDLIST* pidl) throw()
+    void Attach(LPITEMIDLIST pidl) throw()
     {
         ILFree(m_pidl);
         m_pidl = pidl;
     }
 
-    ITEMIDLIST* Detach() throw()
+    LPITEMIDLIST Detach() throw()
     {
-        ITEMIDLIST* pidl = m_pidl;
+        LPITEMIDLIST pidl = m_pidl;
         m_pidl = NULL;
         return pidl;
     }
 
-    void CloneFrom(const ITEMIDLIST* pidl)
+    void CloneFrom(LPCITEMIDLIST pidl)
     {
         Attach(Clone(pidl));
     }
 
-    ITEMIDLIST* Clone() const
+    LPITEMIDLIST Clone() const
     {
         return Clone(m_pidl);
     }
 
     void AppendID(const SHITEMID* pmkid) throw()
     {
-        ITEMIDLIST* pidl = ILAppendID(m_pidl, pmkid, TRUE);
+        LPITEMIDLIST pidl = ILAppendID(m_pidl, pmkid, TRUE);
         RaiseExceptionIf(pidl == NULL, E_OUTOFMEMORY);
 
         m_pidl = pidl;
     }
 
-    const ITEMIDLIST* get() const throw()
+    LPITEMIDLIST get() const throw()
     {
         return m_pidl;
     }
 
-    operator const ITEMIDLIST*() const throw()
+    operator LPCITEMIDLIST() const throw()
     {
         return get();
     }
 
-    const ITEMIDLIST* operator->() const throw()
+    LPCITEMIDLIST operator->() const throw()
     {
         return get();
     }
@@ -154,14 +154,14 @@ public:
     }
 
     // Purpose: Adres operator to be used for passing address to be used as an out-parameter.
-    ITEMIDLIST** operator&() throw()
+    LPITEMIDLIST* operator&() throw()
     {
         Attach(NULL);
         return &m_pidl;
     }
 
 private:
-    ITEMIDLIST* m_pidl;
+    LPITEMIDLIST m_pidl;
 };
 
 } // namespace MSF
