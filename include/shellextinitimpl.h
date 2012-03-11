@@ -16,7 +16,7 @@ class IShellExtInitImpl :  public IShellExtInit
 {
 public:
     // IShellExtInit
-    STDMETHOD(Initialize)(PCIDLIST_ABSOLUTE /*pidlFolder*/, IDataObject* pDataObject, HKEY /*hkeyProgID*/) 
+    STDMETHOD(Initialize)(_In_opt_ PCIDLIST_ABSOLUTE /*pidlFolder*/, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) 
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::Initialize (instance=%p)\n"), this);
         ATLASSERT(pDataObject != NULL && "Invalid argument");

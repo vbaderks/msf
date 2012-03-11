@@ -91,7 +91,8 @@ public:
 
     IColumnProviderImpl() :
         m_bInitialized(false),
-        m_pCachedInfo(NULL)
+        m_pCachedInfo(NULL),
+        m_emptyColumnInfo()
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IColumnProviderImpl::IColumnProviderImpl (instance=%p)\n"), this);
     }
@@ -102,7 +103,7 @@ public:
     }
 
     // IColumnProvider
-    STDMETHOD(Initialize)(const SHCOLUMNINIT* psci)
+    STDMETHOD(Initialize)(_In_ const SHCOLUMNINIT* psci)
     {
         try
         {
@@ -134,7 +135,7 @@ public:
 
     // Purpose: GetColumnInfo is called by the shell to retrieve the column names.
     // By calling this repeatedly the shell can detect how many columns there are.
-    STDMETHOD(GetColumnInfo)(DWORD dwIndex, SHCOLUMNINFO* psci)
+    STDMETHOD(GetColumnInfo)(DWORD dwIndex,  _Out_ SHCOLUMNINFO* psci)
     {
         ATLTRACE2(atlTraceCOM, 0,
             _T("IColumnProviderImpl::GetColumnInfo, i=%p, tid=%d, dwIndex=%d\n"),
@@ -148,13 +149,16 @@ public:
         }
 
         if (m_desktopbugworkaround() || dwIndex >= m_columninfos.size())
+        {
+            *psci = m_emptyColumnInfo;
             return S_FALSE; // tell the shell there are no more columns.
+        }
 
         *psci = m_columninfos[dwIndex];
         return S_OK;
     }
 
-    STDMETHOD(GetItemData)(const SHCOLUMNID* pscid, const SHCOLUMNDATA* pscd, VARIANT* pvarData)
+    STDMETHOD(GetItemData)(_In_ const SHCOLUMNID* pscid, _In_ const SHCOLUMNDATA* pscd, _Out_ VARIANT* pvarData)
     {
         try
         {
@@ -362,6 +366,7 @@ private:
     CStringW                    m_strCachedFilename;
     const std::vector<CString>* m_pCachedInfo;
     mapCacheInfo                m_mapCacheInfo;
+    SHCOLUMNINFO                m_emptyColumnInfo;
 
     CDesktopBugWorkAround<t_bEnableDesktopBugWorkAround> m_desktopbugworkaround;
 };

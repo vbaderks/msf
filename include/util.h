@@ -416,7 +416,7 @@ inline TFunctor for_each(TContainer container, TFunctor functor)
 
 inline int GetSystemImageListIndex(const TCHAR* pszPath)
 {
-    SHFILEINFO sfi;
+    SHFILEINFO sfi = {0};
     if (!SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof(sfi),
                        SHGFI_USEFILEATTRIBUTES | SHGFI_ICON))
         return 0;
