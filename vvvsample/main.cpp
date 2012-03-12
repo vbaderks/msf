@@ -38,7 +38,11 @@ STDAPI DllCanUnloadNow()
 }
 
 // Purpose: Returns a class factory to create an object of the requested type
+#if _MSC_VER < 1700
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
+#else
+STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID* ppv)
+#endif
 {
     return _Module.DllGetClassObject(rclsid, riid, ppv);
 }

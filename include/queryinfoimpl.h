@@ -26,7 +26,7 @@ public:
     }
 
     // IQueryInfo
-    STDMETHOD(GetInfoFlags)(DWORD* /* pdwFlags */)
+    STDMETHOD(GetInfoFlags)(_Out_ DWORD* /* pdwFlags */)
     {
         // The Vista shell will call GetInfoFlags. The msdn docs are incomplete about the use of this function.
         // Possible return values are:
@@ -36,7 +36,7 @@ public:
         MSF_TRACENOTIMPL(_T("IQueryInfoImpl::GetInfoFlags"));
     }
 
-    STDMETHOD(GetInfoTip)(DWORD dwFlags, WCHAR** ppwszTip)
+    STDMETHOD(GetInfoTip)(DWORD dwFlags, _Outptr_ WCHAR** ppwszTip)
     {
         try
         {

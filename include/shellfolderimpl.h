@@ -138,7 +138,7 @@ public:
     }
 
     // IPersistFolder
-    STDMETHOD(GetClassID)(CLSID* pClassID)
+    STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetClassID (instance=%p)\n"), this);
 
@@ -547,7 +547,7 @@ public:
     // Purpose: The Shell will call this function to retrieve column header names and 
     //          the individual names of the items in the folder.
     // Note: Some windows versions use GetDisplayName to get column 0.
-    STDMETHOD(GetDetailsOf)(LPCITEMIDLIST pidl, UINT iColumn, SHELLDETAILS* psd)
+    STDMETHOD(GetDetailsOf)(__RPC__in_opt LPCITEMIDLIST pidl, UINT iColumn, __RPC__out SHELLDETAILS* psd)
     {
         try
         {
@@ -722,11 +722,10 @@ protected:
     CComPtr<IContextMenu> CreateItemContextMenu(HWND hwnd, UINT cidl, LPCITEMIDLIST* ppidl)
     {
         CComPtr<IContextMenu> contextmenu;
-        HKEY ahkeyClsKeys;
 
         RaiseExceptionIfFailed(
             CDefFolderMenu_Create2(m_pidlFolder, hwnd, cidl, ppidl, this,
-                                   IShellFolderImpl::OnDfmCommand, 0, &ahkeyClsKeys, &contextmenu));
+                                   IShellFolderImpl::OnDfmCommand, 0, NULL, &contextmenu));
 
         return contextmenu;
     }

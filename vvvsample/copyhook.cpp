@@ -33,8 +33,8 @@ public:
 
 
     // ICopyHook overrides
-    STDMETHOD_(UINT, CopyCallback)(HWND hwnd, UINT wFunc, UINT /*wFlags*/, LPCTSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
-                                   LPCTSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/)
+    STDMETHOD_(UINT, CopyCallback)(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ LPCTSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
+                                   _In_opt_ LPCTSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/)
     {
         if (wFunc == FO_DELETE && CString(pszSrcFile).Find(_T("VVV")) != -1)
         {

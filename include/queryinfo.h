@@ -19,10 +19,11 @@ public:
     static CComPtr<IQueryInfo> CreateInstance(const CString& strTip)
     {
         CComObject<CQueryInfo>* p;
+        HRESULT hr = CComObject<CQueryInfo>::CreateInstance(&p);
+        if (FAILED(hr))
+            RaiseException(hr);
 
-        RaiseExceptionIfFailed(CComObject<CQueryInfo>::CreateInstance(&p));
         p->m_strTip = strTip;
-
         return p;
     }
 

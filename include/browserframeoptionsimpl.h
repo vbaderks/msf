@@ -27,7 +27,7 @@ public:
 
 
     // IBrowserFrameOptions
-    STDMETHOD(GetFrameOptions)(BROWSERFRAMEOPTIONS dwMask, _In_ BROWSERFRAMEOPTIONS* pdwOptions)
+    STDMETHOD(GetFrameOptions)(_In_ BROWSERFRAMEOPTIONS dwMask, _Out_ BROWSERFRAMEOPTIONS* pdwOptions)
     {
         ATLTRACE2(atlTraceCOM, 0,
                   "IBrowserFrameOptionsImpl::GetFrameOptions (instance=%p, dwMask=%d, dwOptions=%d)\n",

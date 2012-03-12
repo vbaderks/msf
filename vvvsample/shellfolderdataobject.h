@@ -27,13 +27,12 @@ public:
         LPCITEMIDLIST* ppidl, IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         CComObject<CShellFolderDataObject>* pinstance;
-        RaiseExceptionIfFailed(
-            CComObject<CShellFolderDataObject>::CreateInstance(&pinstance));
+        HRESULT hr = CComObject<CShellFolderDataObject>::CreateInstance(&pinstance);
+        if (FAILED(hr))
+            RaiseException(hr);
 
         CComPtr<IDataObject> rdataobject(pinstance);
-
         pinstance->Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
-
         return rdataobject;
     }
 

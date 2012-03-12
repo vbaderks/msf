@@ -55,6 +55,10 @@
 #pragma warning(disable: 4548) // expression before comma has no effect; expected expression with side-effect
 #endif
 
+#if _MSC_VER < 1700
+#define _Outptr_ __deref_out // Prefast defintion not available before VS 11.
+#endif
+
 #ifdef _PREFAST_ // defined for the static analyser in VC 2005 / 2008
 #pragma warning(disable: 6387) // 'return value' might be '0': this does not adhere to the specification for the function
 #pragma warning(disable: 6385) // Invalid data.....
