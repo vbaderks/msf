@@ -51,7 +51,7 @@ public:
     }
 
 
-    STDMETHOD(InvokeCommand)(CMINVOKECOMMANDINFO* pici)
+    STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderContextMenu::InvokeCommand, instance=%p\n"), this);
 

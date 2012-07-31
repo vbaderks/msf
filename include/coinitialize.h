@@ -9,6 +9,7 @@
 #error WIN32_NT must be at least version 4.0 (0x400) to access CoInitaliseEx
 #endif
 
+#include "msfbase.h"
 #include <objbase.h>
 
 namespace MSF

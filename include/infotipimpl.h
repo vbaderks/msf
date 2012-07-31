@@ -70,7 +70,7 @@ public:
 
     // IPersistFile (used by XP and older)
     // Note: A lot of functions are defined by the interface, but not for infotip objects.
-    STDMETHOD(GetClassID)(LPCLSID)
+    STDMETHOD(GetClassID)(_Out_ LPCLSID)
     {
         MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetClassID"));
     }

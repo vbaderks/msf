@@ -422,6 +422,7 @@ inline int GetSystemImageListIndex(const TCHAR* pszPath)
         return 0;
 
     // Only need the index: clean-up the icon.
+	__analysis_assume(sfi.hIcon != 0);
     ATLVERIFY(DestroyIcon(sfi.hIcon));
 
     return sfi.iIcon;

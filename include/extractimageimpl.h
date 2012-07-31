@@ -119,8 +119,8 @@ public:
 
 
     // IExtractImage
-    STDMETHOD(GetLocation)(LPWSTR pszPathBuffer, DWORD cch, DWORD* pdwPriority,
-                           const SIZE* psize, DWORD dwRecClrDepth, DWORD* pdwFlags)
+    STDMETHOD(GetLocation)(LPWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
+                           __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags)
     {
         try
         {
@@ -144,7 +144,7 @@ public:
     }
 
 
-    STDMETHOD(Extract)(HBITMAP* phBmpThumbnail)
+    STDMETHOD(Extract)(__RPC__deref_out_opt HBITMAP* phBmpThumbnail)
     {
         ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::Extract (instance=%p)\n", this);
 
@@ -159,7 +159,7 @@ public:
 
 
     // IExtractImage2
-    STDMETHOD(GetDateStamp)(FILETIME* pDateStamp)
+    STDMETHOD(GetDateStamp)(__RPC__in FILETIME* pDateStamp)
     {
         ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::GetDateStamp (instance=%p, pdatastampe=%p)\n", this, pDateStamp);
 

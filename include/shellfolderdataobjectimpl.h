@@ -57,7 +57,7 @@ public:
     }
 
 
-    STDMETHOD(GetData)(FORMATETC* pformatetc, STGMEDIUM* pstgmedium)
+    STDMETHOD(GetData)(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::GetData cfformat=%d (%s)\n"), 
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
@@ -92,7 +92,7 @@ public:
     }
 
 
-    STDMETHOD(GetDataHere)(FORMATETC* pformatetc, STGMEDIUM* pmedium)
+    STDMETHOD(GetDataHere)(_In_ FORMATETC* pformatetc, _Inout_ STGMEDIUM* pmedium)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::GetDataHere (instance=%p)\n"), this);
 
@@ -100,8 +100,15 @@ public:
     }
 
 
-    STDMETHOD(QueryGetData)(FORMATETC* pformatetc)
+    STDMETHOD(QueryGetData)(__RPC__in_opt FORMATETC* pformatetc)
     {
+        // The docs define pformatetc as [in]. The SDK defines pformatetc as in_opt.
+        if (pformatetc == NULL)
+        {
+            ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::QueryGetData, pformatetc == NULL\n"));
+            return DV_E_FORMATETC;
+        }
+
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::QueryGetData, cfformat=%d (%s)\n"),
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
 
@@ -125,7 +132,7 @@ public:
     }
 
 
-    STDMETHOD(GetCanonicalFormatEtc)(FORMATETC* pformatetc, FORMATETC* pformatetcOut)
+    STDMETHOD(GetCanonicalFormatEtc)(__RPC__in_opt FORMATETC* pformatetc, __RPC__out FORMATETC* pformatetcOut)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::GetCanonicalFormatEtc (instance=%p)\n"), this);
 
@@ -133,7 +140,7 @@ public:
     }
 
 
-    STDMETHOD(SetData)(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease)
+    STDMETHOD(SetData)(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n"),
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
@@ -165,7 +172,7 @@ public:
     }
 
 
-    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, IEnumFORMATETC** ppenumFormatEtc)
+    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, _In_ IEnumFORMATETC** ppenumFormatEtc)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n"), dwDirection);
 
@@ -186,7 +193,7 @@ public:
     }
 
 
-    STDMETHOD(DAdvise)(FORMATETC* pformatetc, DWORD advf, IAdviseSink* pAdvSink, DWORD* pdwConnection)
+    STDMETHOD(DAdvise)(__RPC__in FORMATETC* pformatetc, DWORD advf, __RPC__in_opt IAdviseSink* pAdvSink, __RPC__out DWORD* pdwConnection)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::DAdvise (instance=%p)\n"), this);
 
@@ -202,7 +209,7 @@ public:
     }
 
 
-    STDMETHOD(EnumDAdvise)(IEnumSTATDATA** ppenumAdvise)
+    STDMETHOD(EnumDAdvise)(__RPC__deref_out_opt IEnumSTATDATA** ppenumAdvise)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::EnumDAdvise (instance=%p)\n"), this);
 

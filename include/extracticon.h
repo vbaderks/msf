@@ -106,7 +106,7 @@ public:
     }
 
 
-    STDMETHOD(GetIconLocation)(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, int* /*piIndex*/, UINT* pwFlags)
+    STDMETHOD(GetIconLocation)(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n"), this, uFlags);
 
@@ -114,6 +114,7 @@ public:
         {
             m_nIconIndex = TItem(m_pidl).GetIconOf(uFlags);
 
+            *piIndex = 0; // must initialize index as it is a required out parameter.
             *pwFlags = GIL_NOTFILENAME;
             return S_OK;
         }
@@ -121,7 +122,7 @@ public:
     }
 
 
-    STDMETHOD(Extract)(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, HICON* phiconLarge, HICON* phiconSmall, UINT nIconSize)
+    STDMETHOD(Extract)(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("CExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n"), this, phiconLarge, phiconSmall);
 

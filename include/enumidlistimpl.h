@@ -66,7 +66,7 @@ public:
     };
 
     // IEnumIDList
-    STDMETHOD(Next)(ULONG celt, LPITEMIDLIST* ppidl, ULONG* pceltFetched)
+    STDMETHOD(Next)(ULONG celt, _Out_writes_to_(celt, *pceltFetched) LPITEMIDLIST* ppidl, _Out_opt_ ULONG* pceltFetched)
     {
         try
         {
@@ -108,7 +108,7 @@ public:
         MSF_TRACENOTIMPL(_T("IEnumIDListImpl::Reset"));
     }
 
-    STDMETHOD(Clone)(IEnumIDList** /*ppenum*/)
+    STDMETHOD(Clone)(__RPC__deref_out_opt IEnumIDList** /*ppenum*/)
     {
         // Note: function not used by explorer \ system folder view.
         MSF_TRACENOTIMPL(_T("IEnumIDListImpl::Clone"));

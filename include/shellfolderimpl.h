@@ -149,7 +149,7 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(Initialize)(LPCITEMIDLIST pidl)
+    STDMETHOD(Initialize)(__RPC__in LPCITEMIDLIST pidl)
     {
         try
         {
@@ -165,7 +165,7 @@ public:
     }
 
     // IPersistFolder2
-    STDMETHOD(GetCurFolder)(LPITEMIDLIST* ppidl)
+    STDMETHOD(GetCurFolder)(__RPC__deref_out_opt LPITEMIDLIST* ppidl)
     {
         try
         {
@@ -178,26 +178,26 @@ public:
     }
 
     // IPersistFolder3
-    STDMETHOD(InitializeEx)(IBindCtx* pbc, LPCITEMIDLIST pidlRoot, const PERSIST_FOLDER_TARGET_INFO* /*ppfti*/)
+    STDMETHOD(InitializeEx)(__RPC__in_opt IBindCtx* pbc, __RPC__in LPCITEMIDLIST pidlRoot, __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* /*ppfti*/)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::InitializeEx (instance=%p, pcb=%p)\n"), this, pbc);
         (pbc);
         return Initialize(pidlRoot);
     }
 
-    STDMETHOD(GetFolderTargetInfo)(PERSIST_FOLDER_TARGET_INFO* /* ppfti */)
+    STDMETHOD(GetFolderTargetInfo)(__RPC__out PERSIST_FOLDER_TARGET_INFO* /* ppfti */)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetFolderTargetInfo"));
     }
 
     // IPersistIDList
-    STDMETHOD(SetIDList)(LPCITEMIDLIST pidl)
+    STDMETHOD(SetIDList)(__RPC__in LPCITEMIDLIST pidl)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::SetIDList (instance=%p, pidl=%p)\n"), this, pidl);
         return Initialize(pidl);
     }
 
-    STDMETHOD(GetIDList)(LPITEMIDLIST* ppidl)
+    STDMETHOD(GetIDList)(__RPC__deref_out_opt LPITEMIDLIST* ppidl)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetIDList (instance=%p)\n"), this);
         return GetCurFolder(ppidl);
@@ -223,7 +223,7 @@ public:
     // IShellFolder
 
     // Purpose: The shell calls this function to get the IShellFolder interface of a subfolder.
-    STDMETHOD(BindToObject)(LPCITEMIDLIST pidlSubFolder, LPBC, REFIID riid, void** ppRetVal)
+    STDMETHOD(BindToObject)(__RPC__in LPCITEMIDLIST pidlSubFolder, __RPC__in_opt LPBC, __RPC__in REFIID riid, __RPC__deref_out_opt void** ppRetVal)
     {
         try
         {
@@ -253,7 +253,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(BindToStorage)(LPCITEMIDLIST, LPBC, REFIID, LPVOID* ppRetVal)
+    STDMETHOD(BindToStorage)(__RPC__in LPCITEMIDLIST, LPBC, __RPC__in REFIID, __RPC__deref_out_opt LPVOID* ppRetVal)
     {
         *ppRetVal = NULL;
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::BindToStorage"));
@@ -261,7 +261,7 @@ public:
 
     // Purpose: the shell calls this function to get interfaces to objects such as:
     //          IShellFolder, IContextMenu or IExtractIcon for the complete folder.
-    STDMETHOD(CreateViewObject)(HWND hwndOwner, REFIID riid, void** ppRetVal)
+    STDMETHOD(CreateViewObject)(__RPC__in_opt HWND hwndOwner, __RPC__in REFIID riid, __RPC__deref_out_opt void** ppRetVal)
     {
         try
         {
@@ -305,10 +305,13 @@ public:
 
     // Purpose: The shell will call this function to get an object that can be applied
     //          to a collection of items contained in the folder.
-    STDMETHOD(GetUIObjectOf)(HWND hwnd, UINT cidl, LPCITEMIDLIST* ppidl, REFIID riid, UINT* /*reserved*/, void** ppv)
+    STDMETHOD(GetUIObjectOf)(__RPC__in_opt HWND hwnd, UINT cidl, __RPC__in_ecount_full_opt(cidl) LPCITEMIDLIST* ppidl, __RPC__in REFIID riid, __reserved UINT* /*reserved*/, __RPC__deref_out_opt void** ppv)
     {
         try
         {
+            if (ppidl == NULL)
+                return E_POINTER; // note: ppidl is marked with SAL as optional, but docs state that it is required.
+
             if (riid == __uuidof(IContextMenu))
             {
                 ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IContextMenu)\n"), this, cidl);
@@ -354,7 +357,7 @@ public:
 
     // Purpose: The Shell will call this function to get the name (string) of the item.
     //          (column 0 in details view mode).
-    STDMETHOD(GetDisplayNameOf)(LPCITEMIDLIST pidl, SHGDNF shgdnf, LPSTRRET lpname)
+    STDMETHOD(GetDisplayNameOf)(__RPC__in_opt LPCITEMIDLIST pidl, SHGDNF shgdnf, __RPC__out LPSTRRET lpname)
     {
         try
         {
@@ -369,10 +372,13 @@ public:
     }
 
     // Purpose: The shell uses this function to retrieve info about what can be done with an item.
-    STDMETHOD(GetAttributesOf)(UINT cidl, LPCITEMIDLIST* ppidl, SFGAOF* prgfInOut)
+    STDMETHOD(GetAttributesOf)(UINT cidl, __RPC__in_ecount_full_opt(cidl) LPCITEMIDLIST* ppidl, __RPC__inout SFGAOF* prgfInOut)
     {
         try
         {
+            if (ppidl == NULL)
+                return E_POINTER; // note: ppidl is marked with SAL as optional, but docs state that it is required.
+
             ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetAttributesOf (cidl=%d, rgfInOut=%X)\n"), cidl, *prgfInOut);
 
             SFGAOF sfgaof = static_cast<T*>(this)->GetAttributesOfGlobal(cidl, *prgfInOut);
@@ -394,7 +400,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(ParseDisplayName)(HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, DWORD*, LPITEMIDLIST*, DWORD* pdwAttributes)
+    STDMETHOD(ParseDisplayName)(__RPC__in_opt HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, __reserved DWORD*, __RPC__deref_out_opt LPITEMIDLIST*, __RPC__inout_opt DWORD* pdwAttributes)
     {
         // mark parameters as not used in release build.
         (hwnd);
@@ -413,7 +419,7 @@ public:
         return E_NOTIMPL;
     }
 
-    STDMETHOD(SetNameOf)(HWND hwndOwner, LPCITEMIDLIST pidl, const OLECHAR* pszNewName, SHGDNF uFlags, LPITEMIDLIST* ppidlOut)
+    STDMETHOD(SetNameOf)(_In_opt_ HWND hwndOwner, _In_ LPCITEMIDLIST pidl, _In_ const OLECHAR* pszNewName, SHGDNF uFlags, _Outptr_opt_ LPITEMIDLIST* ppidlOut)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::SetNameOf (hwnd=%d, szName=%s)\n"), hwndOwner, pszNewName);
 
@@ -441,7 +447,7 @@ public:
     }
 
     // Purpose: This function is called to sort items in details view mode.
-    STDMETHOD(CompareIDs)(LPARAM lParam, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2)
+    STDMETHOD(CompareIDs)(LPARAM lParam, __RPC__in LPCITEMIDLIST pidl1, __RPC__in LPCITEMIDLIST pidl2)
     {
         try
         {
@@ -488,8 +494,10 @@ public:
     }
 
     // IShellFolder2
-    STDMETHOD(EnumObjects)(HWND hwnd, DWORD grfFlags, IEnumIDList** ppRetVal)
+    STDMETHOD(EnumObjects)(__RPC__in_opt HWND hwnd, DWORD grfFlags, __RPC__deref_out_opt IEnumIDList** ppRetVal)
     {
+        // TODO: move to IShellFolder1
+
         try
         {
             ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::EnumObjects (hwnd=%d, grfFlags=%d, path=%s)\n"),
@@ -503,17 +511,17 @@ public:
         MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, EC_CREATE_ENUMIDLIST)
     }
 
-    STDMETHOD(GetDefaultSearchGUID)(GUID* /*pguid*/)
+    STDMETHOD(GetDefaultSearchGUID)(__RPC__out GUID* /*pguid*/)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetDefaultSearchGUID"));
     }
 
-    STDMETHOD(EnumSearches)(IEnumExtraSearch** /*ppenum */)
+    STDMETHOD(EnumSearches)(__RPC__deref_out_opt IEnumExtraSearch** /*ppenum */)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::EnumSearches"));
     }
 
-    STDMETHOD(GetDefaultColumn)(DWORD /*dwReserved*/, ULONG* pSort, ULONG* pDisplay)
+    STDMETHOD(GetDefaultColumn)(DWORD /*dwReserved*/, __RPC__out ULONG* pSort, __RPC__out ULONG* pDisplay)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetDefaultColumn\n"));
 
@@ -523,7 +531,7 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(GetDefaultColumnState)(UINT iColumn, SHCOLSTATEF* pcsFlags)
+    STDMETHOD(GetDefaultColumnState)(UINT iColumn, __RPC__out SHCOLSTATEF* pcsFlags)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetDefaultColumnState (iColumn=%d)\n"), iColumn);
 
@@ -534,12 +542,12 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(GetDetailsEx)(LPCITEMIDLIST /*pidl*/, const SHCOLUMNID* /*pscid*/, VARIANT* /*pv*/)
+    STDMETHOD(GetDetailsEx)(__RPC__in_opt LPCITEMIDLIST /*pidl*/, __RPC__in const SHCOLUMNID* /*pscid*/, __RPC__out VARIANT* /*pv*/)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetDetailsEx"));
     }
 
-    STDMETHOD(MapColumnToSCID)(UINT /*iColumn*/, SHCOLUMNID* /*pscid*/)
+    STDMETHOD(MapColumnToSCID)(UINT /*iColumn*/, __RPC__out SHCOLUMNID* /*pscid*/)
     {
         MSF_TRACENOTIMPL(_T("IShellFolderImpl::MapColumnToSCID"));
     }
@@ -574,7 +582,7 @@ public:
     // IShellIcon
     // Purpose: There are 2 ways for the shell to get a icon for the 'view.'
     //          This functions call is prefered by the shell as it slightly faster.
-    STDMETHOD(GetIconOf)(LPCITEMIDLIST pidl, UINT flags, int* pIconIndex)
+    STDMETHOD(GetIconOf)(__RPC__in LPCITEMIDLIST pidl, UINT flags, __RPC__out int* pIconIndex)
     {
         try
         {
@@ -588,7 +596,7 @@ public:
     }
 
     // IDropTarget
-    STDMETHOD(DragEnter)(IDataObject* pdataobject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
+    STDMETHOD(DragEnter)(_In_ IDataObject* pdataobject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragEnter (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
 
@@ -610,7 +618,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
+    STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragOver (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
 
@@ -636,7 +644,7 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(Drop)(IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect)
+    STDMETHOD(Drop)(_In_ IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
         (grfKeyState);
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::Drop (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);

@@ -74,7 +74,7 @@ public:
     {
         _qformatetcs = qformatetcs;
 
-        ATLVERIFY(SUCCEEDED(__super::Init(NULL, *_qformatetcs)));
+        ATLVERIFY(SUCCEEDED(__super::Init(this, *_qformatetcs)));
     }
 
 private:

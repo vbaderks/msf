@@ -59,10 +59,15 @@
 #define _Outptr_ __deref_out // Prefast defintion not available before VS 11.
 #endif
 
-#ifdef _PREFAST_ // defined for the static analyser in VC 2005 / 2008
-#pragma warning(disable: 6387) // 'return value' might be '0': this does not adhere to the specification for the function
-#pragma warning(disable: 6385) // Invalid data.....
-#pragma warning(disable: 6386) // Buffer overrun: accessing 'argument 1'...'
+// The Windows SDK headers files and ATL header files generate static analyzer warnings. Filter these warnings.
+#ifdef _PREFAST_ // defined when Visual Studio C\C++ /analyze is used.
+#pragma warning(disable: 6054)  // String 'Buf' might not be zero-terminated.
+#pragma warning(disable: 6385)  // Invalid data.....
+#pragma warning(disable: 6386)  // Buffer overrun: accessing 'argument 1'...'
+#pragma warning(disable: 6387)  // 'return value' might be '0': this does not adhere to the specification for the function
+#pragma warning(disable: 6388)  // '*xxxx' might not be '0':
+#pragma warning(disable: 28196) // The requirement that '...' is not satisfied.
+#pragma warning(disable: 28204)  // 'QueryInterface' : Only one of this override and the one at.. (caused by END_COM_MAP)
 #endif
 
 // Standard C++ library
@@ -85,6 +90,18 @@
 
 #pragma warning(pop)
 
+// Visual Studio 2012 contains SAL2 (MS Static Analyzer Standard Annatation Language). Define missing used SAL2 macros to support older VS compilers.
+#ifndef _Out_writes_to_
+#define _Out_writes_to_(size,count)
+#endif
+
+#ifndef _Outptr_opt_
+#define _Outptr_opt_
+#endif
+
+#ifdef _PREFAST_ // defined when Visual Studio C\C++ /analyze is used.
+#pragma warning(disable: 6509)  // Invalid annotation: 'return' cannot be referenced in some contexts. [must be disabled globaly to supress issues in Win SDK]
+#endif
 
 // core MSF include files
 #include "shlobjhidden.h"

@@ -51,8 +51,8 @@ interface IBrowserFrameOptions : public IUnknown
 {
 public:
 	virtual HRESULT STDMETHODCALLTYPE GetFrameOptions(
-		/* [in] */  BROWSERFRAMEOPTIONS  dwMask,
-		/* [out] */ BROWSERFRAMEOPTIONS* pdwOptions) = 0;
+		_In_  BROWSERFRAMEOPTIONS  dwMask,
+		_Out_ BROWSERFRAMEOPTIONS* pdwOptions) = 0;
 };
 
 // The Win32 SDK header files don't attach the GUID to the interface.
