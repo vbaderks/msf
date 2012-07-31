@@ -12,6 +12,7 @@
 #include <shlobj.h>
 #include <msidefs.h> // for PID_AUTHOR
 
+
 class ATL_NO_VTABLE CColumnProvider :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CColumnProvider, &__uuidof(CColumnProvider)>,
@@ -28,12 +29,11 @@ public:
             bRegister, IDR_COLUMNPROVIDER, L"VVV Sample ShellExtension");
     }
 
-    DECLARE_PROTECT_FINAL_CONSTRUCT()
-
     BEGIN_COM_MAP(CColumnProvider)
         COM_INTERFACE_ENTRY(IColumnProvider)
     END_COM_MAP()
 
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
     void OnInitialize(PCWSTR /*wszFolder*/)
     {
