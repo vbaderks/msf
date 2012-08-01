@@ -244,7 +244,7 @@ public:
 
     ~IContextMenuImpl() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::Destructor (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::~IContextMenuImpl (instance=%p)\n"), this);
 
         ClearMenuItems();
     }
@@ -253,7 +253,7 @@ public:
     // IContextMenu
     STDMETHOD(QueryContextMenu)( _In_ HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n"),
+        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n"),
             this, indexMenu, idCmdFirst, idCmdLast, uFlags);
 
         try
@@ -279,7 +279,7 @@ public:
 
     STDMETHOD(GetCommandString)(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::GetCommandString, instance=%p, flags=%x"), this, uFlags);
+        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x"), this, uFlags);
 
         try
         {
@@ -310,7 +310,7 @@ public:
 
     STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CContextMenu::InvokeCommand, instance=%p\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("CContextMenu::IContextMenu::InvokeCommand, instance=%p\n"), this);
 
         try
         {
@@ -328,6 +328,7 @@ public:
     // IContextMenu2
     STDMETHOD(HandleMenuMsg)(UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
+        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n"));
         return HandleMenuMsg2(uMsg, wParam, lParam, NULL);
     }
 
@@ -338,33 +339,33 @@ public:
     //       WM_MENUCHAR but this is not true (seen on XP sp2).
     //       HandleMenuMsg2 is called also directly for WM_INITMENUPOPUP, etc when 
     //       the shell detects that IContextMenu3 is supported.
-    //       
+    //
     STDMETHOD(HandleMenuMsg2)(UINT uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult)
     {
         try
         {
-			// Always initialize out parameters.
+            // Always initialize out parameters.
             if (plResult != NULL)
-			{
-				*plResult = 0;
-			}
+            {
+                *plResult = 0;
+            }
 
             switch (uMsg)
             {
             case WM_INITMENUPOPUP:
-                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::HandleMenuMsg (OnInitMenuPopup)\n"));
+                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnInitMenuPopup)\n"));
                 return static_cast<T*>(this)->OnInitMenuPopup(reinterpret_cast<HMENU>(wParam), LOWORD(lParam));
 
             case WM_DRAWITEM:
-                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::HandleMenuMsg (OnDrawItem)\n"));
+                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnDrawItem)\n"));
                 return static_cast<T*>(this)->OnDrawItem(reinterpret_cast<DRAWITEMSTRUCT*>(lParam));
 
             case WM_MEASUREITEM:
-                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::HandleMenuMsg (OnMeasureItem)\n"));
+                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMeasureItem)\n"));
                 return static_cast<T*>(this)->OnMeasureItem(reinterpret_cast<MEASUREITEMSTRUCT*>(lParam));
 
             case WM_MENUCHAR:
-                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::HandleMenuMsg (OnMenuChar)\n"));
+                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n"));
                 if (plResult == NULL)
                     return E_FAIL;
 

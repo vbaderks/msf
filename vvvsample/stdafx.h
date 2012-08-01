@@ -10,8 +10,8 @@
 // Allow use of features specific to Windows XP or later.
 #define WINVER 0x0501
 
-// Allow use of features specific to Windows XP or later.
-#define _WIN32_WINNT 0x0501
+// Allow use of features specific to Windows 7 or later.
+#define _WIN32_WINNT 0x0601
 
 // Allow use of features specific to Windows 98 or later.
 // Change this to the appropriate value to target Windows Me or later.

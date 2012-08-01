@@ -45,6 +45,7 @@ public:
         COM_INTERFACE_ENTRY2(IPersist, IPersistFolder2)
         COM_INTERFACE_ENTRY(IPersistFolder)
         COM_INTERFACE_ENTRY(IPersistFolder2)
+        COM_INTERFACE_ENTRY(IPersistFolder3)
         COM_INTERFACE_ENTRY(IPersistIDList)
         COM_INTERFACE_ENTRY(IShellFolder)  // included in this sample for backwards (win9x) compatiblity.
         COM_INTERFACE_ENTRY(IShellFolder2)
@@ -53,6 +54,7 @@ public:
         COM_INTERFACE_ENTRY(IShellIcon)
         COM_INTERFACE_ENTRY(IItemNameLimits)
         COM_INTERFACE_ENTRY(IDropTarget)   // enable drag and drop support.
+        COM_INTERFACE_ENTRY(IObjectWithFolderEnumMode) // used by Windows 7 and up
     END_COM_MAP()
 
 

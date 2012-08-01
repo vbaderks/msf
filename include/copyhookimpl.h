@@ -51,7 +51,7 @@ public:
 
     ~ICopyHookImpl() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("ICopyHookImpl::Destructor (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("ICopyHookImpl::~ICopyHookImpl (instance=%p)\n"), this);
     }
 
     // ICopyHookImpl only consists of 1 function. So there is little to provide.

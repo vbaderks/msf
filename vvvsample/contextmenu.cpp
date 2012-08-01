@@ -17,7 +17,8 @@
 class ATL_NO_VTABLE CContextMenu :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CContextMenu, &__uuidof(CContextMenu)>,
-    public IContextMenuImpl<CContextMenu>
+    public IContextMenuImpl<CContextMenu>,
+    public IObjectWithSiteImpl<CContextMenu>
 {
 public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
@@ -31,6 +32,7 @@ public:
         COM_INTERFACE_ENTRY(IContextMenu)
         COM_INTERFACE_ENTRY(IContextMenu2)
         COM_INTERFACE_ENTRY(IContextMenu3)
+        COM_INTERFACE_ENTRY(IObjectWithSite) // Used by Vista and up to set the site. The site can be used for menu commands like 'rename'
     END_COM_MAP()
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()

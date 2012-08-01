@@ -236,6 +236,7 @@
     <ClInclude Include="include\htmlinputelementptr.h" />
     <ClInclude Include="include\ibrowserframeoptions.h" />
     <ClInclude Include="include\idldatacreatefromidarray.h" />
+    <ClInclude Include="include\ifoldertype.h" />
     <ClInclude Include="include\imagelistindex.h" />
     <ClInclude Include="include\infotipimpl.h" />
     <ClInclude Include="include\infotipptr.h" />
@@ -244,6 +245,7 @@
     <ClInclude Include="include\ishellfolderviewtype.h" />
     <ClInclude Include="include\itembase.h" />
     <ClInclude Include="include\itemnamelimitsimpl.h" />
+    <ClInclude Include="include\itopviewawareitem.h" />
     <ClInclude Include="include\macros.h" />
     <ClInclude Include="include\menu.h" />
     <ClInclude Include="include\menuiteminfo.h" />

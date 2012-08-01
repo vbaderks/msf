@@ -299,6 +299,12 @@
     <ClInclude Include="include\webbrowser2ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\itopviewawareitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ifoldertype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="include\shell32missing.lib" />

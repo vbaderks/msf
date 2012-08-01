@@ -52,13 +52,13 @@ public:
         CSnapInPropertyPageImpl<T>(lpszTitle),
         m_nRef(0)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellExtPropertyPageImpl::Constructor (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("CShellExtPropertyPageImpl::CShellExtPropertyPageImpl (instance=%p)\n"), this);
         _pAtlModule->Lock(); // propertypage is not a COM object, but DLL must stay in memory.
     }
 
     ~CShellExtPropertyPageImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellExtPropertyPageImpl::Destructor (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("CShellExtPropertyPageImpl::~CShellExtPropertyPageImpl (instance=%p)\n"), this);
         _pAtlModule->Unlock();
     }
 

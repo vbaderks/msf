@@ -17,6 +17,7 @@
 #include "cfpastesucceeded.h"
 #include "performeddropeffectsink.h"
 #include "idldatacreatefromidarray.h"
+#include "itopviewawareitem.h"
 #include "shellfoldercontextmenu.h"
 #include "sfvcreate.h"
 #include "queryinfo.h"
@@ -42,6 +43,7 @@ class ATL_NO_VTABLE IShellFolderImpl :
     public IPersistIDList,
     public IShellDetails,
     public IShellFolder2,
+    public IObjectWithFolderEnumMode,
     public IShellIcon,
     public IDropTarget,
     public IShellFolderContextMenuSink,
@@ -140,7 +142,7 @@ public:
     // IPersistFolder
     STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetClassID (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistFolder::GetClassID (instance=%p)\n"), this);
 
         if (pClassID == NULL)
             return E_POINTER;
@@ -153,7 +155,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::Initialize (instance=%p, pidl=%p)\n"), this, pidl);
+            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistFolder::Initialize (instance=%p, pidl=%p)\n"), this, pidl);
 
             if (pidl == NULL)
                 return E_INVALIDARG;
@@ -169,7 +171,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetCurFolder (instance=%p)\n"), this);
+            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistFolder2::GetCurFolder (instance=%p)\n"), this);
 
             *ppidl = m_pidlFolder.Clone();
             return S_OK;
@@ -178,35 +180,38 @@ public:
     }
 
     // IPersistFolder3
-    STDMETHOD(InitializeEx)(__RPC__in_opt IBindCtx* pbc, __RPC__in LPCITEMIDLIST pidlRoot, __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* /*ppfti*/)
+    STDMETHOD(InitializeEx)(__RPC__in_opt IBindCtx* pbc, __RPC__in LPCITEMIDLIST pidlRoot, __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* ppfti)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::InitializeEx (instance=%p, pcb=%p)\n"), this, pbc);
         (pbc);
+        (ppfti);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistFolder3::InitializeEx (instance=%p, pcb=%p, pidlRoot=%p, ppfti=%p)\n"), this, pbc, pidlRoot, ppfti);
+
+        // Note: if ppfti is NULL InitializeEx should act as Initialize.
         return Initialize(pidlRoot);
     }
 
     STDMETHOD(GetFolderTargetInfo)(__RPC__out PERSIST_FOLDER_TARGET_INFO* /* ppfti */)
     {
-        MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetFolderTargetInfo"));
+        MSF_TRACENOTIMPL(_T("IShellFolderImpl::IPersistFolder3::GetFolderTargetInfo"));
     }
 
     // IPersistIDList
     STDMETHOD(SetIDList)(__RPC__in LPCITEMIDLIST pidl)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::SetIDList (instance=%p, pidl=%p)\n"), this, pidl);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistIDList::SetIDList (instance=%p, pidl=%p)\n"), this, pidl);
         return Initialize(pidl);
     }
 
     STDMETHOD(GetIDList)(__RPC__deref_out_opt LPITEMIDLIST* ppidl)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetIDList (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistIDList::GetIDList (instance=%p)\n"), this);
         return GetCurFolder(ppidl);
     }
 
     // IShellDetails
     STDMETHOD(ColumnClick)(UINT uiColumn)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::ColumnClick (instance=%p, column=%d)\n"), this, uiColumn);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n"), this, uiColumn);
 
         if (IsShell5OrHigher())
         {
@@ -227,7 +232,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::BindToObject (instance=%p)\n"), this);
+            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::BindToObject (instance=%p)\n"), this);
             
             // Quick check if requested interface is supported at all (on ourself).
             HRESULT hr = static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
@@ -256,7 +261,54 @@ public:
     STDMETHOD(BindToStorage)(__RPC__in LPCITEMIDLIST, LPBC, __RPC__in REFIID, __RPC__deref_out_opt LPVOID* ppRetVal)
     {
         *ppRetVal = NULL;
-        MSF_TRACENOTIMPL(_T("IShellFolderImpl::BindToStorage"));
+        MSF_TRACENOTIMPL(_T("IShellFolderImpl::IShellFolder::BindToStorage"));
+    }
+
+    // Purpose: This function is called to sort items in details view mode.
+    STDMETHOD(CompareIDs)(LPARAM lParam, __RPC__in LPCITEMIDLIST pidl1, __RPC__in LPCITEMIDLIST pidl2)
+    {
+        try
+        {
+            if (pidl1->mkid.cb == 0 && pidl2->mkid.cb == 0)
+            {
+                // Win98 sometimes tries to compare empty pidls.
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CompareIDs (lparam=%d, pidl1=%p, pidl2=%p)\n"),
+                    lParam, pidl1, pidl2);
+                return E_INVALIDARG;
+            }
+
+            int nResult = 0;
+            while (pidl1 != NULL && pidl2 != NULL)
+            {
+                TItem item1(pidl1);
+                TItem item2(pidl2);
+
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CompareIDs (lparam=%X, name1=%s, name2=%s)\n"), 
+                    lParam, item1.GetDisplayName(SHGDN_NORMAL).GetString(), item2.GetDisplayName(SHGDN_NORMAL).GetString());
+
+                nResult = static_cast<T*>(this)->CompareItems(lParam, item1, item2);
+                if (nResult != 0)
+                    break; // different items.
+
+                pidl1 = CPidl::GetNextItem(pidl1);
+                pidl2 = CPidl::GetNextItem(pidl2);
+
+                if (pidl1 == NULL && pidl2 != NULL)
+                {
+                    nResult = -1; // pidl1 is at a higher level than pidl2
+                    break;
+                }
+
+                if (pidl1 != NULL && pidl2 == NULL)
+                {
+                    nResult = 1; // pidl2 is at a higher level than pidl1
+                    break;
+                }
+            }
+
+            return MAKE_HRESULT(SEVERITY_SUCCESS, 0, static_cast<USHORT>(nResult));
+        }
+        MSF_COM_CATCH_HANDLER()
     }
 
     // Purpose: the shell calls this function to get interfaces to objects such as:
@@ -271,23 +323,28 @@ public:
 
             if (riid == __uuidof(IShellDetails))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (instance=%p, riid=IShellDetails)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellDetails)\n"), this);
                 return static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
             } 
             else if (riid == __uuidof(IShellView))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (instance=%p, riid=IShellView)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellView)\n"), this);
                 *ppRetVal = static_cast<T*>(this)->CreateShellFolderView().Detach();
             }
             else if (riid == __uuidof(IDropTarget))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (instance=%p, riid=IDropTarget)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IDropTarget)\n"), this);
                 *ppRetVal = static_cast<T*>(this)->CreateDropTarget().Detach();
             }
             else if (riid == __uuidof(IContextMenu))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CreateViewObject (instance=%p, riid=IContextMenu)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IContextMenu)\n"), this);
                 *ppRetVal = static_cast<T*>(this)->CreateFolderContextMenu().Detach();
+            }
+            else if (riid == __uuidof(ITopViewAwareItem))
+            {
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=ITopViewAwareItem)\n"), this);
+                *ppRetVal = NULL; // ITopViewAwareItem is an undocumented inteface, purpose not clear.
             }
             else
             {
@@ -446,53 +503,6 @@ public:
         MSF_COM_CATCH_HANDLER_ON_ERROR(hwndOwner, EC_ON_SET_NAME_OF)
     }
 
-    // Purpose: This function is called to sort items in details view mode.
-    STDMETHOD(CompareIDs)(LPARAM lParam, __RPC__in LPCITEMIDLIST pidl1, __RPC__in LPCITEMIDLIST pidl2)
-    {
-        try
-        {
-            if (pidl1->mkid.cb == 0 && pidl2->mkid.cb == 0)
-            {
-                // Win98 sometimes tries to compare empty pidls.
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CompareIDs (lparam=%d, pidl1=%p, pidl2=%p)\n"),
-                    lParam, pidl1, pidl2);
-                return E_INVALIDARG;
-            }
-
-            int nResult = 0;
-            while (pidl1 != NULL && pidl2 != NULL)
-            {
-                TItem item1(pidl1);
-                TItem item2(pidl2);
-
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::CompareIDs (lparam=%X, name1=%s, name2=%s)\n"), 
-                    lParam, item1.GetDisplayName(SHGDN_NORMAL).GetString(), item2.GetDisplayName(SHGDN_NORMAL).GetString());
-
-                nResult = static_cast<T*>(this)->CompareItems(lParam, item1, item2);
-                if (nResult != 0)
-                    break; // different items.
-
-                pidl1 = CPidl::GetNextItem(pidl1);
-                pidl2 = CPidl::GetNextItem(pidl2);
-
-                if (pidl1 == NULL && pidl2 != NULL)
-                {
-                    nResult = -1; // pidl1 is at a higher level than pidl2
-                    break;
-                }
-
-                if (pidl1 != NULL && pidl2 == NULL)
-                {
-                    nResult = 1; // pidl2 is at a higher level than pidl1
-                    break;
-                }
-            }
-
-            return MAKE_HRESULT(SEVERITY_SUCCESS, 0, static_cast<USHORT>(nResult));
-        }
-        MSF_COM_CATCH_HANDLER()
-    }
-
     // IShellFolder2
     STDMETHOD(EnumObjects)(__RPC__in_opt HWND hwnd, DWORD grfFlags, __RPC__deref_out_opt IEnumIDList** ppRetVal)
     {
@@ -577,6 +587,25 @@ public:
             return S_OK;
         }
         MSF_COM_CATCH_HANDLER()
+    }
+
+    // IObjectWithFolderEnumMode
+    STDMETHOD(SetMode)(FOLDER_ENUM_MODE feMode)
+    {
+        // Note: it seems that the shell always passes FEM_VIEWRESULT.
+        (feMode);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IObjectWithFolderEnumMode::SetMode (feMode=%d, 0=FEM_VIEWRESULT, 1=FEM_NAVIGATION)\n"), feMode);
+        return S_OK;
+    }
+
+    STDMETHOD(GetMode)(__RPC__out FOLDER_ENUM_MODE *pfeMode)
+    {
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IObjectWithFolderEnumMode::GetMode (pfeMode=%p)\n"), pfeMode);
+
+        // Note: the MSDN docs are unclear what the difference is between the enum modes.
+        // Note2: it seems that the shell only calls SetMode to notify the shell folder in which mode to operate and not this method.
+        *pfeMode = FEM_VIEWRESULT;
+        return S_OK;
     }
 
     // IShellIcon

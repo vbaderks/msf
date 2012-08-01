@@ -59,7 +59,7 @@ public:
 
     STDMETHOD(GetData)(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::GetData cfformat=%d (%s)\n"), 
+        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n"), 
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
 
         try
@@ -105,7 +105,7 @@ public:
         // The docs define pformatetc as [in]. The SDK defines pformatetc as in_opt.
         if (pformatetc == NULL)
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::QueryGetData, pformatetc == NULL\n"));
+            ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::QueryGetData (pformatetc == NULL)\n"));
             return DV_E_FORMATETC;
         }
 
