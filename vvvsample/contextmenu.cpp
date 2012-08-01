@@ -24,7 +24,7 @@ public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
     {
         return IContextMenuImpl<CContextMenu>::UpdateRegistry(bRegister, IDR_CONTEXTMENU,
-            L"VVV Sample ShellExtension", wszVVVFileRootExt);
+            L"VVV Sample Context Menu ShellExtension", wszVVVFileRootExt);
     }
 
     BEGIN_COM_MAP(CContextMenu)

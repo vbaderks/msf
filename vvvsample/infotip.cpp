@@ -28,7 +28,7 @@ public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
     {
         return IInfoTipImpl<CInfoTip>::UpdateRegistry(bRegister, IDR_INFOTIP,
-            L"VVV Sample ShellExtension", wszVVVFileRootExt);
+            L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);
     }
 
     void InitializeImpl(const TCHAR* szFilename, DWORD /*dwMode*/)

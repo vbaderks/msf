@@ -11,47 +11,47 @@
 
 
 class ATL_NO_VTABLE CExtractImage :
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CExtractImage, &__uuidof(CExtractImage)>,
-	public IExtractImageImpl<CExtractImage>
+    public CComObjectRootEx<CComSingleThreadModel>,
+    public CComCoClass<CExtractImage, &__uuidof(CExtractImage)>,
+    public IExtractImageImpl<CExtractImage>
 {
 public:
-	BEGIN_COM_MAP(CExtractImage)
-		COM_INTERFACE_ENTRY(IPersistFile)
-		COM_INTERFACE_ENTRY(IExtractImage)
-		COM_INTERFACE_ENTRY(IExtractImage2)
-	END_COM_MAP()
+    BEGIN_COM_MAP(CExtractImage)
+        COM_INTERFACE_ENTRY(IPersistFile)
+        COM_INTERFACE_ENTRY(IExtractImage)
+        COM_INTERFACE_ENTRY(IExtractImage2)
+    END_COM_MAP()
 
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
-	{
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    {
         // TODO: update to new reg model.
-		return IExtractImageImpl<CExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,
-			L"Sample ShellExtension ExtractImage", __uuidof(CShellFolder), wszVVVExtension);
-	}
+        return IExtractImageImpl<CExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,
+            L"VVV Sample ExtractImage ShellExtension", __uuidof(CShellFolder), wszVVVExtension);
+    }
 
 
-	HBITMAP CreateImage(const SIZE& size, DWORD dwRecClrDepth, DWORD /*dwFlags*/)
-	{
-		// TODO: fix this function
-		HBITMAP hbitmap = CreateBitmap(size.cx, size.cy, 1, dwRecClrDepth, NULL);
+    HBITMAP CreateImage(const SIZE& size, DWORD dwRecClrDepth, DWORD /*dwFlags*/)
+    {
+        // TODO: fix this function
+        HBITMAP hbitmap = CreateBitmap(size.cx, size.cy, 1, dwRecClrDepth, NULL);
 
-		HDC hdc = CreateCompatibleDC(NULL);
+        HDC hdc = CreateCompatibleDC(NULL);
 
-		HGDIOBJ hgdiobjectOriginal = SelectObject(hdc, hbitmap);
+        HGDIOBJ hgdiobjectOriginal = SelectObject(hdc, hbitmap);
 
-		HBRUSH hbrush = CreateSolidBrush(RGB(0, 0, 255));
+        HBRUSH hbrush = CreateSolidBrush(RGB(0, 0, 255));
 
-		RECT rect = {0, 0, size.cx, size.cx};
-		FillRect(hdc, &rect, hbrush);
+        RECT rect = {0, 0, size.cx, size.cx};
+        FillRect(hdc, &rect, hbrush);
 
-		DeleteObject(hbrush);
-		hgdiobjectOriginal = SelectObject(hdc, hgdiobjectOriginal);
-		DeleteDC(hdc);
+        DeleteObject(hbrush);
+        hgdiobjectOriginal = SelectObject(hdc, hgdiobjectOriginal);
+        DeleteDC(hdc);
 
-		return hbitmap;
-	}
+        return hbitmap;
+    }
 };
 
 #if 0
@@ -77,7 +77,7 @@ HBITMAP hbmp= CreateDIBSection( dc,
 
 // --------------------------
 
-	HBITMAP Create_DIB_Sec( int cxImage, int cyImage,
+    HBITMAP Create_DIB_Sec( int cxImage, int cyImage,
         int nBitsPerPixel, void **ppImageBits )
 {
     HDC hDC = GetDC( NULL );

@@ -36,7 +36,7 @@ public:
     {
         return IShellFolderImpl<CShellFolder, CVVVItem>::UpdateRegistry(
             bRegister, IDR_SHELLFOLDER,
-            L"Sample ShellExtension ShellFolder", wszVVVFileRootExt, IDS_SHELLFOLDER_TYPE);
+            L"VVV Sample ShellFolder ShellExtension ", wszVVVFileRootExt, IDS_SHELLFOLDER_TYPE);
     }
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()

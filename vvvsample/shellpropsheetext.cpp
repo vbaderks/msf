@@ -20,7 +20,7 @@ public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
     {
         return IShellPropSheetExtImpl<CShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
-            L"VVV Sample ShellExtension", wszVVVFileRootExt);
+            L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
     }
 
 
