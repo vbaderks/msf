@@ -15,29 +15,29 @@
 namespace MSF
 {
 
-inline CString GetModuleDirectory()
+inline ATL::CString GetModuleDirectory()
 {
     TCHAR sz[MAX_PATH];
     ATLVERIFY(::GetModuleFileName(GetModuleHandle(NULL), sz, MAX_PATH));
 
     PathRemoveFileSpec(sz);
 
-    return sz + CString(_T("\\"));
+    return sz + ATL::CString(_T("\\"));
 }
 
 
-inline CStringW GetModuleDirectoryW()
+inline ATL::CStringW GetModuleDirectoryW()
 {
     wchar_t wz[MAX_PATH];
     ATLVERIFY(::GetModuleFileNameW(GetModuleHandle(NULL), wz,  MAX_PATH));
 
     PathRemoveFileSpecW(wz);
 
-    return wz + CStringW(L"\\");
+    return wz + ATL::CStringW(L"\\");
 }
 
 
-inline CString GetSystemDirectory()
+inline ATL::CString GetSystemDirectory()
 {
     TCHAR tsz[MAX_PATH];
     ATLVERIFY(::GetSystemDirectory(tsz,MAX_PATH));
@@ -47,17 +47,17 @@ inline CString GetSystemDirectory()
 
 
 // Note: use ANSI version and convert self. Win 9x only has ANSI version.
-inline CStringW GetFolderPath(int nFolder)
+inline ATL::CStringW GetFolderPath(int nFolder)
 {
     TCHAR tszFolderPath[MAX_PATH];
 
     tszFolderPath[0] = 0;
     ATLVERIFY(SHGetSpecialFolderPath(NULL, tszFolderPath, nFolder, false));
-    return CStringW(CT2W(tszFolderPath));
+    return ATL::CStringW(ATL::CT2W(tszFolderPath));
 }
 
 
-inline DWORD GetFileSize(const CString& strFile)
+inline DWORD GetFileSize(const ATL::CString& strFile)
 {
     HANDLE hFile = CreateFile(strFile, 0, 0, NULL, OPEN_EXISTING, 0, 0);
     RaiseExceptionIf(hFile == INVALID_HANDLE_VALUE);
@@ -95,7 +95,7 @@ inline int UIntCmp(unsigned int n1, unsigned int n2) throw()
 }
 
 
-inline CString FormatLastError(DWORD dwLastError)
+inline ATL::CString FormatLastError(DWORD dwLastError)
 {
     LPTSTR lpMsgBuf;
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
@@ -108,7 +108,7 @@ inline CString FormatLastError(DWORD dwLastError)
                   0,
                   NULL);
 
-    CString str(lpMsgBuf);
+    ATL::CString str(lpMsgBuf);
     LocalFree(lpMsgBuf);
 
     return str;
@@ -175,11 +175,7 @@ public:
 
 // Purpose: 'short' version of Win32 function CreateProcess. 
 //          Usefull for shell extensions that just need a quick way to start apps.
-#ifdef _PREFAST_
-#pragma warning(push)
-#pragma warning(disable: 6335) // supress sa noise: leaking process handle
-#endif
-
+ATLPREFAST_SUPPRESS(6335) // supress sa noise: leaking process handle
 inline void CreateProcess(LPCTSTR szApplicationName, LPTSTR szCmdLine, LPCTSTR lpCurrentDirectory = NULL)
 {
     CStartupInfo startupinfo;
@@ -188,14 +184,12 @@ inline void CreateProcess(LPCTSTR szApplicationName, LPTSTR szCmdLine, LPCTSTR l
     RaiseLastErrorExceptionIf(!::CreateProcess(szApplicationName, szCmdLine, 
         NULL, NULL, false, 0, NULL, lpCurrentDirectory, &startupinfo, &process_information));
 }
+ATLPREFAST_UNSUPPRESS()
 
-#ifdef _PREFAST_
-#pragma warning(pop)
-#endif
 
 // Purpose: helper function to retrieve string from registry. Function will return string and
 //          and true if string could be obtained.
-inline bool QueryRegKeyStringValue(CRegKey& regkey, LPCTSTR pszValueName, CString& strValue) throw()
+inline bool QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, ATL::CString& strValue) throw()
 {
     unsigned long ulLength = 0;
     if (regkey.QueryStringValue(pszValueName, NULL, &ulLength) != ERROR_MORE_DATA)
@@ -210,9 +204,9 @@ inline bool QueryRegKeyStringValue(CRegKey& regkey, LPCTSTR pszValueName, CStrin
 
 
 // Purpose: Helper for use cases to read optional registry keys.
-inline CString QueryRegKeyStringValue(CRegKey& regkey, LPCTSTR pszValueName, const CString& strDefault = CString()) throw()
+inline ATL::CString QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, const ATL::CString& strDefault = ATL::CString()) throw()
 {
-    CString strValue;
+    ATL::CString strValue;
     if (QueryRegKeyStringValue(regkey, pszValueName, strValue))
     {
         return strValue;
@@ -224,7 +218,7 @@ inline CString QueryRegKeyStringValue(CRegKey& regkey, LPCTSTR pszValueName, con
 }
 
 
-inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::vector<CString>& rgStrings)
+inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::vector<ATL::CString>& rgStrings)
 {
     rgStrings.clear();
 
@@ -285,7 +279,7 @@ inline CLIPFORMAT RegisterCf(LPCTSTR lpszFormat)
 }
 
 
-inline CString GetClipboardFormatName(UINT format)
+inline ATL::CString GetClipboardFormatName(UINT format)
 {
     switch (format)
     {

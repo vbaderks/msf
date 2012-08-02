@@ -15,14 +15,14 @@ namespace MSF
 class CContextCommand
 {
 public:
-	virtual ~CContextCommand() throw()
-	{
-	}
+    virtual ~CContextCommand() throw()
+    {
+    }
 
-	virtual void operator()(const CMINVOKECOMMANDINFO* /* pici */,
-	                        const std::vector<CString>& /* filenames */)
-	{
-	}
+    virtual void operator()(const CMINVOKECOMMANDINFO* /* pici */,
+                            const std::vector<ATL::CString>& /* filenames */)
+    {
+    }
 };
 
 } // end namespace MSF

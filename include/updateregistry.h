@@ -24,7 +24,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR sz
     COleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
-    _ATL_REGMAP_ENTRY regmapEntries[] =
+    ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"DESCRIPTION", szDescription },
         { L"CLSID", olestrCLSID },
@@ -42,7 +42,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     COleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
-    _ATL_REGMAP_ENTRY regmapEntries[] =
+    ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"DESCRIPTION", szDescription },
         { L"CLSID", olestrCLSID },
@@ -78,7 +78,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     COleString olestrClsidShellFolder;
     StringFromCLSID(clsidShellFolder, olestrClsidShellFolder);
 
-    _ATL_REGMAP_ENTRY regmapEntries[] =
+    ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"DESCRIPTION", szShellExtDescription },
         { L"EXTENSION", szExtension },

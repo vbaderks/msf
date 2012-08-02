@@ -11,25 +11,25 @@ namespace MSF
 {
 
 /// <summary>Converts the numeric input value to its equivalent string representation.</summary>
-inline CString ToString(unsigned int uiValue)
+inline ATL::CString ToString(unsigned int uiValue)
 {
-    CString str;
+    ATL::CString str;
     str.Format(_T("%d"), uiValue);
     return str;
 }
 
 /// <summary>Converts the numeric input value to its equivalent string representation.</summary>
-inline CStringW ToStringW(unsigned int uiValue)
+inline ATL::CStringW ToStringW(unsigned int uiValue)
 {
-    CStringW str;
+    ATL::CStringW str;
     str.Format(L"%d", uiValue);
     return str;
 }
 
 /// <summary>Load a resource string.</summary>
-inline CString LoadString(UINT nID)
+inline ATL::CString LoadString(UINT nID)
 {
-    CString str;
+    ATL::CString str;
     ATLVERIFY(str.LoadString(nID));
     return str;
 }
@@ -42,9 +42,9 @@ inline int CompareString(_In_ LCID Locale, _In_ DWORD dwCmpFlags, LPCTSTR lpStri
 
 #ifndef _UNICODE
 /// <summary>Load a Unicode resource string.</summary>
-inline CStringW LoadStringW(UINT nID)
+inline ATL::CStringW LoadStringW(UINT nID)
 {
-    CString str;
+    ATL::CString str;
     ATLVERIFY(str.LoadString(nID));
     return CStringW(CA2W(str));
 }
