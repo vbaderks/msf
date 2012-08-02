@@ -31,12 +31,12 @@ public:
 
     IShellPropSheetExtImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::Constructor (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::IShellPropSheetExtImpl (instance=%p)\n"), this);
     }
 
     ~IShellPropSheetExtImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::~Destructor (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::~IShellPropSheetExtImpl (instance=%p)\n"), this);
     }
 
     class CAddPage
@@ -67,6 +67,7 @@ public:
     {
         try
         {
+            ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::IShellPropSheetExt::AddPages (instance=%p, pfnAddPage=%p, lParam=&p)\n"), this, pfnAddPage, lParam);
             CAddPage addpage(pfnAddPage, lParam);
 
             static_cast<T*>(this)->OnAddPages(addpage, GetFilenames());
