@@ -24,7 +24,11 @@
 // Note: MessageBox is not redefined by winuser.inl (by design): need to call explicit IsolationAwareMessageBox
 #define ISOLATION_AWARE_ENABLED 1
 
+// Shell Extensions are COM apartment threaded.
 #define _ATL_APARTMENT_THREADED
+
+// VVV sample is ANSI C++ complaint. Enabled ATL PTM (pointer to a class member function ) warnings.
+#define _ATL_ENABLE_PTM_WARNING
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS // some CString constructors will be explicit
 
@@ -32,17 +36,17 @@
 #define _ATL_DEBUG_QI // Trace which interfaces are requested.
 #endif
 
+#define _ATL_EX_CONVERSION_MACROS_ONLY // Only use the new Unicode <-> Ansi conversion macro's.
+
+#include "..\include\msfbase.h"
+
 // Disable not usefull warnings.
 #pragma warning(disable: 4505) // unreferenced local function has been removed
 
 
-#include "..\include\msfbase.h"
-
-
-#define _ATL_EX_CONVERSION_MACROS_ONLY // Only use the new Unicode <-> Ansi conversion macro's.
-
 using namespace std;
 using namespace MSF;
+
 
 PCWSTR const wszVVVFileRootExt     = L"VVVFile";
 PCWSTR const wszVVVExtension       = L".vvv";
