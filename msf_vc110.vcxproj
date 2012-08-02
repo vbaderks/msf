@@ -192,6 +192,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
     <None Include="readme.txt" />
+    <None Include="Undocumented Shell Interfaces Windows 8.reg" />
     <None Include="Undocumented Shell Interfaces.reg" />
   </ItemGroup>
   <ItemGroup>
@@ -237,9 +238,11 @@
     <ClInclude Include="include\ibrowserframeoptions.h" />
     <ClInclude Include="include\idldatacreatefromidarray.h" />
     <ClInclude Include="include\ifoldertype.h" />
+    <ClInclude Include="include\iframelayoutdefinition.h" />
     <ClInclude Include="include\imagelistindex.h" />
     <ClInclude Include="include\infotipimpl.h" />
     <ClInclude Include="include\infotipptr.h" />
+    <ClInclude Include="include\ishellfolder3.h" />
     <ClInclude Include="include\ishellfoldersearchable.h" />
     <ClInclude Include="include\ishellfoldersearchablecallback.h" />
     <ClInclude Include="include\ishellfolderviewtype.h" />

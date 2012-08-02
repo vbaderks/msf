@@ -18,6 +18,7 @@
 #include "performeddropeffectsink.h"
 #include "idldatacreatefromidarray.h"
 #include "itopviewawareitem.h"
+#include "iframelayoutdefinition.h"
 #include "shellfoldercontextmenu.h"
 #include "sfvcreate.h"
 #include "queryinfo.h"
@@ -37,6 +38,16 @@ namespace MSF
 
 const SFGAOF SFGAO_UNDEFINED = 0xFFFFFFFF;
 
+struct __declspec(uuid("6FE2B64C-5012-4B88-BB9D-7CE4F45E3751")) IConnectionFactory;    // Undocumented interface, seen on Windows 8
+struct __declspec(uuid("93F81976-6A0D-42C3-94DD-AA258A155470")) IShellUndocumented93;  // Seen on Windows 8
+struct __declspec(uuid("CAD9AE9F-56E2-40F1-AFB6-3813E320DCFD")) IShellUndocumentedCA;  // Seen on Windows 8
+
+// The definitions in ShlGuid have no __declspec. Create 'MSF' definitions to make '==' easy.
+struct __declspec(uuid("CB316B22-25F7-42B8-8A09-540D23A43C2F")) EP_NavPane;       // The pane on the left side of the Windows Explorer window that hosts the folders tree and Favorites
+struct __declspec(uuid("D27524A8-C9F2-4834-A106-DF8889FD4F37")) EP_Ribbon;        // The ribbon. New in Windows 8. Not defined in Win 7 SDK.
+struct __declspec(uuid("893C63D1-45C8-4D17-BE19-223BE71BE365")) EP_PreviewPane;   // Pane on the right of the Windows Explorer window that shows a large reading preview of the file.
+struct __declspec(uuid("43ABF98B-89B8-472D-B9CE-E69B8229F019")) EP_DetailsPane;   // Pane showing metadata along the bottom of the Windows Explorer window.
+
 template <typename T, typename TItem>
 class ATL_NO_VTABLE IShellFolderImpl :
     public IPersistFolder3,
@@ -47,7 +58,8 @@ class ATL_NO_VTABLE IShellFolderImpl :
     public IShellIcon,
     public IDropTarget,
     public IShellFolderContextMenuSink,
-    public IPerformedDropEffectSink
+    public IPerformedDropEffectSink,
+    public IExplorerPaneVisibility
 {
 public:
 
@@ -346,6 +358,28 @@ public:
                 ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=ITopViewAwareItem)\n"), this);
                 *ppRetVal = NULL; // ITopViewAwareItem is an undocumented inteface, purpose not clear.
             }
+            else if (riid == __uuidof(IFrameLayoutDefinition))
+            {
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IFrameLayoutDefinition)\n"), this);
+                *ppRetVal = NULL; // IFrameLayoutDefinition is an undocumented inteface, purpose not clear.
+            }
+            else if (riid == __uuidof(IConnectionFactory))
+            {
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IConnectionFactory)\n"), this);
+                *ppRetVal = NULL; // IConnectionFactory is an undocumented inteface, purpose not clear.
+            }
+            else if (riid == __uuidof(IShellUndocumented93))
+            {
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumented93)\n"), this);
+                // stack trace analysis: Called when CDefView class initializes the CDefCollection.
+                *ppRetVal = NULL; // IShellUndocumented93 is an undocumented inteface, purpose not clear.
+            }
+            else if (riid == __uuidof(IShellUndocumentedCA))
+            {
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumentedCA)\n"), this);
+                // stack trace analysis: called from CShellItem::BindToHandler to hook an kind of interrupt source.
+                *ppRetVal = NULL; // IShellUndocumentedCA is an undocumented inteface, purpose not clear.
+            }
             else
             {
                 #ifdef _ATL_DEBUG_QI
@@ -371,17 +405,17 @@ public:
 
             if (riid == __uuidof(IContextMenu))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IContextMenu)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IContextMenu)\n"), this, cidl);
                 *ppv = static_cast<T*>(this)->CreateItemContextMenu(hwnd, cidl, ppidl).Detach();
             }
             else if (riid == __uuidof(IDataObject))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IDataObject)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IDataObject)\n"), this, cidl);
                 *ppv = static_cast<T*>(this)->CreateDataObject(m_pidlFolder, cidl, ppidl).Detach();
             }
             else if (riid == __uuidof(IQueryInfo))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IQueryInfo)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IQueryInfo)\n"), this, cidl);
 
                 if (cidl != 1)
                     return E_FAIL; // can only request a tooltip for 1 selected item!
@@ -390,18 +424,23 @@ public:
             }
             else if (riid == __uuidof(IExtractIcon))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=IExtractIcon)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IExtractIcon)\n"), this, cidl);
 
                 if (cidl != 1)
                     return E_FAIL; // can only request a icon for 1 selected item!
 
                 *ppv = static_cast<T*>(this)->CreateExtractIcon(TItem(ppidl[0])).Detach();
             }
+            else if (riid == __uuidof(IQueryAssociations))
+            {
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IQueryAssociations)\n"), this, cidl);
+                *ppv = NULL;
+            }
             else
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetUIObjectOf (instance=%p, cidl=%d, riid=?)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=?)\n"), this, cidl);
                 #ifdef _ATL_DEBUG_QI
-                AtlDumpIID(riid, _T("IShellFolderImpl(GetUIObjectOf)"), E_NOINTERFACE);
+                AtlDumpIID(riid, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf"), E_NOINTERFACE);
                 #endif //  _ATL_DEBUG_QI
 
                 *ppv = NULL;
@@ -627,7 +666,7 @@ public:
     // IDropTarget
     STDMETHOD(DragEnter)(_In_ IDataObject* pdataobject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragEnter (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IDropTarget::DragEnter (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
 
         try
         {
@@ -649,7 +688,7 @@ public:
 
     STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragOver (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IDropTarget::DragOver (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
 
         try
         {
@@ -668,7 +707,7 @@ public:
 
     STDMETHOD(DragLeave)()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::DragLeave\n"));
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IDropTarget::DragLeave\n"));
         m_bCachedIsSupportedClipboardFormat = false;
         return S_OK;
     }
@@ -676,7 +715,7 @@ public:
     STDMETHOD(Drop)(_In_ IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
         (grfKeyState);
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::Drop (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IDropTarget::Drop (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
 
         try
         {
@@ -684,6 +723,16 @@ public:
             return S_OK;
         }
         MSF_COM_CATCH_HANDLER_ON_ERROR(m_hwndOwner, EC_ON_DROP)
+    }
+
+    // IExplorerPaneVisibility (introduced with Vista)
+    // The shell will use this interface to request which 'panes' should be visible.
+    STDMETHOD(GetPaneState)(_In_ REFEXPLORERPANE ep, _Out_  EXPLORERPANESTATE *peps)
+    {
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IExplorerPaneVisibility::GetPaneState (instance=%p, ep=%s)\n"), this, GetExplorerPaneName(ep));
+
+        *peps = static_cast<T*>(this)->GetPaneState(ep);
+        return S_OK;
     }
 
     // IShellFolderContextMenuSink
@@ -702,6 +751,7 @@ public:
         ATLASSERT(!"Derived class needs to implement this function, if subfolders are used");
         RaiseException();
     }
+
 
 protected:
 
@@ -806,6 +856,14 @@ protected:
         }
 
         return nResult;
+    }
+
+    // Purpose: Called by shell/MSF.
+    //          It is essential to override this function to control which explorer panes are visible.
+    //          The default implementation will just return 'ignore', which will result in almost not visible.
+    EXPLORERPANESTATE GetPaneState(_In_ REFEXPLORERPANE /*ep*/)
+    {
+        return EPS_DONTCARE;
     }
 
     // Purpose: default callback, used to receive cmd from CDefFolderMenu_Create2.
@@ -1457,6 +1515,25 @@ protected:
     ULONG m_ulDisplay; // column that is used when item is displayed in tree view 
 
 private:
+
+    CString GetExplorerPaneName(_In_ REFEXPLORERPANE ep)
+    {
+        if (ep == __uuidof(EP_NavPane))
+            return L"EP_NavPane";
+
+        if (ep == __uuidof(EP_PreviewPane))
+            return L"EP_PreviewPane";
+
+        if (ep == __uuidof(EP_DetailsPane))
+            return L"EP_DetailsPane";
+
+        if (ep == __uuidof(EP_Ribbon))
+            return L"EP_Ribbon";
+
+        COleString epId;
+        StringFromCLSID(ep, epId);
+        return CString(epId);
+    }
 
     CPidl                    m_pidlFolder;
     std::vector<CColumnInfo> m_columninfos;

@@ -55,6 +55,7 @@ public:
         COM_INTERFACE_ENTRY(IItemNameLimits)
         COM_INTERFACE_ENTRY(IDropTarget)   // enable drag and drop support.
         COM_INTERFACE_ENTRY(IObjectWithFolderEnumMode) // used by Windows 7 and up
+        COM_INTERFACE_ENTRY(IExplorerPaneVisibility) // used by Windows Vista and up.
     END_COM_MAP()
 
 
@@ -111,6 +112,17 @@ public:
     SFGAOF GetAttributeOf(unsigned int cidl, const CVVVItem& item, SFGAOF /*sfgofMask*/) const
     {
         return item.GetAttributeOf(cidl == 1, IsReadOnly(GetPathFolderFile()));
+    }
+
+
+    // Purpose: called by MSF to tell the shell which panes to show.
+    // It is essential to override this function to control which explorer panes are visible as by default no panes are shown.
+    EXPLORERPANESTATE GetPaneState(_In_ REFEXPLORERPANE ep)
+    {
+        if (ep == __uuidof(MSF::EP_Ribbon))
+            return EPS_DEFAULT_ON;
+
+        return EPS_DONTCARE;
     }
 
 

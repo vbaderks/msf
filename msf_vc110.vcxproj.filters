@@ -20,6 +20,7 @@
     <None Include="include\shellfolderwin98.rgs" />
     <None Include="readme.txt" />
     <None Include="Undocumented Shell Interfaces.reg" />
+    <None Include="Undocumented Shell Interfaces Windows 8.reg" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\shellviewimpl.h" />
@@ -303,6 +304,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ifoldertype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ishellfolder3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\iframelayoutdefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

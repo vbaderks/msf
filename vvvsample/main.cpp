@@ -20,6 +20,11 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
     // Enable/Disable dynamic isolation aware code (Windows XP and up theme support)
     IsolationAwareDllMain(dwReason);
 
+#ifdef DEBUG
+    // Increase the default level to 4 to see all trace messages.
+    atlTraceCOM.SetLevel(4);
+#endif
+
     if (dwReason == DLL_PROCESS_ATTACH)
     {
         // Optimalization: dont't notify when a thread is created.

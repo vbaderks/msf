@@ -26,7 +26,9 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE IShellFolderViewCBImpl : public IShellFolderViewCB
+class ATL_NO_VTABLE IShellFolderViewCBImpl :
+    public IShellFolderViewCB,
+    public IFolderViewSettings
 {
 public:
     IShellFolderViewCBImpl(long notifyevents = 0) :
@@ -339,6 +341,47 @@ public:
             return E_NOTIMPL;
         }
         MSF_COM_CATCH_HANDLER()
+    }
+
+    // IFolderViewSettings
+    STDMETHOD(GetColumnPropertyList)(__RPC__in REFIID /*riid*/, __RPC__deref_out_opt void ** /*ppv*/)
+    {
+        MSF_TRACENOTIMPL(_T("IShellFolderViewCBImpl::IFolderViewSettings::GetColumnPropertyList"));
+    }
+
+    STDMETHOD(GetGroupByProperty)(__RPC__out PROPERTYKEY * /*pkey*/, __RPC__out BOOL * /*pfGroupAscending*/)
+    {
+        MSF_TRACENOTIMPL(_T("IShellFolderViewCBImpl::IFolderViewSettings::GetGroupByProperty"));
+    }
+
+    STDMETHOD(GetViewMode)(__RPC__out FOLDERLOGICALVIEWMODE *plvm)
+    {
+        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderViewCBImpl::IFolderViewSettings::GetViewMode (instance=%p, plvm=%p)\n"), this, plvm);
+        *plvm = FLVM_DETAILS;
+        return S_OK;
+    }
+
+    STDMETHOD(GetIconSize)(__RPC__out UINT * /*puIconSize*/)
+    {
+        MSF_TRACENOTIMPL(_T("IShellFolderViewCBImpl::IFolderViewSettings::GetIconSize"));
+    }
+
+    STDMETHOD(GetFolderFlags)(__RPC__out FOLDERFLAGS * /*pfolderMask*/, __RPC__out FOLDERFLAGS * /*pfolderFlags*/)
+    {
+        MSF_TRACENOTIMPL(_T("IShellFolderViewCBImpl::IFolderViewSettings::GetFolderFlags"));
+    }
+
+    STDMETHOD(GetSortColumns)(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, UINT cColumnsIn, __RPC__out UINT * pcColumnsOut)
+    {
+        (rgSortColumns);
+        (cColumnsIn);
+        (pcColumnsOut);
+        MSF_TRACENOTIMPL(_T("IShellFolderViewCBImpl::IFolderViewSettings::GetSortColumns"));
+    }
+
+    STDMETHOD(GetGroupSubsetCount)(__RPC__out UINT * /*pcVisibleRows*/)
+    {
+        MSF_TRACENOTIMPL(_T("IShellFolderViewCBImpl::IFolderViewSettings::GetGroupSubsetCount"));
     }
 
 protected:

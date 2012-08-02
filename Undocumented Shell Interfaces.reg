@@ -230,7 +230,7 @@ Windows Registry Editor Version 5.00
 @="IQueryAssociations"
 
 [HKEY_CLASSES_ROOT\Interface\{C46CA590-3C3F-11D2-BEE6-0000F805CA57}\NumMethods]
-@="8"
+@="5"
 
 
 [HKEY_CLASSES_ROOT\Interface\{CEF04FDF-FE72-11D2-87A5-00C04F6837CF}]

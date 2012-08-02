@@ -28,14 +28,12 @@ public:
         return shellfolderviewcb;
     }
 
-
     DECLARE_NOT_AGGREGATABLE(CShellFolderViewCB)
-
 
     BEGIN_COM_MAP(CShellFolderViewCB)
         COM_INTERFACE_ENTRY(IShellFolderViewCB)
+        COM_INTERFACE_ENTRY(IFolderViewSettings)
     END_COM_MAP()
-
 
     CShellFolderViewCB() :
         IShellFolderViewCBImpl<CShellFolderViewCB>(SHCNE_RENAMEITEM |
@@ -48,7 +46,7 @@ public:
     {
     }
 
-    
+
     HRESULT OnGetButtonInfo(TBINFO* /*ptbinfo*/)
     {
         /*
