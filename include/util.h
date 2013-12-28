@@ -40,8 +40,8 @@ inline ATL::CStringW GetModuleDirectoryW()
 inline ATL::CString GetSystemDirectory()
 {
     TCHAR tsz[MAX_PATH];
-    ATLVERIFY(::GetSystemDirectory(tsz,MAX_PATH));
-
+    if (!::GetSystemDirectory(tsz, MAX_PATH))
+        throw new _com_error(HRESULT_FROM_WIN32(GetLastError()));
     return tsz;
 }
 
@@ -98,7 +98,7 @@ inline int UIntCmp(unsigned int n1, unsigned int n2) throw()
 inline ATL::CString FormatLastError(DWORD dwLastError)
 {
     LPTSTR lpMsgBuf;
-    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
+    if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
                   FORMAT_MESSAGE_FROM_SYSTEM |
                   FORMAT_MESSAGE_IGNORE_INSERTS,
                   NULL,
@@ -106,7 +106,8 @@ inline ATL::CString FormatLastError(DWORD dwLastError)
                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
                   (LPTSTR) &lpMsgBuf,
                   0,
-                  NULL);
+                  NULL))
+        throw new _com_error(HRESULT_FROM_WIN32(GetLastError()));
 
     ATL::CString str(lpMsgBuf);
     LocalFree(lpMsgBuf);

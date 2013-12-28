@@ -22,7 +22,11 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 
 #ifdef DEBUG
     // Increase the default level to 4 to see all trace messages.
+#if _ATL_VER < 0x0C00
     atlTraceCOM.SetLevel(4);
+#else
+    CTrace::SetLevel(4);
+#endif
 #endif
 
     if (dwReason == DLL_PROCESS_ATTACH)

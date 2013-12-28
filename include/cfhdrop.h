@@ -48,9 +48,9 @@ public:
         ATLASSERT(iFile < GetFileCount() && "Index out of bounds");
 
         TCHAR szFileName[MAX_PATH];
-        RaiseExceptionIf(
-            ::DragQueryFile(reinterpret_cast<HDROP>(m_stgmedium.hGlobal), iFile, szFileName,
-                            MSF_ARRAY_SIZE(szFileName)) == 0);
+        if (!::DragQueryFile(reinterpret_cast<HDROP>(m_stgmedium.hGlobal), iFile, szFileName,
+                            MSF_ARRAY_SIZE(szFileName)))
+            throw new _com_error(HRESULT_FROM_WIN32(GetLastError()));
 
         return szFileName;
     }

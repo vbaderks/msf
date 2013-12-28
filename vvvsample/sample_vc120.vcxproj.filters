@@ -86,9 +86,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="columnprovider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="contextmenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
