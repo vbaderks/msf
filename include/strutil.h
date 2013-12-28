@@ -14,7 +14,7 @@ namespace MSF
 inline ATL::CString ToString(unsigned int uiValue)
 {
     ATL::CString str;
-    str.Format(_T("%d"), uiValue);
+    str.Format(L"%u", uiValue);
     return str;
 }
 
@@ -22,7 +22,7 @@ inline ATL::CString ToString(unsigned int uiValue)
 inline ATL::CStringW ToStringW(unsigned int uiValue)
 {
     ATL::CStringW str;
-    str.Format(L"%d", uiValue);
+    str.Format(L"%u", uiValue);
     return str;
 }
 
