@@ -7,15 +7,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample", "vvvsample\sample_
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccLocalPath0 = .
-		SccLocalPath1 = .
-		SccLocalPath2 = vvvsample
 		SccNumberOfProjects = 3
-		SccProjectName2 = vvvsample
-		SccProjectUniqueName1 = msf_vc110.vcxproj
-		SccProjectUniqueName2 = vvvsample\\sample_vc110.vcxproj
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = msf_vc110.vcxproj
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = vvvsample\\sample_vc110.vcxproj
+		SccProjectName2 = vvvsample
+		SccLocalPath2 = vvvsample
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Checked|Win32 = Checked|Win32
