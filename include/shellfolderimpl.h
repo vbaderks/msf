@@ -1399,7 +1399,7 @@ protected:
 
     void RetrieveItems(const CCfShellIdList& cfshellidlist, TItems& items) const
     {
-        for (unsigned int i = 0; i < cfshellidlist.GetItemCount(); ++i)
+        for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
             LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
             TItem item(pidl);
@@ -1425,18 +1425,18 @@ protected:
 
     bool HasAttributesOf(const CCfShellIdList& cfshellidlist, SFGAOF sfgaofMask) const
     {
-        unsigned int nItemCount = cfshellidlist.GetItemCount();
+        size_t nItemCount = cfshellidlist.GetItemCount();
 
-        SFGAOF sfgaof = static_cast<const T*>(this)->GetAttributesOfGlobal(nItemCount, sfgaofMask);
+        SFGAOF sfgaof = static_cast<const T*>(this)->GetAttributesOfGlobal(static_cast<UINT>(nItemCount), sfgaofMask);
         if (sfgaof == SFGAO_UNDEFINED)
         {
             sfgaof = 0xFFFFFFFF;
 
-            for (UINT i = 0; i < nItemCount; ++i)
+            for (size_t i = 0; i < nItemCount; ++i)
             {
                 LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
                 TItem item(pidl);
-                sfgaof &= static_cast<const T*>(this)->GetAttributeOf(nItemCount, item, sfgaofMask);
+                sfgaof &= static_cast<const T*>(this)->GetAttributeOf(static_cast<UINT>(nItemCount), item, sfgaofMask);
 
                 if (!IsBitSet(sfgaof, sfgaofMask))
                     return false; // no need to continue the search.
@@ -1465,7 +1465,7 @@ protected:
 
     void ReportChangeNotify(const CCfShellIdList& cfshellidlist, long wEventId, UINT uFlags = SHCNF_FLUSH) const
     {
-        for (unsigned int i = 0; i < cfshellidlist.GetItemCount(); ++i)
+        for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
             LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
 
@@ -1477,7 +1477,7 @@ protected:
     {
         CCfShellIdList cfshellidlist(pdataobject);
 
-        for (unsigned int i = 0; i < cfshellidlist.GetItemCount(); ++i)
+        for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
             LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
 

@@ -35,12 +35,12 @@ public:
         return GetItemCount() == 0;
     }
 
-    unsigned int GetItemCount() const throw()
+    size_t GetItemCount() const throw()
     {
         return m_globalLock.get()->cidl;
     }
 
-    LPCITEMIDLIST GetItem(UINT nIdex) const throw()
+    LPCITEMIDLIST GetItem(size_t nIdex) const throw()
     {
         const CIDA* pcida = m_globalLock.get();
         return reinterpret_cast<LPCITEMIDLIST>
