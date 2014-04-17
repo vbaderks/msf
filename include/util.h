@@ -231,7 +231,7 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
     if (regkey.QueryMultiStringValue(pszValueName, &(buffer[0]), &ulLength) != ERROR_SUCCESS)
         return;
 
-    for (unsigned int i = 0; i < buffer.size() && buffer[i] != NULL;
+    for (size_t i = 0; i < buffer.size() && buffer[i] != NULL;
          i += rgStrings.back().GetLength() + 1)
     {
         rgStrings.push_back(CString(&(buffer[i])));

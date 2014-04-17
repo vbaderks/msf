@@ -848,7 +848,7 @@ protected:
     {
         int nResult = 0; // if there are no columns, items are always equal.
 
-        for (unsigned int i = 0; i < m_columninfos.size(); ++i)
+        for (size_t i = 0; i < m_columninfos.size(); ++i)
         {
             nResult = item1.Compare(item2, static_cast<USHORT>(i), false);
             if (nResult != 0)
@@ -1331,7 +1331,7 @@ protected:
     class CColumnInfo
     {
     public:
-        CColumnInfo(const CString strName, int fmt, SHCOLSTATEF csFlags) :
+        CColumnInfo(const CString& strName, int fmt, SHCOLSTATEF csFlags) :
             m_strName(strName), m_fmt(fmt), m_csFlags(csFlags)
         {
         }
@@ -1487,7 +1487,7 @@ protected:
 
     void ReportRenameChangeNotify(const CCfShellIdList& cfshellidlist, const TItems& itemsNew) const
     {
-        for (UINT i = 0; i < cfshellidlist.GetItemCount(); ++i)
+        for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
             LPCITEMIDLIST pidlOld = cfshellidlist.GetItem(i);
 

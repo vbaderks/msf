@@ -85,11 +85,9 @@ public:
         CMenu AddSubMenu(const CString& strText, const CString& strHelp)
         {
             HMENU hmenu = CreateSubMenu();
-
             CMenuItemInfo menuiteminfo(*_pidCmd, strText, hmenu);
-
             InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(NULL), CCustomMenuHandlerPtr(NULL));
-            
+
             return CMenu(hmenu, 0, *_pidCmd, _idCmdLast, _pmenuhost);
         }
 
@@ -105,13 +103,9 @@ public:
         CMenu AddSubMenu(const CString& strHelp, CCustomMenuHandlerPtr qcustommenuhandler)
         {
             HMENU hmenu = CreateSubMenu();
-
             CMenuItemInfo menuiteminfo(*_pidCmd, hmenu);
-
             qcustommenuhandler->InitializeItemInfo(menuiteminfo);
-
-            CContextCommandPtr qcontextcommand;
-            InsertMenuItem(menuiteminfo, strHelp, qcontextcommand, qcustommenuhandler);
+            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(NULL), qcustommenuhandler);
 
             return CMenu(hmenu, 0, *_pidCmd, _idCmdLast, _pmenuhost);
         }
@@ -128,9 +122,7 @@ public:
                      CContextCommandPtr qcontextcommand)
         {
             CMenuItemInfo menuiteminfo(*_pidCmd, strText);
-
-            CCustomMenuHandlerPtr qcustommenuhandler;
-            InsertMenuItem(menuiteminfo, strHelp, qcontextcommand, qcustommenuhandler);
+            InsertMenuItem(menuiteminfo, strHelp, qcontextcommand, CCustomMenuHandlerPtr(NULL));
         }
 
 
@@ -421,7 +413,6 @@ protected:
             return E_INVALIDARG;
 
         GetMenuItem(pdrawitem->itemID - m_idCmdFirst).GetCustomMenuHandler().Draw(*pdrawitem);
-
         return S_OK;
     }
 
@@ -429,7 +420,6 @@ protected:
     HRESULT OnMeasureItem(MEASUREITEMSTRUCT* pmeasureitem)
     {
         GetMenuItem(pmeasureitem->itemID - m_idCmdFirst).GetCustomMenuHandler().Measure(*pmeasureitem);
-
         return S_OK;
     }
 
@@ -519,7 +509,6 @@ private:
     const CMenuItem& GetMenuItem(UINT nIndex)
     {
         RaiseExceptionIf(nIndex >= m_menuitems.size(), E_INVALIDARG);
-
         return m_menuitems[nIndex];
     }
 
