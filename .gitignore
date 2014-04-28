@@ -1,0 +1,20 @@
+# GIT ignore file for MSF
+
+Win32/  # Ignore all file in this binary build directory
+x64/    # Ignore all file in this binary build directory
+*.suo   # Ignore Visual Studio User option files
+*.obj
+*.lib
+*.pdb
+*.pch
+*.tlog
+*.dll
+*.ilk
+*.log
+*.res
+*.idb
+*.lastbuildstate
+*.exp
+*.sdf
+*.opensdf
+msf_vc120.v12.suo
