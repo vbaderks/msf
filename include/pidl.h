@@ -67,12 +67,12 @@ public:
         return pidlNext;
     }
 
-    CPidl() throw() : m_pidl(NULL)
+    CPidl() throw() : m_pidl(nullptr)
     {
     }
 
     // Purpose: special constructor for NULL pointer init.
-    CPidl(int null) throw() : m_pidl(NULL)
+    CPidl(int null) throw() : m_pidl(nullptr)
     {
         (null);
         ATLASSERT(null == 0 && "Detected misuse of the special constructor");

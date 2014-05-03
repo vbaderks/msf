@@ -10,13 +10,6 @@
 #include "olestring.h"
 
 
-// Visual C++ doesn't like exception handlers that are optimized away in release mode.
-#if _MSC_VER == 1310 && defined(NDEBUG)
-#pragma warning(push)
-#pragma warning(disable: 4702) // disable unreachable code
-#endif
-
-
 namespace MSF
 {
 
@@ -26,14 +19,14 @@ public:
     // Purpose: Override this function to control which chars are valid.
     static const TCHAR* GetValidChars()
     {
-        return NULL;
+        return nullptr;
     }
 
 
     // Purpose: Override this function to control which chars are invalid.
     static const TCHAR* GetInvalidChars()
     {
-        return NULL;
+        return nullptr;
     }
 };
 
@@ -51,14 +44,14 @@ public:
             ATLTRACE2(atlTraceCOM, 0, _T("IItemNameLimitsImpl::GetValidCharacters\n"));
 
             const TCHAR* pszValidChars = TItemV::GetValidChars();
-            if (pszValidChars == NULL)
+            if (!pszValidChars)
             {
-                *ppwszValidChars = NULL;
+                *ppwszValidChars = nullptr;
 
                 const TCHAR* pszInvalidChars = TItemI::GetInvalidChars();
-                if (pszInvalidChars == NULL)
+                if (!pszInvalidChars)
                 {
-                    *ppwszInvalidChars = NULL;
+                    *ppwszInvalidChars = nullptr;
                 }
                 else
                 {
@@ -68,7 +61,7 @@ public:
             else
             {
                 *ppwszValidChars   = COleString::Dup(pszValidChars);
-                *ppwszInvalidChars = NULL;
+                *ppwszInvalidChars = nullptr;
             }
             return S_OK;
         }
@@ -97,7 +90,3 @@ public:
  };
 
 } // namespace MSF
-
-#if _MSC_VER == 1310 && defined(NDEBUG)
-#pragma warning(pop)
-#endif

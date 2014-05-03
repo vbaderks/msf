@@ -17,11 +17,11 @@ class IContextMenuPtr :
     public ::IContextMenuPtr
 {
 public:
-    explicit IContextMenuPtr(const CLSID& clsid, IUnknown* pOuter = NULL, DWORD dwClsContext = CLSCTX_INPROC_SERVER) :
+    explicit IContextMenuPtr(const CLSID& clsid, IUnknown* pOuter = nullptr, DWORD dwClsContext = CLSCTX_INPROC_SERVER) :
         ::IContextMenuPtr(clsid, pOuter, dwClsContext)
     {
         // Note: base class will not throw for E_NOINTERFACE.
-        RaiseExceptionIf(GetInterfacePtr() == NULL, E_NOINTERFACE);
+        RaiseExceptionIf(!GetInterfacePtr(), E_NOINTERFACE);
     }
 
     // Purpose: Constructs a smart-pointer from any other smart pointer.

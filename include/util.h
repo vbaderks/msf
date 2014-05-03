@@ -18,7 +18,7 @@ namespace MSF
 inline ATL::CString GetModuleDirectory()
 {
     TCHAR sz[MAX_PATH];
-    ATLVERIFY(::GetModuleFileName(GetModuleHandle(NULL), sz, MAX_PATH));
+    ATLVERIFY(::GetModuleFileName(GetModuleHandle(nullptr), sz, MAX_PATH));
 
     PathRemoveFileSpec(sz);
 
@@ -29,7 +29,7 @@ inline ATL::CString GetModuleDirectory()
 inline ATL::CStringW GetModuleDirectoryW()
 {
     wchar_t wz[MAX_PATH];
-    ATLVERIFY(::GetModuleFileNameW(GetModuleHandle(NULL), wz,  MAX_PATH));
+    ATLVERIFY(::GetModuleFileNameW(GetModuleHandle(nullptr), wz, MAX_PATH));
 
     PathRemoveFileSpecW(wz);
 
@@ -52,17 +52,17 @@ inline ATL::CStringW GetFolderPath(int nFolder)
     TCHAR tszFolderPath[MAX_PATH];
 
     tszFolderPath[0] = 0;
-    ATLVERIFY(SHGetSpecialFolderPath(NULL, tszFolderPath, nFolder, false));
+    ATLVERIFY(SHGetSpecialFolderPath(nullptr, tszFolderPath, nFolder, false));
     return ATL::CStringW(ATL::CT2W(tszFolderPath));
 }
 
 
 inline DWORD GetFileSize(const ATL::CString& strFile)
 {
-    HANDLE hFile = CreateFile(strFile, 0, 0, NULL, OPEN_EXISTING, 0, 0);
+    HANDLE hFile = CreateFile(strFile, 0, 0, nullptr, OPEN_EXISTING, 0, 0);
     RaiseExceptionIf(hFile == INVALID_HANDLE_VALUE);
 
-    DWORD dwSize = ::GetFileSize(hFile, NULL);
+    DWORD dwSize = ::GetFileSize(hFile, nullptr);
     CloseHandle(hFile);
     RaiseExceptionIf(dwSize == INVALID_FILE_SIZE && GetLastError() != NO_ERROR);
 
@@ -101,12 +101,12 @@ inline ATL::CString FormatLastError(DWORD dwLastError)
     if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
                   FORMAT_MESSAGE_FROM_SYSTEM |
                   FORMAT_MESSAGE_IGNORE_INSERTS,
-                  NULL,
+                  nullptr,
                   dwLastError,
                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
                   (LPTSTR) &lpMsgBuf,
                   0,
-                  NULL))
+                  nullptr))
         throw new _com_error(HRESULT_FROM_WIN32(GetLastError()));
 
     ATL::CString str(lpMsgBuf);
@@ -177,13 +177,13 @@ public:
 // Purpose: 'short' version of Win32 function CreateProcess. 
 //          Usefull for shell extensions that just need a quick way to start apps.
 ATLPREFAST_SUPPRESS(6335) // supress sa noise: leaking process handle
-inline void CreateProcess(LPCTSTR szApplicationName, LPTSTR szCmdLine, LPCTSTR lpCurrentDirectory = NULL)
+inline void CreateProcess(LPCTSTR szApplicationName, LPTSTR szCmdLine, LPCTSTR lpCurrentDirectory = nullptr)
 {
     CStartupInfo startupinfo;
     CProcessInformation process_information; 
 
     RaiseLastErrorExceptionIf(!::CreateProcess(szApplicationName, szCmdLine, 
-        NULL, NULL, false, 0, NULL, lpCurrentDirectory, &startupinfo, &process_information));
+        nullptr, nullptr, false, 0, nullptr, lpCurrentDirectory, &startupinfo, &process_information));
 }
 ATLPREFAST_UNSUPPRESS()
 
@@ -193,7 +193,7 @@ ATLPREFAST_UNSUPPRESS()
 inline bool QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, ATL::CString& strValue) throw()
 {
     unsigned long ulLength = 0;
-    if (regkey.QueryStringValue(pszValueName, NULL, &ulLength) != ERROR_MORE_DATA)
+    if (regkey.QueryStringValue(pszValueName, nullptr, &ulLength) != ERROR_MORE_DATA)
         return false;
 
     if (regkey.QueryStringValue(pszValueName, strValue.GetBuffer(static_cast<int>(ulLength)), &ulLength) != ERROR_SUCCESS)
@@ -224,7 +224,7 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
     rgStrings.clear();
 
     unsigned long ulLength = 0;
-    if (regkey.QueryMultiStringValue(pszValueName, NULL, &ulLength) != ERROR_MORE_DATA)
+    if (regkey.QueryMultiStringValue(pszValueName, nullptr, &ulLength) != ERROR_MORE_DATA)
         return;
 
     std::vector<TCHAR> buffer(ulLength);
@@ -345,8 +345,7 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName)
         // must test for it explicitly. Depending on the particular 
         // DLL, the lack of a DllGetVersion function can be a useful
         // indicator of the version.
-
-        if (pDllGetVersion != NULL)
+        if (pDllGetVersion)
         {
             DLLVERSIONINFO dvi;
 

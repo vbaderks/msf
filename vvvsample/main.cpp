@@ -68,7 +68,7 @@ STDAPI DllRegisterServer()
         return hr;
 
     // Notify the shell that .vvv file association has changed.
-    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
 
     return S_OK;
 }
@@ -81,7 +81,7 @@ STDAPI DllUnregisterServer()
     UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, false, wszVVVExtension, wszVVVFileRootExt);
 
     // Notify the shell that .vvv file association has changed.
-    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
 
     return S_OK;
 }

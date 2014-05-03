@@ -227,7 +227,7 @@ public:
     // Purpose: Called by MSF/shell when items must be deleted.
     long OnDelete(HWND hwnd, CVVVItemList& items)
     {
-        if (hwnd != NULL && !UserConfirmsFileDelete(hwnd, items))
+        if (!hwnd && !UserConfirmsFileDelete(hwnd, items))
             return 0; // user wants to abort the file deletion process.
 
         CVVVFile(GetPathFolderFile(), m_strSubFolder).DeleteItems(items);

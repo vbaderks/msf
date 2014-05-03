@@ -15,13 +15,6 @@
 struct SFVM_WEBVIEW_CONTENT_DATA;
 
 
-// Visual C++ doesn't like exception handlers that are optimized away in release mode.
-#if _MSC_VER == 1310 && defined(NDEBUG)
-#pragma warning(push)
-#pragma warning(disable: 4702) // disable unreachable code
-#endif
-
-
 namespace MSF
 {
 
@@ -602,7 +595,7 @@ protected:
     //          the settings for SHChangeNotifyRegister.
     HRESULT OnGetNotify(LPITEMIDLIST* ppidl, long* plevents)
     {
-        if (_pidlFolder == NULL || _notifyevents == 0)
+        if (!_pidlFolder || _notifyevents == 0)
             return E_FAIL; // notify not requested by derived class.
 
         *ppidl    = ILClone(_pidlFolder);
@@ -617,7 +610,3 @@ protected:
 };
 
 } // MSF namespace
-
-#if _MSC_VER == 1310 && defined(NDEBUG)
-#pragma warning(pop)
-#endif

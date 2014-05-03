@@ -34,18 +34,18 @@ public:
         static HMENU CreateSubMenu()
         {
             HMENU hmenu = ::CreatePopupMenu();
-            RaiseLastErrorExceptionIf(hmenu == NULL);
+            RaiseLastErrorExceptionIf(!hmenu);
 
             return hmenu;
         }
 
 
         CMenu() :
-            _hmenu(NULL),
+            _hmenu(nullptr),
             _indexMenu(0),
-            _pidCmd(NULL),
+            _pidCmd(nullptr),
             _idCmdLast(0),
-            _pmenuhost(NULL)
+            _pmenuhost(nullptr)
         {
         }
 
@@ -86,7 +86,7 @@ public:
         {
             HMENU hmenu = CreateSubMenu();
             CMenuItemInfo menuiteminfo(*_pidCmd, strText, hmenu);
-            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(NULL), CCustomMenuHandlerPtr(NULL));
+            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(nullptr), CCustomMenuHandlerPtr(nullptr));
 
             return CMenu(hmenu, 0, *_pidCmd, _idCmdLast, _pmenuhost);
         }
@@ -105,7 +105,7 @@ public:
             HMENU hmenu = CreateSubMenu();
             CMenuItemInfo menuiteminfo(*_pidCmd, hmenu);
             qcustommenuhandler->InitializeItemInfo(menuiteminfo);
-            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(NULL), qcustommenuhandler);
+            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(nullptr), qcustommenuhandler);
 
             return CMenu(hmenu, 0, *_pidCmd, _idCmdLast, _pmenuhost);
         }
@@ -122,7 +122,7 @@ public:
                      CContextCommandPtr qcontextcommand)
         {
             CMenuItemInfo menuiteminfo(*_pidCmd, strText);
-            InsertMenuItem(menuiteminfo, strHelp, qcontextcommand, CCustomMenuHandlerPtr(NULL));
+            InsertMenuItem(menuiteminfo, strHelp, qcontextcommand, CCustomMenuHandlerPtr(nullptr));
         }
 
 
@@ -157,7 +157,7 @@ public:
         void AddSeparator()
         {
             RaiseLastErrorExceptionIf(
-                !InsertMenu(_hmenu, _indexMenu, MF_BYPOSITION | MF_SEPARATOR, 0, NULL));
+                !InsertMenu(_hmenu, _indexMenu, MF_BYPOSITION | MF_SEPARATOR, 0, nullptr));
 
             ++_indexMenu;
         }
@@ -183,7 +183,7 @@ public:
 
             menuiteminfo.SetSubMenu(hSubmenu);
 
-            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(NULL), CCustomMenuHandlerPtr(NULL));
+            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(nullptr), CCustomMenuHandlerPtr(nullptr));
         }
 
 
@@ -230,13 +230,13 @@ public:
 
     IContextMenuImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::Constructor (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::Constructor (instance=%p)\n", this);
     }
 
 
     ~IContextMenuImpl() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::~IContextMenuImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::~IContextMenuImpl (instance=%p)\n", this);
 
         ClearMenuItems();
     }
@@ -245,7 +245,7 @@ public:
     // IContextMenu
     STDMETHOD(QueryContextMenu)( _In_ HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n"),
+        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
             this, indexMenu, idCmdFirst, idCmdLast, uFlags);
 
         try
@@ -271,7 +271,7 @@ public:
 
     STDMETHOD(GetCommandString)(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x"), this, uFlags);
+        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x", this, uFlags);
 
         try
         {
@@ -282,12 +282,14 @@ public:
                 if (uFlags & GCS_UNICODE)
                 {
                     ATLTRACE2(atlTraceCOM, 0, _T(" (unicode help text)\n"));
-                    lstrcpynW(reinterpret_cast<wchar_t*>(pszName), CT2CW(str), static_cast<int>(cchMax));
+                    if (!lstrcpynW(reinterpret_cast<wchar_t*>(pszName), CT2CW(str), static_cast<int>(cchMax)))
+                        return E_FAIL;
                 }
                 else
                 {
                     ATLTRACE2(atlTraceCOM, 0, _T(" (ansi help text)\n"));
-                    lstrcpynA(pszName, CT2CA(str), static_cast<int>(cchMax));
+                    if (!lstrcpynA(pszName, CT2CA(str), static_cast<int>(cchMax)))
+                        return E_FAIL;
                 }
 
                 return S_OK;
@@ -320,8 +322,8 @@ public:
     // IContextMenu2
     STDMETHOD(HandleMenuMsg)(UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n"));
-        return HandleMenuMsg2(uMsg, wParam, lParam, NULL);
+        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n");
+        return HandleMenuMsg2(uMsg, wParam, lParam, nullptr);
     }
 
 
@@ -337,7 +339,7 @@ public:
         try
         {
             // Always initialize out parameters.
-            if (plResult != NULL)
+            if (plResult)
             {
                 *plResult = 0;
             }
@@ -358,7 +360,7 @@ public:
 
             case WM_MENUCHAR:
                 ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n"));
-                if (plResult == NULL)
+                if (!plResult)
                     return E_FAIL;
 
                 *plResult = static_cast<T*>(this)->OnMenuChar(reinterpret_cast<HMENU>(lParam), LOWORD(wParam));
@@ -378,10 +380,10 @@ public:
         CContextCommandPtr qcontextcommand, CCustomMenuHandlerPtr qcustommenuhandler)
     {
 #ifdef _DEBUG
-        if (qcustommenuhandler.get() != NULL)
+        if (qcustommenuhandler.get()) // TODO use boolean overload.
         {
             CComQIPtr<IContextMenu2> rcontextmenu(this);
-            ATLASSERT(rcontextmenu != NULL && "custom draw handler requires IContextMenu2");
+            ATLASSERT(rcontextmenu && "custom draw handler requires IContextMenu2");
         }
 #endif
 
@@ -457,10 +459,10 @@ private:
         void Clear() throw()
         {
             delete m_pcontextcommand;
-            m_pcontextcommand = NULL;
+            m_pcontextcommand = nullptr;
 
             delete m_pcustommenuhandler;
-            m_pcustommenuhandler = NULL;
+            m_pcustommenuhandler = nullptr;
         }
 
 

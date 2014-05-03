@@ -29,7 +29,7 @@ public:
 
 	HRESULT CallCB(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
-		if (_rshellfolderviewcb == NULL)
+		if (!_rshellfolderviewcb)
 			return E_FAIL;
 
 		return _rshellfolderviewcb->MessageSFVCB(uMsg, wParam, lParam);

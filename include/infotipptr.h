@@ -19,34 +19,34 @@ namespace MSF
 class IInfoTipPtr : public IUnknownPtr
 {
 public:
-	explicit IInfoTipPtr(const CLSID& clsid, IUnknown* pOuter = NULL, DWORD dwClsContext = CLSCTX_INPROC_SERVER) :
-		IUnknownPtr(clsid, pOuter, dwClsContext)
-	{
-	}
+    explicit IInfoTipPtr(const CLSID& clsid, IUnknown* pOuter = nullptr, DWORD dwClsContext = CLSCTX_INPROC_SERVER) :
+        IUnknownPtr(clsid, pOuter, dwClsContext)
+    {
+    }
 
 
-	void Load(PCWSTR wszFilename)
-	{
-		MSF::IPersistFilePtr persistfile(this);
+    void Load(PCWSTR wszFilename)
+    {
+        MSF::IPersistFilePtr persistfile(this);
 
-		persistfile.Load(wszFilename);
-	}
-
-
-	CStringW GetInfoTip()
-	{
-		MSF::IQueryInfoPtr queryinfo(this);
-
-		return queryinfo.GetInfoTip();
-	}
+        persistfile.Load(wszFilename);
+    }
 
 
-	CStringW GetInfoTip(PCWSTR wszFilename)
-	{
-		Load(wszFilename);
+    CStringW GetInfoTip()
+    {
+        MSF::IQueryInfoPtr queryinfo(this);
 
-		return GetInfoTip();
-	}
+        return queryinfo.GetInfoTip();
+    }
+
+
+    CStringW GetInfoTip(PCWSTR wszFilename)
+    {
+        Load(wszFilename);
+
+        return GetInfoTip();
+    }
 };
 
 } // end MSF namespace

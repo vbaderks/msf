@@ -32,7 +32,7 @@ public:
 
         m_dwEffect = *globallock.get();
 
-        ATLTRACE2(atlTraceCOM, 0, _T("CCfPerformedDropEffectHandler::SetData (dwEffect=%p)\n"), m_dwEffect);
+        ATLTRACE2(atlTraceCOM, 0, L"CCfPerformedDropEffectHandler::SetData (dwEffect=%p)\n", m_dwEffect);
 
         if (IsShell5OrHigher())
         {
@@ -69,7 +69,7 @@ private:
 
     void NotifySink()
     {
-        if (m_rperformeddropeffectsink != NULL)
+        if (m_rperformeddropeffectsink)
         {
             m_rperformeddropeffectsink->OnDeleteAfterPaste(m_pdataobject);
         }

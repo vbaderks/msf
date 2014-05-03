@@ -18,71 +18,71 @@ namespace MSF
 class CMenu
 {
 public:
-	CMenu(bool bCreate = true) :
-		m_hmenu(bCreate ? CreateMenu() : NULL)
-	{
-	}
+    CMenu(bool bCreate = true) :
+        m_hmenu(bCreate ? CreateMenu() : NULL)
+    {
+    }
 
 
-	~CMenu() throw()
-	{
-		ATLVERIFY(DestroyMenu(m_hmenu));
-	}
+    ~CMenu() throw()
+    {
+        ATLVERIFY(DestroyMenu(m_hmenu));
+    }
 
 
-	void AddItem(UINT id, UINT nIDText)
-	{
-		AddItem(id, LoadString(nIDText));
-	}
+    void AddItem(UINT id, UINT nIDText)
+    {
+        AddItem(id, LoadString(nIDText));
+    }
 
 
-	void AddItem(UINT id, const CString& strText)
-	{
-		CMenuItemInfo menuiteminfo(id, strText);
+    void AddItem(UINT id, const CString& strText)
+    {
+        CMenuItemInfo menuiteminfo(id, strText);
 
-		InsertMenuItem(menuiteminfo, GetMenuItemCount());
-	}
-
-
-	void AddDefaultItem(UINT id, const CString& strText)
-	{
-		CMenuItemInfo menuiteminfo(id, strText);
-
-		menuiteminfo.SetState(MFS_DEFAULT);
-		InsertMenuItem(menuiteminfo, GetMenuItemCount());
-	}
+        InsertMenuItem(menuiteminfo, GetMenuItemCount());
+    }
 
 
-	void InsertMenuItem(const CMenuItemInfo& menuiteminfo, UINT uItem, bool bByPosition = true)
-	{
-		RaiseLastErrorExceptionIf(!::InsertMenuItem(m_hmenu, uItem, bByPosition, &menuiteminfo));
-	}
+    void AddDefaultItem(UINT id, const CString& strText)
+    {
+        CMenuItemInfo menuiteminfo(id, strText);
+
+        menuiteminfo.SetState(MFS_DEFAULT);
+        InsertMenuItem(menuiteminfo, GetMenuItemCount());
+    }
 
 
-	UINT GetMenuItemCount() const
-	{
-		int count = ::GetMenuItemCount(m_hmenu);
-		RaiseLastErrorExceptionIf(count == -1);
-		return static_cast<UINT>(count);
-	}
+    void InsertMenuItem(const CMenuItemInfo& menuiteminfo, UINT uItem, bool bByPosition = true)
+    {
+        RaiseLastErrorExceptionIf(!::InsertMenuItem(m_hmenu, uItem, bByPosition, &menuiteminfo));
+    }
 
 
-	operator HMENU() const throw()
-	{
-		return m_hmenu;
-	}
+    UINT GetMenuItemCount() const
+    {
+        int count = ::GetMenuItemCount(m_hmenu);
+        RaiseLastErrorExceptionIf(count == -1);
+        return static_cast<UINT>(count);
+    }
+
+
+    operator HMENU() const throw()
+    {
+        return m_hmenu;
+    }
 
 private:
 
-	static HMENU CreateMenu()
-	{
-		HMENU hmenu = ::CreateMenu();
-		RaiseLastErrorExceptionIf(hmenu == NULL);
-		return hmenu;
-	}
+    static HMENU CreateMenu()
+    {
+        HMENU hmenu = ::CreateMenu();
+        RaiseLastErrorExceptionIf(!hmenu);
+        return hmenu;
+    }
 
-	// Member variables.
-	HMENU m_hmenu;
+    // Member variables.
+    HMENU m_hmenu;
 };
 
 } // end MSF namespace

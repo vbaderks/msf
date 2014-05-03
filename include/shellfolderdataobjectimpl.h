@@ -65,7 +65,7 @@ public:
         try
         {
             CCfHandler* pcfhandler = FindCfHandler(pformatetc->cfFormat);
-            if (pcfhandler != NULL)
+            if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
                 {
@@ -103,7 +103,7 @@ public:
     STDMETHOD(QueryGetData)(__RPC__in_opt FORMATETC* pformatetc)
     {
         // The docs define pformatetc as [in]. The SDK defines pformatetc as in_opt.
-        if (pformatetc == NULL)
+        if (!pformatetc)
         {
             ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::QueryGetData (pformatetc == NULL)\n"));
             return DV_E_FORMATETC;
@@ -115,7 +115,7 @@ public:
         try
         {
             const CCfHandler* pcfhandler = FindCfHandler(pformatetc->cfFormat);
-            if (pcfhandler != NULL)
+            if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
                     return pcfhandler->Validate(*pformatetc);
@@ -147,14 +147,14 @@ public:
 
         try
         {
-            if (pformatetc->ptd != NULL)
+            if (pformatetc->ptd)
                 return DV_E_DVTARGETDEVICE;
 
             if (pformatetc->tymed != pstgmedium->tymed)
                 return DV_E_TYMED;
 
             CCfHandler* pcfhandler = FindCfHandler(pformatetc->cfFormat);
-            if (pcfhandler != NULL)
+            if (pcfhandler)
             {
                 if (pcfhandler->CanSetData())
                 {

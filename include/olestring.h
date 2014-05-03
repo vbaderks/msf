@@ -20,7 +20,7 @@ public:
         return pwz;
     }
 
-    COleString() throw() : m_olestrCLSID(NULL)
+    COleString() throw() : m_olestrCLSID(nullptr)
     {
     }
 

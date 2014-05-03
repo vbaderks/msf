@@ -24,8 +24,8 @@ class CStgMedium : public STGMEDIUM
 public:
     static HGLOBAL GlobalClone(HGLOBAL hglobIn)
     {
-        if (hglobIn == NULL)
-            return NULL;
+        if (!hglobIn)
+            return nullptr;
 
         CGlobalLock<void> globallock(hglobIn);
 
@@ -45,7 +45,7 @@ public:
     CStgMedium() throw()
     {
         tymed = TYMED_NULL;
-        pUnkForRelease = NULL;
+        pUnkForRelease = nullptr;
     }
 
     CStgMedium(HGLOBAL hg) throw()
@@ -90,7 +90,7 @@ public:
 
         *static_cast<STGMEDIUM*>(this) = stgmedium;
         stgmedium.tymed = TYMED_NULL;
-        stgmedium.pUnkForRelease = NULL;
+        stgmedium.pUnkForRelease = nullptr;
 
         return *this;
     }

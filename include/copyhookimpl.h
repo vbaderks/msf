@@ -38,7 +38,7 @@ public:
             { L"CLSID", olestrCLSID },
             { L"DESCRIPTION", szDescription },
             { L"COPYHOOKNAME", szCopyHookName },
-            { NULL, NULL }
+            { nullptr, nullptr }
         };
 
         return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
@@ -46,12 +46,12 @@ public:
 
     ICopyHookImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("ICopyHookImpl::Constructor (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"ICopyHookImpl::Constructor (instance=%p)\n", this);
     }
 
     ~ICopyHookImpl() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("ICopyHookImpl::~ICopyHookImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"ICopyHookImpl::~ICopyHookImpl (instance=%p)\n", this);
     }
 
     // ICopyHookImpl only consists of 1 function. So there is little to provide.

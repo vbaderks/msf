@@ -10,11 +10,6 @@
 namespace MSF
 {
 
-#if _MSC_VER == 1300 // ATL 7.0 BEGIN_MSG_MAP generates: expression no effect warnings.
-#pragma warning(push)
-#pragma warning(disable: 4555) // expression has no effect; expected expression with side-effect
-#endif
-
 template <typename T>
 class ATL_NO_VTABLE CShellExtPropertyPageImpl : public CSnapInPropertyPageImpl<T>
 {
@@ -48,7 +43,7 @@ public:
         return 1;
     }
 
-    CShellExtPropertyPageImpl(LPCTSTR lpszTitle = NULL) :
+    CShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) :
         CSnapInPropertyPageImpl<T>(lpszTitle),
         m_nRef(0)
     {
@@ -69,9 +64,5 @@ public:
 private:
     int m_nRef;
 };
-
-#if _MSC_VER == 1300
-#pragma warning(pop)
-#endif
 
 } // namespace MSF

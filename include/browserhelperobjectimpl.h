@@ -30,7 +30,7 @@ public:
             {L"DESCRIPTION", wszDescription},
             {L"CLSID", olestrCLSID},
             {L"NOEXPLORER", bNoExplorer ? L"1" : L"0"},
-            {NULL, NULL}
+            {nullptr, nullptr}
         };
 
         return ATL::_pAtlModule->UpdateRegistryFromResource(IDR_BROWSERHELPEROBJECT, bRegister, regmapEntries);
@@ -43,7 +43,7 @@ public:
     ~CBrowserHelperObjectImpl()
     {
         // If COM object is destructed, make sure ref to site is cleared.
-        SetSite(NULL);
+        SetSite(nullptr);
     }
 
     STDMETHOD(SetSite)(IUnknown* pUnkSite)
@@ -55,7 +55,7 @@ public:
             m_bAdvised = false;
         }
 
-        if (pUnkSite != NULL)
+        if (pUnkSite)
         {
             m_bAdvised = SUCCEEDED(DispEventAdvise(pUnkSite));
         }
@@ -66,7 +66,7 @@ public:
 protected:
     bool IsAttachedSite(IUnknown* pUnkSite) throw()
     {
-        return m_spUnkSite != NULL && m_spUnkSite.IsEqualObject(pUnkSite);
+        return m_spUnkSite && m_spUnkSite.IsEqualObject(pUnkSite);
     }
 
 private:

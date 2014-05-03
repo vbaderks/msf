@@ -23,7 +23,7 @@ public:
 	}
 
 
-	explicit IDataObjectPtr(const CLSID& clsid, IUnknown* pOuter = NULL, DWORD dwClsContext = CLSCTX_ALL) :
+	explicit IDataObjectPtr(const CLSID& clsid, IUnknown* pOuter = nullptr, DWORD dwClsContext = CLSCTX_ALL) :
 		::IDataObjectPtr(clsid, pOuter, dwClsContext)
 	{
 	}

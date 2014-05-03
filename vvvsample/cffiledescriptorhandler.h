@@ -15,45 +15,46 @@
 class CCfFileDescriptorHandler : public CCfHandler
 {
 public:
-	CCfFileDescriptorHandler(IDataObject* pdataobjectOuter) :
-		CCfHandler(CFSTR_FILEDESCRIPTOR, true, false),
-		m_pdataobject(pdataobjectOuter)
-	{
-	}
+    CCfFileDescriptorHandler(IDataObject* pdataobjectOuter) :
+        CCfHandler(CFSTR_FILEDESCRIPTOR, true, false),
+        m_pdataobject(pdataobjectOuter)
+    {
+    }
 
 
-	virtual void GetData(const FORMATETC&, STGMEDIUM& medium) const
-	{
-		CCfShellIdList cfshellidlist(m_pdataobject);
+    virtual void GetData(const FORMATETC&, STGMEDIUM& medium) const
+    {
+        CCfShellIdList cfshellidlist(m_pdataobject);
 
-		size_t size = sizeof(FILEGROUPDESCRIPTOR) + 
-			(cfshellidlist.GetItemCount() * sizeof(FILEDESCRIPTOR));
+        size_t size = sizeof(FILEGROUPDESCRIPTOR) + 
+            (cfshellidlist.GetItemCount() * sizeof(FILEDESCRIPTOR));
 
-		HGLOBAL hg = GlobalAllocThrow(size);
+        HGLOBAL hg = GlobalAllocThrow(size);
 
-		FILEGROUPDESCRIPTOR* pfgd = static_cast<FILEGROUPDESCRIPTOR*>(hg);
+        FILEGROUPDESCRIPTOR* pfgd = static_cast<FILEGROUPDESCRIPTOR*>(hg);
 
-		pfgd->cItems = static_cast<UINT>(cfshellidlist.GetItemCount());
+        pfgd->cItems = static_cast<UINT>(cfshellidlist.GetItemCount());
 
-		for (unsigned int i = 0; i < pfgd->cItems; ++i)
-		{
-			FILEDESCRIPTOR& fd = pfgd->fgd[i];
+        for (unsigned int i = 0; i < pfgd->cItems; ++i)
+        {
+            FILEDESCRIPTOR& fd = pfgd->fgd[i];
 
-			fd.dwFlags = FD_FILESIZE;
-			fd.nFileSizeHigh = 0;
+            fd.dwFlags = FD_FILESIZE;
+            fd.nFileSizeHigh = 0;
 
-			CVVVItem vvvitem(cfshellidlist.GetItem(i));
+            CVVVItem vvvitem(cfshellidlist.GetItem(i));
 
-			fd.nFileSizeLow = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
-			lstrcpyn(fd.cFileName, vvvitem.GetDisplayName(), MAX_PATH);
-		}
+            fd.nFileSizeLow = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
+            if (lstrcpyn(fd.cFileName, vvvitem.GetDisplayName(), MAX_PATH))
+                _com_raise_error(E_FAIL);
+        }
 
-		CStgMedium::SetHGlobal(medium, hg);
-	}
+        CStgMedium::SetHGlobal(medium, hg);
+    }
 
 private:
 
-	CCfFileDescriptorHandler& operator=(const CCfFileDescriptorHandler&); // not implemented.
+    CCfFileDescriptorHandler& operator=(const CCfFileDescriptorHandler&); // not implemented.
 
-	IDataObject* m_pdataobject;
+    IDataObject* m_pdataobject;
 };

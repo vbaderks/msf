@@ -28,7 +28,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR sz
     {
         { L"DESCRIPTION", szDescription },
         { L"CLSID", olestrCLSID },
-        { NULL, NULL }
+        { nullptr, nullptr }
     };
 
     return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
@@ -47,7 +47,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
         { L"DESCRIPTION", szDescription },
         { L"CLSID", olestrCLSID },
         { L"ROOTTYPE", szRootExt },
-        { NULL, NULL }
+        { nullptr, nullptr }
     };
 
     return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
@@ -62,7 +62,7 @@ inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegiste
     {
         { L"EXTENSION", szExtension },
         { L"PROGID", szProgId },
-        { NULL, NULL }
+        { nullptr, nullptr }
     };
 
     return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
@@ -84,7 +84,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
         { L"EXTENSION", szExtension },
         { L"CLSID", olestrCLSID },
         { L"CLSIDSHELLFOLDER", olestrClsidShellFolder },
-        { NULL, NULL }
+        { nullptr, nullptr }
     };
 
     return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
@@ -105,7 +105,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
         { L"EXTENSION", szExtension },
         { L"CLSID", olestrCLSID },
         { L"FRIENDLYTYPENAME", strFriendlyTypenameId },
-        { NULL, NULL }
+        { nullptr, nullptr }
     };
 
     return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);

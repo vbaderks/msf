@@ -58,7 +58,7 @@ LPITEMIDLIST CVVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) 
 
         unsigned int nActive = GetPrivateProfileInt(strAppName, TSZ_ACTIVE, -1);
         if (nActive == -1)
-            return NULL;
+            return nullptr;
 
         ++nItemIterator;
 

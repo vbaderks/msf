@@ -49,11 +49,7 @@ public:
     // IInitializeWithFile
     STDMETHOD(Initialize)(LPCWSTR pszFilePath, DWORD dwMode)
     {
-#ifdef UNICODE
         ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, filename=%s)\n", this, dwMode, pszFilePath);
-#else
-        ATLTRACE2(atlTraceCOM, 0, "IInfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, , filename=%S)\n", this, dwMode, pszFilePath);
-#endif
 
         try
         {
@@ -97,11 +93,7 @@ public:
 
     STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode)
     {
-#ifdef UNICODE
         ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
-#else
-        ATLTRACE2(atlTraceCOM, 0, "IInfoTipImpl::Load (instance=%p, mode=%d, , filename=%S)\n", this, dwMode, wszFilename);
-#endif
         try
         {
             if (m_bInitialized)

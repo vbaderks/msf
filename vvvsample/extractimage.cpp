@@ -35,9 +35,9 @@ public:
     HBITMAP CreateImage(const SIZE& size, DWORD dwRecClrDepth, DWORD /*dwFlags*/)
     {
         // TODO: fix this function
-        HBITMAP hbitmap = CreateBitmap(size.cx, size.cy, 1, dwRecClrDepth, NULL);
+        HBITMAP hbitmap = CreateBitmap(size.cx, size.cy, 1, dwRecClrDepth, nullptr);
 
-        HDC hdc = CreateCompatibleDC(NULL);
+        HDC hdc = CreateCompatibleDC(nullptr);
 
         HGDIOBJ hgdiobjectOriginal = SelectObject(hdc, hbitmap);
 

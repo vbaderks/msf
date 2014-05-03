@@ -35,7 +35,7 @@ public:
 
             ~CItemIdListVector()
             {
-                if (m_ppidl != NULL)
+                if (m_ppidl)
                 {
                     for (ULONG i = 0; i < m_nCount; ++i)
                     {
@@ -57,7 +57,7 @@ public:
 
             void release() throw()
             {
-                m_ppidl = NULL;
+                m_ppidl = nullptr;
             }
 
         private:
@@ -70,7 +70,7 @@ public:
     {
         try
         {
-            if (pceltFetched == NULL && celt != 1)
+            if (!pceltFetched && celt != 1)
                 return E_INVALIDARG;
 
             CItemIdListVector itemidlistvector(ppidl);
@@ -78,13 +78,13 @@ public:
             for (ULONG i = 0; i < celt; ++i)
             {
                 LPITEMIDLIST pidl = static_cast<T*>(this)->GetNextItem();
-                if (pidl == NULL)
+                if (!pidl)
                     break; // No more items.
 
                 itemidlistvector.push_back(pidl);
             }
 
-            if (pceltFetched != NULL)
+            if (pceltFetched)
             {
                 *pceltFetched = itemidlistvector.size();
             }
@@ -99,19 +99,19 @@ public:
     STDMETHOD(Skip)(ULONG /*celt*/)
     {
         // Note: function not used by explorer \ system folder view.
-        MSF_TRACENOTIMPL(_T("IEnumIDListImpl::Skip"));
+        MSF_TRACENOTIMPL(L"IEnumIDListImpl::Skip");
     }
 
     STDMETHOD(Reset)()
     {
         // Note: function not used by explorer \ system folder view.
-        MSF_TRACENOTIMPL(_T("IEnumIDListImpl::Reset"));
+        MSF_TRACENOTIMPL(L"IEnumIDListImpl::Reset");
     }
 
     STDMETHOD(Clone)(__RPC__deref_out_opt IEnumIDList** /*ppenum*/)
     {
         // Note: function not used by explorer \ system folder view.
-        MSF_TRACENOTIMPL(_T("IEnumIDListImpl::Clone"));
+        MSF_TRACENOTIMPL(L"IEnumIDListImpl::Clone");
     }
 };
 

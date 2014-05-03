@@ -22,7 +22,7 @@ public:
 
     bool Next(FORMATETC& formatetc)
     {
-        return Next(1, &formatetc, NULL);
+        return Next(1, &formatetc, nullptr);
     }
 
     

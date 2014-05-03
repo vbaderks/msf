@@ -93,7 +93,7 @@ public:
             { L"CLSID", olestrCLSID },
             { L"ROOTTYPE", szRootExt },
             { L"FRIENDLYTYPENAME", strFriendlyTypeName },
-            { NULL, NULL } };
+            { nullptr, nullptr } };
 
         return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
     }
@@ -108,7 +108,7 @@ public:
     }
 
     // Purpose: small helper to support 'type' system. 
-    static void ChangeNotifyPidl(long wEventId, UINT uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = NULL)
+    static void ChangeNotifyPidl(long wEventId, UINT uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = nullptr)
     {
         ::SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
     }
@@ -140,7 +140,7 @@ public:
     IShellFolderImpl(ULONG ulSort = 0, ULONG ulDisplay = 0) :
         m_ulSort(ulSort),
         m_ulDisplay(ulDisplay),
-        m_hwndOwner(NULL),
+        m_hwndOwner(nullptr),
         m_bCachedIsSupportedClipboardFormat(false)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolderImpl (instance=%p)\n"), this);
@@ -356,29 +356,29 @@ public:
             else if (riid == __uuidof(ITopViewAwareItem))
             {
                 ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=ITopViewAwareItem)\n"), this);
-                *ppRetVal = NULL; // ITopViewAwareItem is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // ITopViewAwareItem is an undocumented inteface, purpose not clear.
             }
             else if (riid == __uuidof(IFrameLayoutDefinition))
             {
                 ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IFrameLayoutDefinition)\n"), this);
-                *ppRetVal = NULL; // IFrameLayoutDefinition is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // IFrameLayoutDefinition is an undocumented inteface, purpose not clear.
             }
             else if (riid == __uuidof(IConnectionFactory))
             {
                 ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IConnectionFactory)\n"), this);
-                *ppRetVal = NULL; // IConnectionFactory is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // IConnectionFactory is an undocumented inteface, purpose not clear.
             }
             else if (riid == __uuidof(IShellUndocumented93))
             {
                 ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumented93)\n"), this);
                 // stack trace analysis: Called when CDefView class initializes the CDefCollection.
-                *ppRetVal = NULL; // IShellUndocumented93 is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // IShellUndocumented93 is an undocumented inteface, purpose not clear.
             }
             else if (riid == __uuidof(IShellUndocumentedCA))
             {
                 ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumentedCA)\n"), this);
                 // stack trace analysis: called from CShellItem::BindToHandler to hook an kind of interrupt source.
-                *ppRetVal = NULL; // IShellUndocumentedCA is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // IShellUndocumentedCA is an undocumented inteface, purpose not clear.
             }
             else
             {
@@ -386,10 +386,10 @@ public:
                 AtlDumpIID(riid, _T("IShellFolderImpl::CreateViewObject (?)"), E_NOINTERFACE);
                 #endif //  _ATL_DEBUG_QI
 
-                *ppRetVal = NULL;
+                *ppRetVal = nullptr;
             }
 
-            return *ppRetVal == NULL ? E_NOINTERFACE : S_OK;
+            return !(*ppRetVal) ? E_NOINTERFACE : S_OK;
         }
         MSF_COM_CATCH_HANDLER()
     }
@@ -400,7 +400,7 @@ public:
     {
         try
         {
-            if (ppidl == NULL)
+            if (!ppidl)
                 return E_POINTER; // note: ppidl is marked with SAL as optional, but docs state that it is required.
 
             if (riid == __uuidof(IContextMenu))
@@ -443,10 +443,10 @@ public:
                 AtlDumpIID(riid, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf"), E_NOINTERFACE);
                 #endif //  _ATL_DEBUG_QI
 
-                *ppv = NULL;
+                *ppv = nullptr;
             }
 
-            return *ppv == NULL ? E_NOINTERFACE : S_OK;
+            return !(*ppv) ? E_NOINTERFACE : S_OK;
         }
         MSF_COM_CATCH_HANDLER()
     }
@@ -881,23 +881,19 @@ protected:
             switch (uMsg)
             {
                 case DFM_MERGECONTEXTMENU:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=MergeContextMenu, wParam=%d, lParam=%p)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=MergeContextMenu, wParam=%d, lParam=%p)\n", wParam, lParam);
                     return static_cast<T*>(this)->OnDfmMergeContextMenu(pdataobject, static_cast<UINT>(wParam), *reinterpret_cast<QCMINFO*>(lParam));
 
                 case DFM_INVOKECOMMAND:
-                    #ifdef _UNICODE
-                        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand (wParam=%d, lParam=%s)\n"), wParam, lParam);
-                    #else
-                        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand (wParam=%d, lParam=%S)\n"), wParam, lParam);
-                    #endif
+                     ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand (wParam=%d, lParam=%s)\n", wParam, lParam);
                     return static_cast<T*>(this)->OnDfmInvokeCommand(hwnd, pdataobject, static_cast<int>(wParam), reinterpret_cast<wchar_t*>(lParam));
 
                 case DFM_GETDEFSTATICID:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=GetDefStaticID, wParam=%d, lParam=%p)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=GetDefStaticID, wParam=%d, lParam=%p)\n", wParam, lParam);
                     return static_cast<T*>(this)->OnDfmGetStaticID(reinterpret_cast<int*>(lParam));
 
                 case DFM_CREATE:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=Create, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=Create, wParam=%d, lParam=%d)\n", wParam, lParam);
                     return static_cast<T*>(this)->OnDfmCreate();
 
                 case DFM_GETHELPTEXT:
@@ -1031,12 +1027,7 @@ protected:
 
         CString str = static_cast<T*>(this)->OnDfmGetHelpText(nCmdId);
 
-#ifdef _UNICODE
-        strncpy(pBuffer, CW2A(str), nBufferMax);
-#else
-        strncpy(pBuffer, str, nBufferMax);
-#endif
-
+        strncpy_s(pBuffer, nBufferMax, CW2A(str), _TRUNCATE);
         pBuffer[nBufferMax - 1] = 0;
 
         return S_OK;
@@ -1051,12 +1042,7 @@ protected:
 
         CString str = static_cast<T*>(this)->OnDfmGetHelpText(nCmdId);
 
-#ifdef _UNICODE
-        wcsncpy(pBuffer, str, nBufferMax);
-#else
-        wcsncpy(pBuffer, CA2W(str), nBufferMax);
-#endif
-    
+        wcsncpy_s(pBuffer, nBufferMax, str, _TRUNCATE);
         pBuffer[nBufferMax - 1] = 0;
 
         return S_OK;
@@ -1281,7 +1267,7 @@ protected:
     {
         // It is not required to use a callback object.
         // It just makes it impossible to catch events.
-        return NULL;
+        return nullptr;
     }
 
     // Purpose: Standard 'ondragover' handler. Override if special drag handling is required.
@@ -1300,7 +1286,7 @@ protected:
     DWORD OnDrop(IDataObject* pdataobject, DWORD grfKeyState, POINTL /*pt*/, DWORD dwEffect)
     {
         if ((dwEffect & (DROPEFFECT_MOVE | DROPEFFECT_COPY)) == 0 ||
-             pdataobject == NULL || !static_cast<T*>(this)->IsSupportedClipboardFormat(pdataobject))
+             !pdataobject || !static_cast<T*>(this)->IsSupportedClipboardFormat(pdataobject))
             return DROPEFFECT_NONE;
 
         dwEffect = static_cast<T*>(this)->AddItemsFromDataObject(dwEffect, pdataobject);

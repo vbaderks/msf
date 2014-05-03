@@ -23,7 +23,7 @@ public:
     class CIcon
     {
     public:
-        explicit CIcon(HICON hicon = NULL) :
+        explicit CIcon(HICON hicon = nullptr) :
             m_hicon(hicon)
         {
         }
@@ -45,7 +45,7 @@ public:
 
         void release() throw()
         {
-            m_hicon = NULL;
+            m_hicon = nullptr;
         }
 
 
@@ -58,10 +58,10 @@ public:
 
         void dispose() throw()
         {
-            if (m_hicon != NULL)
+            if (m_hicon)
             {
                 ATLVERIFY(DestroyIcon(m_hicon));
-                m_hicon = NULL;
+                m_hicon = nullptr;
             }
         }
 
@@ -108,7 +108,7 @@ public:
 
     STDMETHOD(GetIconLocation)(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n"), this, uFlags);
+        ATLTRACE2(atlTraceCOM, 0, L"CExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
 
         try
         {
@@ -136,7 +136,7 @@ public:
             RaiseExceptionIf(!Shell_GetImageLists(&himLarge, &himSmall));
 
             CIcon iconLarge;
-            if (phiconLarge != NULL)
+            if (phiconLarge)
             {
                 if (LOWORD(nIconSize) != 32)
                     return E_INVALIDARG;
@@ -145,7 +145,7 @@ public:
                 *phiconLarge = iconLarge.get();
             }
 
-            if (phiconSmall != NULL)
+            if (phiconSmall)
             {
                 if (HIWORD(nIconSize) != 16)
                     return E_INVALIDARG;

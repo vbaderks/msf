@@ -86,20 +86,20 @@ public:
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId, PCWSTR szDescription) throw()
     {
-        return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), _T(""));
+        return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), L"");
     }
 
     IColumnProviderImpl() :
         m_bInitialized(false),
-        m_pCachedInfo(NULL),
+        m_pCachedInfo(nullptr),
         m_emptyColumnInfo()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IColumnProviderImpl::IColumnProviderImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IColumnProviderImpl::IColumnProviderImpl (instance=%p)\n", this);
     }
 
     ~IColumnProviderImpl() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IColumnProviderImpl::~IColumnProviderImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IColumnProviderImpl::~IColumnProviderImpl (instance=%p)\n", this);
     }
 
     // IColumnProvider
@@ -108,14 +108,14 @@ public:
         try
         {
             ATLTRACE2(atlTraceCOM, 0,
-                _T("IColumnProviderImpl::Initialize, i=%p, tid=%d, dwFlags=%d, wszFolder=%s\n"),
+                L"IColumnProviderImpl::Initialize, i=%p, tid=%d, dwFlags=%d, wszFolder=%s\n",
                 this, GetCurrentThreadId(), psci->dwFlags, psci->wszFolder);
 
             // Note: the SDK docs are unclear if 
             // TODO: check if explorer calls this function twice.
 
             // Clear internal caching variables.
-            m_pCachedInfo = NULL;
+            m_pCachedInfo = nullptr;
             m_strCachedFilename.Empty();
             m_mapCacheInfo.clear();
 
@@ -135,16 +135,14 @@ public:
 
     // Purpose: GetColumnInfo is called by the shell to retrieve the column names.
     // By calling this repeatedly the shell can detect how many columns there are.
-    STDMETHOD(GetColumnInfo)(DWORD dwIndex,  _Out_ SHCOLUMNINFO* psci)
+    STDMETHOD(GetColumnInfo)(DWORD dwIndex, _Out_ SHCOLUMNINFO* psci)
     {
-        ATLTRACE2(atlTraceCOM, 0,
-            _T("IColumnProviderImpl::GetColumnInfo, i=%p, tid=%d, dwIndex=%d\n"),
+        ATLTRACE2(atlTraceCOM, 0, L"IColumnProviderImpl::GetColumnInfo, i=%p, tid=%d, dwIndex=%d\n",
             this, GetCurrentThreadId(), dwIndex);
 
         if (!m_bInitialized)
         {
-            ATLTRACE2(atlTraceCOM, 0,
-                _T("IColumnProviderImpl::GetColumnInfo, i=%p, Initialize was not called\n"), this);
+            ATLTRACE2(atlTraceCOM, 0, L"IColumnProviderImpl::GetColumnInfo, i=%p, Initialize was not called\n", this);
             return E_FAIL;
         }
 
@@ -162,7 +160,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IColumnProviderImpl::GetItemData, i=%p, tid=%d, f=%d, c=%d, file=%s\n"),
+            ATLTRACE2(atlTraceCOM, 0, L"IColumnProviderImpl::GetItemData, i=%p, tid=%d, f=%d, c=%d, file=%s\n",
                 this, GetCurrentThreadId(), pscd->dwFlags, pscid->pid, CW2T(pscd->wszFile));
 
             if (!m_bInitialized)
@@ -185,7 +183,7 @@ public:
 
             if (bFlushCache)
             {
-                pCachedInfo = NULL;
+                pCachedInfo = nullptr;
             }
             else
             {
@@ -194,7 +192,7 @@ public:
                 pCachedInfo = FindInLastUsedCache(wszFilename);
             }
 
-            if (pCachedInfo == NULL)
+            if (!pCachedInfo)
             {
                 pCachedInfo = GetAndCacheFileInfo(wszFilename, pscd->wszFile, bFlushCache);
             }
@@ -297,14 +295,14 @@ private:
 
         if (bFlushCache)
         {
-            pCachedInfo = NULL;
+            pCachedInfo = nullptr;
         }
         else
         {
             pCachedInfo = FindInCache(strFilename);
         }
 
-        if (pCachedInfo == NULL)
+        if (!pCachedInfo)
         {
             // New file info must be stored in the cache.
             vector<CString> strColumnInfos;
@@ -329,7 +327,7 @@ private:
         }
         else
         {
-            return NULL;
+            return nullptr;
         }
     }
 
@@ -348,12 +346,12 @@ private:
 
     const std::vector<CString>* FindInLastUsedCache(PCWSTR wszFilename) const
     {
-        if (m_pCachedInfo == NULL)
-            return NULL; // last used cache is empty.
+        if (!m_pCachedInfo)
+            return nullptr; // last used cache is empty.
 
         if (m_strCachedFilename != wszFilename)
-            return NULL; // last used cache was for a different file.
-        
+            return nullptr; // last used cache was for a different file.
+
         return m_pCachedInfo;
     }
 

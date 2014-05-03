@@ -40,7 +40,7 @@ public:
     unsigned int GetFileCount() const throw()
     {
         ATLASSERT(m_stgmedium.tymed == TYMED_HGLOBAL && "Unable to retrieve filecount");
-        return ::DragQueryFile((HDROP) m_stgmedium.hGlobal, (UINT)-1, NULL, 0);
+        return ::DragQueryFile((HDROP) m_stgmedium.hGlobal, (UINT)-1, nullptr, 0);
     }
 
     CString GetFile(unsigned int iFile) const

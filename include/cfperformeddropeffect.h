@@ -17,27 +17,27 @@ class CCfPerformedDropEffect
 {
 public:
 
-	static void Set(IDataObject* pdataobject, DWORD dwEffect)
-	{
-		RaiseExceptionIfFailed(SetImpl(pdataobject, dwEffect));
-	}
+    static void Set(IDataObject* pdataobject, DWORD dwEffect)
+    {
+        RaiseExceptionIfFailed(SetImpl(pdataobject, dwEffect));
+    }
 
 
-	static void SetOptional(IDataObject* pdataobject, DWORD dwEffect)
-	{
-		HRESULT hr = SetImpl(pdataobject, dwEffect);
-		if (FAILED(hr))
-		{
-			ATLTRACE2(atlTraceCOM, 0, _T("CCfPerformedDropEffect::SetOptional failed, hr=%x\n"), hr);
-		}
-	}
+    static void SetOptional(IDataObject* pdataobject, DWORD dwEffect)
+    {
+        HRESULT hr = SetImpl(pdataobject, dwEffect);
+        if (FAILED(hr))
+        {
+            ATLTRACE2(atlTraceCOM, 0, L"CCfPerformedDropEffect::SetOptional failed, hr=%x\n", hr);
+        }
+    }
 
 private:
 
-	static HRESULT SetImpl(IDataObject* pdataobject, DWORD dwEffect)
-	{
-		return SetCfEffect(CFSTR_PERFORMEDDROPEFFECT, pdataobject, dwEffect);
-	}
+    static HRESULT SetImpl(IDataObject* pdataobject, DWORD dwEffect)
+    {
+        return SetCfEffect(CFSTR_PERFORMEDDROPEFFECT, pdataobject, dwEffect);
+    }
 };
 
 } // end of MSF namespace

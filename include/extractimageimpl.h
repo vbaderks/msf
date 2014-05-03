@@ -49,7 +49,7 @@ public:
 
 
     IExtractImageImpl() :
-        _hbitmap(NULL)
+        _hbitmap(nullptr)
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IExtractImageImpl::IExtractImageImpl (instance=%p)\n"), this);
     }
@@ -68,7 +68,7 @@ public:
     {
         ATLTRACE2(atlTraceCOM, 0, _T("IExtractImageImpl::GetClassID\n"));
 
-        if (pClassID == NULL)
+        if (!pClassID)
             return E_POINTER;
 
         *pClassID = T::GetObjectCLSID();
@@ -104,11 +104,7 @@ public:
     {
         (dwMode); // unused in release.
 
-#ifdef UNICODE
         ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
-#else
-        ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::Load (instance=%p, mode=%d, , filename=%S)\n", this, dwMode, wszFilename);
-#endif
         try
         {
             _strFilename = CW2T(wszFilename);
@@ -133,7 +129,7 @@ public:
             *pdwFlags |= IEIFLAG_CACHE;
 
             //  Note: The SDK docs are unclear if it passing a NULL pointer is allowed.
-            if (pdwPriority != NULL)
+            if (pdwPriority)
             {
                 *pdwPriority = IEIT_PRIORITY_NORMAL;
             }
@@ -148,11 +144,11 @@ public:
     {
         ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::Extract (instance=%p)\n", this);
 
-        if (_hbitmap == NULL)
+        if (!_hbitmap)
             return E_FAIL;
 
         *phBmpThumbnail = _hbitmap;
-        _hbitmap = NULL;
+        _hbitmap = nullptr;
 
         return S_OK;
     }
@@ -163,7 +159,7 @@ public:
     {
         ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::GetDateStamp (instance=%p, pdatastampe=%p)\n", this, pDateStamp);
 
-        if (pDateStamp == NULL)
+        if (!pDateStamp)
             return E_POINTER;
 
         WIN32_FILE_ATTRIBUTE_DATA fileattributedata;

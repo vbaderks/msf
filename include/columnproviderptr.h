@@ -19,120 +19,120 @@ namespace MSF
 class CSHColumnInit : public SHCOLUMNINIT
 {
 public:
-	CSHColumnInit()
-	{
-		dwFlags = 0; // reserved.
-		dwReserved = 0;
-		wszFolder[0] = 0;
-	}
+    CSHColumnInit()
+    {
+        dwFlags = 0; // reserved.
+        dwReserved = 0;
+        wszFolder[0] = 0;
+    }
 
-	CSHColumnInit(PCWSTR pwszFolder)
-	{
-		dwFlags = 0; // reserved.
-		dwReserved = 0;
-		lstrcpynW(wszFolder, pwszFolder, MSF_ARRAY_SIZE(wszFolder));
-	}
+    CSHColumnInit(PCWSTR pwszFolder)
+    {
+        dwFlags = 0; // reserved.
+        dwReserved = 0;
+        lstrcpynW(wszFolder, pwszFolder, MSF_ARRAY_SIZE(wszFolder));
+    }
 };
 
 
 class IColumnProviderPtr :
-	public ::IColumnProviderPtr
+    public ::IColumnProviderPtr
 {
 public:
-	IColumnProviderPtr(const CLSID& clsid, IUnknown* pOuter, DWORD dwClsContext) :
-		::IColumnProviderPtr(clsid, pOuter, dwClsContext)
-	{
-	}
+    IColumnProviderPtr(const CLSID& clsid, IUnknown* pOuter, DWORD dwClsContext) :
+        ::IColumnProviderPtr(clsid, pOuter, dwClsContext)
+    {
+    }
 
 
-	IColumnProviderPtr(const CLSID& clsid, wchar_t* pwszFolder = NULL) :
-		::IColumnProviderPtr(clsid, NULL, CLSCTX_INPROC_SERVER)
-	{
-		Initialize(pwszFolder);
-	}
+    IColumnProviderPtr(const CLSID& clsid, wchar_t* pwszFolder = nullptr) :
+        ::IColumnProviderPtr(clsid, NULL, CLSCTX_INPROC_SERVER)
+    {
+        Initialize(pwszFolder);
+    }
 
 
-	void CreateInstance(const CLSID& rclsid)
-	{
-		RaiseExceptionIfFailed(__super::CreateInstance(rclsid));
-	}
+    void CreateInstance(const CLSID& rclsid)
+    {
+        RaiseExceptionIfFailed(__super::CreateInstance(rclsid));
+    }
 
 
-	void Initialize(wchar_t* pwszFolder = NULL)
-	{
-		CSHColumnInit shcolumninit(pwszFolder);
+    void Initialize(wchar_t* pwszFolder = nullptr)
+    {
+        CSHColumnInit shcolumninit(pwszFolder);
 
-		RaiseExceptionIfFailed(GetInterfacePtr()->Initialize(&shcolumninit));
-	}
-
-
-	bool GetColumnInfo(DWORD dwIndex, SHCOLUMNINFO& columninfo)
-	{
-		HRESULT hr = GetInterfacePtr()->GetColumnInfo(dwIndex, &columninfo);
-		RaiseExceptionIfFailed(hr);
-
-		return hr == S_OK;
-	}
+        RaiseExceptionIfFailed(GetInterfacePtr()->Initialize(&shcolumninit));
+    }
 
 
-	// Helper that retrieves id as return or throws.
-	SHCOLUMNID GetColumnId(DWORD dwIndex)
-	{
-		SHCOLUMNINFO columninfo;
+    bool GetColumnInfo(DWORD dwIndex, SHCOLUMNINFO& columninfo)
+    {
+        HRESULT hr = GetInterfacePtr()->GetColumnInfo(dwIndex, &columninfo);
+        RaiseExceptionIfFailed(hr);
 
-		RaiseExceptionIf(!GetColumnInfo(dwIndex, columninfo));
-
-		return columninfo.scid;
-	}
+        return hr == S_OK;
+    }
 
 
-	unsigned long GetColumnCount()
-	{
-		DWORD dwIndex = 0;
-		SHCOLUMNINFO columninfo;
+    // Helper that retrieves id as return or throws.
+    SHCOLUMNID GetColumnId(DWORD dwIndex)
+    {
+        SHCOLUMNINFO columninfo;
 
-		while (GetColumnInfo(dwIndex, columninfo))
-		{
-			++dwIndex;
-		}
+        RaiseExceptionIf(!GetColumnInfo(dwIndex, columninfo));
 
-		return dwIndex;
-	}
+        return columninfo.scid;
+    }
 
 
-	bool GetItemData(PCWSTR wszFilename, SHCOLUMNID& scid, VARIANT& varData, ULONG dwflags = 0)
-	{
-		CShColumnData shcolumndata(wszFilename, dwflags);
+    unsigned long GetColumnCount()
+    {
+        DWORD dwIndex = 0;
+        SHCOLUMNINFO columninfo;
 
-		HRESULT hr = GetInterfacePtr()->GetItemData(&scid, &shcolumndata, &varData);
-		RaiseExceptionIfFailed(hr);
+        while (GetColumnInfo(dwIndex, columninfo))
+        {
+            ++dwIndex;
+        }
 
-		return hr == S_OK;
-	}
+        return dwIndex;
+    }
 
 
-	_variant_t GetItemData(PCWSTR wszFilename, SHCOLUMNID& scid, ULONG dwflags = 0)
-	{
-		_variant_t varData;
-		RaiseExceptionIf(!GetItemData(wszFilename, scid, varData, dwflags));
+    bool GetItemData(PCWSTR wszFilename, SHCOLUMNID& scid, VARIANT& varData, ULONG dwflags = 0)
+    {
+        CShColumnData shcolumndata(wszFilename, dwflags);
 
-		return varData;
-	}
+        HRESULT hr = GetInterfacePtr()->GetItemData(&scid, &shcolumndata, &varData);
+        RaiseExceptionIfFailed(hr);
+
+        return hr == S_OK;
+    }
+
+
+    _variant_t GetItemData(PCWSTR wszFilename, SHCOLUMNID& scid, ULONG dwflags = 0)
+    {
+        _variant_t varData;
+        RaiseExceptionIf(!GetItemData(wszFilename, scid, varData, dwflags));
+
+        return varData;
+    }
 
 private:
-	class CShColumnData : public SHCOLUMNDATA
-	{
-	public:
-		CShColumnData(PCWSTR wszFilename, ULONG dwflags = 0, DWORD dwfileattributes = FILE_ATTRIBUTE_NORMAL)
-		{
-			dwFlags = dwflags;
-			dwFileAttributes = dwfileattributes;
-			dwReserved = 0;
-			lstrcpynW(wszFile, wszFilename, MSF_ARRAY_SIZE(wszFile));
-			wcscpy(wszFile, wszFilename);
-			pwszExt = wcsrchr(wszFile, '.');
-		}
-	};
+    class CShColumnData : public SHCOLUMNDATA
+    {
+    public:
+        CShColumnData(PCWSTR wszFilename, ULONG dwflags = 0, DWORD dwfileattributes = FILE_ATTRIBUTE_NORMAL)
+        {
+            dwFlags = dwflags;
+            dwFileAttributes = dwfileattributes;
+            dwReserved = 0;
+            lstrcpynW(wszFile, wszFilename, MSF_ARRAY_SIZE(wszFile));
+            wcscpy(wszFile, wszFilename);
+            pwszExt = wcsrchr(wszFile, '.');
+        }
+    };
 };
 
 } // end MSF namespace

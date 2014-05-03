@@ -18,19 +18,19 @@ namespace MSF
 class CFormatEtc : public FORMATETC
 {
 public:
-    CFormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = NULL, DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) throw()
+    CFormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr, DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) throw()
     {
         CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
     }
 
-    CFormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = NULL, DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) throw()
+    CFormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr, DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) throw()
     {
         CommonConstruct(RegisterCf(lpszFormat), dwtymed, pdvtd, dwaspect, index);
     }
 
     CFormatEtc()
     {
-        ptd = NULL;
+        ptd = nullptr;
     }
 
     CFormatEtc(const FORMATETC& formatetc)
@@ -55,10 +55,10 @@ public:
 
     void Dispose() throw()
     {
-        if (ptd != NULL)
+        if (ptd)
         {
             CoTaskMemFree(ptd);
-            ptd = NULL;
+            ptd = nullptr;
         }
     }
 
@@ -82,11 +82,11 @@ private:
 
     static DVTARGETDEVICE* CopyTargetDevice(const FORMATETC& src)
     {
-        if (src.ptd == NULL)
-            return NULL;
+        if (!src.ptd)
+            return nullptr;
 
         DVTARGETDEVICE* ptd = static_cast<DVTARGETDEVICE*>(CoTaskMemAlloc(src.ptd->tdSize));
-        if (ptd == NULL)
+        if (!ptd)
             throw std::bad_alloc();
         memcpy(ptd, src.ptd, src.ptd->tdSize);
         return ptd;
