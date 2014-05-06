@@ -231,7 +231,7 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
     if (regkey.QueryMultiStringValue(pszValueName, &(buffer[0]), &ulLength) != ERROR_SUCCESS)
         return;
 
-    for (size_t i = 0; i < buffer.size() && buffer[i] != NULL;
+    for (size_t i = 0; i < buffer.size() && buffer[i];
          i += rgStrings.back().GetLength() + 1)
     {
         rgStrings.push_back(CString(&(buffer[i])));
@@ -266,7 +266,7 @@ inline CString GetAppPath(const CString& strApp)
 inline HGLOBAL GlobalAllocThrow(SIZE_T dwBytes, UINT uFlags = GMEM_FIXED)
 {
     HGLOBAL hg = GlobalAlloc(uFlags, dwBytes);
-    RaiseExceptionIf(hg == NULL, E_OUTOFMEMORY);
+    RaiseExceptionIf(!hg, E_OUTOFMEMORY);
     return hg;
 }
 

@@ -8,6 +8,7 @@
 
 #include "../include/enumidlistimpl.h"
 #include "vvvfile.h"
+#include <memory>
 
 
 class ATL_NO_VTABLE CEnumIDList :
@@ -39,18 +40,17 @@ public:
         return m_qfile->GetNextItem(m_grfFlags, m_nItemIterator);
     }
 
-    // Note: VC++ 7.0 cannot access private members from static class functions.
+private:
+
     void Initialize(const CString& strFilename, const CString& strFolder, DWORD grfFlags)
     {
+        m_qfile = make_unique<CVVVFile>(strFilename, strFolder);
         m_grfFlags = grfFlags;
-        m_qfile.reset(new CVVVFile(strFilename, strFolder));
         m_nItemIterator = 0;
     }
 
-private:
-
     // Member variables
-    DWORD              m_grfFlags;
-    auto_ptr<CVVVFile> m_qfile;
-    unsigned int       m_nItemIterator;
+    DWORD m_grfFlags;
+    unique_ptr<CVVVFile> m_qfile;
+    unsigned int m_nItemIterator;
 };

@@ -154,9 +154,9 @@ public:
     // IPersistFolder
     STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistFolder::GetClassID (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IPersistFolder::GetClassID (instance=%p)\n", this);
 
-        if (pClassID == NULL)
+        if (!pClassID)
             return E_POINTER;
 
         *pClassID = T::GetObjectCLSID();
@@ -167,9 +167,9 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistFolder::Initialize (instance=%p, pidl=%p)\n"), this, pidl);
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IPersistFolder::Initialize (instance=%p, pidl=%p)\n", this, pidl);
 
-            if (pidl == NULL)
+            if (!pidl)
                 return E_INVALIDARG;
 
             m_pidlFolder.CloneFrom(pidl);
@@ -522,9 +522,9 @@ public:
         try
         {
             // Documented interface specifications requires that ppidlOut is always set.
-            if (ppidlOut != NULL)
+            if (ppidlOut)
             {
-                *ppidlOut = NULL;
+                *ppidlOut = nullptr;
             }
 
             CPidl pidlNewItem(static_cast<T*>(this)->OnSetNameOf(hwndOwner, TItem(pidl), CW2T(pszNewName), uFlags));
@@ -532,7 +532,7 @@ public:
             ChangeNotifyPidl(SHCNE_RENAMEITEM, 0,
                 CPidl(m_pidlFolder, pidl), CPidl(m_pidlFolder, pidlNewItem));
 
-            if (ppidlOut != NULL)
+            if (ppidlOut)
             {
                 *ppidlOut = pidlNewItem.Detach();
             }
@@ -614,13 +614,13 @@ public:
                 return E_INVALIDARG;
             }
 
-            if (pidl == NULL)
+            if (pidl)
             {
-                GetColumnDetailsOf(iColumn, psd);
+                GetItemDetailsOf(iColumn, pidl, psd);
             }
             else
             {
-                GetItemDetailsOf(iColumn, pidl, psd);
+                GetColumnDetailsOf(iColumn, psd);
             }
 
             return S_OK;
@@ -831,7 +831,7 @@ protected:
     {
         CString strText = item.GetInfoTipText();
         if (strText.IsEmpty())
-            return NULL;
+            return nullptr;
 
         return CQueryInfo::CreateInstance(strText);
     }

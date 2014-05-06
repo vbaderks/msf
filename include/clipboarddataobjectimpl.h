@@ -11,7 +11,7 @@
 #include "enumformatetc.h"
 #include "formatetc.h"
 #include <atlctl.h> // for IDataObjectImpl
-
+#include <memory>
 
 namespace MSF
 {
@@ -41,7 +41,7 @@ public:
     }
 
 
-    void RegisterCfHandler(std::auto_ptr<CCfHandler> qcfhandler)
+    void RegisterCfHandler(std::unique_ptr<CCfHandler> qcfhandler)
     {
         ATLASSERT(FindCfHandler(!qcfhandler->GetClipFormat()) && "Cannot register twice");
         m_cfhandlers.push_back(qcfhandler.get());
@@ -276,9 +276,9 @@ private:
 
     void AddExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium)
     {
-        ATLASSERT(FindExternalData(formatetc.cfFormat) == NULL && "External format already set");
+        ATLASSERT(!FindExternalData(formatetc.cfFormat) && "External format already set");
 
-        std::auto_ptr<CExternalData> qexternaldata(new CExternalData(formatetc, stgmedium));
+        std::unique_ptr<CExternalData> qexternaldata = make_unique<CExternalData>(formatetc, stgmedium);
         m_externaldatas.push_back(qexternaldata.get());
         qexternaldata.release();
     }

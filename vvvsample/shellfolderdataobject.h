@@ -9,6 +9,7 @@
 #include "../include/shellfolderdataobjectimpl.h"
 #include "cffilecontentshandler.h"
 #include "cffiledescriptorhandler.h"
+#include <memory>
 
 
 class CShellFolderDataObject :
@@ -23,7 +24,7 @@ public:
     END_COM_MAP()
 
 
-    static CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl, 
+    static CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl,
         LPCITEMIDLIST* ppidl, IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         CComObject<CShellFolderDataObject>* pinstance;
@@ -42,10 +43,7 @@ public:
     {
         __super::Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
 
-        auto_ptr<CCfHandler> qfiledescriptorhandler(new CCfFileDescriptorHandler(this));
-        RegisterCfHandler(qfiledescriptorhandler);
-
-        auto_ptr<CCfHandler> qfilecontentshandler(new CCfFileContentsHandler(this));
-        RegisterCfHandler(qfilecontentshandler);
+        RegisterCfHandler(make_unique<CCfFileDescriptorHandler>(this));
+        RegisterCfHandler(make_unique<CCfFileContentsHandler>(this));
     }
 };

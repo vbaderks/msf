@@ -39,7 +39,7 @@ public:
     {
         stgmedium.tymed          = TYMED_HGLOBAL;
         stgmedium.hGlobal        = hglobal;
-        stgmedium.pUnkForRelease = NULL;
+        stgmedium.pUnkForRelease = nullptr;
     }
 
     CStgMedium() throw()

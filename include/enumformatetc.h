@@ -6,6 +6,8 @@
 #pragma once
 
 #include "msfbase.h"
+#include "catchhandler.h"
+#include <memory>
 
 namespace MSF
 {
@@ -47,51 +49,49 @@ class CEnumFORMATETC :
 public:
     typedef std::vector<FORMATETC> CFormatEtcs;
 
-    static CComPtr<CEnumFORMATETC> CreateInstance(std::auto_ptr<CFormatEtcs> qformatetcs)
+    static CComPtr<CEnumFORMATETC> CreateInstance(std::unique_ptr<CFormatEtcs> qformatetcs)
     {
         CComObject<CEnumFORMATETC>* pEnum;
         RaiseExceptionIfFailed(CComObject<CEnumFORMATETC>::CreateInstance(&pEnum));
 
         CComPtr<CEnumFORMATETC> renum(pEnum);
-        renum->Init(qformatetcs);
+        renum->Init(move(qformatetcs));
         
         return renum;
     }
 
     CEnumFORMATETC() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CEnumFORMATETC::CEnumFORMATETC (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CEnumFORMATETC::CEnumFORMATETC (instance=%p)\n", this);
     }
 
     ~CEnumFORMATETC() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CEnumFORMATETC::~CEnumFORMATETC (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CEnumFORMATETC::~CEnumFORMATETC (instance=%p)\n", this);
     }
 
-    // Purpose: 'Constructor' for our ATL based COM object.
-    // Note: must be public for VC .NET 2002
-    void Init(std::auto_ptr<CFormatEtcs> qformatetcs) throw()
+
+private:
+    void Init(std::unique_ptr<CFormatEtcs> qformatetcs) throw()
     {
-        _qformatetcs = qformatetcs;
+        _qformatetcs = std::move(qformatetcs);
 
         ATLVERIFY(SUCCEEDED(__super::Init(this, *_qformatetcs)));
     }
 
-private:
-
     // Member variables.
-    std::auto_ptr<CFormatEtcs> _qformatetcs;
+    std::unique_ptr<CFormatEtcs> _qformatetcs;
 };
 
 
 // Purpose: alternative for the SHCreateStdEnumFmtEtc function.
 //          Created before I discovered SHCreateStdEnumFmtEtc.
 //          Source can act as sample, or as easy debug alternative.
-inline HRESULT CreateStdEnumFmtEtc(std::auto_ptr<std::vector<FORMATETC> > qformatetcs, IEnumFORMATETC** ppenumFormatEtc)
+inline HRESULT CreateStdEnumFmtEtc(std::unique_ptr<std::vector<FORMATETC> > qformatetcs, IEnumFORMATETC** ppenumFormatEtc)
 {
     try
     {
-        CComPtr<CEnumFORMATETC> renum = CEnumFORMATETC::CreateInstance(qformatetcs);
+        CComPtr<CEnumFORMATETC> renum = CEnumFORMATETC::CreateInstance(std::move(qformatetcs));
         *ppenumFormatEtc = renum.Detach();
 
         return S_OK;

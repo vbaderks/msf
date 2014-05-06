@@ -46,7 +46,7 @@ public:
 
 
     IColumnProviderPtr(const CLSID& clsid, wchar_t* pwszFolder = nullptr) :
-        ::IColumnProviderPtr(clsid, NULL, CLSCTX_INPROC_SERVER)
+        ::IColumnProviderPtr(clsid, nullptr, CLSCTX_INPROC_SERVER)
     {
         Initialize(pwszFolder);
     }

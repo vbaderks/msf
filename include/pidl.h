@@ -19,21 +19,21 @@ public:
         ATLASSERT(pidlSrc != NULL && "Why clone a NULL pointer?");
 
         LPITEMIDLIST pidl = ILClone(pidlSrc);
-        RaiseExceptionIf(pidl == NULL, E_OUTOFMEMORY);
+        RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
         return pidl;
     }
 
     static LPITEMIDLIST Combine(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2)
     {
         LPITEMIDLIST pidl = ILCombine(pidl1, pidl2);
-        RaiseExceptionIf(pidl == NULL && !(pidl1 == NULL && pidl == NULL), E_OUTOFMEMORY);
+        RaiseExceptionIf(!pidl && !(pidl1 == NULL && pidl == NULL), E_OUTOFMEMORY);
         return pidl;
     }
 
     static LPITEMIDLIST CreateFromPath(LPCTSTR pszPath)
     {
         LPITEMIDLIST pidl = ILCreateFromPath(pszPath);
-        RaiseExceptionIf(pidl == NULL, E_OUTOFMEMORY);
+        RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
         return pidl;
     }
 
@@ -42,7 +42,7 @@ public:
         size_t size = sizeof(short) + sizeItem;
 
         LPITEMIDLIST pidl = static_cast<LPITEMIDLIST>(CoTaskMemAlloc(size + (sizeof(short))));
-        if (pidl == NULL)
+        if (!pidl)
             RaiseException(E_OUTOFMEMORY);
 
         LPSHITEMID pshitemid = &(pidl->mkid);
@@ -59,9 +59,9 @@ public:
     static LPCITEMIDLIST GetNextItem(LPCITEMIDLIST pidl)
     {
         LPCITEMIDLIST pidlNext = ILGetNext(pidl);
-        if (pidlNext != NULL && pidlNext->mkid.cb == 0)
+        if (pidlNext && pidlNext->mkid.cb == 0)
         {
-            pidlNext = NULL;
+            pidlNext = nullptr;
         }
 
         return pidlNext;
@@ -111,7 +111,7 @@ public:
     LPITEMIDLIST Detach() throw()
     {
         LPITEMIDLIST pidl = m_pidl;
-        m_pidl = NULL;
+        m_pidl = nullptr;
         return pidl;
     }
 
@@ -128,7 +128,7 @@ public:
     void AppendID(const SHITEMID* pmkid) throw()
     {
         LPITEMIDLIST pidl = ILAppendID(m_pidl, pmkid, TRUE);
-        RaiseExceptionIf(pidl == NULL, E_OUTOFMEMORY);
+        RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
 
         m_pidl = pidl;
     }
@@ -156,7 +156,7 @@ public:
     // Purpose: Adres operator to be used for passing address to be used as an out-parameter.
     LPITEMIDLIST* operator&() throw()
     {
-        Attach(NULL);
+        Attach(nullptr);
         return &m_pidl;
     }
 

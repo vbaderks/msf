@@ -21,7 +21,7 @@ class CCoInitialize
 public:
     CCoInitialize()
     {
-        ATLVERIFY(SUCCEEDED(::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)));
+        ATLVERIFY(SUCCEEDED(::CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED)));
     }
 
     ~CCoInitialize() throw()

@@ -11,7 +11,7 @@
 #include "formatetc.h"
 #include "dataobjectptr.h"
 #include "cfperformeddropeffecthandler.h"
-
+#include <memory>
 
 namespace MSF
 {
@@ -39,19 +39,16 @@ public:
 
 
     void Init(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
-        IPerformedDropEffectSink* pperformeddropeffectsink = NULL)
+        IPerformedDropEffectSink* pperformeddropeffectsink = nullptr)
     {
-        m_pidldata =
-            static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl));
-
-        auto_ptr<CCfHandler> qcfhandler(new CCfPerformedDropEffectHandler(pperformeddropeffectsink, this));
-        RegisterCfHandler(qcfhandler);
+        m_pidldata = static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl));
+        RegisterCfHandler(make_unique<CCfPerformedDropEffectHandler>(pperformeddropeffectsink, this));
     }
 
 
-    void RegisterCfHandler(std::auto_ptr<CCfHandler> qcfhandler)
+    void RegisterCfHandler(std::unique_ptr<CCfHandler> qcfhandler)
     {
-        ATLASSERT(FindCfHandler(qcfhandler->GetClipFormat()) == NULL && "cannot register twice!");
+        ATLASSERT(FindCfHandler(!qcfhandler->GetClipFormat()) && "cannot register twice!");
         m_cfhandlers.push_back(qcfhandler.get());
         qcfhandler.release();
     }
@@ -105,11 +102,11 @@ public:
         // The docs define pformatetc as [in]. The SDK defines pformatetc as in_opt.
         if (!pformatetc)
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::QueryGetData (pformatetc == NULL)\n"));
+            ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::QueryGetData (!pformatetc)\n");
             return DV_E_FORMATETC;
         }
 
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::QueryGetData, cfformat=%d (%s)\n"),
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
 
         try

@@ -9,6 +9,7 @@
 #include "../include/cfhandler.h"
 #include "../include/util.h"
 #include "vvvitem.h"
+#include <memory>
 
 // Note: owner of the instance of this class must keep passed dataobject alive.
 //       This class doesn't do addref to prevent circulair referencing.
@@ -57,14 +58,14 @@ private:
 
     CCfShellIdList* GetCfShellIdList() const
     {
-        if (m_qcfshellidlist.get() == NULL)
+        if (!m_qcfshellidlist)
         {
-            m_qcfshellidlist.reset(new CCfShellIdList(m_pdataobject));
+            m_qcfshellidlist = make_unique<CCfShellIdList>(m_pdataobject);
         }
 
         return m_qcfshellidlist.get();
     }
 
-    IDataObject*                     m_pdataobject;
-    mutable auto_ptr<CCfShellIdList> m_qcfshellidlist;
+    IDataObject* m_pdataobject;
+    mutable unique_ptr<CCfShellIdList> m_qcfshellidlist;
 };

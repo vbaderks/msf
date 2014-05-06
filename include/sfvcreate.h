@@ -11,7 +11,7 @@ namespace MSF
 class CSfvCreate : public SFV_CREATE
 {
 public:
-    CSfvCreate(IShellFolder* pShf, IShellFolderViewCB* pSfvcb, IShellView* pSvOuter = NULL)
+    CSfvCreate(IShellFolder* pShf, IShellFolderViewCB* pSfvcb, IShellView* pSvOuter = nullptr)
     {
         cbSize   = sizeof(SFV_CREATE);
         pshf     = pShf;

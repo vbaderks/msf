@@ -19,14 +19,14 @@ namespace MSF
 class IShellFolder2Ptr : public ::IShellFolder2Ptr
 {
 public:
-    explicit IShellFolder2Ptr(const CLSID& clsid, IUnknown* pOuter = NULL, DWORD dwClsContext = CLSCTX_INPROC_SERVER) :
+    explicit IShellFolder2Ptr(const CLSID& clsid, IUnknown* pOuter = nullptr, DWORD dwClsContext = CLSCTX_INPROC_SERVER) :
         ::IShellFolder2Ptr(clsid, pOuter, dwClsContext)
     {
     }
 
 
     IShellFolder2Ptr(const CLSID& clsid, const TCHAR* szFilename) :
-        ::IShellFolder2Ptr(clsid, NULL, CLSCTX_INPROC_SERVER)
+        ::IShellFolder2Ptr(clsid, nullptr, CLSCTX_INPROC_SERVER)
     {
         Initialize(szFilename);
     }
