@@ -10,14 +10,14 @@
 #include "../include/pidl.h"
 
 
-const TCHAR* TSZ_APP_NAME_DIRECTORY = _T("directory");
-const TCHAR* TSZ_FILE_COUNT         = _T("filecount");
-const TCHAR* TSZ_FILE_FORMAT        = _T("file%d");
-const TCHAR* TSZ_LABEL              = _T("label");
-const TCHAR* TSZ_NAME               = _T("name");
-const TCHAR* TSZ_SIZE               = _T("size");
-const TCHAR* TSZ_ACTIVE             = _T("active");
-const TCHAR* TSZ_FOLDER             = _T("folder");
+const wchar_t* TSZ_APP_NAME_DIRECTORY = L"directory";
+const wchar_t* TSZ_FILE_COUNT         = L"filecount";
+const wchar_t* TSZ_FILE_FORMAT        = L"file%d";
+const wchar_t* TSZ_LABEL              = L"label";
+const wchar_t* TSZ_NAME               = L"name";
+const wchar_t* TSZ_SIZE               = L"size";
+const wchar_t* TSZ_ACTIVE             = L"active";
+const wchar_t* TSZ_FOLDER             = L"folder";
 
 
 CString CVVVFile::GetLabel() const
@@ -173,7 +173,7 @@ CString CVVVFile::GetAppNameDirectory() const
     }
     else
     {
-        strAppName = _strFolder + _T("\\") + TSZ_APP_NAME_DIRECTORY;
+        strAppName = _strFolder + L"\\" + TSZ_APP_NAME_DIRECTORY;
     }
 
     return strAppName;
@@ -187,7 +187,7 @@ CString CVVVFile::GetAppNameItem(unsigned int nID) const
 
     if (!_strFolder.IsEmpty())
     {
-        strAppName = _strFolder + _T("\\") + strAppName;
+        strAppName = _strFolder + L"\\" + strAppName;
     }
 
     return strAppName;
@@ -196,9 +196,9 @@ CString CVVVFile::GetAppNameItem(unsigned int nID) const
 
 CString CVVVFile::GetPrivateProfileString(LPCTSTR lpAppName, LPCTSTR lpKeyName) const
 {
-    TCHAR tszBuf[255];
+    wchar_t tszBuf[255];
 
-    ::GetPrivateProfileString(lpAppName, lpKeyName, _T(""), tszBuf, 255, _strFilename);
+    ::GetPrivateProfileString(lpAppName, lpKeyName, L"", tszBuf, 255, _strFilename);
 
     return tszBuf;
 }

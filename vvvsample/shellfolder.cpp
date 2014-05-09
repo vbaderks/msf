@@ -76,7 +76,7 @@ public:
         {
             if (!m_strSubFolder.IsEmpty())
             {
-                m_strSubFolder += _T("\\");
+                m_strSubFolder += L"\\";
             }
 
             m_strSubFolder += ToString(it->GetID());
@@ -136,7 +136,7 @@ public:
         {
             // Add 'open' if only 1 item is selected.
             CMenu menu(true);
-            menu.AddDefaultItem(ID_DFM_CMD_OPEN, _T("&Open"));
+            menu.AddDefaultItem(ID_DFM_CMD_OPEN, L"&Open");
             MergeMenus(qcminfo, menu);
 
             // Note: XP will automatic make first menu item the default.
@@ -186,14 +186,14 @@ public:
         }
         else
         {
-            CString strMessage = _T("Open on: ") + item.GetName();
-            IsolationAwareMessageBox(hwnd, strMessage, _T("Open"), MB_OK | MB_ICONQUESTION);
+            CString strMessage = L"Open on: " + item.GetName();
+            IsolationAwareMessageBox(hwnd, strMessage, L"Open", MB_OK | MB_ICONQUESTION);
         }
     }
 
 
     // Purpose: Called by the shell/MSF when an item must be renamed.
-    LPITEMIDLIST OnSetNameOf(HWND /*hwnd*/, const CVVVItem& item, const TCHAR* szNewName, SHGDNF shgndf)
+    LPITEMIDLIST OnSetNameOf(HWND /*hwnd*/, const CVVVItem& item, const wchar_t* szNewName, SHGDNF shgndf)
     {
         RaiseExceptionIf(shgndf != SHGDN_NORMAL && shgndf != SHGDN_INFOLDER); // not supported 'name'.
 

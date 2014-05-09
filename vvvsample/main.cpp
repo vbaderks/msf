@@ -42,7 +42,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 STDAPI DllCanUnloadNow()
 {
     HRESULT hr = _Module.DllCanUnloadNow();
-    ATLTRACE2(atlTraceCOM, 0, _T("SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload ok)\n"), hr);
+    ATLTRACE2(atlTraceCOM, 0, L"SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload ok)\n", hr);
     return hr;
 }
 

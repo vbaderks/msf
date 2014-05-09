@@ -33,12 +33,12 @@ public:
             RaiseException(hr);
 
         CComPtr<IDataObject> rdataobject(pinstance);
-        pinstance->Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
+        pinstance->Initialize(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
         return rdataobject;
     }
 
-
-    void Init(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
+private:
+    void Initialize(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
         IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         __super::Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);

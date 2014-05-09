@@ -17,12 +17,12 @@ class ATL_NO_VTABLE IEnumIDListImpl :
 public:
     IEnumIDListImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n", this);
     }
 
     ~IEnumIDListImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n", this);
     }
 
     class CItemIdListVector

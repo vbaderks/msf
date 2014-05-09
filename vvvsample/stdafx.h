@@ -50,7 +50,7 @@ using namespace MSF;
 
 PCWSTR const wszVVVFileRootExt     = L"VVVFile";
 PCWSTR const wszVVVExtension       = L".vvv";
-const TCHAR* const tszVVVExtension =_T(".vvv");
+const wchar_t* const tszVVVExtension =L".vvv";
 
 // Artificial limit to prevent allocating of to much memory. (remove if required)
 const unsigned int MAX_VVV_ITEM_SIZE = 3000;

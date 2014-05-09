@@ -26,13 +26,13 @@ public:
 
     CShellFolderDataObjectImpl() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::CShellFolderDataObjectImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::CShellFolderDataObjectImpl (instance=%p)\n", this);
     }
 
 
     ~CShellFolderDataObjectImpl() throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::~CShellFolderDataObjectImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::~CShellFolderDataObjectImpl (instance=%p)\n", this);
 
         for_each(m_cfhandlers, CDeleteObject());
     }
@@ -56,7 +56,7 @@ public:
 
     STDMETHOD(GetData)(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n"), 
+        ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
 
         try
@@ -76,13 +76,13 @@ public:
                 HRESULT hr = m_pidldata->GetData(pformatetc, pstgmedium);
                 if (FAILED(hr))
                 {
-                    ATLTRACE2(atlTraceCOM, 0, _T("CClipboardDataObjectImpl::GetData (pidldata failes)\n"));
+                    ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData (pidldata failes)\n");
                 }
 
                 return hr;
             }
 
-            ATLTRACE2(atlTraceCOM, 0, _T("CClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n"));
+            ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
         MSF_COM_CATCH_HANDLER()
@@ -91,7 +91,7 @@ public:
 
     STDMETHOD(GetDataHere)(_In_ FORMATETC* pformatetc, _Inout_ STGMEDIUM* pmedium)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::GetDataHere (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::GetDataHere (instance=%p)\n", this);
 
         return m_pidldata->GetDataHere(pformatetc, pmedium);
     }
@@ -117,7 +117,7 @@ public:
                 if (pcfhandler->CanGetData())
                     return pcfhandler->Validate(*pformatetc);
 
-                ATLTRACE2(atlTraceCOM, 0, _T("CClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
                 return DV_E_FORMATETC;
             }
             else
@@ -131,7 +131,7 @@ public:
 
     STDMETHOD(GetCanonicalFormatEtc)(__RPC__in_opt FORMATETC* pformatetc, __RPC__out FORMATETC* pformatetcOut)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::GetCanonicalFormatEtc (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::GetCanonicalFormatEtc (instance=%p)\n", this);
 
         return m_pidldata->GetCanonicalFormatEtc(pformatetc, pformatetcOut);
     }
@@ -139,7 +139,7 @@ public:
 
     STDMETHOD(SetData)(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n"),
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
 
         try
@@ -171,7 +171,7 @@ public:
 
     STDMETHOD(EnumFormatEtc)(DWORD dwDirection, _In_ IEnumFORMATETC** ppenumFormatEtc)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n"), dwDirection);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 
         try
         {
@@ -192,7 +192,7 @@ public:
 
     STDMETHOD(DAdvise)(__RPC__in FORMATETC* pformatetc, DWORD advf, __RPC__in_opt IAdviseSink* pAdvSink, __RPC__out DWORD* pdwConnection)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::DAdvise (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::DAdvise (instance=%p)\n", this);
 
         return m_pidldata->DAdvise(pformatetc, advf, pAdvSink, pdwConnection);
     }
@@ -200,7 +200,7 @@ public:
 
     STDMETHOD(DUnadvise)(DWORD dwConnection)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::DUnadvise (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::DUnadvise (instance=%p)\n", this);
 
         return m_pidldata->DUnadvise(dwConnection);
     }
@@ -208,7 +208,7 @@ public:
 
     STDMETHOD(EnumDAdvise)(__RPC__deref_out_opt IEnumSTATDATA** ppenumAdvise)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderDataObjectImpl::EnumDAdvise (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::EnumDAdvise (instance=%p)\n", this);
 
         return m_pidldata->EnumDAdvise(ppenumAdvise);
     }

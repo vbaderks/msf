@@ -36,7 +36,7 @@ public:
     STDMETHOD_(UINT, CopyCallback)(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ LPCTSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
                                    _In_opt_ LPCTSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/)
     {
-        if (wFunc == FO_DELETE && CString(pszSrcFile).Find(_T("VVV")) != -1)
+        if (wFunc == FO_DELETE && CString(pszSrcFile).Find(L"VVV") != -1)
         {
             return IsolationAwareMessageBox(hwnd, LoadString(IDS_COPYHOOK_QUESTION), 
                 LoadString(IDS_COPYHOOK_CAPTION), MB_YESNOCANCEL);

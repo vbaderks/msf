@@ -39,7 +39,7 @@ public:
 	}
 
 
-	void Initialize(const TCHAR* szFilename)
+	void Initialize(const wchar_t* szFilename)
 	{
 		CPidl pidl(szFilename);
 

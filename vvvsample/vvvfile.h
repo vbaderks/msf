@@ -39,11 +39,11 @@ private:
     CString GetAppNameDirectory() const;
     CString GetAppNameItem(unsigned int nID) const;
 
-    CString GetPrivateProfileString(const TCHAR* lpAppName, const TCHAR* lpKeyName) const;
-    unsigned int GetPrivateProfileInt(const TCHAR* lpAppName, const TCHAR* lpKeyName, int nDefault = -1) const;
+    CString GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName) const;
+    unsigned int GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault = -1) const;
 
-    void WritePrivateProfileString(const TCHAR* lpAppName, const TCHAR* lpKeyName, const TCHAR* lpString) const;
-    void WritePrivateProfileInt(const TCHAR* lpAppName, const TCHAR* lpKeyName, unsigned int nValue) const;
+    void WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName, const wchar_t* lpString) const;
+    void WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const;
 
     // Member variables
     CString _strFilename;

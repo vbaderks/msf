@@ -56,7 +56,7 @@ public:
     }
 
 
-    void Add(const TCHAR* tszFilename)
+    void Add(const wchar_t* tszFilename)
     {
         m_filenames.push_back(tszFilename);
     }
@@ -82,15 +82,10 @@ private:
         DROPFILES* pdropfiles = static_cast<DROPFILES*>(hg);
 
         pdropfiles->pFiles = sizeof(DROPFILES);
-        #ifdef _UNICODE
         pdropfiles->fWide = TRUE;
-        #else
-        pdropfiles->fWide = FALSE;
-        #endif
 
         // copy filenames into data block.
-        TCHAR* pszBuf =
-            reinterpret_cast<TCHAR*>(reinterpret_cast<BYTE*>(pdropfiles) + sizeof(DROPFILES));
+        wchar_t* pszBuf = reinterpret_cast<wchar_t*>(reinterpret_cast<BYTE*>(pdropfiles) +sizeof(DROPFILES));
 
         for (std::vector<CString>::const_iterator it = m_filenames.begin(); it != m_filenames.end(); ++it)
         {
@@ -98,7 +93,7 @@ private:
             pszBuf += (it->GetLength() + 1);
         }
 
-        *pszBuf = _T('\0');
+        *pszBuf = L'\0';
 
         return hg;
     }
@@ -113,7 +108,7 @@ private:
             nchars += it->GetLength() + 1;
         }
 
-        return sizeof(DROPFILES) + (sizeof(TCHAR) * (nchars + 1));
+        return sizeof(DROPFILES) + (sizeof(wchar_t) * (nchars + 1));
     }
 
     std::vector<CString> m_filenames;

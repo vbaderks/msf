@@ -55,7 +55,7 @@ public:
         RaiseExceptionIfFailed(CComObject<CEnumFORMATETC>::CreateInstance(&pEnum));
 
         CComPtr<CEnumFORMATETC> renum(pEnum);
-        renum->Init(move(qformatetcs));
+        renum->Initialize(move(qformatetcs));
         
         return renum;
     }
@@ -72,7 +72,7 @@ public:
 
 
 private:
-    void Init(std::unique_ptr<CFormatEtcs> qformatetcs) throw()
+    void Initialize(std::unique_ptr<CFormatEtcs> qformatetcs) throw()
     {
         _qformatetcs = std::move(qformatetcs);
 

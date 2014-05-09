@@ -21,7 +21,7 @@ public:
         switch (uMsg)
         {
         case PSPCB_ADDREF:
-            ATLTRACE2(atlTraceCOM, 0, _T("CShellExtPropertyPageImpl::Callback (instance=%p, uMsg=AddRef)\n"), pT);
+            ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::Callback (instance=%p, uMsg=AddRef)\n", pT);
             pT->m_nRef++; // only 5.80 (IE5) and up sends 'addref'.
             break;
 
@@ -29,7 +29,7 @@ public:
             return CSnapInPropertyPageImpl<T>::PropPageCallback(hWnd, uMsg, ppsp);
 
         case PSPCB_RELEASE:
-            ATLTRACE2(atlTraceCOM, 0, _T("CShellExtPropertyPageImpl::Callback (instance=%p, uMsg=Release)\n"), pT);
+            ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::Callback (instance=%p, uMsg=Release)\n", pT);
             pT->m_nRef--;
             if (pT->m_nRef <= 0)
                 delete pT;
@@ -47,13 +47,13 @@ public:
         CSnapInPropertyPageImpl<T>(lpszTitle),
         m_nRef(0)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellExtPropertyPageImpl::CShellExtPropertyPageImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::CShellExtPropertyPageImpl (instance=%p)\n", this);
         _pAtlModule->Lock(); // propertypage is not a COM object, but DLL must stay in memory.
     }
 
     ~CShellExtPropertyPageImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellExtPropertyPageImpl::~CShellExtPropertyPageImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::~CShellExtPropertyPageImpl (instance=%p)\n", this);
         _pAtlModule->Unlock();
     }
 

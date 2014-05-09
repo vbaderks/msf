@@ -41,7 +41,7 @@ public:
 #ifdef _DEBUG
         if (!bValid)
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("CVVVItem::Constructor, PIDL not valid (dsize=%d, ssize=%d)\n"), GetDataSize(), sizeof(SItemData));
+            ATLTRACE2(atlTraceCOM, 0, L"CVVVItem::Constructor, PIDL not valid (dsize=%d, ssize=%d)\n", GetDataSize(), sizeof(SItemData));
         }
 #endif
         RaiseExceptionIf(!bValid);

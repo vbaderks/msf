@@ -127,7 +127,7 @@ public:
                 }
             }
 
-            ATLTRACE2(atlTraceCOM, 0, _T("CClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n"));
+            ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
         MSF_COM_CATCH_HANDLER()
@@ -136,7 +136,7 @@ public:
 
     STDMETHOD(SetData)(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n"),
+        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
 
         try

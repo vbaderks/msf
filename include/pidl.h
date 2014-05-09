@@ -92,7 +92,7 @@ public:
     {
     }
 
-    CPidl(const TCHAR* pszPath) :
+    CPidl(const wchar_t* pszPath) :
         m_pidl(CreateFromPath(pszPath))
     {
     }

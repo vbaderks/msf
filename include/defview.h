@@ -234,7 +234,7 @@ public:
 	                         RECT* prcView,
 	                         HWND* phWnd)
 	{
-		//ATLTRACENOTIMPL(_T("IShellViewImpl::CreateViewWindow"));
+		//ATLTRACENOTIMPL(L"IShellViewImpl::CreateViewWindow");
 		SV2CVW2_PARAMS params;
 
 		params.cbSize   = sizeof(params);

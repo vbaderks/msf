@@ -124,7 +124,7 @@ public:
 
     STDMETHOD(Extract)(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n"), this, phiconLarge, phiconSmall);
+        ATLTRACE2(atlTraceCOM, 0, L"CExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
 
         try
         {

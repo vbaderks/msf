@@ -25,18 +25,17 @@ public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szRootKey) throw()
     {
-        return UpdateRegistryFromResource(nResId, bRegister,
-            szDescription, T::GetObjectCLSID(), szRootKey);
+        return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), szRootKey);
     }
 
     IShellPropSheetExtImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::IShellPropSheetExtImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::IShellPropSheetExtImpl (instance=%p)\n", this);
     }
 
     ~IShellPropSheetExtImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::~IShellPropSheetExtImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::~IShellPropSheetExtImpl (instance=%p)\n", this);
     }
 
     class CAddPage
@@ -67,7 +66,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellPropSheetExtImpl::IShellPropSheetExt::AddPages (instance=%p, pfnAddPage=%p, lParam=&p)\n"), this, pfnAddPage, lParam);
+            ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::IShellPropSheetExt::AddPages (instance=%p, pfnAddPage=%p, lParam=&p)\n", this, pfnAddPage, lParam);
             CAddPage addpage(pfnAddPage, lParam);
 
             static_cast<T*>(this)->OnAddPages(addpage, GetFilenames());
@@ -80,7 +79,7 @@ public:
     {
         // The Shell doesn't call this function for file class Property Sheets.
         // Only for control panel objects.
-        MSF_TRACENOTIMPL(_T("CPropSheetExtImpl::ReplacePage"));
+        MSF_TRACENOTIMPL(L"CPropSheetExtImpl::ReplacePage");
     }
 
 protected:

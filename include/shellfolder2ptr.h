@@ -25,7 +25,7 @@ public:
     }
 
 
-    IShellFolder2Ptr(const CLSID& clsid, const TCHAR* szFilename) :
+    IShellFolder2Ptr(const CLSID& clsid, const wchar_t* szFilename) :
         ::IShellFolder2Ptr(clsid, nullptr, CLSCTX_INPROC_SERVER)
     {
         Initialize(szFilename);
@@ -55,7 +55,7 @@ public:
     }
 
 
-    void Initialize(const TCHAR* szFilename)
+    void Initialize(const wchar_t* szFilename)
     {
         MSF::IPersistFolderPtr persistfolder(this);
 

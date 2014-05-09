@@ -113,7 +113,7 @@ public:
         ::SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
     }
 
-    static void StrToStrRet(const TCHAR* sz, STRRET* pstrret)
+    static void StrToStrRet(const wchar_t* sz, STRRET* pstrret)
     {
         pstrret->uType = STRRET_WSTR;
         RaiseExceptionIfFailed(SHStrDup(sz, &pstrret->pOleStr));
@@ -143,12 +143,12 @@ public:
         m_hwndOwner(nullptr),
         m_bCachedIsSupportedClipboardFormat(false)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolderImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolderImpl (instance=%p)\n", this);
     }
 
     ~IShellFolderImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::~IShellFolderImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::~IShellFolderImpl (instance=%p)\n", this);
     }
 
     // IPersistFolder
@@ -183,7 +183,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistFolder2::GetCurFolder (instance=%p)\n"), this);
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IPersistFolder2::GetCurFolder (instance=%p)\n", this);
 
             *ppidl = m_pidlFolder.Clone();
             return S_OK;
@@ -196,7 +196,7 @@ public:
     {
         (pbc);
         (ppfti);
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistFolder3::InitializeEx (instance=%p, pcb=%p, pidlRoot=%p, ppfti=%p)\n"), this, pbc, pidlRoot, ppfti);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IPersistFolder3::InitializeEx (instance=%p, pcb=%p, pidlRoot=%p, ppfti=%p)\n", this, pbc, pidlRoot, ppfti);
 
         // Note: if ppfti is NULL InitializeEx should act as Initialize.
         return Initialize(pidlRoot);
@@ -204,26 +204,26 @@ public:
 
     STDMETHOD(GetFolderTargetInfo)(__RPC__out PERSIST_FOLDER_TARGET_INFO* /* ppfti */)
     {
-        MSF_TRACENOTIMPL(_T("IShellFolderImpl::IPersistFolder3::GetFolderTargetInfo"));
+        MSF_TRACENOTIMPL(L"IShellFolderImpl::IPersistFolder3::GetFolderTargetInfo");
     }
 
     // IPersistIDList
     STDMETHOD(SetIDList)(__RPC__in LPCITEMIDLIST pidl)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistIDList::SetIDList (instance=%p, pidl=%p)\n"), this, pidl);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IPersistIDList::SetIDList (instance=%p, pidl=%p)\n", this, pidl);
         return Initialize(pidl);
     }
 
     STDMETHOD(GetIDList)(__RPC__deref_out_opt LPITEMIDLIST* ppidl)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IPersistIDList::GetIDList (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IPersistIDList::GetIDList (instance=%p)\n", this);
         return GetCurFolder(ppidl);
     }
 
     // IShellDetails
     STDMETHOD(ColumnClick)(UINT uiColumn)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n"), this, uiColumn);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n", this, uiColumn);
 
         if (IsShell5OrHigher())
         {
@@ -244,7 +244,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::BindToObject (instance=%p)\n"), this);
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::BindToObject (instance=%p)\n", this);
             
             // Quick check if requested interface is supported at all (on ourself).
             HRESULT hr = static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
@@ -273,7 +273,7 @@ public:
     STDMETHOD(BindToStorage)(__RPC__in LPCITEMIDLIST, LPBC, __RPC__in REFIID, __RPC__deref_out_opt LPVOID* ppRetVal)
     {
         *ppRetVal = NULL;
-        MSF_TRACENOTIMPL(_T("IShellFolderImpl::IShellFolder::BindToStorage"));
+        MSF_TRACENOTIMPL(L"IShellFolderImpl::IShellFolder::BindToStorage");
     }
 
     // Purpose: This function is called to sort items in details view mode.
@@ -284,7 +284,7 @@ public:
             if (pidl1->mkid.cb == 0 && pidl2->mkid.cb == 0)
             {
                 // Win98 sometimes tries to compare empty pidls.
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CompareIDs (lparam=%d, pidl1=%p, pidl2=%p)\n"),
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CompareIDs (lparam=%d, pidl1=%p, pidl2=%p)\n",
                     lParam, pidl1, pidl2);
                 return E_INVALIDARG;
             }
@@ -295,7 +295,7 @@ public:
                 TItem item1(pidl1);
                 TItem item2(pidl2);
 
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CompareIDs (lparam=%X, name1=%s, name2=%s)\n"), 
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CompareIDs (lparam=%X, name1=%s, name2=%s)\n",
                     lParam, item1.GetDisplayName(SHGDN_NORMAL).GetString(), item2.GetDisplayName(SHGDN_NORMAL).GetString());
 
                 nResult = static_cast<T*>(this)->CompareItems(lParam, item1, item2);
@@ -335,55 +335,55 @@ public:
 
             if (riid == __uuidof(IShellDetails))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellDetails)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellDetails)\n", this);
                 return static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
             } 
             else if (riid == __uuidof(IShellView))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellView)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellView)\n", this);
                 *ppRetVal = static_cast<T*>(this)->CreateShellFolderView().Detach();
             }
             else if (riid == __uuidof(IDropTarget))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IDropTarget)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IDropTarget)\n", this);
                 *ppRetVal = static_cast<T*>(this)->CreateDropTarget().Detach();
             }
             else if (riid == __uuidof(IContextMenu))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IContextMenu)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IContextMenu)\n", this);
                 *ppRetVal = static_cast<T*>(this)->CreateFolderContextMenu().Detach();
             }
             else if (riid == __uuidof(ITopViewAwareItem))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=ITopViewAwareItem)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=ITopViewAwareItem)\n", this);
                 *ppRetVal = nullptr; // ITopViewAwareItem is an undocumented inteface, purpose not clear.
             }
             else if (riid == __uuidof(IFrameLayoutDefinition))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IFrameLayoutDefinition)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IFrameLayoutDefinition)\n", this);
                 *ppRetVal = nullptr; // IFrameLayoutDefinition is an undocumented inteface, purpose not clear.
             }
             else if (riid == __uuidof(IConnectionFactory))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IConnectionFactory)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IConnectionFactory)\n", this);
                 *ppRetVal = nullptr; // IConnectionFactory is an undocumented inteface, purpose not clear.
             }
             else if (riid == __uuidof(IShellUndocumented93))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumented93)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumented93)\n", this);
                 // stack trace analysis: Called when CDefView class initializes the CDefCollection.
                 *ppRetVal = nullptr; // IShellUndocumented93 is an undocumented inteface, purpose not clear.
             }
             else if (riid == __uuidof(IShellUndocumentedCA))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumentedCA)\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumentedCA)\n", this);
                 // stack trace analysis: called from CShellItem::BindToHandler to hook an kind of interrupt source.
                 *ppRetVal = nullptr; // IShellUndocumentedCA is an undocumented inteface, purpose not clear.
             }
             else
             {
                 #ifdef _ATL_DEBUG_QI
-                AtlDumpIID(riid, _T("IShellFolderImpl::CreateViewObject (?)"), E_NOINTERFACE);
+                AtlDumpIID(riid, L"IShellFolderImpl::CreateViewObject (?)", E_NOINTERFACE);
                 #endif //  _ATL_DEBUG_QI
 
                 *ppRetVal = nullptr;
@@ -405,17 +405,17 @@ public:
 
             if (riid == __uuidof(IContextMenu))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IContextMenu)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IContextMenu)\n", this, cidl);
                 *ppv = static_cast<T*>(this)->CreateItemContextMenu(hwnd, cidl, ppidl).Detach();
             }
             else if (riid == __uuidof(IDataObject))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IDataObject)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IDataObject)\n", this, cidl);
                 *ppv = static_cast<T*>(this)->CreateDataObject(m_pidlFolder, cidl, ppidl).Detach();
             }
             else if (riid == __uuidof(IQueryInfo))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IQueryInfo)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IQueryInfo)\n", this, cidl);
 
                 if (cidl != 1)
                     return E_FAIL; // can only request a tooltip for 1 selected item!
@@ -424,7 +424,7 @@ public:
             }
             else if (riid == __uuidof(IExtractIcon))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IExtractIcon)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IExtractIcon)\n", this, cidl);
 
                 if (cidl != 1)
                     return E_FAIL; // can only request a icon for 1 selected item!
@@ -433,14 +433,14 @@ public:
             }
             else if (riid == __uuidof(IQueryAssociations))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IQueryAssociations)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=IQueryAssociations)\n", this, cidl);
                 *ppv = NULL;
             }
             else
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=?)\n"), this, cidl);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, cidl=%d, riid=?)\n", this, cidl);
                 #ifdef _ATL_DEBUG_QI
-                AtlDumpIID(riid, _T("IShellFolderImpl::IShellFolder::GetUIObjectOf"), E_NOINTERFACE);
+                AtlDumpIID(riid, L"IShellFolderImpl::IShellFolder::GetUIObjectOf", E_NOINTERFACE);
                 #endif //  _ATL_DEBUG_QI
 
                 *ppv = nullptr;
@@ -460,7 +460,7 @@ public:
             TItem item(pidl);
             StrToStrRet(item.GetDisplayName(shgdnf), lpname);
 
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetDisplayNameOf (instance=%p, shgdnf=%x, name=%s)\n"),
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetDisplayNameOf (instance=%p, shgdnf=%x, name=%s)\n",
                       this, shgdnf, item.GetDisplayName(shgdnf).GetString());
             return S_OK;
         }
@@ -475,7 +475,7 @@ public:
             if (ppidl == NULL)
                 return E_POINTER; // note: ppidl is marked with SAL as optional, but docs state that it is required.
 
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetAttributesOf (cidl=%d, rgfInOut=%X)\n"), cidl, *prgfInOut);
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetAttributesOf (cidl=%d, rgfInOut=%X)\n", cidl, *prgfInOut);
 
             SFGAOF sfgaof = static_cast<T*>(this)->GetAttributesOfGlobal(cidl, *prgfInOut);
 
@@ -508,7 +508,7 @@ public:
 
         DWORD dwAttributes = pdwAttributes == NULL ? 0 : *pdwAttributes;
 
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n"), hwnd, pbc, pwszDisplayName, dwAttributes);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n", hwnd, pbc, pwszDisplayName, dwAttributes);
 
         #endif
 
@@ -517,7 +517,7 @@ public:
 
     STDMETHOD(SetNameOf)(_In_opt_ HWND hwndOwner, _In_ LPCITEMIDLIST pidl, _In_ const OLECHAR* pszNewName, SHGDNF uFlags, _Outptr_opt_ LPITEMIDLIST* ppidlOut)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::SetNameOf (hwnd=%d, szName=%s)\n"), hwndOwner, pszNewName);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::SetNameOf (hwnd=%d, szName=%s)\n", hwndOwner, pszNewName);
 
         try
         {
@@ -549,7 +549,7 @@ public:
 
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::EnumObjects (hwnd=%d, grfFlags=%d, path=%s)\n"),
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::EnumObjects (hwnd=%d, grfFlags=%d, path=%s)\n",
                       hwnd, grfFlags, GetPathFolderFile().GetString());
             if (ppRetVal == NULL)
                 return E_POINTER;
@@ -562,17 +562,17 @@ public:
 
     STDMETHOD(GetDefaultSearchGUID)(__RPC__out GUID* /*pguid*/)
     {
-        MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetDefaultSearchGUID"));
+        MSF_TRACENOTIMPL(L"IShellFolderImpl::GetDefaultSearchGUID");
     }
 
     STDMETHOD(EnumSearches)(__RPC__deref_out_opt IEnumExtraSearch** /*ppenum */)
     {
-        MSF_TRACENOTIMPL(_T("IShellFolderImpl::EnumSearches"));
+        MSF_TRACENOTIMPL(L"IShellFolderImpl::EnumSearches");
     }
 
     STDMETHOD(GetDefaultColumn)(DWORD /*dwReserved*/, __RPC__out ULONG* pSort, __RPC__out ULONG* pDisplay)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetDefaultColumn\n"));
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetDefaultColumn\n");
 
         *pSort    = m_ulSort;
         *pDisplay = m_ulDisplay;
@@ -582,7 +582,7 @@ public:
 
     STDMETHOD(GetDefaultColumnState)(UINT iColumn, __RPC__out SHCOLSTATEF* pcsFlags)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetDefaultColumnState (iColumn=%d)\n"), iColumn);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetDefaultColumnState (iColumn=%d)\n", iColumn);
 
         if (iColumn >= m_columninfos.size())
             return E_FAIL;
@@ -593,12 +593,12 @@ public:
 
     STDMETHOD(GetDetailsEx)(__RPC__in_opt LPCITEMIDLIST /*pidl*/, __RPC__in const SHCOLUMNID* /*pscid*/, __RPC__out VARIANT* /*pv*/)
     {
-        MSF_TRACENOTIMPL(_T("IShellFolderImpl::GetDetailsEx"));
+        MSF_TRACENOTIMPL(L"IShellFolderImpl::GetDetailsEx");
     }
 
     STDMETHOD(MapColumnToSCID)(UINT /*iColumn*/, __RPC__out SHCOLUMNID* /*pscid*/)
     {
-        MSF_TRACENOTIMPL(_T("IShellFolderImpl::MapColumnToSCID"));
+        MSF_TRACENOTIMPL(L"IShellFolderImpl::MapColumnToSCID");
     }
 
     // Purpose: The Shell will call this function to retrieve column header names and 
@@ -610,7 +610,7 @@ public:
         {
             if (iColumn >= m_columninfos.size())
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetDetailsOf (iColumn=%d > max)\n"), iColumn);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetDetailsOf (iColumn=%d > max)\n", iColumn);
                 return E_INVALIDARG;
             }
 
@@ -633,13 +633,13 @@ public:
     {
         // Note: it seems that the shell always passes FEM_VIEWRESULT.
         (feMode);
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IObjectWithFolderEnumMode::SetMode (feMode=%d, 0=FEM_VIEWRESULT, 1=FEM_NAVIGATION)\n"), feMode);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IObjectWithFolderEnumMode::SetMode (feMode=%d, 0=FEM_VIEWRESULT, 1=FEM_NAVIGATION)\n", feMode);
         return S_OK;
     }
 
     STDMETHOD(GetMode)(__RPC__out FOLDER_ENUM_MODE *pfeMode)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IObjectWithFolderEnumMode::GetMode (pfeMode=%p)\n"), pfeMode);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IObjectWithFolderEnumMode::GetMode (pfeMode=%p)\n", pfeMode);
 
         // Note: the MSDN docs are unclear what the difference is between the enum modes.
         // Note2: it seems that the shell only calls SetMode to notify the shell folder in which mode to operate and not this method.
@@ -654,7 +654,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetIconOf (flags=%d)\n"), flags);
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetIconOf (flags=%d)\n", flags);
 
             *pIconIndex = TItem(pidl).GetIconOf(flags);
 
@@ -666,7 +666,7 @@ public:
     // IDropTarget
     STDMETHOD(DragEnter)(_In_ IDataObject* pdataobject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IDropTarget::DragEnter (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IDropTarget::DragEnter (grfKeyState=%d, dwEffect=%d)\n", grfKeyState, *pdwEffect);
 
         try
         {
@@ -688,7 +688,7 @@ public:
 
     STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IDropTarget::DragOver (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IDropTarget::DragOver (grfKeyState=%d, dwEffect=%d)\n", grfKeyState, *pdwEffect);
 
         try
         {
@@ -707,7 +707,7 @@ public:
 
     STDMETHOD(DragLeave)()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IDropTarget::DragLeave\n"));
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IDropTarget::DragLeave\n");
         m_bCachedIsSupportedClipboardFormat = false;
         return S_OK;
     }
@@ -715,7 +715,7 @@ public:
     STDMETHOD(Drop)(_In_ IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect)
     {
         (grfKeyState);
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IDropTarget::Drop (grfKeyState=%d, dwEffect=%d)\n"), grfKeyState, *pdwEffect);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IDropTarget::Drop (grfKeyState=%d, dwEffect=%d)\n", grfKeyState, *pdwEffect);
 
         try
         {
@@ -729,7 +729,7 @@ public:
     // The shell will use this interface to request which 'panes' should be visible.
     STDMETHOD(GetPaneState)(_In_ REFEXPLORERPANE ep, _Out_  EXPLORERPANESTATE *peps)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::IExplorerPaneVisibility::GetPaneState (instance=%p, ep=%s)\n"), this, GetExplorerPaneName(ep));
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IExplorerPaneVisibility::GetPaneState (instance=%p, ep=%s)\n", this, GetExplorerPaneName(ep));
 
         *peps = static_cast<T*>(this)->GetPaneState(ep);
         return S_OK;
@@ -897,51 +897,51 @@ protected:
                     return static_cast<T*>(this)->OnDfmCreate();
 
                 case DFM_GETHELPTEXT:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=GetHelpTextA, nCmdId=%hu)\n"), LOWORD(wParam));
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=GetHelpTextA, nCmdId=%hu)\n", LOWORD(wParam));
                     return static_cast<T*>(this)->OnDfmGetHelpTextA(LOWORD(wParam), reinterpret_cast<char*>(lParam), HIWORD(wParam));
 
                 case DFM_GETHELPTEXTW:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=GetHelpTextW, nCmdId=%hu)\n"), LOWORD(wParam));
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=GetHelpTextW, nCmdId=%hu)\n", LOWORD(wParam));
                     return static_cast<T*>(this)->OnDfmGetHelpTextW(LOWORD(wParam), reinterpret_cast<wchar_t*>(lParam), HIWORD(wParam));
 
                 case DFM_WM_MEASUREITEM:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=MeasureItem, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=MeasureItem, wParam=%d, lParam=%d)\n", wParam, lParam);
                     return static_cast<T*>(this)->OnDfmMeasureItem();
 
                 case DFM_WM_DRAWITEM:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=DrawItem, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=DrawItem, wParam=%d, lParam=%d)\n", wParam, lParam);
                     return static_cast<T*>(this)->OnDfmDrawItem();
 
                 case DFM_GETVERBW:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=GetVerbW, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=GetVerbW, wParam=%d, lParam=%d)\n", wParam, lParam);
                     return static_cast<T*>(this)->OnGetVerbW();
 
                 case DFM_GETVERBA:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=GetVerbA, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=GetVerbA, wParam=%d, lParam=%d)\n", wParam, lParam);
                     return static_cast<T*>(this)->OnGetVerbA();
 
                 case DFM_DESTROY:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=OnDestruct, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=OnDestruct, wParam=%d, lParam=%d)\n", wParam, lParam);
                     break;
 
                 case DFM_MERGECONTEXTMENU_TOP:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=OnPreCreate, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=OnPreCreate, wParam=%d, lParam=%d)\n", wParam, lParam);
                     break;
 
                 case DFM_INVOKECOMMANDEX:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=OnPreInvokeCmd, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=OnPreInvokeCmd, wParam=%d, lParam=%d)\n", wParam, lParam);
                     break;
 
                 case DFM_MERGECONTEXTMENU_BOTTOM:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=OnQueryMenu, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=OnQueryMenu, wParam=%d, lParam=%d)\n", wParam, lParam);
                     break;
 
                 case DFM_WM_INITMENUPOPUP:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand (uMsg=OnInitMenuPopup, wParam=%d, lParam=%d)\n"), wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand (uMsg=OnInitMenuPopup, wParam=%d, lParam=%d)\n", wParam, lParam);
                     break;
 
                 default:
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCommand Undocumented (uMsg=%d, wParam=%d, lParam=%d)\n"), uMsg, wParam, lParam);
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCommand Undocumented (uMsg=%d, wParam=%d, lParam=%d)\n", uMsg, wParam, lParam);
                     break;
             }
 
@@ -966,37 +966,37 @@ protected:
             switch (nId)
             {
             case DFM_CMD_PROPERTIES:
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_PROPERTIES'\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_PROPERTIES'\n");
                 return static_cast<T*>(this)->OnDfmCmdProperties(hwnd, pdataobject);
 
             case DFM_CMD_DELETE:
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_DELETE'\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_DELETE'\n");
                 errorcontext = EC_ON_DELETE;
                 static_cast<T*>(this)->OnDeleteFromDataObject(hwnd, pdataobject);
                 return S_OK;
 
             case DFM_CMD_MOVE:
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_CUT'\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_CUT'\n");
                 errorcontext = EC_ON_CUT;
                 static_cast<T*>(this)->OnCut(hwnd, pdataobject);
                 return S_OK;
 
             case DFM_CMD_COPY:
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_COPY'\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_COPY'\n");
                 errorcontext = EC_ON_COPY;
                 static_cast<T*>(this)->OnCopy(hwnd, pdataobject);
                 return S_OK;
 
             case DFM_CMD_PASTE:
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_PASTE'\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_PASTE'\n");
                 return static_cast<T*>(this)->OnDfmCmdPaste(hwnd, pdataobject);
 
             case DFM_CMD_LINK: //DFM_CMD_CREATESHORTCUT:
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_CREATESHORTCUT'\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_CREATESHORTCUT'\n");
                 return static_cast<T*>(this)->OnDfmCmdCreateShortcut(hwnd, pdataobject);
 
             default:
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmInvokeCommand (id=%d)\n"), nId);
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand (id=%d)\n", nId);
                 errorcontext = EC_ON_INVOKE_ADDED_CMD;
                 return static_cast<T*>(this)->OnDfmInvokeAddedCommand(hwnd, pdataobject, nId);
             }
@@ -1081,7 +1081,7 @@ protected:
 
             if (cfshellidlist.IsEmpty())
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCmdProperties (nothing to do, list is empty)\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCmdProperties (nothing to do, list is empty)\n");
             }
             else
             {
@@ -1094,13 +1094,13 @@ protected:
 
                 if (IsBitSet(wEventId, SHCNE_RENAMEITEM))
                 {
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCmdProperties (firing SHCNE_RENAMEITEM)\n"));
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCmdProperties (firing SHCNE_RENAMEITEM)\n");
                     ReportRenameChangeNotify(cfshellidlist, items);
                 }
 
                 if (IsBitSet(wEventId, SHCNE_ATTRIBUTES))
                 {
-                    ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDfmCmdProperties (firing SHCNE_ATTRIBUTES)\n"));
+                    ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmCmdProperties (firing SHCNE_ATTRIBUTES)\n");
                     ReportChangeNotify(items, SHCNE_ATTRIBUTES);
                 }
             }
@@ -1118,7 +1118,7 @@ protected:
 
         if (cfshellidlist.IsEmpty())
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDeleteFromDataObject (nothing to do, list is empty)\n"));
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDeleteFromDataObject (nothing to do, list is empty)\n");
         }
         else
         {
@@ -1131,13 +1131,13 @@ protected:
 
             if (IsBitSet(wEventId, SHCNE_DELETE))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDeleteFromDataObject (firing SHCNE_DELETEs)\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDeleteFromDataObject (firing SHCNE_DELETEs)\n");
                 ReportChangeNotify(cfshellidlist, SHCNE_DELETE);
             }
 
             if (IsBitSet(wEventId, SHCNE_UPDATEDIR))
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::OnDeleteFromDataObject (firing SHCNE_UPDATEDIR)\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDeleteFromDataObject (firing SHCNE_UPDATEDIR)\n");
                 ChangeNotifyPidl(SHCNE_UPDATEDIR, SHCNF_IDLIST, m_pidlFolder);
             }
         }
@@ -1214,7 +1214,7 @@ protected:
 
     void GetColumnDetailsOf(UINT iColumn, SHELLDETAILS* psd) throw()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetColumnDetailsOf (iColumn=%d, cxChar=%d)\n"), iColumn, psd->cxChar);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetColumnDetailsOf (iColumn=%d, cxChar=%d)\n", iColumn, psd->cxChar);
 
         psd->fmt = m_columninfos[iColumn].m_fmt;
         StrToStrRet(m_columninfos[iColumn].m_strName, &psd->str);
@@ -1224,7 +1224,7 @@ protected:
     {
         TItem item(pidl);
 
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::GetItemDetailsOf (name=%s, iColumn=%d, str=%s)\n"),
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetItemDetailsOf (name=%s, iColumn=%d, str=%s)\n",
                   item.GetDisplayName(SHGDN_NORMAL).GetString(), iColumn,
                   item.GetItemDetailsOf(iColumn));
 
@@ -1327,7 +1327,7 @@ protected:
         SHCOLSTATEF m_csFlags;
     };
 
-    void RegisterColumn(const TCHAR* szName, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
+    void RegisterColumn(const wchar_t* szName, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
     {
         CColumnInfo columninfo(szName, fmt, csFlags);
         m_columninfos.push_back(columninfo);
@@ -1356,7 +1356,7 @@ protected:
     // Purpose: derived classes need to implement this function if they want to support
     //          renaming of items.
     //          Even if SFGAO_CANRENAME is not set, clients can try to set the name.
-    ITEMIDLIST* OnSetNameOf(HWND /*hwnd*/, const TItem& /*item*/, const TCHAR* /*szNewName*/, SHGDNF /*shgdnf*/)
+    ITEMIDLIST* OnSetNameOf(HWND /*hwnd*/, const TItem& /*item*/, const wchar_t* /*szNewName*/, SHGDNF /*shgdnf*/)
     {
         RaiseException();
     }
@@ -1404,7 +1404,7 @@ protected:
     {
         if (!HasAttributesOf(cfshellidlist, sfgaofMask))
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IShellFolderImpl::VerifyAttribute failure\n"));
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::VerifyAttribute failure\n");
             RaiseException(E_INVALIDARG);
         }
     }

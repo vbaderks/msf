@@ -165,8 +165,7 @@ public:
 
             if (!m_bInitialized)
             {
-                ATLTRACE2(atlTraceCOM, 0,
-                    _T("IColumnProviderImpl::GetItemData, i=%p, Initialize was not called\n"), this);
+                ATLTRACE2(atlTraceCOM, 0, L"IColumnProviderImpl::GetItemData, i=%p, Initialize was not called\n", this);
                 return E_FAIL;
             }
 

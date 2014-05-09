@@ -51,13 +51,13 @@ public:
     IExtractImageImpl() :
         _hbitmap(nullptr)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IExtractImageImpl::IExtractImageImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::IExtractImageImpl (instance=%p)\n", this);
     }
 
 
     ~IExtractImageImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IExtractImageImpl::~IExtractImageImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::~IExtractImageImpl (instance=%p)\n", this);
 
         Dispose();
     }
@@ -66,7 +66,7 @@ public:
     // IPersistFile
     STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IExtractImageImpl::GetClassID\n"));
+        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::GetClassID\n");
 
         if (!pClassID)
             return E_POINTER;
@@ -78,25 +78,25 @@ public:
 
     STDMETHOD(IsDirty)()
     {
-        MSF_TRACENOTIMPL(_T("IExtractImageImpl::IsDirty"));
+        MSF_TRACENOTIMPL(L"IExtractImageImpl::IsDirty");
     }
 
 
     STDMETHOD(Save)(LPCOLESTR, BOOL)
     {
-        MSF_TRACENOTIMPL(_T("IExtractImageImpl::Save"));
+        MSF_TRACENOTIMPL(L"IExtractImageImpl::Save");
     }
 
 
     STDMETHOD(SaveCompleted)(LPCOLESTR)
     {
-        MSF_TRACENOTIMPL(_T("IExtractImageImpl::SaveCompleted"));
+        MSF_TRACENOTIMPL(L"IExtractImageImpl::SaveCompleted");
     }
 
 
     STDMETHOD(GetCurFile)(LPOLESTR*)
     {
-        MSF_TRACENOTIMPL(_T("IExtractImageImpl::GetCurFile"));
+        MSF_TRACENOTIMPL(L"IExtractImageImpl::GetCurFile");
     }
 
 
@@ -157,7 +157,7 @@ public:
     // IExtractImage2
     STDMETHOD(GetDateStamp)(__RPC__in FILETIME* pDateStamp)
     {
-        ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::GetDateStamp (instance=%p, pdatastampe=%p)\n", this, pDateStamp);
+        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::GetDateStamp (instance=%p, pdatastampe=%p)\n", this, pDateStamp);
 
         if (!pDateStamp)
             return E_POINTER;

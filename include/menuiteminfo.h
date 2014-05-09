@@ -68,7 +68,7 @@ public:
 		fType |= MFT_STRING;
 
 		m_strCache = str;
-		dwTypeData = const_cast<TCHAR*>(m_strCache.GetString());
+		dwTypeData = const_cast<wchar_t*>(m_strCache.GetString());
 	}
 
 

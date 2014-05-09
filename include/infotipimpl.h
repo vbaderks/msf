@@ -43,7 +43,7 @@ public:
 
     IInfoTipImpl() : m_bInitialized(false)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IInfoTipImpl::IInfoTipImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::IInfoTipImpl (instance=%p)\n", this);
     }
 
     // IInitializeWithFile
@@ -68,27 +68,27 @@ public:
     // Note: A lot of functions are defined by the interface, but not for infotip objects.
     STDMETHOD(GetClassID)(_Out_ LPCLSID)
     {
-        MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetClassID"));
+        MSF_TRACENOTIMPL(L"IInfoTipImpl::GetClassID");
     }
 
     STDMETHOD(IsDirty)()
     {
-        MSF_TRACENOTIMPL(_T("IInfoTipImpl::IsDirty"));
+        MSF_TRACENOTIMPL(L"IInfoTipImpl::IsDirty");
     }
 
     STDMETHOD(Save)(LPCOLESTR, BOOL)
     {
-        MSF_TRACENOTIMPL(_T("IInfoTipImpl::Save"));
+        MSF_TRACENOTIMPL(L"IInfoTipImpl::Save");
     }
 
     STDMETHOD(SaveCompleted)(LPCOLESTR)
     {
-        MSF_TRACENOTIMPL(_T("IInfoTipImpl::SaveCompleted"));
+        MSF_TRACENOTIMPL(L"IInfoTipImpl::SaveCompleted");
     }
 
     STDMETHOD(GetCurFile)(LPOLESTR*)
     {
-        MSF_TRACENOTIMPL(_T("IInfoTipImpl::GetCurFile"));
+        MSF_TRACENOTIMPL(L"IInfoTipImpl::GetCurFile");
     }
 
     STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode)

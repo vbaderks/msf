@@ -77,8 +77,8 @@ private:
     // strings then to maintain copies of the dialog resource.
     void InitializeStaticString()
     {
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_NAME, LoadString(IDS_SHELLEXT_NAME) + _T(":")));
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_SIZE, LoadString(IDS_SHELLEXT_SIZE) + _T(":")));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_NAME, LoadString(IDS_SHELLEXT_NAME) + L":"));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_SIZE, LoadString(IDS_SHELLEXT_SIZE) + L":"));
     }
 
 

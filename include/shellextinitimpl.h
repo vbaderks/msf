@@ -20,7 +20,7 @@ public:
     STDMETHOD(Initialize)(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) 
     {
         (pidlFolder);
-        ATLTRACE2(atlTraceCOM, 0, _T("IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n"), this, pidlFolder, pDataObject);
+        ATLTRACE2(atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, pDataObject);
         ATLASSERT(pDataObject != NULL && "Invalid argument");
 
         try
@@ -65,7 +65,7 @@ protected:
         return false;
     }
 
-    bool IsUnknownExtension(const TCHAR* szFileName) const
+    bool IsUnknownExtension(const wchar_t* szFileName) const
     {
         CString strExtension(PathFindExtension(szFileName));
         strExtension.MakeLower();

@@ -17,12 +17,12 @@ namespace MSF
 
 inline ATL::CString GetModuleDirectory()
 {
-    TCHAR sz[MAX_PATH];
+    wchar_t sz[MAX_PATH];
     ATLVERIFY(::GetModuleFileName(GetModuleHandle(nullptr), sz, MAX_PATH));
 
     PathRemoveFileSpec(sz);
 
-    return sz + ATL::CString(_T("\\"));
+    return sz + ATL::CString("\\");
 }
 
 
@@ -39,7 +39,7 @@ inline ATL::CStringW GetModuleDirectoryW()
 
 inline ATL::CString GetSystemDirectory()
 {
-    TCHAR tsz[MAX_PATH];
+    wchar_t tsz[MAX_PATH];
     if (!::GetSystemDirectory(tsz, MAX_PATH))
         throw new _com_error(HRESULT_FROM_WIN32(GetLastError()));
     return tsz;
@@ -49,7 +49,7 @@ inline ATL::CString GetSystemDirectory()
 // Note: use ANSI version and convert self. Win 9x only has ANSI version.
 inline ATL::CStringW GetFolderPath(int nFolder)
 {
-    TCHAR tszFolderPath[MAX_PATH];
+    wchar_t tszFolderPath[MAX_PATH];
 
     tszFolderPath[0] = 0;
     ATLVERIFY(SHGetSpecialFolderPath(nullptr, tszFolderPath, nFolder, false));
@@ -227,7 +227,7 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
     if (regkey.QueryMultiStringValue(pszValueName, nullptr, &ulLength) != ERROR_MORE_DATA)
         return;
 
-    std::vector<TCHAR> buffer(ulLength);
+    std::vector<wchar_t> buffer(ulLength);
     if (regkey.QueryMultiStringValue(pszValueName, &(buffer[0]), &ulLength) != ERROR_SUCCESS)
         return;
 
@@ -249,11 +249,11 @@ inline CString GetAppPath(const CString& strApp)
     CRegKey key;
 
     if (key.Open(HKEY_LOCAL_MACHINE,
-        _T("Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\") + strApp,
+        L"Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + strApp,
         KEY_READ) != ERROR_SUCCESS)
         return CString();
 
-    return QueryRegKeyStringValue(key, _T(""));
+    return QueryRegKeyStringValue(key, L"");
 }
 
 
@@ -284,26 +284,26 @@ inline ATL::CString GetClipboardFormatName(UINT format)
 {
     switch (format)
     {
-    case 0:               return _T("Undefined");
-    case CF_TEXT:         return _T("Text");
-    case CF_BITMAP:       return _T("Bitmap");
-    case CF_METAFILEPICT: return _T("Metafilepct");
-    case CF_SYLK:         return _T("Sylk");
-    case CF_DIF:          return _T("Dif");
-    case CF_TIFF:         return _T("Tiff");
-    case CF_OEMTEXT:      return _T("Oemtext");
-    case CF_DIB:          return _T("Dib");
-    case CF_PALETTE:      return _T("Palette");
-    case CF_PENDATA:      return _T("Pendata");
-    case CF_RIFF:         return _T("Riff");
-    case CF_WAVE:         return _T("Wave");
-    case CF_UNICODETEXT:  return _T("Unicodetext");
-    case CF_ENHMETAFILE:  return _T("Enhmetafile");
-    case CF_HDROP:        return _T("Hdrop");
-    case CF_LOCALE:       return _T("Locale");
+    case 0:               return L"Undefined";
+    case CF_TEXT:         return L"Text";
+    case CF_BITMAP:       return L"Bitmap";
+    case CF_METAFILEPICT: return L"Metafilepct";
+    case CF_SYLK:         return L"Sylk";
+    case CF_DIF:          return L"Dif";
+    case CF_TIFF:         return L"Tiff";
+    case CF_OEMTEXT:      return L"Oemtext";
+    case CF_DIB:          return L"Dib";
+    case CF_PALETTE:      return L"Palette";
+    case CF_PENDATA:      return L"Pendata";
+    case CF_RIFF:         return L"Riff";
+    case CF_WAVE:         return L"Wave";
+    case CF_UNICODETEXT:  return L"Unicodetext";
+    case CF_ENHMETAFILE:  return L"Enhmetafile";
+    case CF_HDROP:        return L"Hdrop";
+    case CF_LOCALE:       return L"Locale";
     default:
         {
-            TCHAR szName[255];
+            wchar_t szName[255];
 
             ATLVERIFY(::GetClipboardFormatName(format, szName, MSF_ARRAY_SIZE(szName)));
             return szName;
@@ -375,7 +375,7 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName)
 /// </remarks>
 inline bool IsShell5OrHigher()
 {
-    return GetDllVersion(_T("shell32.dll")) >= MSF_PACKVERSION(5, 0);
+    return GetDllVersion(L"shell32.dll") >= MSF_PACKVERSION(5, 0);
 }
 
 
@@ -385,7 +385,7 @@ inline bool IsShell5OrHigher()
 /// </remarks>
 inline bool IsShell6OrHigher()
 {
-    return GetDllVersion(_T("shell32.dll")) >= MSF_PACKVERSION(6, 0);
+    return GetDllVersion(L"shell32.dll") >= MSF_PACKVERSION(6, 0);
 }
 
 
@@ -408,7 +408,7 @@ inline TFunctor for_each(TContainer container, TFunctor functor)
 }
 
 
-inline int GetSystemImageListIndex(const TCHAR* pszPath)
+inline int GetSystemImageListIndex(const wchar_t* pszPath)
 {
     SHFILEINFO sfi = {0};
     if (!SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof(sfi),
@@ -416,7 +416,7 @@ inline int GetSystemImageListIndex(const TCHAR* pszPath)
         return 0;
 
     // Only need the index: clean-up the icon.
-	__analysis_assume(sfi.hIcon != 0);
+    __analysis_assume(sfi.hIcon != 0);
     ATLVERIFY(DestroyIcon(sfi.hIcon));
 
     return sfi.iIcon;

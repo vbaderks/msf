@@ -31,7 +31,7 @@ public:
             L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);
     }
 
-    void InitializeImpl(const TCHAR* szFilename, DWORD /*dwMode*/)
+    void InitializeImpl(const wchar_t* szFilename, DWORD /*dwMode*/)
     {
         CVVVFile vvvfile(szFilename);
 
@@ -43,8 +43,8 @@ public:
     //          The string is used for the tooltip and the text in the statusbar.
     CString GetInfoTip(DWORD /* dwFlags */)
     {
-        return LoadString(IDS_SHELLEXT_LABEL) + _T(": ") + m_strLabel + _T("\n") +
-               LoadString(IDS_SHELLEXT_FILECOUNT) + _T(": ") + m_strFileCount;
+        return LoadString(IDS_SHELLEXT_LABEL) + L": " + m_strLabel + L"\n" +
+               LoadString(IDS_SHELLEXT_FILECOUNT) + L": " + m_strFileCount;
     }
 
 private:

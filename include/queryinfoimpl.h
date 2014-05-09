@@ -17,12 +17,12 @@ class ATL_NO_VTABLE IQueryInfoImpl :
 public:
     IQueryInfoImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n", this);
     }
 
     ~IQueryInfoImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n", this);
     }
 
     // IQueryInfo
@@ -33,14 +33,14 @@ public:
         // - QIF_CACHED 
         // - QIF_DONTEXPANDFOLDER
 
-        MSF_TRACENOTIMPL(_T("IQueryInfoImpl::GetInfoFlags"));
+        MSF_TRACENOTIMPL(L"IQueryInfoImpl::GetInfoFlags");
     }
 
     STDMETHOD(GetInfoTip)(DWORD dwFlags, _Outptr_ WCHAR** ppwszTip)
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IQueryInfoImpl::GetInfoTip (dwFlags=%d)\n"), dwFlags);
+            ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (dwFlags=%d)\n", dwFlags);
             return SHStrDup(static_cast<T*>(this)->GetInfoTip(dwFlags), ppwszTip);
         }
         MSF_COM_CATCH_HANDLER()

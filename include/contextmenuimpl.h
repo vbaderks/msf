@@ -171,7 +171,7 @@ public:
         {
             if (*_pidCmd >= _idCmdLast)
             {
-                ATLTRACE2(atlTraceCOM, 0, _T("CMenu::CheckID: Out of id space (idCmd=%d, idCmdLast=%d)\n"), *_pidCmd, _idCmdLast);
+                ATLTRACE2(atlTraceCOM, 0, L"CMenu::CheckID: Out of id space (idCmd=%d, idCmdLast=%d)\n", *_pidCmd, _idCmdLast);
                 RaiseException();
             }
         }
@@ -281,13 +281,13 @@ public:
 
                 if (uFlags & GCS_UNICODE)
                 {
-                    ATLTRACE2(atlTraceCOM, 0, _T(" (unicode help text)\n"));
+                    ATLTRACE2(atlTraceCOM, 0, L" (unicode help text)\n");
                     if (!lstrcpynW(reinterpret_cast<wchar_t*>(pszName), CT2CW(str), static_cast<int>(cchMax)))
                         return E_FAIL;
                 }
                 else
                 {
-                    ATLTRACE2(atlTraceCOM, 0, _T(" (ansi help text)\n"));
+                    ATLTRACE2(atlTraceCOM, 0, L" (ansi help text)\n");
                     if (!lstrcpynA(pszName, CT2CA(str), static_cast<int>(cchMax)))
                         return E_FAIL;
                 }
@@ -295,7 +295,7 @@ public:
                 return S_OK;
             }
 
-            ATLTRACE2(atlTraceCOM, 0, _T("\n"));
+            ATLTRACE2(atlTraceCOM, 0, L"\n");
             return E_NOTIMPL;
         }
         MSF_COM_CATCH_HANDLER()
@@ -304,7 +304,7 @@ public:
 
     STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CContextMenu::IContextMenu::InvokeCommand, instance=%p\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CContextMenu::IContextMenu::InvokeCommand, instance=%p\n", this);
 
         try
         {
@@ -347,25 +347,25 @@ public:
             switch (uMsg)
             {
             case WM_INITMENUPOPUP:
-                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnInitMenuPopup)\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnInitMenuPopup)\n");
                 return static_cast<T*>(this)->OnInitMenuPopup(reinterpret_cast<HMENU>(wParam), LOWORD(lParam));
 
             case WM_DRAWITEM:
-                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnDrawItem)\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnDrawItem)\n");
                 return static_cast<T*>(this)->OnDrawItem(reinterpret_cast<DRAWITEMSTRUCT*>(lParam));
 
             case WM_MEASUREITEM:
-                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMeasureItem)\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMeasureItem)\n");
                 return static_cast<T*>(this)->OnMeasureItem(reinterpret_cast<MEASUREITEMSTRUCT*>(lParam));
 
             case WM_MENUCHAR:
-                ATLTRACE2(atlTraceCOM, 0, _T("IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n"));
+                ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n");
                 if (!plResult)
                     return E_FAIL;
 
                 *plResult = static_cast<T*>(this)->OnMenuChar(reinterpret_cast<HMENU>(lParam), LOWORD(wParam));
                 return S_OK;
-            
+
             default:
                 ATLASSERT(!"detected unsupported message");
                 return E_FAIL;

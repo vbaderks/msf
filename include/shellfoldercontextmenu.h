@@ -53,7 +53,7 @@ public:
 
     STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici)
     {
-        ATLTRACE2(atlTraceCOM, 0, _T("CShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n"), this);
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n", this);
 
         if (strcmp(pici->lpVerb, "paste") == 0)
             return _rshellfoldercontextmenusink->OnPasteCmCmd();

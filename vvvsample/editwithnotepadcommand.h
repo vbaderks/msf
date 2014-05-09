@@ -20,7 +20,7 @@ public:
 
         // Use the command line param to pass the exe filename. This causes
         // Windows to use the path to find notepad.
-        CString strCmd = _T("notepad.exe \"") + filenames[0] + _T("\"");
+        CString strCmd = L"notepad.exe \"" + filenames[0] + L"\"";
 
         CreateProcess(nullptr, strCmd.GetBuffer());
     }

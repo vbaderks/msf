@@ -17,14 +17,14 @@ class IItemNameLimitsImplDefault
 {
 public:
     // Purpose: Override this function to control which chars are valid.
-    static const TCHAR* GetValidChars()
+    static const wchar_t* GetValidChars()
     {
         return nullptr;
     }
 
 
     // Purpose: Override this function to control which chars are invalid.
-    static const TCHAR* GetInvalidChars()
+    static const wchar_t* GetInvalidChars()
     {
         return nullptr;
     }
@@ -41,14 +41,14 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IItemNameLimitsImpl::GetValidCharacters\n"));
+            ATLTRACE2(atlTraceCOM, 0, L"IItemNameLimitsImpl::GetValidCharacters\n");
 
-            const TCHAR* pszValidChars = TItemV::GetValidChars();
+            const wchar_t* pszValidChars = TItemV::GetValidChars();
             if (!pszValidChars)
             {
                 *ppwszValidChars = nullptr;
 
-                const TCHAR* pszInvalidChars = TItemI::GetInvalidChars();
+                const wchar_t* pszInvalidChars = TItemI::GetInvalidChars();
                 if (!pszInvalidChars)
                 {
                     *ppwszInvalidChars = nullptr;
@@ -77,7 +77,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, _T("IItemNameLimitsImpl::GetMaxLength, name=%s\n"), pszName);
+            ATLTRACE2(atlTraceCOM, 0, L"IItemNameLimitsImpl::GetMaxLength, name=%s\n", pszName);
 
             // The TItem must implement the static function GetMaxItemNameLength.
             *piMaxNameLen = TItem::GetMaxNameLength(pszName);

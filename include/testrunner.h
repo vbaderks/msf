@@ -27,7 +27,7 @@ typedef void (*performtest_fn)();
 
 struct test_t
 {
-    const TCHAR*   szName;
+    const wchar_t*   szName;
     performtest_fn PerformTest;
 };
 
@@ -67,7 +67,7 @@ public:
             {
                 bWaitForKeypress = false;
                 int nLoop = 0;
-                (void) _stscanf(argv[2], _T("%d"), &nLoop);
+                (void) _stscanf(argv[2], L"%d", &nLoop);
                 for (int i = 0; i < nLoop; ++i)
                 {
                     PerformTest(argv[1]);
@@ -76,11 +76,11 @@ public:
             break;
 
         default:
-            std::tcout << _T("command line option unknown") << std::endl;
+            std::tcout << L"command line option unknown" << std::endl;
             return EXIT_FAILURE;
         }
 
-        std::tcout << _T("\nAll test(s) completed, press any key to quit") << std::endl;
+        std::tcout << L"\nAll test(s) completed, press any key to quit" << std::endl;
 
         if (bWaitForKeypress)
             (void) _getch();
@@ -92,20 +92,20 @@ public:
 private:
     void PerformTest(const test_t& test)
     {
-        std::tcout << _T("Performing test: ") << test.szName;
+        std::tcout << L"Performing test: " << test.szName;
         try
         {
             test.PerformTest();
-            std::tcout << _T(" -> OK") << std::endl;
+            std::tcout << L" -> OK" << std::endl;
         }
         catch (...)
         {
-            std::tcout << _T(" -> Failed") << std::endl;
+            std::tcout << L" -> Failed" << std::endl;
         }
     }
 
 
-    void PerformTest(const TCHAR* szName)
+    void PerformTest(const wchar_t* szName)
     {
         for (unsigned int i = 0; i < _nTests; ++i)
         {
@@ -116,7 +116,7 @@ private:
             }
         }
 
-        std::tcout << _T("Test ") << szName << _T(" Not found") << std::endl;
+        std::tcout << L"Test " << szName << L" Not found" << std::endl;
     }
 
 
@@ -129,8 +129,8 @@ private:
     }
 
 
-    const test_t*  _ptests;
-    unsigned int   _nTests;
+    const test_t* _ptests;
+    unsigned int _nTests;
 };
 
 
