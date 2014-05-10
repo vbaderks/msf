@@ -47,7 +47,7 @@ public:
             ValidateFormatEtc(pformatetc);
 
             pmedium->tymed = TYMED_HGLOBAL;
-            pmedium->pUnkForRelease = NULL;
+            pmedium->pUnkForRelease = nullptr;
             pmedium->hGlobal = CreateData();
 
             return S_OK;
@@ -56,9 +56,9 @@ public:
     }
 
 
-    void Add(const wchar_t* tszFilename)
+    void Add(const wchar_t* szFilename)
     {
-        m_filenames.push_back(tszFilename);
+        m_filenames.push_back(szFilename);
     }
 
 

@@ -13,7 +13,7 @@ template <typename T>
 class CGlobalLock
 {
 public:
-    CGlobalLock() : m_p(NULL), m_hMem(NULL)
+    CGlobalLock() : m_p(nullptr), m_hMem(nullptr)
     {
     }
 
@@ -42,11 +42,11 @@ public:
 
     void Dispose() throw()
     {
-        if (m_hMem != NULL)
+        if (m_hMem)
         {
             BOOL bResult = GlobalUnlock(m_hMem);
             ATLASSERT(bResult || GetLastError() == NO_ERROR); (bResult);
-            m_hMem = NULL;
+            m_hMem = nullptr;
             m_p = nullptr;
         }
     }
@@ -61,22 +61,18 @@ private:
 
     static void* GlobalLockThrow(HGLOBAL hMem)
     {
-        if (hMem == NULL)
-        {
+        if (!hMem)
             return nullptr;
-        }
-        else
-        {
-            void* p = GlobalLock(hMem);
-            RaiseLastErrorExceptionIf(!p);
-            return p;
-        }
+
+        void* p = GlobalLock(hMem);
+        RaiseLastErrorExceptionIf(!p);
+        return p;
     }
 
     CGlobalLock& operator=(const CGlobalLock&) throw(); // not implemented by design.
 
     // Member variables
-    void*   m_p;
+    void* m_p;
     HGLOBAL m_hMem;
 };
 

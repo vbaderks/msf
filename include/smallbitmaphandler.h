@@ -21,13 +21,13 @@ public:
     class CBitmap
     {
     public:
-        CBitmap(HBITMAP handle = NULL) : m_handle(handle)
+        CBitmap(HBITMAP handle = nullptr) : m_handle(handle)
         {
         }
 
         ~CBitmap()
         {
-            if (m_handle != NULL)
+            if (m_handle)
             {
                 ATLVERIFY(DeleteObject(m_handle));
             }

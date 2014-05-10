@@ -184,10 +184,10 @@ protected:
 
     void Dispose()
     {
-        if (_hbitmap != NULL)
+        if (_hbitmap)
         {
             ATLVERIFY(DeleteObject(_hbitmap));
-            _hbitmap = NULL;
+            _hbitmap = nullptr;
         }
     }
 

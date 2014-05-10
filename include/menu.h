@@ -19,7 +19,7 @@ class CMenu
 {
 public:
     CMenu(bool bCreate = true) :
-        m_hmenu(bCreate ? CreateMenu() : NULL)
+        m_hmenu(bCreate ? CreateMenu() : nullptr)
     {
     }
 

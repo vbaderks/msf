@@ -36,7 +36,7 @@ public:
 
     LPOLESTR* GetAddress() throw()
     {
-        ATLASSERT(m_olestrCLSID == NULL || !"instance already owns a olestring"); 
+        ATLASSERT(!m_olestrCLSID || !"instance already owns a olestring"); 
         return &m_olestrCLSID;
     }
 
