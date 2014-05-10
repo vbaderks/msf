@@ -8,7 +8,7 @@
 #pragma warning(push)
 
 #include <conio.h>  // for _getch
-#include <stdlib.h> // for EXIT_SUCCESS / EXIT_FAILURE
+#include <cstdlib> // for EXIT_SUCCESS / EXIT_FAILURE
 #include <iostream>
 
 #pragma warning(pop)

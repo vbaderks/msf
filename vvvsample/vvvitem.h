@@ -6,7 +6,7 @@
 #pragma once
 
 
-#include <string.h>
+#include <cstring>
 #include <vector>
 #include "../include/macros.h"
 #include "../include/pidl.h"
