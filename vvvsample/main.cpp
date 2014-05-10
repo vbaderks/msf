@@ -3,11 +3,14 @@
 //
 // See README.TXT for the details of the software licence.
 //
+
 #include "stdafx.h"
+
 #include "module.h"
+#include "resource.h"
+
 #include "../include/util.h"
 #include "../include/updateregistry.h"
-#include "resource.h"
 
 CModule _Module;
 

@@ -3,11 +3,14 @@
 //
 // See README.TXT for the details of the software licence.
 //
+
 #include "stdafx.h"
-#include "../include/extractimageimpl.h"
+
 #include "extractimageclsid.h"
 #include "shellfolderclsid.h"
 #include "resource.h"
+
+#include "../include/extractimageimpl.h"
 
 
 class ATL_NO_VTABLE CExtractImage :

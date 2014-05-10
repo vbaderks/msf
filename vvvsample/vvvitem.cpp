@@ -3,14 +3,17 @@
 //
 // See README.TXT for detailed details of the software licence.
 //
+
 #include "stdafx.h"
+
 #include "vvvitem.h"
 #include "columns.h"
+#include "resource.h"
+
 #include "../include/macros.h"
 #include "../include/strutil.h"
 #include "../include/util.h"
 #include "../include/imagelistindex.h"
-#include "resource.h"
 
 
 // Note: 'switch' is used in this example to show all the possible options.

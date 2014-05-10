@@ -3,13 +3,16 @@
 //
 // See README.TXT for the details of the software licence.
 //
+
 #include "stdafx.h"
-#include "../include/infotipimpl.h"
-#include "../include/strutil.h"
+
 #include "infotipclsid.h"
 #include "shellfolderclsid.h"
 #include "vvvfile.h"
 #include "resource.h"
+
+#include "../include/infotipimpl.h"
+#include "../include/strutil.h"
 
 class ATL_NO_VTABLE CInfoTip :
     public CComObjectRootEx<CComSingleThreadModel>,

@@ -4,13 +4,7 @@
 // See README.TXT for the details of the software licence.
 //
 #include "stdafx.h"
-#include "../include/shellfolderimpl.h"
-#include "../include/browserframeoptionsimpl.h"
-#include "../include/itemnamelimitsimpl.h"
-#include "../include/strutil.h"
-#include "../include/queryinfo.h"
-#include "../include/cfhdrop.h"
-#include "../include/menu.h"
+
 #include "shellfolderclsid.h"
 #include "shellfolderviewcb.h"
 #include "shellfolderdataobject.h"
@@ -20,6 +14,15 @@
 #include "columns.h"
 #include "vvvpropertysheet.h"
 #include "resource.h"
+
+#include "../include/shellfolderimpl.h"
+#include "../include/browserframeoptionsimpl.h"
+#include "../include/itemnamelimitsimpl.h"
+#include "../include/strutil.h"
+#include "../include/queryinfo.h"
+#include "../include/cfhdrop.h"
+#include "../include/menu.h"
+
 
 // Defines for the item context menu.
 const UINT ID_DFM_CMD_OPEN = 0;

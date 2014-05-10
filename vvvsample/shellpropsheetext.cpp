@@ -3,12 +3,15 @@
 //
 // See README.TXT for the details of the software licence.
 //
+
 #include "stdafx.h"
-#include "../include/shellpropsheetextimpl.h"
-#include "propertypagevvv.h"
+
 #include "shellpropsheetextclsid.h"
 #include "shellfolderclsid.h"
+#include "propertypagevvv.h"
 #include "resource.h"
+
+#include "../include/shellpropsheetextimpl.h"
 
 
 class ATL_NO_VTABLE CShellPropSheetExt :

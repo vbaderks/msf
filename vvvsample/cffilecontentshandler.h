@@ -5,10 +5,12 @@
 //
 #pragma once
 
+#include "vvvitem.h"
 
 #include "../include/cfhandler.h"
+#include "../include/cfshellidlist.h"
 #include "../include/util.h"
-#include "vvvitem.h"
+
 #include <memory>
 
 // Note: owner of the instance of this class must keep passed dataobject alive.

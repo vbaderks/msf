@@ -3,8 +3,11 @@
 //
 // See README.TXT for detailed details of the software licence.
 //
+
 #include "stdafx.h"
+
 #include "vvvfile.h"
+
 #include "../include/util.h"
 #include "../include/strutil.h"
 #include "../include/pidl.h"

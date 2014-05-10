@@ -3,11 +3,15 @@
 //
 // See README.TXT for the details of the software licence.
 //
+
 #include "stdafx.h"
-#include "../include/copyhookimpl.h"
-#include "../include/strutil.h"
+
 #include "copyhookclsid.h"
 #include "resource.h"
+
+#include "../include/copyhookimpl.h"
+#include "../include/strutil.h"
+
 
 // This sample will watch folder delete requests. 
 // When the name includes the substring 'VVV' it will display an conformation dialogbox.

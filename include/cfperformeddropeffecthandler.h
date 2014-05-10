@@ -6,8 +6,10 @@
 #pragma once
 
 #include "cfhandler.h"
-#include "util.h"
 #include "performeddropeffectsink.h"
+#include "globallock.h"
+#include "stgmedium.h"
+#include "util.h"
 
 namespace MSF
 {

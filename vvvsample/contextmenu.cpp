@@ -5,14 +5,16 @@
 //
 #include "stdafx.h"
 
-#include "../include/contextmenuimpl.h"
-#include "../include/smallbitmaphandler.h"
-#include "../include/util.h"
 #include "contextmenuclsid.h"
 #include "shellfolderclsid.h"
 #include "editwithnotepadcommand.h"
 #include "aboutmsfcommand.h"
 #include "resource.h"
+
+#include "../include/contextmenuimpl.h"
+#include "../include/smallbitmaphandler.h"
+#include "../include/util.h"
+
 
 class ATL_NO_VTABLE CContextMenu :
     public CComObjectRootEx<CComSingleThreadModel>,
