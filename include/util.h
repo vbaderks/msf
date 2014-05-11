@@ -389,25 +389,6 @@ inline bool IsShell6OrHigher()
 }
 
 
-// Source: Effective STL, by Scott Meyers. ISBN: 0-201-74968-9, Item 7, page 38
-class CDeleteObject
-{
-public:
-    template <typename T>
-    void operator()(const T* p) const throw()
-    {
-        delete p;
-    }
-};
-
-
-template <typename TContainer, typename TFunctor>
-inline TFunctor for_each(TContainer container, TFunctor functor)
-{
-    return std::for_each(container.begin(), container.end(), functor);
-}
-
-
 inline int GetSystemImageListIndex(const wchar_t* pszPath)
 {
     SHFILEINFO sfi = {0};

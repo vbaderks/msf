@@ -20,7 +20,7 @@ template <typename T>
 class CShellFolderDataObjectImpl : public IDataObject
 {
 public:
-    typedef std::vector<CCfHandler*> CCfHandlers;
+    typedef std::vector<std::unique_ptr<CCfHandler>> CCfHandlers;
     typedef std::vector<CFormatEtc>  CFormatEtcs;
 
 
@@ -33,8 +33,6 @@ public:
     ~CShellFolderDataObjectImpl() throw()
     {
         ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::~CShellFolderDataObjectImpl (instance=%p)\n", this);
-
-        for_each(m_cfhandlers, CDeleteObject());
     }
 
 
@@ -49,8 +47,7 @@ public:
     void RegisterCfHandler(std::unique_ptr<CCfHandler> qcfhandler)
     {
         ATLASSERT(FindCfHandler(!qcfhandler->GetClipFormat()) && "cannot register twice!");
-        m_cfhandlers.push_back(qcfhandler.get());
-        qcfhandler.release();
+        m_cfhandlers.push_back(std::move(qcfhandler));
     }
 
 
@@ -222,11 +219,11 @@ private:
         {
             if ((*it)->GetClipFormat() == clipformat)
             {
-                return *it;
+                return (*it).get();
             }
         }
 
-        return NULL;
+        return nullptr;
     }
 
 

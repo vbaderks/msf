@@ -59,9 +59,9 @@ public:
     ~CPropertySheet()
     {
         // Clean up pages that are added but never used.
-        for (std::vector<HPROPSHEETPAGE>::iterator it = _hpages.begin(); it != _hpages.end(); ++it)
-        {
-            ATLVERIFY(DestroyPropertySheetPage(*it));
+        for (auto hpage : _hpages)
+        { 
+            ATLVERIFY(DestroyPropertySheetPage(hpage));
         }
     }
 

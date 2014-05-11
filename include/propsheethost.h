@@ -5,20 +5,23 @@
 //
 #pragma once
 
-#include "util.h"
+#include "msfbase.h"
 
 #pragma comment(lib, "comctl32") // required to link DestroyPropertySheetPage.
 
 namespace MSF
 {
 
-    /// <purpose>Owns a collection of property sheet pages.</purpose>
+/// <purpose>Owns a collection of property sheet pages.</purpose>
 class CPropSheetHost
 {
 public:
     ~CPropSheetHost() throw()
     {
-        for_each(_propsheetpages, CDestroyPropertySheet());
+        for (auto hpropsheetpage : _propsheetpages)
+        {
+            ATLVERIFY(::DestroyPropertySheetPage(hpropsheetpage));
+        }
     }
 
     void Add(HPROPSHEETPAGE hpropsheetpage)
@@ -34,14 +37,6 @@ public:
     }
 
 private:
-    class CDestroyPropertySheet
-    {
-    public:
-        void operator()(HPROPSHEETPAGE hpropsheetpage) const throw()
-        {
-            ATLVERIFY(::DestroyPropertySheetPage(hpropsheetpage));
-        }
-    };
 
     std::vector<HPROPSHEETPAGE> _propsheetpages;
 };

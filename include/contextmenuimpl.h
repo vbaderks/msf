@@ -491,19 +491,12 @@ private:
     };
 
 
-    class CClearMenuItem
+    void ClearMenuItems() throw()
     {
-    public:
-        void operator()(CMenuItem& menuitem) const throw()
+        for (auto& menuitem : m_menuitems)
         {
             menuitem.Clear();
         }
-    };
-
-
-    void ClearMenuItems() throw()
-    {
-        for_each(m_menuitems, CClearMenuItem());
         m_menuitems.clear();
     }
 

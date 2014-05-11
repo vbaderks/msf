@@ -21,8 +21,8 @@ class CClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>
 {
     class CExternalData;
 
-    typedef std::vector<CCfHandler*>    CCfHandlers;
-    typedef std::vector<CExternalData*> CExternalDatas;
+    typedef std::vector<std::unique_ptr<CCfHandler>> CCfHandlers;
+    typedef std::vector<std::unique_ptr<CExternalData>> CExternalDatas;
 
 public:
 
@@ -35,17 +35,13 @@ public:
     ~CClipboardDataObjectImpl() throw()
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::~CClipboardDataObjectImpl (instance=%p)\n", this);
-
-        for_each(m_cfhandlers, CDeleteObject());
-        for_each(m_externaldatas, CDeleteObject());
     }
 
 
     void RegisterCfHandler(std::unique_ptr<CCfHandler> qcfhandler)
     {
         ATLASSERT(FindCfHandler(!qcfhandler->GetClipFormat()) && "Cannot register twice");
-        m_cfhandlers.push_back(qcfhandler.get());
-        qcfhandler.release();
+        m_cfhandlers.push_back(qcfhandler);
     }
 
 
@@ -277,10 +273,7 @@ private:
     void AddExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium)
     {
         ATLASSERT(!FindExternalData(formatetc.cfFormat) && "External format already set");
-
-        std::unique_ptr<CExternalData> qexternaldata = make_unique<CExternalData>(formatetc, stgmedium);
-        m_externaldatas.push_back(qexternaldata.get());
-        qexternaldata.release();
+        m_externaldatas.push_back(make_unique<CExternalData>(formatetc, stgmedium));
     }
 
 
