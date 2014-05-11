@@ -428,10 +428,10 @@ protected:
 
     LRESULT OnMenuChar(HMENU hmenu, unsigned short nChar)
     {
-        for (std::vector<CMenuItem>::iterator it = m_menuitems.begin(); it != m_menuitems.end(); ++it)
+        for (auto& menuItem : m_menuitems)
         {
             LRESULT lresult;
-            if (it->GetCustomMenuHandler().OnMenuChar(hmenu, nChar, lresult))
+            if (menuItem.GetCustomMenuHandler().OnMenuChar(hmenu, nChar, lresult))
             {
                 return lresult;
             }

@@ -215,34 +215,28 @@ private:
 
     CCfHandler* FindCfHandler(CLIPFORMAT clipformat) const throw()
     {
-        for (CCfHandlers::const_iterator it = m_cfhandlers.begin(); it != m_cfhandlers.end(); ++it)
-        {
-            if ((*it)->GetClipFormat() == clipformat)
-            {
-                return (*it).get();
-            }
-        }
-
-        return nullptr;
+        auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
+            [=](const unique_ptr<CCfHandler>& cfHandler) { return cfHandler->GetClipFormat() == clipformat; });
+        return handler == m_cfhandlers.end() ? nullptr : (*handler).get();
     }
 
 
     void GetRegisteredFormats(DWORD dwDirection, CFormatEtcs& formatetcs) const
     {
-        for (CCfHandlers::const_iterator it = m_cfhandlers.begin(); it != m_cfhandlers.end(); ++it)
+        for (auto& handler : m_cfhandlers)
         {
             if (dwDirection == DATADIR_GET)
             {
-                if ((*it)->CanGetData())
+                if (handler->CanGetData())
                 {
-                    formatetcs.push_back(CFormatEtc((*it)->GetClipFormat()));
+                    formatetcs.push_back(CFormatEtc(handler->GetClipFormat()));
                 }
             }
             else
             {
-                if ((*it)->CanSetData())
+                if (handler->CanSetData())
                 {
-                    formatetcs.push_back(CFormatEtc((*it)->GetClipFormat()));
+                    formatetcs.push_back(CFormatEtc(handler->GetClipFormat()));
                 }
             }
         }

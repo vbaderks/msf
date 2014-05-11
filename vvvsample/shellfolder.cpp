@@ -75,14 +75,14 @@ public:
     {
         m_strSubFolder.Empty();
 
-        for (CVVVItemList::const_iterator it = items.begin(); it != items.end(); ++it)
+        for (auto item : items)
         {
             if (!m_strSubFolder.IsEmpty())
             {
                 m_strSubFolder += L"\\";
             }
 
-            m_strSubFolder += ToString(it->GetID());
+            m_strSubFolder += ToString(item.GetID());
         }
     }
 

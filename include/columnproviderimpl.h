@@ -268,16 +268,12 @@ protected:
     bool IsSupportedFileType(CStringW strExtension) const
     {
         strExtension.MakeLower();
-
-        std::vector<CStringW>::const_iterator result =
-            std::find(m_extensions.begin(), m_extensions.end(), strExtension);
-
-        return result != m_extensions.end();
+        return std::find(m_extensions.begin(), m_extensions.end(), strExtension) != m_extensions.end();
     }
 
     unsigned int GetIndex(const SHCOLUMNID& scid) const
     {
-        mapColumnIdToIndex::const_iterator it = m_columnidtoindex.find(scid);
+        auto it = m_columnidtoindex.find(scid);
         RaiseExceptionIf(it == m_columnidtoindex.end());
         return it->second;
     }
@@ -319,15 +315,8 @@ private:
 
     const std::vector<CString>* FindInCache(const CStringW& strFilename) const
     {
-        mapCacheInfo::const_iterator it = m_mapCacheInfo.find(strFilename);
-        if (it != m_mapCacheInfo.end())
-        {
-            return &(*it).second;
-        }
-        else
-        {
-            return nullptr;
-        }
+        auto it = m_mapCacheInfo.find(strFilename);
+        return it == m_mapCacheInfo.end() ? nullptr : &(*it).second;
     }
 
     const std::vector<CString>* InsertInCache(const CStringW& strFilename, const std::vector<CString>& strColumnInfos)

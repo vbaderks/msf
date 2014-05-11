@@ -87,10 +87,10 @@ private:
         // copy filenames into data block.
         wchar_t* pszBuf = reinterpret_cast<wchar_t*>(reinterpret_cast<BYTE*>(pdropfiles) +sizeof(DROPFILES));
 
-        for (std::vector<CString>::const_iterator it = m_filenames.begin(); it != m_filenames.end(); ++it)
+        for (auto fileName : m_filenames)
         {
-            ATLVERIFY(lstrcpy(pszBuf, it->GetString()) != NULL);
-            pszBuf += (it->GetLength() + 1);
+            ATLVERIFY(lstrcpy(pszBuf, fileName.GetString()));
+            pszBuf += fileName.GetLength() + 1;
         }
 
         *pszBuf = L'\0';
@@ -103,9 +103,9 @@ private:
     {
         UINT nchars = 0;
 
-        for (std::vector<CString>::const_iterator it = m_filenames.begin(); it != m_filenames.end(); ++it)
+        for (auto fileName : m_filenames)
         {
-            nchars += it->GetLength() + 1;
+            nchars += fileName.GetLength() + 1;
         }
 
         return sizeof(DROPFILES) + (sizeof(wchar_t) * (nchars + 1));

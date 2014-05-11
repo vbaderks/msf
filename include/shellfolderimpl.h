@@ -1443,9 +1443,9 @@ protected:
 
     void ReportChangeNotify(const TItems& items, long wEventId, UINT uFlags = SHCNF_FLUSH) const
     {
-        for (TItems::const_iterator it = items.begin(); it != items.end(); ++it)
+        for (auto item : items)
         {
-            ChangeNotifyPidl(wEventId, uFlags, CPidl(m_pidlFolder, it->GetItemIdList()));
+            ChangeNotifyPidl(wEventId, uFlags, CPidl(m_pidlFolder, item.GetItemIdList()));
         }
     }
 

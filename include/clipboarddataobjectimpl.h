@@ -244,15 +244,9 @@ private:
 
     CCfHandler* FindCfHandler(CLIPFORMAT clipformat) const throw()
     {
-        for (CCfHandlers::const_iterator it = m_cfhandlers.begin(); it != m_cfhandlers.end(); ++it)
-        {
-            if ((*it)->GetClipFormat() == clipformat)
-            {
-                return *it;
-            }
-        }
-
-        return nullptr;
+        auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
+            [=](CCfHandler* cfHandler) { return cfHandler->GetClipFormat() == clipformat; });
+        return handler == m_cfhandlers.end() ? nullptr : handler;
     }
 
 
@@ -301,9 +295,9 @@ private:
 
     void GetExternalFormats(std::vector<FORMATETC>& formatetcs) const
     {
-        for (CExternalDatas::const_iterator it = m_externaldatas.begin(); it != m_externaldatas.end(); ++it)
+        for (auto externalData : m_externaldatas)
         {
-            formatetcs.push_back((*it)->GetFormatetc());
+            formatetcs.push_back(externalData->GetFormatetc());
         }
     }
 

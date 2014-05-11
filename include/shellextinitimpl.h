@@ -56,24 +56,15 @@ protected:
     // Purpose: helper function, can be used to filter unsupported filename in a collection.
     bool ContainsUnknownExtension(const std::vector<CString>& filenames) const
     {
-        for (std::vector<CString>::const_iterator it = filenames.begin(); it != filenames.end(); ++it)
-        {
-            if (IsUnknownExtension(*it))
-                return true; // found at least 1 unknown extension.
-        }
-
-        return false;
+        return std::find_if(filenames.begin(), filenames.end(),
+            [=](const CString& fileName) { return IsUnknownExtension(fileName); }) != filenames.end();
     }
 
     bool IsUnknownExtension(const wchar_t* szFileName) const
     {
         CString strExtension(PathFindExtension(szFileName));
         strExtension.MakeLower();
-
-        std::vector<CString>::const_iterator result =
-            std::find(m_extensions.begin(), m_extensions.end(), strExtension);
-
-        return result == m_extensions.end();
+        return std::find(m_extensions.begin(), m_extensions.end(), strExtension) == m_extensions.end();
     }
 
     const std::vector<CString>& GetFilenames() const

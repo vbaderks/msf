@@ -85,9 +85,9 @@ LPITEMIDLIST CVVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) 
 
 void CVVVFile::DeleteItems(const CVVVItemList& items) const
 {
-    for (CVVVItemList::const_iterator it = items.begin(); it != items.end(); ++it)
+    for (auto item : items)
     {
-        DeleteItem(*it);
+        DeleteItem(item);
     }
 
     SetFileCount(GetFileCount() - static_cast<unsigned int>(items.size()));
