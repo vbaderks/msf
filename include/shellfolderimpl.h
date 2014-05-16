@@ -22,8 +22,8 @@
 #include "shellfoldercontextmenu.h"
 #include "sfvcreate.h"
 #include "queryinfo.h"
-#include "shellbrowserptr.h"
 #include "extracticon.h"
+#include "smartptr/shellbrowserptr.h"
 
 #if (!defined(_WIN32_IE) || _WIN32_IE < 0x0501)
     #error _WIN32_IE needs to be at least 0x501 for IShellFolder2 definition.

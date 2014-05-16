@@ -5,11 +5,11 @@
 //
 #pragma once
 
-#include "dataobjectptr.h"
 #include "stgmedium.h"
 #include "globallock.h"
 #include "formatetc.h"
 #include "util.h"
+#include "smartptr/dataobjectptr.h"
 
 namespace MSF
 {

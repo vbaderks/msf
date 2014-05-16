@@ -9,8 +9,8 @@
 #include "cfhandler.h"
 #include "enumformatetc.h"
 #include "formatetc.h"
-#include "dataobjectptr.h"
 #include "cfperformeddropeffecthandler.h"
+#include "smartptr/dataobjectptr.h"
 #include <memory>
 
 namespace MSF

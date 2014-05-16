@@ -5,7 +5,7 @@
 //
 #pragma once
 
-#include "dataobjectptr.h"
+#include "smartptr/dataobjectptr.h"
 #include "stgmedium.h"
 #include "formatetc.h"
 
