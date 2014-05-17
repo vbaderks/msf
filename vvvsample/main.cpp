@@ -53,6 +53,7 @@ STDAPI DllCanUnloadNow()
 #if _MSC_VER < 1700
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 #else
+_Check_return_
 STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID* ppv)
 #endif
 {
