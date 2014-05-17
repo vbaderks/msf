@@ -38,10 +38,10 @@ public:
     }
 
 
-    void RegisterCfHandler(std::unique_ptr<CCfHandler> qcfhandler)
+    void RegisterCfHandler(std::unique_ptr<CCfHandler> clipFormatHandler)
     {
-        ATLASSERT(FindCfHandler(!qcfhandler->GetClipFormat()) && "Cannot register twice");
-        m_cfhandlers.push_back(qcfhandler);
+        ATLASSERT(!FindClipFormatHandler(clipFormatHandler->GetClipFormat()) && "Cannot register a ClipBoard handler twice!");
+        m_cfhandlers.push_back(clipFormatHandler);
     }
 
 
@@ -242,10 +242,13 @@ private:
     };
 
 
-    CCfHandler* FindCfHandler(CLIPFORMAT clipformat) const throw()
+    CCfHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const throw()
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
-            [=](CCfHandler* cfHandler) { return cfHandler->GetClipFormat() == clipformat; });
+            [=](CCfHandler* cfHandler)
+        { 
+            return cfHandler->GetClipFormat() == clipformat;
+        });
         return handler == m_cfhandlers.end() ? nullptr : handler;
     }
 
