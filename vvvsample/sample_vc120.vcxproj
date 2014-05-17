@@ -132,22 +132,22 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(Platform)\$(Configuration)_110\</OutDir>
+    <OutDir>$(Platform)\$(Configuration)_120\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>$(Platform)\$(Configuration)_110\</IntDir>
+    <IntDir>$(Platform)\$(Configuration)_120\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(Platform)\$(Configuration)_110\</OutDir>
+    <OutDir>$(Platform)\$(Configuration)_120\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IntDir>$(Platform)\$(Configuration)_110\</IntDir>
+    <IntDir>$(Platform)\$(Configuration)_120\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Checked|x64'">
-    <OutDir>$(Platform)\$(Configuration)_110\</OutDir>
+    <OutDir>$(Platform)\$(Configuration)_120\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Checked|x64'">
-    <IntDir>$(Platform)\$(Configuration)_110\</IntDir>
+    <IntDir>$(Platform)\$(Configuration)_120\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
