@@ -7,9 +7,6 @@
 // Enabled improved type checking of the Win32 SDK header files.
 #define STRICT
 
-// Allow use of features specific to Windows XP or later.
-#define WINVER 0x0501
-
 // Allow use of features specific to Windows 7 or later.
 #define _WIN32_WINNT 0x0601
 

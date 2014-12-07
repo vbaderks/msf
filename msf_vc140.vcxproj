@@ -110,16 +110,16 @@
     <IntDir>$(Platform)\$(Configuration)_140\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(Platform)\$(Configuration)_110\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)_110\</IntDir>
+    <OutDir>$(Platform)\$(Configuration)_140\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)_140\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(Platform)\$(Configuration)_110\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)_110\</IntDir>
+    <OutDir>$(Platform)\$(Configuration)_140\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)_140\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Checked|x64'">
-    <OutDir>$(Platform)\$(Configuration)_110\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)_110\</IntDir>
+    <OutDir>$(Platform)\$(Configuration)_140\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)_140\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
