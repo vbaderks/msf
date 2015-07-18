@@ -1,8 +1,26 @@
 # GIT ignore file for MSF
 
+# User-specific files
+*.suo            # Ignore Visual Studio User option files
+*.v12.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
 Win32/  # Ignore all file in this binary build directory
 x64/    # Ignore all file in this binary build directory
-*.suo   # Ignore Visual Studio User option files
 *.obj
 *.lib
 *.pdb
@@ -14,7 +32,9 @@ x64/    # Ignore all file in this binary build directory
 *.res
 *.idb
 *.lastbuildstate
+*.nativecodeanalysis.xml
+*.pchast
 *.exp
+*.exe
 *.sdf
 *.opensdf
-msf_vc120.v12.suo
