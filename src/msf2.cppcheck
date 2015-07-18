@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <paths>
+        <dir name="C:/Users/Victor/Source/Repos/msf/start"/>
+    </paths>
+    <libraries>
+        <library>windows</library>
+    </libraries>
+</project>

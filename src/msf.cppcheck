@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <defines>
+        <define name="_WIN32"/>
+        <define name="_M_X64"/>
+        <define name="_M_AMD64"/>
+        <define name="__cplusplus"/>
+        <define name="WIN32"/>
+        <define name="_WINDOWS"/>
+        <define name="_DEBUG"/>
+        <define name="_USRDLL"/>
+        <define name="_WINDLL"/>
+        <define name="_UNICODE"/>
+        <define name="UNICODE"/>
+    </defines>
+    <paths>
+        <dir name="C:/Users/Victor/Source/Repos/msf/vvvsample"/>
+    </paths>
+    <libraries>
+        <library>windows</library>
+    </libraries>
+</project>

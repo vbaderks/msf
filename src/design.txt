@@ -1,0 +1,8 @@
+Design
+
+Code Style
+
+1) Spaces are used. Indentation level is 4
+   Rationale: spaces are more compatible with external tools (note: MFC\ATL style is internal tabs
+   
+2) 
