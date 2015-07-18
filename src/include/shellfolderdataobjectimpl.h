@@ -70,7 +70,7 @@ public:
             }
             else
             {
-                HRESULT hr = m_pidldata->GetData(pformatetc, pstgmedium);
+                auto hr = m_pidldata->GetData(pformatetc, pstgmedium);
                 if (FAILED(hr))
                 {
                     ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData (pidldata failes)\n");
@@ -117,10 +117,8 @@ public:
                 ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
                 return DV_E_FORMATETC;
             }
-            else
-            {
-                return m_pidldata->QueryGetData(pformatetc);
-            }
+
+            return m_pidldata->QueryGetData(pformatetc);
         }
         MSF_COM_CATCH_HANDLER()
     }
@@ -147,7 +145,7 @@ public:
             if (pformatetc->tymed != pstgmedium->tymed)
                 return DV_E_TYMED;
 
-            CCfHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
+            auto pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanSetData())

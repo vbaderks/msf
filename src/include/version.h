@@ -6,4 +6,4 @@
 #pragma once
 
 
-#define MSF_VER 0x005C // Mini Shell extension Framework version 0.92 (alpha 1)
+#define MSF_VER 0x005D // Mini Shell extension Framework version 0.93

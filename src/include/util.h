@@ -368,17 +368,6 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName)
 #pragma warning(pop)
 
 
-/// <summary>Determines if running on Shell 5.0 or higher.</summary>
-/// <remarks>
-/// Windows 2000 (NT family) and Windows ME (9x family) are the 
-/// first versions to use the 5.0 shell version.
-/// </remarks>
-inline bool IsShell5OrHigher()
-{
-    return GetDllVersion(L"shell32.dll") >= MSF_PACKVERSION(5, 0);
-}
-
-
 /// <summary>Determines if running on Shell 6.0 or higher.</summary>
 /// <remarks>
 /// Windows XP is the first version to use the 6.0 shell version.

@@ -22,7 +22,7 @@ public:
         {
         case PSPCB_ADDREF:
             ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::Callback (instance=%p, uMsg=AddRef)\n", pT);
-            pT->m_nRef++; // only 5.80 (IE5) and up sends 'addref'.
+            ++(pT->_nRef); // only 5.80 (IE5) and up sends 'addref'.
             break;
 
         case PSPCB_CREATE:
@@ -30,8 +30,8 @@ public:
 
         case PSPCB_RELEASE:
             ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::Callback (instance=%p, uMsg=Release)\n", pT);
-            pT->m_nRef--;
-            if (pT->m_nRef <= 0)
+            --(pT->_nRef);
+            if (pT->_nRef <= 0)
                 delete pT;
             break;
 
@@ -45,7 +45,7 @@ public:
 
     CShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) :
         CSnapInPropertyPageImpl<T>(lpszTitle),
-        m_nRef(0)
+        _nRef(0)
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::CShellExtPropertyPageImpl (instance=%p)\n", this);
         _pAtlModule->Lock(); // propertypage is not a COM object, but DLL must stay in memory.
@@ -62,7 +62,7 @@ public:
     END_MSG_MAP()
 
 private:
-    int m_nRef;
+    int _nRef;
 };
 
 } // namespace MSF

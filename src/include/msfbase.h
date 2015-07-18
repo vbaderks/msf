@@ -8,8 +8,9 @@
 
 // Purpose: base include file for msf header files. Includes most common header files.
 // MSF supports the following compilers:
-// _MSC_VER = 1700 : Visual Studio 2012
 // _MSC_VER = 1800 : Visual Studio 2013
+// _MSC_VER = 1900 : Visual Studio 2015
+
 // _PREFAST_ is defined when the Visual Studio C\C++ compiler is executed with the /analyze switch, it activates the static analyzer.
 
 // To support testing with the /Wall switch certain warning must be disabled when including
@@ -26,17 +27,6 @@
 #pragma warning(disable: 4619) // #pragma warning : there is no warning number 'xxx'
 #pragma warning(disable: 4668) // not a preprocessor macro
 #pragma warning(disable: 4917) // a GUID can only be defines to a class, interface, etc.
-
-// The Windows SDK headers files and ATL header files generate static analyzer warnings. Filter these warnings.
-#ifdef _PREFAST_ // 
-#pragma warning(disable: 6054)  // String 'Buf' might not be zero-terminated.
-#pragma warning(disable: 6385)  // Invalid data.....
-#pragma warning(disable: 6386)  // Buffer overrun: accessing 'argument 1'...'
-#pragma warning(disable: 6387)  // 'return value' might be '0': this does not adhere to the specification for the function
-#pragma warning(disable: 6388)  // '*xxxx' might not be '0':
-#pragma warning(disable: 28196) // The requirement that '...' is not satisfied.
-#pragma warning(disable: 28204)  // 'QueryInterface' : Only one of this override and the one at.. (caused by END_COM_MAP)
-#endif
 
 // Standard C++ library
 #include <vector>
@@ -57,19 +47,6 @@
 #include <atlsnap.h>
 
 #pragma warning(pop)
-
-// Visual Studio 2012 contains SAL2 (MS Static Analyzer Standard Annatation Language). Define missing used SAL2 macros to support older VS compilers.
-#ifndef _Out_writes_to_
-//#define _Out_writes_to_(size,count)
-#endif
-
-#ifndef _Outptr_opt_
-//#define _Outptr_opt_
-#endif
-
-#ifdef _PREFAST_ // defined when Visual Studio C\C++ /analyze is used.
-#pragma warning(disable: 6509)  // Invalid annotation: 'return' cannot be referenced in some contexts. [must be disabled globaly to supress issues in Win SDK]
-#endif
 
 // core MSF include files
 #include "shlobjhidden.h"

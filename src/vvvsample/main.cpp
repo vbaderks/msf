@@ -25,11 +25,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 
 #ifdef DEBUG
     // Increase the default level to 4 to see all trace messages.
-#if _ATL_VER < 0x0C00
-    atlTraceCOM.SetLevel(4);
-#else
     CTrace::SetLevel(4);
-#endif
 #endif
 
     if (dwReason == DLL_PROCESS_ATTACH)
@@ -50,12 +46,8 @@ STDAPI DllCanUnloadNow()
 }
 
 // Purpose: Returns a class factory to create an object of the requested type
-#if _MSC_VER < 1700
-STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
-#else
 _Check_return_
 STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID* ppv)
-#endif
 {
     return _Module.DllGetClassObject(rclsid, riid, ppv);
 }
@@ -63,7 +55,7 @@ STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID
 // Purpose: Adds entries to the system registry
 STDAPI DllRegisterServer()
 {
-    HRESULT hr = _Module.DllRegisterServer(/* bRegTypeLib = */ false);
+    auto hr = _Module.DllRegisterServer(/* bRegTypeLib = */ false);
     if (FAILED(hr))
         return hr;
 

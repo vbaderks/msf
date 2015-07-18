@@ -34,22 +34,20 @@ public:
 protected:
     void RegisterExtension(CString strExtension)
     {
-        m_extensions.push_back(strExtension.MakeLower());
+        _extensions.push_back(strExtension.MakeLower());
     }
 
     void CacheFiles(IDataObject* pDataObject)
     {
         CCfHDrop cfhdrop(pDataObject);
 
-        m_filenames.clear();
+        _filenames.clear();
 
-        const unsigned int uFiles = cfhdrop.GetFileCount();
-
+        const auto uFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < uFiles; ++i)
         {
-            CString strFilename = cfhdrop.GetFile(i);
-
-            m_filenames.push_back(strFilename);
+            auto strFilename = cfhdrop.GetFile(i);
+            _filenames.push_back(strFilename);
         }
     }
 
@@ -64,18 +62,18 @@ protected:
     {
         CString strExtension(PathFindExtension(szFileName));
         strExtension.MakeLower();
-        return std::find(m_extensions.begin(), m_extensions.end(), strExtension) == m_extensions.end();
+        return std::find(_extensions.begin(), _extensions.end(), strExtension) == _extensions.end();
     }
 
     const std::vector<CString>& GetFilenames() const
     {
-        return m_filenames;
+        return _filenames;
     }
 
 private:
     // Member variables.
-    std::vector<CString> m_extensions;
-    std::vector<CString> m_filenames;
+    std::vector<CString> _extensions;
+    std::vector<CString> _filenames;
 };
 
 } // end MSF namespace

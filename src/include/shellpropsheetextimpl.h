@@ -42,14 +42,14 @@ public:
     {
     public:
         CAddPage(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) :
-            m_pfnAddPage(pfnAddPage),
-            m_lParam(lParam)
+            _pfnAddPage(pfnAddPage),
+            _lParam(lParam)
         {
         }
 
         void operator()(HPROPSHEETPAGE hPage) const
         {
-            if (!m_pfnAddPage(hPage, m_lParam))
+            if (!_pfnAddPage(hPage, _lParam))
             {
                 ATLVERIFY(::DestroyPropertySheetPage(hPage));
                 RaiseException(E_FAIL);
@@ -57,8 +57,8 @@ public:
         }
 
     private:
-        LPFNSVADDPROPSHEETPAGE m_pfnAddPage;
-        LPARAM                 m_lParam;
+        LPFNSVADDPROPSHEETPAGE _pfnAddPage;
+        LPARAM                 _lParam;
     };
 
     // IShellPropSheetExt

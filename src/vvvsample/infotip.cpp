@@ -23,7 +23,6 @@ public:
     BEGIN_COM_MAP(CInfoTip)
         COM_INTERFACE_ENTRY(IQueryInfo)
         COM_INTERFACE_ENTRY(IInitializeWithFile) // Used and prefered by Vista and up.
-        COM_INTERFACE_ENTRY(IPersistFile)        // Used by XP and older.
     END_COM_MAP()
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
@@ -38,21 +37,21 @@ public:
     {
         CVVVFile vvvfile(szFilename);
 
-        m_strLabel = vvvfile.GetLabel();
-        m_strFileCount = MSF::ToString(vvvfile.GetFileCount());
+        _strLabel = vvvfile.GetLabel();
+        _strFileCount = MSF::ToString(vvvfile.GetFileCount());
     }
 
     // Purpose: called by the shell/MSF when it needs the text for the infotip.
     //          The string is used for the tooltip and the text in the statusbar.
     CString GetInfoTip(DWORD /* dwFlags */)
     {
-        return LoadString(IDS_SHELLEXT_LABEL) + L": " + m_strLabel + L"\n" +
-               LoadString(IDS_SHELLEXT_FILECOUNT) + L": " + m_strFileCount;
+        return LoadString(IDS_SHELLEXT_LABEL) + L": " + _strLabel + L"\n" +
+               LoadString(IDS_SHELLEXT_FILECOUNT) + L": " + _strFileCount;
     }
 
 private:
-    CString m_strLabel;
-    CString m_strFileCount;
+    CString _strLabel;
+    CString _strFileCount;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(CInfoTip), CInfoTip)

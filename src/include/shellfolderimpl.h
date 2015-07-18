@@ -225,16 +225,8 @@ public:
     {
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n", this, uiColumn);
 
-        if (IsShell5OrHigher())
-        {
-            // Shell can sort by itself.
-            return S_FALSE;
-        }
-        else
-        {
-            ATLVERIFY(ShellFolderView_ReArrange(GetHwndOwner(), static_cast<LPARAM>(uiColumn)));
-            return S_OK;
-        }
+        // Shell can sort by itself.
+        return S_FALSE;
     }
 
     // IShellFolder

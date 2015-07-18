@@ -10,7 +10,6 @@
 #include "shellextinitimpl.h"
 #include "catchhandler.h"
 #include "strutil.h"
-#include "shelluuids.h"
 #include "contextcommand.h"
 #include "custommenuhandler.h"
 
@@ -33,9 +32,8 @@ public:
     public:
         static HMENU CreateSubMenu()
         {
-            HMENU hmenu = ::CreatePopupMenu();
+            auto hmenu = ::CreatePopupMenu();
             RaiseLastErrorExceptionIf(!hmenu);
-
             return hmenu;
         }
 
@@ -84,7 +82,7 @@ public:
         // Purpose: Create and add a submenu to the contextmenu.
         CMenu AddSubMenu(const CString& strText, const CString& strHelp)
         {
-            HMENU hmenu = CreateSubMenu();
+            auto hmenu = CreateSubMenu();
             CMenuItemInfo menuiteminfo(*_pidCmd, strText, hmenu);
             InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(nullptr), CCustomMenuHandlerPtr(nullptr));
 
@@ -102,7 +100,7 @@ public:
         // Purpose: create and add a owner drawn custom submenu to the contextmenu.
         CMenu AddSubMenu(const CString& strHelp, CCustomMenuHandlerPtr qcustommenuhandler)
         {
-            HMENU hmenu = CreateSubMenu();
+            auto hmenu = CreateSubMenu();
             CMenuItemInfo menuiteminfo(*_pidCmd, hmenu);
             qcustommenuhandler->InitializeItemInfo(menuiteminfo);
             InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(nullptr), qcustommenuhandler);
@@ -256,13 +254,13 @@ public:
 
             ClearMenuItems();
 
-            m_idCmdFirst = idCmdFirst;
-            UINT nID = m_idCmdFirst;
+            _idCmdFirst = idCmdFirst;
+            UINT nID = _idCmdFirst;
             CMenu menu(hmenu, indexMenu, nID, idCmdLast, this);
 
             static_cast<T*>(this)->OnQueryContextMenu(menu, GetFilenames());
 
-            const UINT nAdded = nID - m_idCmdFirst;
+            const UINT nAdded = nID - _idCmdFirst;
             return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, static_cast<USHORT>(nAdded));
         }
         MSF_COM_CATCH_HANDLER()
@@ -387,9 +385,9 @@ public:
         }
 #endif
 
-        m_menuitems.push_back(CMenuItem(strHelp, qcontextcommand.get(), qcustommenuhandler.get()));
+        _menuitems.push_back(CMenuItem(strHelp, qcontextcommand.get(), qcustommenuhandler.get()));
 
-        // the auto_ptrs are now stored in m_menuitems: take ownership.
+        // the auto_ptrs are now stored in _menuitems: take ownership.
         qcontextcommand.release();
         qcustommenuhandler.release();
     }
@@ -414,21 +412,21 @@ protected:
         if (pdrawitem->CtlType != ODT_MENU)
             return E_INVALIDARG;
 
-        GetMenuItem(pdrawitem->itemID - m_idCmdFirst).GetCustomMenuHandler().Draw(*pdrawitem);
+        GetMenuItem(pdrawitem->itemID - _idCmdFirst).GetCustomMenuHandler().Draw(*pdrawitem);
         return S_OK;
     }
 
 
     HRESULT OnMeasureItem(MEASUREITEMSTRUCT* pmeasureitem)
     {
-        GetMenuItem(pmeasureitem->itemID - m_idCmdFirst).GetCustomMenuHandler().Measure(*pmeasureitem);
+        GetMenuItem(pmeasureitem->itemID - _idCmdFirst).GetCustomMenuHandler().Measure(*pmeasureitem);
         return S_OK;
     }
 
 
     LRESULT OnMenuChar(HMENU hmenu, unsigned short nChar)
     {
-        for (auto& menuItem : m_menuitems)
+        for (auto& menuItem : _menuitems)
         {
             LRESULT lresult;
             if (menuItem.GetCustomMenuHandler().OnMenuChar(hmenu, nChar, lresult))
@@ -449,68 +447,68 @@ private:
         CMenuItem(const CString& strHelp,
                   CContextCommand* pcontextcommand,
                   CCustomMenuHandler* pcustommenuhandler) :
-            m_strHelp(strHelp),
-            m_pcontextcommand(pcontextcommand),
-            m_pcustommenuhandler(pcustommenuhandler)
+            _strHelp(strHelp),
+            _pcontextcommand(pcontextcommand),
+            _pcustommenuhandler(pcustommenuhandler)
         {
         }
 
 
         void Clear() throw()
         {
-            delete m_pcontextcommand;
-            m_pcontextcommand = nullptr;
+            delete _pcontextcommand;
+            _pcontextcommand = nullptr;
 
-            delete m_pcustommenuhandler;
-            m_pcustommenuhandler = nullptr;
+            delete _pcustommenuhandler;
+            _pcustommenuhandler = nullptr;
         }
 
 
         CString GetHelpString() const
         {
-            return m_strHelp;
+            return _strHelp;
         }
 
 
         CContextCommand& GetContextCommand() const throw()
         {
-            return *m_pcontextcommand;
+            return *_pcontextcommand;
         }
 
 
         CCustomMenuHandler& GetCustomMenuHandler() const throw()
         {
-            return *m_pcustommenuhandler;
+            return *_pcustommenuhandler;
         }
 
     private:
 
-        CString             m_strHelp;
-        CContextCommand*    m_pcontextcommand;
-        CCustomMenuHandler* m_pcustommenuhandler;
+        CString             _strHelp;
+        CContextCommand*    _pcontextcommand;
+        CCustomMenuHandler* _pcustommenuhandler;
     };
 
 
     void ClearMenuItems() throw()
     {
-        for (auto& menuitem : m_menuitems)
+        for (auto& menuitem : _menuitems)
         {
             menuitem.Clear();
         }
-        m_menuitems.clear();
+        _menuitems.clear();
     }
 
 
     const CMenuItem& GetMenuItem(UINT nIndex)
     {
-        RaiseExceptionIf(nIndex >= m_menuitems.size(), E_INVALIDARG);
-        return m_menuitems[nIndex];
+        RaiseExceptionIf(nIndex >= _menuitems.size(), E_INVALIDARG);
+        return _menuitems[nIndex];
     }
 
 
     // Member variables
-    std::vector<CMenuItem> m_menuitems;
-    UINT                   m_idCmdFirst;
+    std::vector<CMenuItem> _menuitems;
+    UINT                   _idCmdFirst;
 };
 
 } // end namespace MSF

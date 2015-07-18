@@ -36,21 +36,9 @@ public:
 
         ATLTRACE2(atlTraceCOM, 0, L"CCfPerformedDropEffectHandler::SetData (dwEffect=%p)\n", m_dwEffect);
 
-        if (IsShell5OrHigher())
+        if (m_dwEffect == DROPEFFECT_MOVE)
         {
-            if (m_dwEffect == DROPEFFECT_MOVE)
-            {
-                NotifySink();
-            }
-        }
-        else
-        {
-            // Note: Windows 98 will pass DROPEFFECT_NONE instead of DROPEFFECT_MOVE
-            // See SDK documentation CFSTR_LOGICALPERFORMEDDROPEFFECT
-            if (m_dwEffect == DROPEFFECT_NONE)
-            {
-                NotifySink();
-            }
+            NotifySink();
         }
 
         if (bRelease)

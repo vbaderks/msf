@@ -6,6 +6,7 @@
 #pragma once
 
 
+#include "msfbase.h"
 #include "updateregistry.h"
 #include "catchhandler.h"
 #include <shlobj.h>
@@ -125,7 +126,7 @@ public:
             Dispose();
             _hbitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
 
-            lstrcpynW(pszPathBuffer, CT2W(static_cast<T*>(this)->GetPathBuffer()), static_cast<int>(cch));
+            ATLVERIFY(lstrcpynW(pszPathBuffer, CT2W(static_cast<T*>(this)->GetPathBuffer()), static_cast<int>(cch)));
             *pdwFlags |= IEIFLAG_CACHE;
 
             //  Note: The SDK docs are unclear if it passing a NULL pointer is allowed.
