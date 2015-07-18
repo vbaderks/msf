@@ -87,7 +87,7 @@ public:
     static HICON GetIcon(HIMAGELIST himl, int i, UINT flags = 0)
     {
         HICON hicon = ImageList_GetIcon(himl, i, flags);
-        RaiseExceptionIf(hicon == NULL);
+        RaiseExceptionIf(!hicon);
         return hicon;
     }
 

@@ -7,7 +7,7 @@
 
 
 #include <comdef.h>
-#include "persistfolderptr.h"
+#include "..\persistfolderptr.h"
 
 
 _COM_SMARTPTR_TYPEDEF(IShellFolder2, __uuidof(IShellFolder2));
@@ -46,7 +46,7 @@ public:
     }
 
 
-    IEnumIDListPtr EnumObjects(HWND hwnd = NULL, SHCONTF grfFlags = 0)
+    IEnumIDListPtr EnumObjects(HWND hwnd = nullptr, SHCONTF grfFlags = 0)
     {
         IEnumIDListPtr enumidlist;
         RaiseExceptionIfFailed(GetInterfacePtr()->EnumObjects(hwnd, grfFlags, &enumidlist));

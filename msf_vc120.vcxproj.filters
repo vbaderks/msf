@@ -252,9 +252,6 @@
     <ClInclude Include="include\imagelistindex.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>
-    <ClInclude Include="include\infotipimpl.h">
-      <Filter>Header Files\Support</Filter>
-    </ClInclude>
     <ClInclude Include="include\ishellfolder3.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>
@@ -346,6 +343,15 @@
       <Filter>Header Files\Support</Filter>
     </ClInclude>
     <ClInclude Include="include\shellviewimpl.h">
+      <Filter>Header Files\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\infotipimpl.h">
+      <Filter>Header Files\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\diskcleanupimpl.h">
+      <Filter>Header Files\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\iconoverlayimpl.h">
       <Filter>Header Files\Impl</Filter>
     </ClInclude>
   </ItemGroup>

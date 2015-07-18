@@ -221,6 +221,7 @@
     <ClInclude Include="include\custommenuhandler.h" />
     <ClInclude Include="include\defview.h" />
     <ClInclude Include="include\dfmdefines.h" />
+    <ClInclude Include="include\diskcleanupimpl.h" />
     <ClInclude Include="include\enumformatetc.h" />
     <ClInclude Include="include\enumidlistimpl.h" />
     <ClInclude Include="include\enumidlistptr.h" />
@@ -230,6 +231,7 @@
     <ClInclude Include="include\formatetc.h" />
     <ClInclude Include="include\globallock.h" />
     <ClInclude Include="include\ibrowserframeoptions.h" />
+    <ClInclude Include="include\iconoverlayimpl.h" />
     <ClInclude Include="include\idldatacreatefromidarray.h" />
     <ClInclude Include="include\ifoldertype.h" />
     <ClInclude Include="include\iframelayoutdefinition.h" />

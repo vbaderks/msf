@@ -6,8 +6,8 @@
 #pragma once
 
 
-#include "msfbase.h"
-#include "shelluuids.h"
+#include "..\msfbase.h"
+#include "..\shelluuids.h"
 
 
 _COM_SMARTPTR_TYPEDEF(IQueryInfo, __uuidof(IQueryInfo));
@@ -19,7 +19,7 @@ namespace MSF
 class IQueryInfoPtr : public ::IQueryInfoPtr
 {
 public:
-    explicit IQueryInfoPtr(const CLSID& clsid, IUnknown* pOuter = NULL, DWORD dwClsContext = CLSCTX_INPROC_SERVER) :
+    explicit IQueryInfoPtr(const CLSID& clsid, IUnknown* pOuter = nullptr, DWORD dwClsContext = CLSCTX_INPROC_SERVER) :
         ::IQueryInfoPtr(clsid, pOuter, dwClsContext)
     {
     }

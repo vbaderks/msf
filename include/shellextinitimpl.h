@@ -21,7 +21,7 @@ public:
     {
         (pidlFolder);
         ATLTRACE2(atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, pDataObject);
-        ATLASSERT(pDataObject != NULL && "Invalid argument");
+        ATLASSERT(pDataObject && "Invalid argument");
 
         try
         {

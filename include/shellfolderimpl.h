@@ -255,7 +255,7 @@ public:
 
             // Get all subfolder items.
             TItems items;
-            while (pidlSubFolder != NULL)
+            while (pidlSubFolder)
             {
                 items.push_back(TItem(pidlSubFolder));
                 pidlSubFolder = CPidl::GetNextItem(pidlSubFolder);
@@ -272,7 +272,7 @@ public:
 
     STDMETHOD(BindToStorage)(__RPC__in LPCITEMIDLIST, LPBC, __RPC__in REFIID, __RPC__deref_out_opt LPVOID* ppRetVal)
     {
-        *ppRetVal = NULL;
+        *ppRetVal = nullptr;
         MSF_TRACENOTIMPL(L"IShellFolderImpl::IShellFolder::BindToStorage");
     }
 
@@ -472,7 +472,7 @@ public:
     {
         try
         {
-            if (ppidl == NULL)
+            if (!ppidl)
                 return E_POINTER; // note: ppidl is marked with SAL as optional, but docs state that it is required.
 
             ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetAttributesOf (cidl=%d, rgfInOut=%X)\n", cidl, *prgfInOut);

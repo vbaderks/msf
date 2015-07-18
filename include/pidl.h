@@ -16,7 +16,7 @@ class CPidl
 public:
     static LPITEMIDLIST Clone(_In_ LPCITEMIDLIST pidlSrc)
     {
-        ATLASSERT(pidlSrc != NULL && "Why clone a NULL pointer?");
+        ATLASSERT(pidlSrc && "Why clone a NULL pointer?");
 
         LPITEMIDLIST pidl = ILClone(pidlSrc);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
@@ -55,7 +55,7 @@ public:
         return pidl;
     }
 
-    // Purpose: Small helper, returns NULL also for the tail element.
+    // Purpose: Small helper, returns nullptr also for the tail element.
     static LPCITEMIDLIST GetNextItem(LPCITEMIDLIST pidl)
     {
         LPCITEMIDLIST pidlNext = ILGetNext(pidl);
