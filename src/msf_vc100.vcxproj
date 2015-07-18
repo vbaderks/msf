@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Checked|Win32">
+      <Configuration>Checked</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Checked|x64">
+      <Configuration>Checked</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>msf</ProjectName>
+    <ProjectGuid>{1F4F16F7-B27A-4C0E-AEE5-CA856C28C6D7}</ProjectGuid>
+    <RootNamespace>msf</RootNamespace>
+    <SccProjectName>$/msf</SccProjectName>
+    <SccAuxPath>https://tfs.codeplex.com/tfs/tfs02</SccAuxPath>
+    <SccLocalPath>.</SccLocalPath>
+    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Checked|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Checked|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Checked|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Checked|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)_100\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)_100\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)_100\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)_100\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)_100\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)_100\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)_100\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)_100\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Checked|Win32'">$(Platform)\$(Configuration)_100\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Checked|x64'">$(Platform)\$(Configuration)_100\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Checked|Win32'">$(Platform)\$(Configuration)_100\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Checked|x64'">$(Platform)\$(Configuration)_100\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="include\browserhelperobject.rgs" />
+    <None Include="include\columnprovider.rgs" />
+    <None Include="include\contextmenu.rgs" />
+    <None Include="include\contextmenu_sf.rgs" />
+    <None Include="include\copyhookfolder.rgs" />
+    <None Include="include\extension.rgs" />
+    <None Include="include\extractimage_sf.rgs" />
+    <None Include="include\infotip.rgs" />
+    <None Include="include\infotip_sf.rgs" />
+    <None Include="include\propertysheetext.rgs" />
+    <None Include="include\propertysheetext_sf.rgs" />
+    <None Include="include\shellfolder.rgs" />
+    <None Include="include\shellfoldervista.rgs" />
+    <None Include="include\shellfolderwin98.rgs" />
+    <CustomBuild Include="include\shell32missing.def">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Checked|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Checked|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Checked|Win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Checked|x64'">%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Outputs)</Outputs>
+    </CustomBuild>
+    <None Include="readme.txt" />
+    <None Include="Undocumented Shell Interfaces.reg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\browserframeoptionsimpl.h" />
+    <ClInclude Include="include\browserhelperobjectimpl.h" />
+    <ClInclude Include="include\catchhandler.h" />
+    <ClInclude Include="include\cfeffect.h" />
+    <ClInclude Include="include\cfhandler.h" />
+    <ClInclude Include="include\cfhdrop.h" />
+    <ClInclude Include="include\cfpastesucceeded.h" />
+    <ClInclude Include="include\cfperformeddropeffect.h" />
+    <ClInclude Include="include\cfperformeddropeffecthandler.h" />
+    <ClInclude Include="include\cfpreferreddropeffect.h" />
+    <ClInclude Include="include\cfshellidlist.h" />
+    <ClInclude Include="include\cfshellidlisthandler.h" />
+    <ClInclude Include="include\cftargetclsid.h" />
+    <ClInclude Include="include\clipboarddataobjectimpl.h" />
+    <ClInclude Include="include\coinitialize.h" />
+    <ClInclude Include="include\columnproviderimpl.h" />
+    <ClInclude Include="include\columnproviderptr.h" />
+    <ClInclude Include="include\contextcommand.h" />
+    <ClInclude Include="include\contextmenuimpl.h" />
+    <ClInclude Include="include\contextmenuptr.h" />
+    <ClInclude Include="include\copyhookimpl.h" />
+    <ClInclude Include="include\custommenuhandler.h" />
+    <ClInclude Include="include\dataobjectptr.h" />
+    <ClInclude Include="include\defview.h" />
+    <ClInclude Include="include\dfmdefines.h" />
+    <ClInclude Include="include\enumformatetc.h" />
+    <ClInclude Include="include\enumformatetcptr.h" />
+    <ClInclude Include="include\enumidlistimpl.h" />
+    <ClInclude Include="include\enumidlistptr.h" />
+    <ClInclude Include="include\extracticon.h" />
+    <ClInclude Include="include\extractimageimpl.h" />
+    <ClInclude Include="include\filelist.h" />
+    <ClInclude Include="include\formatetc.h" />
+    <ClInclude Include="include\globallock.h" />
+    <ClInclude Include="include\htmldocument2ptr.h" />
+    <ClInclude Include="include\htmldocument3ptr.h" />
+    <ClInclude Include="include\htmlelementcollectionptr.h" />
+    <ClInclude Include="include\htmlelementptr.h" />
+    <ClInclude Include="include\htmlinputelementptr.h" />
+    <ClInclude Include="include\ibrowserframeoptions.h" />
+    <ClInclude Include="include\idldatacreatefromidarray.h" />
+    <ClInclude Include="include\imagelistindex.h" />
+    <ClInclude Include="include\infotipimpl.h" />
+    <ClInclude Include="include\infotipptr.h" />
+    <ClInclude Include="include\ishellfoldersearchable.h" />
+    <ClInclude Include="include\ishellfoldersearchablecallback.h" />
+    <ClInclude Include="include\ishellfolderviewtype.h" />
+    <ClInclude Include="include\itembase.h" />
+    <ClInclude Include="include\itemnamelimitsimpl.h" />
+    <ClInclude Include="include\macros.h" />
+    <ClInclude Include="include\menu.h" />
+    <ClInclude Include="include\menuiteminfo.h" />
+    <ClInclude Include="include\msfbase.h" />
+    <ClInclude Include="include\olestring.h" />
+    <ClInclude Include="include\performeddropeffectsink.h" />
+    <ClInclude Include="include\persistfileptr.h" />
+    <ClInclude Include="include\persistfolder2ptr.h" />
+    <ClInclude Include="include\persistfolderptr.h" />
+    <ClInclude Include="include\pidl.h" />
+    <ClInclude Include="include\propertypageimpl.h" />
+    <ClInclude Include="include\propertysheet.h" />
+    <ClInclude Include="include\propsheethost.h" />
+    <ClInclude Include="include\queryinfo.h" />
+    <ClInclude Include="include\queryinfoimpl.h" />
+    <ClInclude Include="include\queryinfoptr.h" />
+    <ClInclude Include="include\sfvcreate.h" />
+    <ClInclude Include="include\sfvmdefines.h" />
+    <ClInclude Include="include\shellbrowserptr.h" />
+    <ClInclude Include="include\shellextinitimpl.h" />
+    <ClInclude Include="include\shellextinitptr.h" />
+    <ClInclude Include="include\shellfolder2ptr.h" />
+    <ClInclude Include="include\shellfoldercontextmenu.h" />
+    <ClInclude Include="include\shellfolderdataobjectimpl.h" />
+    <ClInclude Include="include\shellfolderimpl.h" />
+    <ClInclude Include="include\shellfolderptr.h" />
+    <ClInclude Include="include\shellfolderviewcbimpl.h" />
+    <ClInclude Include="include\shellitemid.h" />
+    <ClInclude Include="include\shellpropsheetextimpl.h" />
+    <ClInclude Include="include\shellpropsheetextptr.h" />
+    <ClInclude Include="include\shelluuids.h" />
+    <ClInclude Include="include\shellviewimpl.h" />
+    <ClInclude Include="include\shellviewptr.h" />
+    <ClInclude Include="include\shlobjhidden.h" />
+    <ClInclude Include="include\smallbitmaphandler.h" />
+    <ClInclude Include="include\stgmedium.h" />
+    <ClInclude Include="include\strutil.h" />
+    <ClInclude Include="include\taskband.h" />
+    <ClInclude Include="include\testrunner.h" />
+    <ClInclude Include="include\testutil.h" />
+    <ClInclude Include="include\updateregistry.h" />
+    <ClInclude Include="include\util.h" />
+    <ClInclude Include="include\version.h" />
+    <ClInclude Include="include\webbrowser2ptr.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="include\shell32missing.lib" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

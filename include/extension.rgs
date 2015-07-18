@@ -1,6 +1,0 @@
-HKCR
-{
-	NoRemove '%EXTENSION%' = s '%PROGID%'
-	{
-	}
-}

@@ -1,0 +1,18 @@
+[directory]
+label=Sample One
+filecount=3
+
+[file0]
+name=File One
+size=45386
+active=1
+
+[file1]
+name=File Two
+size=12900
+active=1
+
+[file2]
+name=File Three
+size=39625
+active=1
