@@ -31,7 +31,6 @@
 #define IDS_COPYHOOK_QUESTION           371
 #define IDR_INFOTIP                     1000
 #define IDR_CONTEXTMENU                 1001
-#define IDR_COLUMNPROVIDER              1002
 #define IDR_PROPERTYSHEETEXT            1003
 #define IDR_SHELLFOLDER                 1004
 #define IDR_SHELLFOLDER_WIN98           1005

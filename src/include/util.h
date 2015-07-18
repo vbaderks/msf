@@ -15,17 +15,6 @@
 namespace MSF
 {
 
-inline ATL::CString GetModuleDirectory()
-{
-    wchar_t sz[MAX_PATH];
-    ATLVERIFY(::GetModuleFileName(GetModuleHandle(nullptr), sz, MAX_PATH));
-
-    PathRemoveFileSpec(sz);
-
-    return sz + ATL::CString("\\");
-}
-
-
 inline ATL::CStringW GetModuleDirectoryW()
 {
     wchar_t wz[MAX_PATH];
@@ -59,7 +48,7 @@ inline ATL::CStringW GetFolderPath(int nFolder)
 
 inline DWORD GetFileSize(const ATL::CString& strFile)
 {
-    HANDLE hFile = CreateFile(strFile, 0, 0, nullptr, OPEN_EXISTING, 0, 0);
+    auto hFile = CreateFile(strFile, 0, 0, nullptr, OPEN_EXISTING, 0, 0);
     RaiseExceptionIf(hFile == INVALID_HANDLE_VALUE);
 
     DWORD dwSize = ::GetFileSize(hFile, nullptr);
@@ -104,7 +93,7 @@ inline ATL::CString FormatLastError(DWORD dwLastError)
                   nullptr,
                   dwLastError,
                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-                  (LPTSTR) &lpMsgBuf,
+                  reinterpret_cast<LPTSTR>(&lpMsgBuf),
                   0,
                   nullptr))
         throw new _com_error(HRESULT_FROM_WIN32(GetLastError()));
@@ -265,7 +254,7 @@ inline CString GetAppPath(const CString& strApp)
 /// </remarks>
 inline HGLOBAL GlobalAllocThrow(SIZE_T dwBytes, UINT uFlags = GMEM_FIXED)
 {
-    HGLOBAL hg = GlobalAlloc(uFlags, dwBytes);
+    auto hg = GlobalAlloc(uFlags, dwBytes);
     RaiseExceptionIf(!hg, E_OUTOFMEMORY);
     return hg;
 }
