@@ -6,30 +6,32 @@
 
 #include "stdafx.h"
 
-#include "infotipclsid.h"
-#include "shellfolderclsid.h"
 #include "vvvfile.h"
 #include "resource.h"
 
 #include "../include/infotipimpl.h"
 #include "../include/strutil.h"
 
+// Attach a GUID to the COM class.
+// Note: Don't copy this GUID. Always use the 'Create GUID' tool to create new GUIDs.
+class DECLSPEC_UUID("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71") CInfoTip;
+
 class ATL_NO_VTABLE CInfoTip :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CInfoTip, &__uuidof(CInfoTip)>,
-    public IInfoTipImpl<CInfoTip>
+    public InfoTipImpl<CInfoTip>
 {
 public:
     BEGIN_COM_MAP(CInfoTip)
         COM_INTERFACE_ENTRY(IQueryInfo)
-        COM_INTERFACE_ENTRY(IInitializeWithFile) // Used and prefered by Vista and up.
+        COM_INTERFACE_ENTRY(IInitializeWithFile)
     END_COM_MAP()
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
     {
-        return IInfoTipImpl<CInfoTip>::UpdateRegistry(bRegister, IDR_INFOTIP,
+        return InfoTipImpl<CInfoTip>::UpdateRegistry(bRegister, IDR_INFOTIP,
             L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);
     }
 

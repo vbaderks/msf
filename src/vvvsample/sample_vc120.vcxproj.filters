@@ -24,9 +24,6 @@
     <ClInclude Include="cffiledescriptorhandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="columnproviderclsid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="columns.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,9 +40,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="extractimageclsid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="infotipclsid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="module.h">
@@ -116,6 +110,7 @@
     <ClCompile Include="vvvfile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="diskcleanup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

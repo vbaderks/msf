@@ -25,7 +25,7 @@ namespace MSF
 ///  - IInitializeWithStream
 /// </remarks>
 template <typename T>
-class ATL_NO_VTABLE IInfoTipImpl :
+class ATL_NO_VTABLE InfoTipImpl :
     public IInitializeWithFile,
     public IQueryInfoImpl<T>
 {
@@ -38,7 +38,7 @@ public:
             szDescription, T::GetObjectCLSID(), szRootKey);
     }
 
-    IInfoTipImpl() : _bInitialized(false)
+    InfoTipImpl() : _bInitialized(false)
     {
         ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::IInfoTipImpl (instance=%p)\n", this);
     }

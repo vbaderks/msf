@@ -4,7 +4,6 @@
     <CustomBuild Include="include\shell32missing.def" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.txt" />
     <None Include="Undocumented Shell Interfaces.reg" />
     <None Include="Undocumented Shell Interfaces Windows 8.reg" />
     <None Include="include\browserhelperobject.rgs">
@@ -217,9 +216,6 @@
       <Filter>Header Files\Support</Filter>
     </ClInclude>
     <ClInclude Include="include\enumidlistimpl.h">
-      <Filter>Header Files\Support</Filter>
-    </ClInclude>
-    <ClInclude Include="include\enumidlistptr.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>
     <ClInclude Include="include\extracticon.h">
