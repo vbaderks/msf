@@ -12,6 +12,7 @@
 #include "strutil.h"
 #include "contextcommand.h"
 #include "custommenuhandler.h"
+#include <memory>
 
 
 namespace MSF
@@ -23,10 +24,6 @@ class ATL_NO_VTABLE IContextMenuImpl :
     public IContextMenu3
 {
 public:
-
-    typedef std::auto_ptr<CContextCommand>    CContextCommandPtr;
-    typedef std::auto_ptr<CCustomMenuHandler> CCustomMenuHandlerPtr;
-
     class CMenu
     {
     public:
@@ -98,57 +95,58 @@ public:
 
 
         // Purpose: create and add a owner drawn custom submenu to the contextmenu.
-        CMenu AddSubMenu(const CString& strHelp, CCustomMenuHandlerPtr qcustommenuhandler)
+        CMenu AddSubMenu(const CString& strHelp, std::unique_ptr<CCustomMenuHandler> qcustommenuhandler)
         {
             auto hmenu = CreateSubMenu();
             CMenuItemInfo menuiteminfo(*_pidCmd, hmenu);
             qcustommenuhandler->InitializeItemInfo(menuiteminfo);
-            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(nullptr), qcustommenuhandler);
+            InsertMenuItem(menuiteminfo, strHelp, std::move(std::unique_ptr<CContextCommand>(nullptr)), std::move(qcustommenuhandler));
 
             return CMenu(hmenu, 0, *_pidCmd, _idCmdLast, _pmenuhost);
         }
 
 
         // Purpose: alternative format, that loads the string from the resource.
-        CMenu AddSubMenu(UINT nIDHelp, CCustomMenuHandlerPtr qcustommenuhandler)
+        CMenu AddSubMenu(UINT nIDHelp, std::unique_ptr<CCustomMenuHandler> qcustommenuhandler)
         {
-            return AddSubMenu(LoadString(nIDHelp), qcustommenuhandler);
+            return AddSubMenu(LoadString(nIDHelp), std::move(qcustommenuhandler));
         }
 
 
         void AddItem(const CString& strText, const CString& strHelp,
-                     CContextCommandPtr qcontextcommand)
+                     std::unique_ptr<CContextCommand> qcontextcommand)
         {
             CMenuItemInfo menuiteminfo(*_pidCmd, strText);
-            InsertMenuItem(menuiteminfo, strHelp, qcontextcommand, CCustomMenuHandlerPtr(nullptr));
+            InsertMenuItem(menuiteminfo, strHelp, std::move(qcontextcommand), std::unique_ptr<CCustomMenuHandler>(nullptr));
         }
 
 
         // Purpose: alternative format, that loads the strings from the resource.
         void AddItem(UINT nIDText, UINT nIDHelp,
-                     CContextCommandPtr qcontextcommand)
+                     std::unique_ptr<CContextCommand> qcontextcommand)
         {
-            AddItem(LoadString(nIDText), LoadString(nIDHelp), qcontextcommand);
+            AddItem(LoadString(nIDText), LoadString(nIDHelp), std::move(qcontextcommand));
         }
 
 
         void AddItem(const CString& strHelp,
-                     CContextCommandPtr qcontextcommand,
-                     CCustomMenuHandlerPtr qcustommenuhandler)
+                     std::unique_ptr<CContextCommand> qcontextcommand,
+                     std::unique_ptr<CCustomMenuHandler> qcustommenuhandler)
         {
             CMenuItemInfo menuiteminfo(*_pidCmd);
 
             qcustommenuhandler->InitializeItemInfo(menuiteminfo);
 
-            InsertMenuItem(menuiteminfo, strHelp, qcontextcommand, qcustommenuhandler);
+            InsertMenuItem(menuiteminfo, strHelp, std::move(qcontextcommand), std::move(qcustommenuhandler));
         }
 
 
         // Purpose: alternative format, that loads the strings from the resource.
         void AddItem(UINT nIDHelp,
-                     CContextCommandPtr qcontextcommand, CCustomMenuHandlerPtr qcustommenuhandler)
+                     std::unique_ptr<CContextCommand> qcontextcommand,
+                     std::unique_ptr<CCustomMenuHandler> qcustommenuhandler)
         {
-            AddItem(LoadString(nIDHelp), qcontextcommand, qcustommenuhandler);
+            AddItem(LoadString(nIDHelp), std::move(qcontextcommand), std::move(qcustommenuhandler));
         }
 
 
@@ -187,22 +185,23 @@ public:
 
         void InsertMenuItem(const CMenuItemInfo& menuiteminfo,
                             const CString& strHelp,
-                            CContextCommandPtr qcontextcommand,
-                            CCustomMenuHandlerPtr qcustommenuhandler)
+                            std::unique_ptr<CContextCommand> qcontextcommand,
+                            std::unique_ptr<CCustomMenuHandler> qcustommenuhandler)
         {
             CheckID();
 
             RaiseLastErrorExceptionIf(
                 !::InsertMenuItem(_hmenu, _indexMenu, true, &menuiteminfo));
 
-            PostAddItem(strHelp, qcontextcommand, qcustommenuhandler);
+            PostAddItem(strHelp, std::move(qcontextcommand), std::move(qcustommenuhandler));
         }
 
 
-        void PostAddItem(const CString& strHelp, CContextCommandPtr qcontextcommand,
-                         CCustomMenuHandlerPtr qcustommenuhandler)
+        void PostAddItem(const CString& strHelp,
+                         std::unique_ptr<CContextCommand> qcontextcommand,
+                         std::unique_ptr<CCustomMenuHandler> qcustommenuhandler)
         {
-            _pmenuhost->OnAddMenuItem(strHelp, qcontextcommand, qcustommenuhandler);
+            _pmenuhost->OnAddMenuItem(strHelp, std::move(qcontextcommand), std::move(qcustommenuhandler));
 
             ++_indexMenu;
             ++(*_pidCmd);
@@ -375,7 +374,8 @@ public:
 
     // 'IMenuHost'
     void OnAddMenuItem(const CString& strHelp,
-        CContextCommandPtr qcontextcommand, CCustomMenuHandlerPtr qcustommenuhandler)
+                       std::unique_ptr<CContextCommand> qcontextcommand,
+                       std::unique_ptr<CCustomMenuHandler> qcustommenuhandler)
     {
 #ifdef _DEBUG
         if (qcustommenuhandler.get()) // TODO use boolean overload.

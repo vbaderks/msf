@@ -54,16 +54,16 @@ public:
         if (filenames.size() != 1)
             return; // only add to the context menu when 1 file is selected.
 
-        CCustomMenuHandlerPtr qsmallbitmaphandler(new CSmallBitmapHandler(IDS_CONTEXTMENU_VVV_SUBMENU, IDB_MENUICON));
-        CMenu menuVVV = menu.AddSubMenu(IDS_CONTEXTMENU_VVV_SUBMENU_HELP, qsmallbitmaphandler);
+        std::unique_ptr<CCustomMenuHandler> qsmallbitmaphandler(new CSmallBitmapHandler(IDS_CONTEXTMENU_VVV_SUBMENU, IDB_MENUICON));
+        CMenu menuVVV = menu.AddSubMenu(IDS_CONTEXTMENU_VVV_SUBMENU_HELP, std::move(qsmallbitmaphandler));
 
-        CContextCommandPtr qeditwithnotepadcommand(new CEditWithNotepadCommand());
+        std::unique_ptr<CContextCommand> qeditwithnotepadcommand(new CEditWithNotepadCommand());
         menuVVV.AddItem(IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD,
-                        IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD_HELP, qeditwithnotepadcommand);
+                        IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD_HELP, std::move(qeditwithnotepadcommand));
 
-        CContextCommandPtr qaboutmsfcommand(new CAboutMSFCommand());
-        CCustomMenuHandlerPtr qsmallbitmaphandler2(new CSmallBitmapHandler(IDS_CONTEXTMENU_ABOUT_MSF, IDB_MENUICON));
-        menuVVV.AddItem(IDS_CONTEXTMENU_ABOUT_MSF_HELP, qaboutmsfcommand, qsmallbitmaphandler2);
+        std::unique_ptr<CContextCommand> qaboutmsfcommand(new CAboutMSFCommand());
+        std::unique_ptr<CCustomMenuHandler> qsmallbitmaphandler2(new CSmallBitmapHandler(IDS_CONTEXTMENU_ABOUT_MSF, IDB_MENUICON));
+        menuVVV.AddItem(IDS_CONTEXTMENU_ABOUT_MSF_HELP, std::move(qaboutmsfcommand), std::move(qsmallbitmaphandler2));
 
         // ... optional add more submenu's or more menu items.
     }
