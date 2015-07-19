@@ -67,7 +67,7 @@ public:
 
 private:
 
-    static HBITMAP LoadBitmap(UINT nResID) throw()
+    static HBITMAP LoadBitmap(UINT nResID) MSF_NOEXCEPT
     {
         HBITMAP hbitmap = ::LoadBitmap(_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(nResID));
         ATLASSERT(hbitmap && "Failed to load the bitmap, check resource id, etc");

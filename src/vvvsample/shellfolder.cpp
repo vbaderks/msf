@@ -35,7 +35,7 @@ class ATL_NO_VTABLE CShellFolder :
     public IItemNameLimitsImpl<CShellFolder, CVVVItem>
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) MSF_NOEXCEPT
     {
         return IShellFolderImpl<CShellFolder, CVVVItem>::UpdateRegistry(
             bRegister, IDR_SHELLFOLDER,

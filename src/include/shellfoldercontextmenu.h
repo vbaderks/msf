@@ -14,7 +14,7 @@ namespace MSF
 
 struct IShellFolderContextMenuSink : public IUnknown
 {
-    virtual HRESULT OnPasteCmCmd() throw() = 0;
+    virtual HRESULT OnPasteCmCmd() MSF_NOEXCEPT = 0;
 };
 
 

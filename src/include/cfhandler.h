@@ -21,6 +21,7 @@ public:
     {
     }
 
+
     CCfHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
         m_clipformat(RegisterCf(lpszFormat)),
         m_bCanGetData(bCanGetData),
@@ -28,26 +29,31 @@ public:
     {
     }
 
-    virtual ~CCfHandler() throw()
+
+    virtual ~CCfHandler() MSF_NOEXCEPT
     {
     }
 
-    CLIPFORMAT GetClipFormat() const throw()
+
+    CLIPFORMAT GetClipFormat() const MSF_NOEXCEPT
     {
         return m_clipformat;
     }
 
-    bool CanGetData() const throw()
+
+    bool CanGetData() const MSF_NOEXCEPT
     {
         return m_bCanGetData;
     }
 
-    bool CanSetData() const throw()
+
+    bool CanSetData() const MSF_NOEXCEPT
     {
         return m_bCanSetData;
     }
 
-    virtual HRESULT Validate(const FORMATETC& formatetc) const throw()
+
+    virtual HRESULT Validate(const FORMATETC& formatetc) const MSF_NOEXCEPT
     {
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
@@ -61,13 +67,16 @@ public:
         return S_OK;
     }
 
+    
     virtual void GetData(const FORMATETC&, STGMEDIUM&) const
     {
     }
 
+
     virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*bRelease*/)
     {
     }
+
 
     bool IsValid(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) const
     {

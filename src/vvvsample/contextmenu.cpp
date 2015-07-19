@@ -23,7 +23,7 @@ class ATL_NO_VTABLE CContextMenu :
     public IObjectWithSiteImpl<CContextMenu>
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) MSF_NOEXCEPT
     {
         return IContextMenuImpl<CContextMenu>::UpdateRegistry(bRegister, IDR_CONTEXTMENU,
             L"VVV Sample Context Menu ShellExtension", wszVVVFileRootExt);

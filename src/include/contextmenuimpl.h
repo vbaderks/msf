@@ -219,7 +219,7 @@ public:
 
     /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) throw()
+        PCWSTR szDescription, PCWSTR szRootKey) MSF_NOEXCEPT
     {
         return UpdateRegistryFromResource(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), szRootKey);
@@ -232,7 +232,7 @@ public:
     }
 
 
-    ~IContextMenuImpl() throw()
+    ~IContextMenuImpl() MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::~IContextMenuImpl (instance=%p)\n", this);
 
@@ -454,7 +454,7 @@ private:
         }
 
 
-        void Clear() throw()
+        void Clear() MSF_NOEXCEPT
         {
             delete _pcontextcommand;
             _pcontextcommand = nullptr;
@@ -470,13 +470,13 @@ private:
         }
 
 
-        CContextCommand& GetContextCommand() const throw()
+        CContextCommand& GetContextCommand() const MSF_NOEXCEPT
         {
             return *_pcontextcommand;
         }
 
 
-        CCustomMenuHandler& GetCustomMenuHandler() const throw()
+        CCustomMenuHandler& GetCustomMenuHandler() const MSF_NOEXCEPT
         {
             return *_pcustommenuhandler;
         }
@@ -489,7 +489,7 @@ private:
     };
 
 
-    void ClearMenuItems() throw()
+    void ClearMenuItems() MSF_NOEXCEPT
     {
         for (auto& menuitem : _menuitems)
         {

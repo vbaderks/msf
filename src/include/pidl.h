@@ -67,65 +67,77 @@ public:
         return pidlNext;
     }
 
-    CPidl() throw() : m_pidl(nullptr)
+
+    CPidl() MSF_NOEXCEPT : m_pidl(nullptr)
     {
     }
 
+
     // Purpose: special constructor for NULL pointer init.
-    CPidl(int null) throw() : m_pidl(nullptr)
+    CPidl(int null) MSF_NOEXCEPT : m_pidl(nullptr)
     {
         (null);
         ATLASSERT(null == 0 && "Detected misuse of the special constructor");
     }
 
-    CPidl(LPITEMIDLIST pidl) throw() : m_pidl(pidl)
+
+    CPidl(LPITEMIDLIST pidl) MSF_NOEXCEPT : m_pidl(pidl)
     {
     }
+
 
     CPidl(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2) :
         m_pidl(Combine(pidl1, pidl2))
     {
     }
 
+
     CPidl(const CPidl& pidl1, LPCITEMIDLIST pidl2) :
         m_pidl(Combine(pidl1.m_pidl, pidl2))
     {
     }
+
 
     CPidl(const wchar_t* pszPath) :
         m_pidl(CreateFromPath(pszPath))
     {
     }
 
-    ~CPidl() throw()
+
+    ~CPidl() MSF_NOEXCEPT
     {
         ILFree(m_pidl);
     }
 
-    void Attach(LPITEMIDLIST pidl) throw()
+
+    void Attach(LPITEMIDLIST pidl) MSF_NOEXCEPT
     {
         ILFree(m_pidl);
         m_pidl = pidl;
     }
 
-    LPITEMIDLIST Detach() throw()
+
+    LPITEMIDLIST Detach() MSF_NOEXCEPT
     {
         LPITEMIDLIST pidl = m_pidl;
         m_pidl = nullptr;
         return pidl;
     }
 
+
     void CloneFrom(LPCITEMIDLIST pidl)
     {
         Attach(Clone(pidl));
     }
+
 
     LPITEMIDLIST Clone() const
     {
         return Clone(m_pidl);
     }
 
-    void AppendID(const SHITEMID* pmkid) throw()
+
+    void AppendID(const SHITEMID* pmkid)
     {
         LPITEMIDLIST pidl = ILAppendID(m_pidl, pmkid, TRUE);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
@@ -133,28 +145,33 @@ public:
         m_pidl = pidl;
     }
 
-    LPITEMIDLIST get() const throw()
+
+    LPITEMIDLIST get() const MSF_NOEXCEPT
     {
         return m_pidl;
     }
 
-    operator LPCITEMIDLIST() const throw()
+
+    operator LPCITEMIDLIST() const MSF_NOEXCEPT
     {
         return get();
     }
 
-    LPCITEMIDLIST operator->() const throw()
+
+    LPCITEMIDLIST operator->() const MSF_NOEXCEPT
     {
         return get();
     }
 
-    UINT GetSize() const throw()
+
+    UINT GetSize() const MSF_NOEXCEPT
     {
         return ILGetSize(m_pidl);
     }
 
+
     // Purpose: Adres operator to be used for passing address to be used as an out-parameter.
-    LPITEMIDLIST* operator&() throw()
+    LPITEMIDLIST* operator&() MSF_NOEXCEPT
     {
         Attach(nullptr);
         return &m_pidl;

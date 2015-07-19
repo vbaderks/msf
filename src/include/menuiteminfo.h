@@ -13,106 +13,106 @@ class CMenuItemInfo : public MENUITEMINFO
 {
 public:
 
-	CMenuItemInfo()
-	{
-		CommonConstruct();
-	}
+    CMenuItemInfo()
+    {
+        CommonConstruct();
+    }
 
 
-	CMenuItemInfo(UINT id)
-	{
-		CommonConstruct();
+    CMenuItemInfo(UINT id)
+    {
+        CommonConstruct();
 
-		SetID(id);
-	}
-
-
-	CMenuItemInfo(UINT id, const CString& str)
-	{
-		CommonConstruct();
-
-		SetID(id);
-		SetString(str);
-	}
+        SetID(id);
+    }
 
 
-	CMenuItemInfo(UINT id, const CString& str, HMENU hsubmenu)
-	{
-		CommonConstruct();
+    CMenuItemInfo(UINT id, const CString& str)
+    {
+        CommonConstruct();
 
-		SetID(id);
-		SetString(str);
-		SetSubMenu(hsubmenu);
-	}
-
-
-	CMenuItemInfo(UINT id, HMENU hsubmenu) throw()
-	{
-		CommonConstruct();
-
-		SetID(id);
-		SetSubMenu(hsubmenu);
-	}
+        SetID(id);
+        SetString(str);
+    }
 
 
-	void SetID(UINT id) throw()
-	{
-		fMask |= MIIM_ID;
-		wID = id;
-	}
+    CMenuItemInfo(UINT id, const CString& str, HMENU hsubmenu)
+    {
+        CommonConstruct();
+
+        SetID(id);
+        SetString(str);
+        SetSubMenu(hsubmenu);
+    }
 
 
-	void SetString(const CString& str)
-	{
-		fMask |= MIIM_TYPE;
-		fType |= MFT_STRING;
+    CMenuItemInfo(UINT id, HMENU hsubmenu) MSF_NOEXCEPT
+    {
+        CommonConstruct();
 
-		m_strCache = str;
-		dwTypeData = const_cast<wchar_t*>(m_strCache.GetString());
-	}
-
-
-	void SetSubMenu(HMENU hsubmenu) throw()
-	{
-		fMask |= MIIM_SUBMENU;
-		hSubMenu = hsubmenu;
-	}
+        SetID(id);
+        SetSubMenu(hsubmenu);
+    }
 
 
-	void SetOwnerDraw() throw()
-	{
-		fType |= MFT_OWNERDRAW;
-	}
+    void SetID(UINT id) MSF_NOEXCEPT
+    {
+        fMask |= MIIM_ID;
+        wID = id;
+    }
 
 
-	void SetCheckMarkBmps(HBITMAP hChecked, HBITMAP hUnchecked) throw()
-	{
-		fMask |= MIIM_CHECKMARKS;
-		hbmpChecked   = hChecked;
-		hbmpUnchecked = hUnchecked;
-	}
+    void SetString(const CString& str)
+    {
+        fMask |= MIIM_TYPE;
+        fType |= MFT_STRING;
+
+        m_strCache = str;
+        dwTypeData = const_cast<wchar_t*>(m_strCache.GetString());
+    }
 
 
-	void SetState(UINT uiState) throw()
-	{
-		fMask |= MIIM_STATE;
-		fState = uiState;
-	}
+    void SetSubMenu(HMENU hsubmenu) MSF_NOEXCEPT
+    {
+        fMask |= MIIM_SUBMENU;
+        hSubMenu = hsubmenu;
+    }
+
+
+    void SetOwnerDraw() MSF_NOEXCEPT
+    {
+        fType |= MFT_OWNERDRAW;
+    }
+
+
+    void SetCheckMarkBmps(HBITMAP hChecked, HBITMAP hUnchecked) MSF_NOEXCEPT
+    {
+        fMask |= MIIM_CHECKMARKS;
+        hbmpChecked   = hChecked;
+        hbmpUnchecked = hUnchecked;
+    }
+
+
+    void SetState(UINT uiState) MSF_NOEXCEPT
+    {
+        fMask |= MIIM_STATE;
+        fState = uiState;
+    }
 
 private:
 
-	void CommonConstruct() throw()
-	{
-		cbSize = sizeof(MENUITEMINFO);
-		fMask  = 0;
-		fType  = 0;
-	}
+    void CommonConstruct() MSF_NOEXCEPT
+    {
+        cbSize = sizeof(MENUITEMINFO);
+        fMask  = 0;
+        fType  = 0;
+    }
 
-	CMenuItemInfo(const CMenuItemInfo&);            // not implemented by design
-	CMenuItemInfo& operator=(const CMenuItemInfo&); // not implemented by design
+    CMenuItemInfo(const CMenuItemInfo&);            // not implemented by design
+    CMenuItemInfo& operator=(const CMenuItemInfo&); // not implemented by design
 
-	// Member variables.
-	CString m_strCache;
+    // Member variables.
+    CString m_strCache;
 };
 
 } // end namespace MSF

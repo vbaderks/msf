@@ -27,7 +27,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) MSF_NOEXCEPT
     {
         // TODO: update to new reg model.
         return IExtractImageImpl<CExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,

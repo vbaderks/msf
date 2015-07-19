@@ -5,7 +5,7 @@
 //
 #pragma once
 
-#include "catchhandler.h"
+#include "msfbase.h"
 
 namespace MSF
 {
@@ -20,10 +20,12 @@ public:
         ATLTRACE2(atlTraceCOM, 0, L"IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n", this);
     }
 
+
     ~IEnumIDListImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, L"IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n", this);
     }
+
 
     class CItemIdListVector
     {
@@ -32,6 +34,7 @@ public:
                 m_nCount(0), m_ppidl(ppidl)
             {
             }
+
 
             ~CItemIdListVector()
             {
@@ -44,18 +47,21 @@ public:
                 }
             }
 
-            void push_back(LPITEMIDLIST pidl) throw()
+
+            void push_back(LPITEMIDLIST pidl) MSF_NOEXCEPT
             {
                 m_ppidl[m_nCount] = pidl;
                 ++m_nCount;
             }
 
-            ULONG size() const throw()
+
+            ULONG size() const MSF_NOEXCEPT
             {
                 return m_nCount;
             }
 
-            void release() throw()
+
+            void release() MSF_NOEXCEPT
             {
                 m_ppidl = nullptr;
             }

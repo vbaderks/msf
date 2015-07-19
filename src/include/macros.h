@@ -11,6 +11,12 @@
 // Replacement macro for ATLTRACENOTIMPL that will generate C4217 (conditional expression is constant) warning under VS90.
 #define MSF_TRACENOTIMPL(funcname)  for (;;){ ATLTRACE(ATL::atlTraceNotImpl, 0, L"MSF: %s not implemented.\n", funcname); return E_NOTIMPL; }
 
+#if (_MSC_VER >= 1900)
+#define MSF_NOEXCEPT noexcept
+#else
+#define MSF_NOEXCEPT throw()
+#endif
+
 
 namespace MSF
 {

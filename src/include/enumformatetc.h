@@ -19,6 +19,7 @@ inline CComPtr<IEnumFORMATETC> SHCreateStdEnumFmtEtc(UINT cfmt, const FORMATETC*
     return renumformatetc;
 }
 
+
 // Purpose: copy policy class: required for the ATL::CComEnumOnSTL template.
 class CFORMATETCToFORMATETC
 {
@@ -28,23 +29,26 @@ public:
         // No init needed.
     }
 
+
     static HRESULT copy(FORMATETC* pTo, const FORMATETC* pFrom)
     {
         *pTo = *pFrom;
         return S_OK;
     }
 
+
     static void destroy(FORMATETC*)
     {
     }
 };
 
+
 class CEnumFORMATETC :
     public CComEnumOnSTL<IEnumFORMATETC,
-                         &IID_IEnumFORMATETC,     // name and IID of enumerator interface
-                         FORMATETC,               // type of object to return
-                         CFORMATETCToFORMATETC,   // copy policy class
-                         std::vector<FORMATETC> > // type of collection holding the data
+                         &IID_IEnumFORMATETC,    // name and IID of enumerator interface
+                         FORMATETC,              // type of object to return
+                         CFORMATETCToFORMATETC,  // copy policy class
+                         std::vector<FORMATETC>> // type of collection holding the data
 {
 public:
     typedef std::vector<FORMATETC> CFormatEtcs;
@@ -60,19 +64,21 @@ public:
         return renum;
     }
 
-    CEnumFORMATETC() throw()
+
+    CEnumFORMATETC() MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, L"CEnumFORMATETC::CEnumFORMATETC (instance=%p)\n", this);
     }
 
-    ~CEnumFORMATETC() throw()
+
+    ~CEnumFORMATETC() MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, L"CEnumFORMATETC::~CEnumFORMATETC (instance=%p)\n", this);
     }
 
-
 private:
-    void Initialize(std::unique_ptr<CFormatEtcs> qformatetcs) throw()
+
+    void Initialize(std::unique_ptr<CFormatEtcs> qformatetcs) MSF_NOEXCEPT
     {
         _qformatetcs = std::move(qformatetcs);
 

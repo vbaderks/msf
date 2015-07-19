@@ -29,7 +29,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) MSF_NOEXCEPT
     {
         return InfoTipImpl<CInfoTip>::UpdateRegistry(bRegister, IDR_INFOTIP,
             L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);

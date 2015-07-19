@@ -91,7 +91,7 @@ private:
         //ATLVERIFY(SUCCEEDED(SHLimitInputEdit(GetDlgItem(IDC_EDITm_item_NAME), m_rshellfolder)));
     }
 
-    CPropertyPageItem& operator=(const CPropertyPageItem&) throw();
+    CPropertyPageItem& operator=(const CPropertyPageItem&) MSF_NOEXCEPT;
 
     // Member variables
     const CVVVItem&       m_item;

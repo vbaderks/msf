@@ -20,29 +20,29 @@ public:
         return pwz;
     }
 
-    COleString() throw() : m_olestrCLSID(nullptr)
+    COleString() MSF_NOEXCEPT : m_olestrCLSID(nullptr)
     {
     }
 
-    ~COleString() throw()
+    ~COleString() MSF_NOEXCEPT
     {
         CoTaskMemFree(m_olestrCLSID);
     }
 
-    operator LPOLESTR() const throw()
+    operator LPOLESTR() const MSF_NOEXCEPT
     {
         return m_olestrCLSID;
     }
 
-    LPOLESTR* GetAddress() throw()
+    LPOLESTR* GetAddress() MSF_NOEXCEPT
     {
         ATLASSERT(!m_olestrCLSID || !"instance already owns a olestring"); 
         return &m_olestrCLSID;
     }
 
 private:
-    COleString(const COleString&) throw();            // not implemented by design.
-    COleString& operator=(const COleString&) throw(); // not implemented by design.
+    COleString(const COleString&) MSF_NOEXCEPT;            // not implemented by design.
+    COleString& operator=(const COleString&) MSF_NOEXCEPT; // not implemented by design.
 
     LPOLESTR m_olestrCLSID;
 };

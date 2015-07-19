@@ -27,21 +27,25 @@ public:
         return SUCCEEDED(pdataobject->QueryGetData(&formatetc));
     }
 
+
     CCfHDrop(IDataObjectPtr dataobject)
     {
         dataobject.GetData(CFormatEtc(CF_HDROP), m_stgmedium);
     }
 
-    bool IsEmpty() const throw()
+
+    bool IsEmpty() const MSF_NOEXCEPT
     {
         return GetFileCount() == 0;
     }
 
-    unsigned int GetFileCount() const throw()
+
+    unsigned int GetFileCount() const MSF_NOEXCEPT
     {
         ATLASSERT(m_stgmedium.tymed == TYMED_HGLOBAL && "Unable to retrieve filecount");
         return ::DragQueryFile((HDROP) m_stgmedium.hGlobal, (UINT)-1, nullptr, 0);
     }
+
 
     CString GetFile(unsigned int iFile) const
     {

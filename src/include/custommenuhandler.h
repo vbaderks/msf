@@ -16,34 +16,34 @@ namespace MSF
 class CCustomMenuHandler
 {
 public:
-	virtual ~CCustomMenuHandler() throw()
-	{
-	}
+    virtual ~CCustomMenuHandler() MSF_NOEXCEPT
+    {
+    }
 
 
-	virtual void InitializeItemInfo(CMenuItemInfo& menuiteminfo)
-	{
-		menuiteminfo.SetOwnerDraw();
-	}
+    virtual void InitializeItemInfo(CMenuItemInfo& menuiteminfo)
+    {
+        menuiteminfo.SetOwnerDraw();
+    }
 
 
-	// Purpose: called by OS to require the size of the menu item.
-	virtual void Measure(MEASUREITEMSTRUCT& /*measureitem*/)
-	{
-	}
+    // Purpose: called by OS to require the size of the menu item.
+    virtual void Measure(MEASUREITEMSTRUCT& /*measureitem*/)
+    {
+    }
 
 
-	// Purpose: called by the OS when the item must be draw.
-	virtual void Draw(const DRAWITEMSTRUCT& /*drawitem*/)
-	{
-	}
+    // Purpose: called by the OS when the item must be draw.
+    virtual void Draw(const DRAWITEMSTRUCT& /*drawitem*/)
+    {
+    }
 
 
-	// Purpose: override this function to handle accelerator keys
-	virtual bool OnMenuChar(HMENU /*hmenu*/, unsigned short /*nChar*/, LRESULT& /*lresult*/)
-	{
-		return false; // not handled.
-	}
+    // Purpose: override this function to handle accelerator keys
+    virtual bool OnMenuChar(HMENU /*hmenu*/, unsigned short /*nChar*/, LRESULT& /*lresult*/)
+    {
+        return false; // not handled.
+    }
 };
 
 } // end namespace MSF

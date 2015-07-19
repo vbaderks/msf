@@ -18,12 +18,15 @@ namespace MSF
 class CFormatEtc : public FORMATETC
 {
 public:
-    CFormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr, DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) throw()
+    CFormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr, 
+        DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) MSF_NOEXCEPT
     {
         CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
     }
 
-    CFormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr, DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) throw()
+
+    CFormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
+         DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) MSF_NOEXCEPT
     {
         CommonConstruct(RegisterCf(lpszFormat), dwtymed, pdvtd, dwaspect, index);
     }
@@ -53,7 +56,7 @@ public:
         return *this;
     }
 
-    void Dispose() throw()
+    void Dispose() MSF_NOEXCEPT
     {
         if (ptd)
         {
@@ -64,7 +67,7 @@ public:
 
 private:
 
-    void CommonConstruct(CLIPFORMAT cfformat, DWORD dwtymed, DVTARGETDEVICE* pdvtd, DWORD dwaspect, LONG index) throw()
+    void CommonConstruct(CLIPFORMAT cfformat, DWORD dwtymed, DVTARGETDEVICE* pdvtd, DWORD dwaspect, LONG index) MSF_NOEXCEPT
     {
         cfFormat = cfformat;
         tymed    = dwtymed;
@@ -73,12 +76,14 @@ private:
         lindex   = index;
     }
 
+
     static void Copy(FORMATETC& dest, const FORMATETC& src)
     {
         DVTARGETDEVICE* ptd = CopyTargetDevice(src);
         dest = src;
         dest.ptd = ptd;
     }
+
 
     static DVTARGETDEVICE* CopyTargetDevice(const FORMATETC& src)
     {

@@ -5,6 +5,7 @@
 //
 #pragma once
 
+#include "macros.h"
 
 namespace MSF
 {
@@ -14,19 +15,19 @@ namespace MSF
 class CItemBase
 {
 public:
-    CItemBase(LPCITEMIDLIST pidl) throw() :
+    CItemBase(LPCITEMIDLIST pidl) MSF_NOEXCEPT :
         m_pidl(pidl)
     {
     }
 
 
-    USHORT GetDataSize() const throw()
+    USHORT GetDataSize() const MSF_NOEXCEPT
     {
         return m_pidl->mkid.cb - sizeof(short);
     }
 
 
-    const BYTE* GetData() const throw()
+    const BYTE* GetData() const MSF_NOEXCEPT
     {
         return m_pidl->mkid.abID;
     }

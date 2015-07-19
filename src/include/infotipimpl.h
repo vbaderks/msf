@@ -32,7 +32,7 @@ class ATL_NO_VTABLE InfoTipImpl :
 public:
     /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) throw()
+        PCWSTR szDescription, PCWSTR szRootKey) MSF_NOEXCEPT
     {
         return UpdateRegistryFromResource(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), szRootKey);

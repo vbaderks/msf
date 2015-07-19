@@ -23,7 +23,7 @@ class ATL_NO_VTABLE IExtractImageImpl :
 public:
     // Registration function to register the extension.
     static HRESULT WINAPI UpdateRegistry(UINT nResId, BOOL bRegister,
-        PCWSTR szDescription, const CLSID& clsidShellFolder, PCWSTR szExtension) throw()
+        PCWSTR szDescription, const CLSID& clsidShellFolder, PCWSTR szExtension) MSF_NOEXCEPT
     {
         return UpdateRegistryFromResource(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), clsidShellFolder, szExtension);
@@ -32,7 +32,7 @@ public:
 
     // Registration function to register the COM object + the root extension.
     static HRESULT WINAPI UpdateRegistryForRootExt(UINT nResId, BOOL bRegister,
-        PCWSTR szDescription, PCWSTR szRootExt) throw()
+        PCWSTR szDescription, PCWSTR szRootExt) MSF_NOEXCEPT
     {
         return UpdateRegistryForRootExt(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), szRootExt);
@@ -42,7 +42,7 @@ public:
     // All-in-one registration function for 1 extenstion, call 'ForExt' to register
     // aditional functions.
     static HRESULT WINAPI UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,
-        PCWSTR szDescription, PCWSTR szRootExt, PCWSTR szExtension) throw()
+        PCWSTR szDescription, PCWSTR szRootExt, PCWSTR szExtension) MSF_NOEXCEPT
     {
         return ::UpdateRegistry(nResIdRoot, nResIdExt, bRegister,
             szDescription, T::GetObjectCLSID(), szRootExt, szExtension);

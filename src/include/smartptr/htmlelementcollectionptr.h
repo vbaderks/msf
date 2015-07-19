@@ -19,44 +19,44 @@ class IHTMLElementCollectionPtr : public ::IHTMLElementCollectionPtr
 public:
     // Default constructor.
     //
-    IHTMLElementCollectionPtr() throw() : 
-	  ::IHTMLElementCollectionPtr()
+    IHTMLElementCollectionPtr() MSF_NOEXCEPT :
+      ::IHTMLElementCollectionPtr()
     {
     }
 
 
-	// Constructs a smart-pointer from any other smart pointer.
-	//
-	template<typename _OtherIID> IHTMLElementCollectionPtr(const _com_ptr_t<_OtherIID>& p) :
-		::IHTMLElementCollectionPtr(p)
-	{
-	}
+    // Constructs a smart-pointer from any other smart pointer.
+    //
+    template<typename _OtherIID> IHTMLElementCollectionPtr(const _com_ptr_t<_OtherIID>& p) :
+        ::IHTMLElementCollectionPtr(p)
+    {
+    }
 
 
-	// Constructs a smart-pointer from any IUnknown-based interface pointer.
-	//
-	template<typename _InterfaceType> IHTMLElementCollectionPtr(_InterfaceType* p) :
-		::IHTMLElementCollectionPtr(p)
-	{
-	}
+    // Constructs a smart-pointer from any IUnknown-based interface pointer.
+    //
+    template<typename _InterfaceType> IHTMLElementCollectionPtr(_InterfaceType* p) :
+        ::IHTMLElementCollectionPtr(p)
+    {
+    }
 
 
-	long GetLength() const
-	{
-		long length;
-		HRESULT hr = GetInterfacePtr()->get_length(&length);
-		RaiseExceptionIfFailed(hr);
-		return length;
-	}
+    long GetLength() const
+    {
+        long length;
+        HRESULT hr = GetInterfacePtr()->get_length(&length);
+        RaiseExceptionIfFailed(hr);
+        return length;
+    }
 
 
-	IDispatchPtr Item(long index, long collectionIndex = 0) const
-	{
-		IDispatchPtr rdispElement;
-		HRESULT hr = GetInterfacePtr()->item(_variant_t(index), _variant_t(collectionIndex), &rdispElement);
-		RaiseExceptionIfFailed(hr);
-		return rdispElement;
-	}
+    IDispatchPtr Item(long index, long collectionIndex = 0) const
+    {
+        IDispatchPtr rdispElement;
+        HRESULT hr = GetInterfacePtr()->item(_variant_t(index), _variant_t(collectionIndex), &rdispElement);
+        RaiseExceptionIfFailed(hr);
+        return rdispElement;
+    }
 };
 
 }

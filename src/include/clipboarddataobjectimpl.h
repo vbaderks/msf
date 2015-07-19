@@ -26,13 +26,13 @@ class CClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>
 
 public:
 
-    CClipboardDataObjectImpl() throw()
+    CClipboardDataObjectImpl() MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::CClipboardDataObjectImpl (instance=%p)\n", this);
     }
 
 
-    ~CClipboardDataObjectImpl() throw()
+    ~CClipboardDataObjectImpl() MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::~CClipboardDataObjectImpl (instance=%p)\n", this);
     }
@@ -188,26 +188,26 @@ private:
     class CExternalData
     {
     public:
-        CExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) throw() :
+        CExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) MSF_NOEXCEPT :
             _formatetc(formatetc),
             _stgmedium(stgmedium)
         {
         }
 
 
-        CLIPFORMAT GetClipFormat() const throw()
+        CLIPFORMAT GetClipFormat() const MSF_NOEXCEPT
         {
             return _formatetc.cfFormat;
         }
 
 
-        const FORMATETC& GetFormatetc() const throw()
+        const FORMATETC& GetFormatetc() const MSF_NOEXCEPT
         {
             return _formatetc;
         }
 
 
-        HRESULT Validate(const FORMATETC& formatetc) const throw()
+            HRESULT Validate(const FORMATETC& formatetc) const MSF_NOEXCEPT
         {
             if (formatetc.dwAspect != DVASPECT_CONTENT)
                 return DV_E_DVASPECT;
@@ -242,7 +242,7 @@ private:
     };
 
 
-    CCfHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const throw()
+    CCfHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const MSF_NOEXCEPT
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
             [=](CCfHandler* cfHandler)
@@ -253,7 +253,7 @@ private:
     }
 
 
-    CExternalData* FindExternalData(CLIPFORMAT clipformat) const throw()
+    CExternalData* FindExternalData(CLIPFORMAT clipformat) const MSF_NOEXCEPT
     {
         for (CExternalDatas::const_iterator it = m_externaldatas.begin(); it != m_externaldatas.end(); ++it)
         {

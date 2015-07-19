@@ -24,13 +24,13 @@ public:
     typedef std::vector<CFormatEtc>  CFormatEtcs;
 
 
-    CShellFolderDataObjectImpl() throw()
+    CShellFolderDataObjectImpl() MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::CShellFolderDataObjectImpl (instance=%p)\n", this);
     }
 
 
-    ~CShellFolderDataObjectImpl() throw()
+    ~CShellFolderDataObjectImpl() MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::~CShellFolderDataObjectImpl (instance=%p)\n", this);
     }
@@ -211,7 +211,7 @@ public:
 
 private:
 
-    CCfHandler* FindClipFormatHandler(CLIPFORMAT clipFormat) const throw()
+    CCfHandler* FindClipFormatHandler(CLIPFORMAT clipFormat) const MSF_NOEXCEPT
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
             [=](const unique_ptr<CCfHandler>& clipFormatHandler)

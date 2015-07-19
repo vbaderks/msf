@@ -24,7 +24,8 @@ public:
         ATLVERIFY(SUCCEEDED(::CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED)));
     }
 
-    ~CCoInitialize() throw()
+
+    ~CCoInitialize() MSF_NOEXCEPT
     {
         ::CoUninitialize();
     }

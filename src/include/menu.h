@@ -24,7 +24,7 @@ public:
     }
 
 
-    ~CMenu() throw()
+    ~CMenu() MSF_NOEXCEPT
     {
         ATLVERIFY(DestroyMenu(m_hmenu));
     }
@@ -67,7 +67,7 @@ public:
     }
 
 
-    operator HMENU() const throw()
+    operator HMENU() const MSF_NOEXCEPT
     {
         return m_hmenu;
     }

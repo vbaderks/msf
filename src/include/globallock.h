@@ -5,6 +5,7 @@
 //
 #pragma once
 
+#include "msfbase.h"
 
 namespace MSF
 {
@@ -40,7 +41,7 @@ public:
     }
 
 
-    void Dispose() throw()
+    void Dispose() MSF_NOEXCEPT
     {
         if (m_hMem)
         {
@@ -52,7 +53,7 @@ public:
     }
 
 
-    T* get() const throw()
+    T* get() const MSF_NOEXCEPT
     {
         return reinterpret_cast<T*>(m_p);
     }
@@ -69,7 +70,7 @@ private:
         return p;
     }
 
-    CGlobalLock& operator=(const CGlobalLock&) throw(); // not implemented by design.
+    CGlobalLock& operator=(const CGlobalLock&) MSF_NOEXCEPT; // not implemented by design.
 
     // Member variables
     void* m_p;

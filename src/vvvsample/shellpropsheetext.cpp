@@ -20,7 +20,7 @@ class ATL_NO_VTABLE CShellPropSheetExt :
     public IShellPropSheetExtImpl<CShellPropSheetExt>
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) MSF_NOEXCEPT
     {
         return IShellPropSheetExtImpl<CShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
             L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);

@@ -29,13 +29,13 @@ public:
         }
 
 
-        ~CIcon() throw()
+        ~CIcon() MSF_NOEXCEPT
         {
             dispose();
         }
 
 
-        HICON operator=(HICON hicon) throw()
+        HICON operator=(HICON hicon) MSF_NOEXCEPT
         {
             dispose();
             m_hicon = hicon;
@@ -43,20 +43,20 @@ public:
         }
 
 
-        void release() throw()
+        void release() MSF_NOEXCEPT
         {
             m_hicon = nullptr;
         }
 
 
-        HICON get() const throw()
+        HICON get() const MSF_NOEXCEPT
         {
             return m_hicon;
         }
 
     private:
 
-        void dispose() throw()
+        void dispose() MSF_NOEXCEPT
         {
             if (m_hicon)
             {

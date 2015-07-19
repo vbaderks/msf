@@ -5,6 +5,7 @@
 //
 #pragma once
 
+#include "msfbase.h"
 #include <objidl.h>
 #include "util.h"
 #include "globallock.h"
@@ -35,31 +36,36 @@ public:
         return hglobOut;
     }
 
-    static void SetHGlobal(STGMEDIUM& stgmedium, HGLOBAL hglobal) throw()
+
+    static void SetHGlobal(STGMEDIUM& stgmedium, HGLOBAL hglobal) MSF_NOEXCEPT
     {
         stgmedium.tymed          = TYMED_HGLOBAL;
         stgmedium.hGlobal        = hglobal;
         stgmedium.pUnkForRelease = nullptr;
     }
 
-    CStgMedium() throw()
+
+    CStgMedium() MSF_NOEXCEPT
     {
         tymed = TYMED_NULL;
         pUnkForRelease = nullptr;
     }
 
-    CStgMedium(HGLOBAL hg) throw()
+
+    CStgMedium(HGLOBAL hg) MSF_NOEXCEPT
     {
         SetHGlobal(*this, hg);
     }
 
+
     // Purpose: passed in STGMEDIUM will be owned after a bitwise copy.
-    CStgMedium(const STGMEDIUM& stgmedium) throw()
+    CStgMedium(const STGMEDIUM& stgmedium) MSF_NOEXCEPT
     {
         *static_cast<STGMEDIUM*>(this) = stgmedium;
     }
 
-    ~CStgMedium() throw()
+
+    ~CStgMedium() MSF_NOEXCEPT
     {
         if (tymed != TYMED_NULL)
         {
@@ -67,22 +73,26 @@ public:
         }
     }
 
-    HGLOBAL GetHGlobal() const throw()
+
+    HGLOBAL GetHGlobal() const MSF_NOEXCEPT
     {
         ATLASSERT(tymed == TYMED_HGLOBAL && "Can only get hglobal if correct type");
         return hGlobal;
     }
 
-    void Detach(STGMEDIUM& stgmedium) throw()
+
+    void Detach(STGMEDIUM& stgmedium) MSF_NOEXCEPT
     {
         stgmedium = *this;
         Detach();
     }
 
-    void Detach() throw()
+
+    void Detach() MSF_NOEXCEPT
     {
         tymed = TYMED_NULL;
     }
+
 
     CStgMedium& operator = (STGMEDIUM& stgmedium)
     {
@@ -94,6 +104,7 @@ public:
 
         return *this;
     }
+
 
     void CopyTo(STGMEDIUM& stgmedium)
     {

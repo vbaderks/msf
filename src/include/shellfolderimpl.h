@@ -81,7 +81,7 @@ public:
 
     // Registration function to register the COM object + the root extension.
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootExt, UINT nFriendlyTypeNameId) throw()
+        PCWSTR szDescription, PCWSTR szRootExt, UINT nFriendlyTypeNameId) MSF_NOEXCEPT
     {
         COleString olestrCLSID;
         StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
@@ -1204,7 +1204,7 @@ protected:
         return 0;
     }
 
-    void GetColumnDetailsOf(UINT iColumn, SHELLDETAILS* psd) throw()
+    void GetColumnDetailsOf(UINT iColumn, SHELLDETAILS* psd) MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetColumnDetailsOf (iColumn=%d, cxChar=%d)\n", iColumn, psd->cxChar);
 
@@ -1475,7 +1475,7 @@ protected:
     }
 
     // Note: if hwndOwner is NULL, errors should only be returned as COM failures.
-    HWND GetHwndOwner() const throw()
+    HWND GetHwndOwner() const MSF_NOEXCEPT
     {
         return m_hwndOwner;
     }

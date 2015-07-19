@@ -26,7 +26,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) throw()
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) MSF_NOEXCEPT
     {
         return DiskCleanupImpl<CDiskCleanup>::UpdateRegistry(bRegister, IDR_INFOTIP, // tODO FIX
             L"Sample Disk Clean Handler", wszVVVFileRootExt);

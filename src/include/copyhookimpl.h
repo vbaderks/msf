@@ -28,7 +28,7 @@ class ATL_NO_VTABLE ICopyHookImpl :
 {
 public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szCopyHookName) throw()
+        PCWSTR szDescription, PCWSTR szCopyHookName) MSF_NOEXCEPT
     {
         COleString olestrCLSID;
         StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
@@ -44,12 +44,14 @@ public:
         return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
     }
 
+
     ICopyHookImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, L"ICopyHookImpl::Constructor (instance=%p)\n", this);
     }
 
-    ~ICopyHookImpl() throw()
+
+    ~ICopyHookImpl() MSF_NOEXCEPT
     {
         ATLTRACE2(atlTraceCOM, 0, L"ICopyHookImpl::~ICopyHookImpl (instance=%p)\n", this);
     }
