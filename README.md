@@ -72,7 +72,7 @@ Legacy Compilers
 ----------------
  Support has been removed from latest code, requires older release.
 
-* Visual Studio 2012 Update 4 (ATL 11.0) 
+* Visual Studio 2012 Update 5 (ATL 11.0) 
 * Visual Studio 2010 SP1 (ATL 10.0) 
 * Visual Studio 2008 SP1 (ATL 9.0) 
 * Visual Studio 2005 SP1 (ATL 8.0) 
