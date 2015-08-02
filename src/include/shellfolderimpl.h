@@ -225,7 +225,10 @@ public:
     {
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n", this, uiColumn);
 
-        // Shell can sort by itself.
+        // mark parameters as not used in release build.
+        (uiColumn);
+
+        // Shell 6.0 (Vista and up) can sort by itself, return S_FALSE to trigger this.
         return S_FALSE;
     }
 
