@@ -26,7 +26,7 @@ public:
     }
 
 
-    virtual HRESULT Validate(const FORMATETC& formatetc) const
+    virtual HRESULT Validate(const FORMATETC& formatetc) const MSF_NOEXCEPT
     {
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;

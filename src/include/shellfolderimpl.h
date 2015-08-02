@@ -728,7 +728,7 @@ public:
     }
 
     // IShellFolderContextMenuSink
-    virtual HRESULT OnPasteCmCmd()
+    virtual HRESULT OnPasteCmCmd() MSF_NOEXCEPT
     {
         try
         {
