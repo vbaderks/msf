@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/9o2gbepqfcw1g141/branch/master?svg=true)](https://ci.appveyor.com/project/vbaderks/msf/branch/master)
+
 Introduction
 ============
 The Mini Shell extension Framework (MSF) is a collection of C++ template classes that can be 
