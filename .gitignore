@@ -22,6 +22,7 @@ ipch/
 [Ww]in32/  # Ignore all file in this binary build directory
 Checked_120/
 x64/    # Ignore all file in this binary build directory
+src/.vs
 *.obj
 *.lib
 *.pdb
