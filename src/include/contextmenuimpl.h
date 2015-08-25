@@ -240,7 +240,7 @@ public:
 
 
     // IContextMenu
-    STDMETHOD(QueryContextMenu)( _In_ HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags)
+    STDMETHOD(QueryContextMenu)( _In_ HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
             this, indexMenu, idCmdFirst, idCmdLast, uFlags);
@@ -266,7 +266,7 @@ public:
     }
 
 
-    STDMETHOD(GetCommandString)(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax)
+    STDMETHOD(GetCommandString)(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x", this, uFlags);
 
@@ -299,7 +299,7 @@ public:
     }
 
 
-    STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici)
+    STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CContextMenu::IContextMenu::InvokeCommand, instance=%p\n", this);
 
@@ -317,7 +317,7 @@ public:
 
 
     // IContextMenu2
-    STDMETHOD(HandleMenuMsg)(UINT uMsg, WPARAM wParam, LPARAM lParam)
+    STDMETHOD(HandleMenuMsg)(UINT uMsg, WPARAM wParam, LPARAM lParam) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n");
         return HandleMenuMsg2(uMsg, wParam, lParam, nullptr);
@@ -331,7 +331,7 @@ public:
     //       HandleMenuMsg2 is called also directly for WM_INITMENUPOPUP, etc when 
     //       the shell detects that IContextMenu3 is supported.
     //
-    STDMETHOD(HandleMenuMsg2)(UINT uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult)
+    STDMETHOD(HandleMenuMsg2)(UINT uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult) override
     {
         try
         {

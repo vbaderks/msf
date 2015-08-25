@@ -51,7 +51,7 @@ public:
     }
 
 
-    STDMETHOD(GetData)(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium)
+    STDMETHOD(GetData)(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) override
     {
         ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
@@ -86,7 +86,7 @@ public:
     }
 
 
-    STDMETHOD(GetDataHere)(_In_ FORMATETC* pformatetc, _Inout_ STGMEDIUM* pmedium)
+    STDMETHOD(GetDataHere)(_In_ FORMATETC* pformatetc, _Inout_ STGMEDIUM* pmedium) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::GetDataHere (instance=%p)\n", this);
 
@@ -94,7 +94,7 @@ public:
     }
 
 
-    STDMETHOD(QueryGetData)(__RPC__in_opt FORMATETC* pformatetc)
+    STDMETHOD(QueryGetData)(__RPC__in_opt FORMATETC* pformatetc) override
     {
         // The docs define pformatetc as [in]. The SDK defines pformatetc as in_opt.
         if (!pformatetc)
@@ -124,7 +124,7 @@ public:
     }
 
 
-    STDMETHOD(GetCanonicalFormatEtc)(__RPC__in_opt FORMATETC* pformatetc, __RPC__out FORMATETC* pformatetcOut)
+    STDMETHOD(GetCanonicalFormatEtc)(__RPC__in_opt FORMATETC* pformatetc, __RPC__out FORMATETC* pformatetcOut) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::GetCanonicalFormatEtc (instance=%p)\n", this);
 
@@ -132,7 +132,7 @@ public:
     }
 
 
-    STDMETHOD(SetData)(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease)
+    STDMETHOD(SetData)(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
@@ -164,7 +164,7 @@ public:
     }
 
 
-    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, _In_ IEnumFORMATETC** ppenumFormatEtc)
+    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, _In_ IEnumFORMATETC** ppenumFormatEtc) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 
@@ -185,7 +185,7 @@ public:
     }
 
 
-    STDMETHOD(DAdvise)(__RPC__in FORMATETC* pformatetc, DWORD advf, __RPC__in_opt IAdviseSink* pAdvSink, __RPC__out DWORD* pdwConnection)
+    STDMETHOD(DAdvise)(__RPC__in FORMATETC* pformatetc, DWORD advf, __RPC__in_opt IAdviseSink* pAdvSink, __RPC__out DWORD* pdwConnection) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::DAdvise (instance=%p)\n", this);
 
@@ -193,7 +193,7 @@ public:
     }
 
 
-    STDMETHOD(DUnadvise)(DWORD dwConnection)
+    STDMETHOD(DUnadvise)(DWORD dwConnection) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::DUnadvise (instance=%p)\n", this);
 
@@ -201,7 +201,7 @@ public:
     }
 
 
-    STDMETHOD(EnumDAdvise)(__RPC__deref_out_opt IEnumSTATDATA** ppenumAdvise)
+    STDMETHOD(EnumDAdvise)(__RPC__deref_out_opt IEnumSTATDATA** ppenumAdvise) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::EnumDAdvise (instance=%p)\n", this);
 

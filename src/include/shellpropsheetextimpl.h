@@ -62,7 +62,7 @@ public:
     };
 
     // IShellPropSheetExt
-    STDMETHOD(AddPages)(_In_ LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam)
+    STDMETHOD(AddPages)(_In_ LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) override
     {
         try
         {
@@ -75,7 +75,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(ReplacePage)(EXPPS /*uPageID*/, _In_ LPFNSVADDPROPSHEETPAGE /*pfnReplaceWith*/, LPARAM /*lParam*/)
+    STDMETHOD(ReplacePage)(EXPPS /*uPageID*/, _In_ LPFNSVADDPROPSHEETPAGE /*pfnReplaceWith*/, LPARAM /*lParam*/) override
     {
         // The Shell doesn't call this function for file class Property Sheets.
         // Only for control panel objects.

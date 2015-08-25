@@ -37,7 +37,7 @@ class ATL_NO_VTABLE IItemNameLimitsImpl :
 {
 public:
     // IItemNameLimits
-    STDMETHOD(GetValidCharacters)(LPWSTR* ppwszValidChars, LPWSTR* ppwszInvalidChars)
+    STDMETHOD(GetValidCharacters)(LPWSTR* ppwszValidChars, LPWSTR* ppwszInvalidChars) override
     {
         try
         {
@@ -73,7 +73,7 @@ public:
     //          Lenght can depend on the current string. (UNC pathname has
     //          different length then local path, etc).
     //
-    STDMETHOD(GetMaxLength)(__RPC__in_string LPCWSTR pszName, __RPC__out int* piMaxNameLen)
+    STDMETHOD(GetMaxLength)(__RPC__in_string LPCWSTR pszName, __RPC__out int* piMaxNameLen) override
     {
         try
         {

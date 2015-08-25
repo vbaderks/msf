@@ -65,7 +65,7 @@ public:
 
 
     // IPersistFile
-    STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID)
+    STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::GetClassID\n");
 
@@ -77,31 +77,31 @@ public:
     }
 
 
-    STDMETHOD(IsDirty)()
+    STDMETHOD(IsDirty)() override
     {
         MSF_TRACENOTIMPL(L"IExtractImageImpl::IsDirty");
     }
 
 
-    STDMETHOD(Save)(LPCOLESTR, BOOL)
+    STDMETHOD(Save)(LPCOLESTR, BOOL) override
     {
         MSF_TRACENOTIMPL(L"IExtractImageImpl::Save");
     }
 
 
-    STDMETHOD(SaveCompleted)(LPCOLESTR)
+    STDMETHOD(SaveCompleted)(LPCOLESTR) override
     {
         MSF_TRACENOTIMPL(L"IExtractImageImpl::SaveCompleted");
     }
 
 
-    STDMETHOD(GetCurFile)(LPOLESTR*)
+    STDMETHOD(GetCurFile)(LPOLESTR*) override
     {
         MSF_TRACENOTIMPL(L"IExtractImageImpl::GetCurFile");
     }
 
 
-    STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode)
+    STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode) override
     {
         (dwMode); // unused in release.
 
@@ -117,7 +117,7 @@ public:
 
     // IExtractImage
     STDMETHOD(GetLocation)(LPWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
-                           __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags)
+                           __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags) override
     {
         try
         {
@@ -141,7 +141,7 @@ public:
     }
 
 
-    STDMETHOD(Extract)(__RPC__deref_out_opt HBITMAP* phBmpThumbnail)
+    STDMETHOD(Extract)(__RPC__deref_out_opt HBITMAP* phBmpThumbnail) override
     {
         ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::Extract (instance=%p)\n", this);
 
@@ -156,7 +156,7 @@ public:
 
 
     // IExtractImage2
-    STDMETHOD(GetDateStamp)(__RPC__in FILETIME* pDateStamp)
+    STDMETHOD(GetDateStamp)(__RPC__in FILETIME* pDateStamp) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::GetDateStamp (instance=%p, pdatastampe=%p)\n", this, pDateStamp);
 

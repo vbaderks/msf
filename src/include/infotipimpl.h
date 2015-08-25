@@ -52,7 +52,7 @@ public:
 
 
     // IInitializeWithFile
-    STDMETHOD(Initialize)(LPCWSTR pszFilePath, DWORD dwMode)
+    STDMETHOD(Initialize)(LPCWSTR pszFilePath, DWORD dwMode) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, filename=%s)\n", this, dwMode, pszFilePath);
 

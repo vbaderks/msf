@@ -39,7 +39,7 @@ public:
 
 
     // IShellFolderViewCB
-    STDMETHOD(MessageSFVCB)(UINT uMsg, WPARAM wParam, LPARAM lParam)
+    STDMETHOD(MessageSFVCB)(UINT uMsg, WPARAM wParam, LPARAM lParam) override
     {
         try
         {
@@ -338,34 +338,34 @@ public:
     }
 
     // IFolderViewSettings
-    STDMETHOD(GetColumnPropertyList)(__RPC__in REFIID /*riid*/, __RPC__deref_out_opt void ** /*ppv*/)
+    STDMETHOD(GetColumnPropertyList)(__RPC__in REFIID /*riid*/, __RPC__deref_out_opt void ** /*ppv*/) override
     {
         MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetColumnPropertyList");
     }
 
-    STDMETHOD(GetGroupByProperty)(__RPC__out PROPERTYKEY * /*pkey*/, __RPC__out BOOL * /*pfGroupAscending*/)
+    STDMETHOD(GetGroupByProperty)(__RPC__out PROPERTYKEY * /*pkey*/, __RPC__out BOOL * /*pfGroupAscending*/) override
     {
         MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetGroupByProperty");
     }
 
-    STDMETHOD(GetViewMode)(__RPC__out FOLDERLOGICALVIEWMODE *plvm)
+    STDMETHOD(GetViewMode)(__RPC__out FOLDERLOGICALVIEWMODE *plvm) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderViewCBImpl::IFolderViewSettings::GetViewMode (instance=%p, plvm=%p)\n", this, plvm);
         *plvm = FLVM_DETAILS;
         return S_OK;
     }
 
-    STDMETHOD(GetIconSize)(__RPC__out UINT * /*puIconSize*/)
+    STDMETHOD(GetIconSize)(__RPC__out UINT * /*puIconSize*/) override
     {
         MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetIconSize");
     }
 
-    STDMETHOD(GetFolderFlags)(__RPC__out FOLDERFLAGS * /*pfolderMask*/, __RPC__out FOLDERFLAGS * /*pfolderFlags*/)
+    STDMETHOD(GetFolderFlags)(__RPC__out FOLDERFLAGS * /*pfolderMask*/, __RPC__out FOLDERFLAGS * /*pfolderFlags*/) override
     {
         MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetFolderFlags");
     }
 
-    STDMETHOD(GetSortColumns)(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, UINT cColumnsIn, __RPC__out UINT * pcColumnsOut)
+    STDMETHOD(GetSortColumns)(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, UINT cColumnsIn, __RPC__out UINT * pcColumnsOut) override
     {
         (rgSortColumns);
         (cColumnsIn);
@@ -373,7 +373,7 @@ public:
         MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetSortColumns");
     }
 
-    STDMETHOD(GetGroupSubsetCount)(__RPC__out UINT * /*pcVisibleRows*/)
+    STDMETHOD(GetGroupSubsetCount)(__RPC__out UINT * /*pcVisibleRows*/) override
     {
         MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetGroupSubsetCount");
     }

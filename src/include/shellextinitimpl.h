@@ -17,7 +17,7 @@ class IShellExtInitImpl :  public IShellExtInit
 {
 public:
     // IShellExtInit
-    STDMETHOD(Initialize)(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) 
+    STDMETHOD(Initialize)(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) override
     {
         (pidlFolder);
         ATLTRACE2(atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, pDataObject);
