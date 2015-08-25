@@ -213,7 +213,6 @@
     <ClInclude Include="include\cftargetclsid.h" />
     <ClInclude Include="include\clipboarddataobjectimpl.h" />
     <ClInclude Include="include\coinitialize.h" />
-    <ClInclude Include="include\columnproviderimpl.h" />
     <ClInclude Include="include\contextcommand.h" />
     <ClInclude Include="include\contextmenuimpl.h" />
     <ClInclude Include="include\copyhookimpl.h" />

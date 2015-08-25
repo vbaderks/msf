@@ -132,9 +132,6 @@
     <ClInclude Include="include\clipboarddataobjectimpl.h">
       <Filter>Header Files\Impl</Filter>
     </ClInclude>
-    <ClInclude Include="include\columnproviderimpl.h">
-      <Filter>Header Files\Impl</Filter>
-    </ClInclude>
     <ClInclude Include="include\propertypageimpl.h">
       <Filter>Header Files\Impl</Filter>
     </ClInclude>
