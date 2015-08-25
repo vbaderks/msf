@@ -38,15 +38,23 @@ public:
             szDescription, T::GetObjectCLSID(), szRootKey);
     }
 
+
     InfoTipImpl() : _bInitialized(false)
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::IInfoTipImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
     }
+
+
+    ~InfoTipImpl() MSF_NOEXCEPT
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
+    }
+
 
     // IInitializeWithFile
     STDMETHOD(Initialize)(LPCWSTR pszFilePath, DWORD dwMode)
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IInfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, filename=%s)\n", this, dwMode, pszFilePath);
+        ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, filename=%s)\n", this, dwMode, pszFilePath);
 
         try
         {
