@@ -8,7 +8,6 @@
 
 // Purpose: this file contains small helper functions. 
 #include "msfbase.h"
-#include <algorithm>
 #include <shellapi.h>
 
 
@@ -48,7 +47,7 @@ inline ATL::CStringW GetFolderPath(int nFolder)
 
 inline DWORD GetFileSize(const ATL::CString& strFile)
 {
-    auto hFile = CreateFile(strFile, 0, 0, nullptr, OPEN_EXISTING, 0, 0);
+    auto hFile = CreateFile(strFile, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
     RaiseExceptionIf(hFile == INVALID_HANDLE_VALUE);
 
     DWORD dwSize = ::GetFileSize(hFile, nullptr);
@@ -375,7 +374,7 @@ inline int GetSystemImageListIndex(const wchar_t* pszPath)
         return 0;
 
     // Only need the index: clean-up the icon.
-    __analysis_assume(sfi.hIcon != 0);
+    __analysis_assume(sfi.hIcon);
     ATLVERIFY(DestroyIcon(sfi.hIcon));
 
     return sfi.iIcon;

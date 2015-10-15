@@ -6,13 +6,18 @@
 
 #include "stdafx.h"
 
-#include "module.h"
 #include "resource.h"
 
 #include "../include/util.h"
 #include "../include/updateregistry.h"
 
+
+// ATL COM DLLs require a single "module" instance.
+class CModule : public CAtlDllModuleT<CModule>
+{
+};
 CModule _Module;
+
 
 // Purpose: DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)

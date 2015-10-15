@@ -24,16 +24,10 @@
     <ClInclude Include="cffiledescriptorhandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="columnproviderclsid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="columns.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="contextmenuclsid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="copyhookclsid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="editwithnotepadcommand.h">
@@ -43,12 +37,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="extractimageclsid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="infotipclsid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="module.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="propertypageitem.h">
