@@ -4,6 +4,8 @@
 // See README.TXT for the details of the software licence.
 //
 
+#pragma once
+
 // Enabled improved type checking of the Win32 SDK header files.
 #define STRICT
 

@@ -13,8 +13,7 @@
 class CEditWithNotepadCommand : public CContextCommand
 {
 public:
-    virtual void operator()(const CMINVOKECOMMANDINFO* /* pici */,
-                            const std::vector<CString>& filenames)
+    void operator()(const CMINVOKECOMMANDINFO* /* pici */, const std::vector<CString>& filenames) override
     {
         ATLASSERT(filenames.size() == 1); // can only handle 1 file.
 

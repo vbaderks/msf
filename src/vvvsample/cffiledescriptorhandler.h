@@ -22,7 +22,7 @@ public:
     }
 
 
-    virtual void GetData(const FORMATETC&, STGMEDIUM& medium) const
+    void GetData(const FORMATETC&, STGMEDIUM& medium) const override
     {
         CCfShellIdList cfshellidlist(m_pdataobject);
 

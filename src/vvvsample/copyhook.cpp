@@ -44,7 +44,7 @@ public:
     {
         if (wFunc == FO_DELETE && CString(pszSrcFile).Find(L"VVV") != -1)
         {
-            return IsolationAwareMessageBox(hwnd, LoadString(IDS_COPYHOOK_QUESTION), 
+            return IsolationAwareMessageBox(hwnd, LoadString(IDS_COPYHOOK_QUESTION),
                 LoadString(IDS_COPYHOOK_CAPTION), MB_YESNOCANCEL);
         }
 

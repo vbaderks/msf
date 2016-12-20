@@ -11,7 +11,6 @@
 #include "enumidlist.h"
 #include "vvvitem.h"
 #include "vvvfile.h"
-#include "columns.h"
 #include "vvvpropertysheet.h"
 #include "resource.h"
 
@@ -19,7 +18,6 @@
 #include "../include/browserframeoptionsimpl.h"
 #include "../include/itemnamelimitsimpl.h"
 #include "../include/strutil.h"
-#include "../include/queryinfo.h"
 #include "../include/cfhdrop.h"
 #include "../include/menu.h"
 
@@ -105,7 +103,7 @@ public:
 
     // Purpose: called by MSF/shell when it want the current list of 
     //          all items  The shell will walk all IDs and then release the enum.
-    CComPtr<IEnumIDList> CreateEnumIDList(HWND /*hwnd*/, DWORD grfFlags)
+    CComPtr<IEnumIDList> CreateEnumIDList(HWND /*hwnd*/, DWORD grfFlags) const
     {
         return CEnumIDList::CreateInstance(GetPathFolderFile(), m_strSubFolder, grfFlags);
     }
@@ -175,7 +173,7 @@ public:
 
 
     // Purpose: handle 'open' by showing the name of the selected item.
-    void OnOpen(HWND hwnd, IDataObject* pdataobject)
+    void OnOpen(HWND hwnd, IDataObject* pdataobject) const
     {
         CCfShellIdList cfshellidlist(pdataobject); 
         ATLASSERT(cfshellidlist.GetItemCount() == 1);
@@ -228,7 +226,7 @@ public:
 
 
     // Purpose: Called by MSF/shell when items must be deleted.
-    long OnDelete(HWND hwnd, CVVVItemList& items)
+    long OnDelete(HWND hwnd, CVVVItemList& items) const
     {
         if (!hwnd && !UserConfirmsFileDelete(hwnd, items))
             return 0; // user wants to abort the file deletion process.
@@ -274,7 +272,7 @@ private:
 
     // Purpose: Ask the user if he is really sure about the file delete action.
     //          Deleted files cannot be restored from the recycle bin.
-    bool UserConfirmsFileDelete(HWND hwnd, const CVVVItemList& items)
+    bool UserConfirmsFileDelete(HWND hwnd, const CVVVItemList& items) const
     {
         CString strMessage;
         UINT    nCaptionResId;
@@ -296,7 +294,7 @@ private:
     }
 
 
-    void AddItem(const CString& strFile)
+    void AddItem(const CString& strFile) const
     {
         CVVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
 
@@ -306,7 +304,7 @@ private:
     }
 
 
-    bool IsReadOnly(const CString& strFileName) const
+    static bool IsReadOnly(const CString& strFileName)
     {
         DWORD dwAttributes = GetFileAttributes(strFileName);
         return (dwAttributes & FILE_ATTRIBUTE_READONLY) != 0;

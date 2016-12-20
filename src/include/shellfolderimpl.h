@@ -722,9 +722,9 @@ public:
 
     // IExplorerPaneVisibility (introduced with Vista)
     // The shell will use this interface to request which 'panes' should be visible.
-    STDMETHOD(GetPaneState)(_In_ REFEXPLORERPANE ep, _Out_  EXPLORERPANESTATE *peps) override
+    STDMETHOD(GetPaneState)(_In_ REFEXPLORERPANE ep, _Out_ EXPLORERPANESTATE *peps) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IExplorerPaneVisibility::GetPaneState (instance=%p, ep=%s)\n", this, GetExplorerPaneName(ep));
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IExplorerPaneVisibility::GetPaneState (instance=%p, ep=%s)\n", this, GetExplorerPaneName(ep).GetString());
 
         *peps = static_cast<T*>(this)->GetPaneState(ep);
         return S_OK;
@@ -1221,7 +1221,7 @@ protected:
 
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetItemDetailsOf (name=%s, iColumn=%d, str=%s)\n",
                   item.GetDisplayName(SHGDN_NORMAL).GetString(), iColumn,
-                  item.GetItemDetailsOf(iColumn));
+                  item.GetItemDetailsOf(iColumn).GetString());
 
         StrToStrRet(item.GetItemDetailsOf(iColumn), &psd->str);
     }

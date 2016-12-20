@@ -95,7 +95,7 @@ private:
     }
 
 
-    CString GetLabel()
+    CString GetLabel() const
     {
         CString str;
 

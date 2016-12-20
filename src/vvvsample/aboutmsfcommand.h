@@ -16,8 +16,7 @@
 class CAboutMSFCommand : public CContextCommand
 {
 public:
-    virtual void operator()(const CMINVOKECOMMANDINFO* pici,
-                            const std::vector<CString>& /* filenames */)
+    void operator()(const CMINVOKECOMMANDINFO* pici, const std::vector<CString>& /* filenames */) override
     {
         CString strText;
         strText.Format(IDS_CONTEXTMENU_ABOUT_MASK, HIWORD(MSF_VER), LOWORD(MSF_VER));

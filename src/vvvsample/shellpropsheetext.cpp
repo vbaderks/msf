@@ -48,7 +48,7 @@ public:
         if (filenames.size() != 1 || ContainsUnknownExtension(filenames))
             return;
 
-        addpage(CPropertyPageVVV::CreateInstance(filenames[0]));
+        addpage(CPropertyPageVVV::CreateInstance(filenames.front()));
     }
 };
 

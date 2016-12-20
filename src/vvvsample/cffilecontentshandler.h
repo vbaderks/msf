@@ -26,7 +26,7 @@ public:
     }
 
 
-    virtual HRESULT Validate(const FORMATETC& formatetc) const MSF_NOEXCEPT
+    HRESULT Validate(const FORMATETC& formatetc) const MSF_NOEXCEPT override
     {
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
@@ -41,7 +41,7 @@ public:
     }
 
 
-    virtual void GetData(const FORMATETC& formatetc, STGMEDIUM& medium) const
+    void GetData(const FORMATETC& formatetc, STGMEDIUM& medium) const override
     {
         ATLASSERT(SUCCEEDED(Validate(formatetc)));
 

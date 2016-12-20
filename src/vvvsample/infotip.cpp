@@ -45,7 +45,7 @@ public:
 
     // Purpose: called by the shell/MSF when it needs the text for the infotip.
     //          The string is used for the tooltip and the text in the statusbar.
-    CString GetInfoTip(DWORD /* dwFlags */)
+    CString GetInfoTip(DWORD /* dwFlags */) const
     {
         return LoadString(IDS_SHELLEXT_LABEL) + L": " + _strLabel + L"\n" +
                LoadString(IDS_SHELLEXT_FILECOUNT) + L": " + _strFileCount;
