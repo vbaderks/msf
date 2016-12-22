@@ -7,7 +7,6 @@
 
 #include "msfbase.h"
 #include "updateregistry.h"
-#include "catchhandler.h"
 #include "queryinfoimpl.h"
 
 namespace MSF
@@ -32,7 +31,7 @@ class ATL_NO_VTABLE InfoTipImpl :
 public:
     /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) MSF_NOEXCEPT
+        PCWSTR szDescription, PCWSTR szRootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), szRootKey);
@@ -45,7 +44,7 @@ public:
     }
 
 
-    ~InfoTipImpl() MSF_NOEXCEPT
+    ~InfoTipImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
     }

@@ -45,6 +45,5 @@
 #pragma warning(pop)
 
 // Core MSF include files
-#include "shlobjhidden.h"
 #include "macros.h"
 #include "catchhandler.h"

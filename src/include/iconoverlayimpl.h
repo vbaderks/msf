@@ -6,7 +6,6 @@
 #pragma once
 
 #include "msfbase.h"
-#include "catchhandler.h"
 
 namespace MSF
 {

@@ -76,7 +76,7 @@ public:
 
 private:
 
-    unsigned int AddPidlToCida(CIDA* pcida, const CPidl& pidl, UINT index, UINT offset) const MSF_NOEXCEPT
+    unsigned int AddPidlToCida(CIDA* pcida, const CPidl& pidl, UINT index, UINT offset) const noexcept
     {
         pcida->aoffset[index] = offset;
 

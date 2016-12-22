@@ -34,13 +34,13 @@ public:
     }
 
 
-    bool IsEmpty() const MSF_NOEXCEPT
+    bool IsEmpty() const noexcept
     {
         return GetFileCount() == 0;
     }
 
 
-    unsigned int GetFileCount() const MSF_NOEXCEPT
+    unsigned int GetFileCount() const noexcept
     {
         ATLASSERT(m_stgmedium.tymed == TYMED_HGLOBAL && "Unable to retrieve filecount");
         return ::DragQueryFile(static_cast<HDROP>(m_stgmedium.hGlobal), static_cast<UINT>(-1), nullptr, 0);

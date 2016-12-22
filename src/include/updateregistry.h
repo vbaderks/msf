@@ -5,7 +5,7 @@
 //
 #pragma once
 
-#include "macros.h"
+#include "msfbase.h"
 #include "olestring.h"
 #include "strutil.h"
 
@@ -19,7 +19,7 @@ inline void StringFromCLSID(REFCLSID clsid, COleString& olestrCLSID)
 }
 
 
-inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR szDescription, const CLSID& clsid) MSF_NOEXCEPT
+inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR szDescription, const CLSID& clsid) noexcept
 {
     COleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
@@ -37,7 +37,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR sz
 
 /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
-    PCWSTR szDescription, const CLSID& clsid, PCWSTR szRootExt) MSF_NOEXCEPT
+    PCWSTR szDescription, const CLSID& clsid, PCWSTR szRootExt) noexcept
 {
     COleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
@@ -56,7 +56,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
 
 /// <summary>Registration function to register the extension based on the root extension.</summary>
 inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegister,
-    PCWSTR szExtension, PCWSTR szProgId) MSF_NOEXCEPT
+    PCWSTR szExtension, PCWSTR szProgId) noexcept
 {
     _ATL_REGMAP_ENTRY regmapEntries[] = 
     {
@@ -70,7 +70,7 @@ inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegiste
 
 
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
-    PCWSTR szShellExtDescription, const CLSID& clsid, const CLSID& clsidShellFolder, PCWSTR szExtension) MSF_NOEXCEPT
+    PCWSTR szShellExtDescription, const CLSID& clsid, const CLSID& clsidShellFolder, PCWSTR szExtension) noexcept
 {
     COleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
@@ -92,7 +92,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
 
 
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
-    PCWSTR szShellExtDescription, const CLSID& clsid, PCWSTR szExtension, UINT nFriendlyTypeNameId) MSF_NOEXCEPT
+    PCWSTR szShellExtDescription, const CLSID& clsid, PCWSTR szExtension, UINT nFriendlyTypeNameId) noexcept
 {
     COleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);

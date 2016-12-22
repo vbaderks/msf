@@ -25,7 +25,7 @@ public:
     }
 
 
-    ~CCoInitialize() MSF_NOEXCEPT
+    ~CCoInitialize()
     {
         ::CoUninitialize();
     }

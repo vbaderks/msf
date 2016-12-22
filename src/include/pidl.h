@@ -68,20 +68,20 @@ public:
     }
 
 
-    CPidl() MSF_NOEXCEPT : m_pidl(nullptr)
+    CPidl() noexcept : m_pidl(nullptr)
     {
     }
 
 
     // Purpose: special constructor for NULL pointer init.
-    CPidl(int null) MSF_NOEXCEPT : m_pidl(nullptr)
+    CPidl(int null) noexcept : m_pidl(nullptr)
     {
         (null);
         ATLASSERT(null == 0 && "Detected misuse of the special constructor");
     }
 
 
-    CPidl(LPITEMIDLIST pidl) MSF_NOEXCEPT : m_pidl(pidl)
+    CPidl(LPITEMIDLIST pidl) noexcept : m_pidl(pidl)
     {
     }
 
@@ -104,20 +104,20 @@ public:
     }
 
 
-    ~CPidl() MSF_NOEXCEPT
+    ~CPidl()
     {
         ILFree(m_pidl);
     }
 
 
-    void Attach(LPITEMIDLIST pidl) MSF_NOEXCEPT
+    void Attach(LPITEMIDLIST pidl) noexcept
     {
         ILFree(m_pidl);
         m_pidl = pidl;
     }
 
 
-    LPITEMIDLIST Detach() MSF_NOEXCEPT
+    LPITEMIDLIST Detach() noexcept
     {
         LPITEMIDLIST pidl = m_pidl;
         m_pidl = nullptr;
@@ -146,32 +146,32 @@ public:
     }
 
 
-    LPITEMIDLIST get() const MSF_NOEXCEPT
+    LPITEMIDLIST get() const noexcept
     {
         return m_pidl;
     }
 
 
-    operator LPCITEMIDLIST() const MSF_NOEXCEPT
+    operator LPCITEMIDLIST() const noexcept
     {
         return get();
     }
 
 
-    LPCITEMIDLIST operator->() const MSF_NOEXCEPT
+    LPCITEMIDLIST operator->() const noexcept
     {
         return get();
     }
 
 
-    UINT GetSize() const MSF_NOEXCEPT
+    UINT GetSize() const noexcept
     {
         return ILGetSize(m_pidl);
     }
 
 
     // Purpose: Adres operator to be used for passing address to be used as an out-parameter.
-    LPITEMIDLIST* operator&() MSF_NOEXCEPT
+    LPITEMIDLIST* operator&() noexcept
     {
         Attach(nullptr);
         return &m_pidl;

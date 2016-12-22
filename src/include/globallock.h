@@ -41,7 +41,7 @@ public:
     }
 
 
-    void Dispose() MSF_NOEXCEPT
+    void Dispose() noexcept
     {
         if (m_hMem)
         {
@@ -53,7 +53,7 @@ public:
     }
 
 
-    T* get() const MSF_NOEXCEPT
+    T* get() const noexcept
     {
         return reinterpret_cast<T*>(m_p);
     }
@@ -70,7 +70,7 @@ private:
         return p;
     }
 
-    CGlobalLock& operator=(const CGlobalLock&) MSF_NOEXCEPT = delete;
+    CGlobalLock& operator=(const CGlobalLock&) = delete;
 
     // Member variables
     void* m_p;

@@ -7,7 +7,6 @@
 
 #include "msfbase.h"
 #include "cfhdrop.h"
-#include "catchhandler.h"
 
 namespace MSF
 {

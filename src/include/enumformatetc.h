@@ -6,7 +6,6 @@
 #pragma once
 
 #include "msfbase.h"
-#include "catchhandler.h"
 #include <memory>
 
 namespace MSF
@@ -65,20 +64,20 @@ public:
     }
 
 
-    CEnumFORMATETC() MSF_NOEXCEPT
+    CEnumFORMATETC() noexcept
     {
         ATLTRACE2(atlTraceCOM, 0, L"CEnumFORMATETC::CEnumFORMATETC (instance=%p)\n", this);
     }
 
 
-    ~CEnumFORMATETC() MSF_NOEXCEPT
+    ~CEnumFORMATETC()
     {
         ATLTRACE2(atlTraceCOM, 0, L"CEnumFORMATETC::~CEnumFORMATETC (instance=%p)\n", this);
     }
 
 private:
 
-    void Initialize(std::unique_ptr<CFormatEtcs> qformatetcs) MSF_NOEXCEPT
+    void Initialize(std::unique_ptr<CFormatEtcs> qformatetcs) noexcept
     {
         _qformatetcs = std::move(qformatetcs);
 

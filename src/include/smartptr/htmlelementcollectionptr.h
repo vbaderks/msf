@@ -20,7 +20,7 @@ class IHTMLElementCollectionPtr : public ::IHTMLElementCollectionPtr
 public:
     // Default constructor.
     //
-    IHTMLElementCollectionPtr() MSF_NOEXCEPT :
+    IHTMLElementCollectionPtr() noexcept :
       ::IHTMLElementCollectionPtr()
     {
     }

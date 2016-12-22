@@ -8,7 +8,6 @@
 #include "msfbase.h"
 #include "updateregistry.h"
 #include "shellextinitimpl.h"
-#include "catchhandler.h"
 #include "strutil.h"
 #include "contextcommand.h"
 #include "custommenuhandler.h"
@@ -54,6 +53,14 @@ public:
         {
         }
 
+        CMenu(const CMenu& other)
+        {
+            _hmenu = rhs._hmenu;
+            _indexMenu = rhs._indexMenu;
+            _pidCmd = rhs._pidCmd;
+            _idCmdLast = rhs._idCmdLast;
+            _pmenuhost = rhs._pmenuhost;
+        }
 
         CMenu& operator=(const CMenu& rhs)
         {
@@ -218,7 +225,7 @@ public:
 
     /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) MSF_NOEXCEPT
+        PCWSTR szDescription, PCWSTR szRootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), szRootKey);
@@ -231,7 +238,7 @@ public:
     }
 
 
-    ~IContextMenuImpl() MSF_NOEXCEPT
+    ~IContextMenuImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::~IContextMenuImpl (instance=%p)\n", this);
 
@@ -454,7 +461,7 @@ private:
         }
 
 
-        void Clear() MSF_NOEXCEPT
+        void Clear() noexcept
         {
             delete _pcontextcommand;
             _pcontextcommand = nullptr;
@@ -470,13 +477,13 @@ private:
         }
 
 
-        CContextCommand& GetContextCommand() const MSF_NOEXCEPT
+        CContextCommand& GetContextCommand() const noexcept
         {
             return *_pcontextcommand;
         }
 
 
-        CCustomMenuHandler& GetCustomMenuHandler() const MSF_NOEXCEPT
+        CCustomMenuHandler& GetCustomMenuHandler() const noexcept
         {
             return *_pcustommenuhandler;
         }
@@ -489,7 +496,7 @@ private:
     };
 
 
-    void ClearMenuItems() MSF_NOEXCEPT
+    void ClearMenuItems() noexcept
     {
         for (auto& menuitem : _menuitems)
         {

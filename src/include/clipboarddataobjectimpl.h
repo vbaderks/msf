@@ -26,13 +26,13 @@ class CClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>
 
 public:
 
-    CClipboardDataObjectImpl() MSF_NOEXCEPT
+    CClipboardDataObjectImpl() noexcept
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::CClipboardDataObjectImpl (instance=%p)\n", this);
     }
 
 
-    ~CClipboardDataObjectImpl() MSF_NOEXCEPT
+    ~CClipboardDataObjectImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::~CClipboardDataObjectImpl (instance=%p)\n", this);
     }
@@ -188,26 +188,26 @@ private:
     class CExternalData
     {
     public:
-        CExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) MSF_NOEXCEPT :
+        CExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) noexcept :
             _formatetc(formatetc),
             _stgmedium(stgmedium)
         {
         }
 
 
-        CLIPFORMAT GetClipFormat() const MSF_NOEXCEPT
+        CLIPFORMAT GetClipFormat() const noexcept
         {
             return _formatetc.cfFormat;
         }
 
 
-        const FORMATETC& GetFormatetc() const MSF_NOEXCEPT
+        const FORMATETC& GetFormatetc() const noexcept
         {
             return _formatetc;
         }
 
 
-            HRESULT Validate(const FORMATETC& formatetc) const MSF_NOEXCEPT
+            HRESULT Validate(const FORMATETC& formatetc) const noexcept
         {
             if (formatetc.dwAspect != DVASPECT_CONTENT)
                 return DV_E_DVASPECT;
@@ -242,7 +242,7 @@ private:
     };
 
 
-    CCfHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const MSF_NOEXCEPT
+    CCfHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const noexcept
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
             [=](CCfHandler* cfHandler)
@@ -253,7 +253,7 @@ private:
     }
 
 
-    CExternalData* FindExternalData(CLIPFORMAT clipformat) const MSF_NOEXCEPT
+    CExternalData* FindExternalData(CLIPFORMAT clipformat) const noexcept
     {
         for (CExternalDatas::const_iterator it = m_externaldatas.begin(); it != m_externaldatas.end(); ++it)
         {

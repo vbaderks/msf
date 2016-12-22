@@ -16,7 +16,7 @@
 class CVVVItem : public CItemBase
 {
 public:
-    static int GetMaxNameLength(LPCWSTR /*pszName*/) MSF_NOEXCEPT
+    static int GetMaxNameLength(LPCWSTR /*pszName*/) noexcept
     {
         return 10; // note: limit is 10 for easy testing.
     }
@@ -52,13 +52,13 @@ public:
 
     SFGAOF GetAttributeOf(bool bSingleSelect, bool bReadOnly) const;
 
-    unsigned int GetID() const MSF_NOEXCEPT
+    unsigned int GetID() const noexcept
     {
         return GetItemData().nID;
     }
 
 
-    unsigned int GetSize() const MSF_NOEXCEPT
+    unsigned int GetSize() const noexcept
     {
         return GetItemData().nSize;
     }
@@ -70,7 +70,7 @@ public:
     }
 
 
-    bool IsFolder() const MSF_NOEXCEPT
+    bool IsFolder() const noexcept
     {
         return GetItemData().bFolder;
     }
@@ -109,7 +109,7 @@ private:
     }
 
 
-    const SItemData& GetItemData() const MSF_NOEXCEPT
+    const SItemData& GetItemData() const noexcept
     {
         return *reinterpret_cast<const SItemData*>(GetData());
     }

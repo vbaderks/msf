@@ -21,7 +21,7 @@ class ATL_NO_VTABLE CBrowserHelperObjectImpl :
     public IDispEventImpl<1, T, &DIID_DWebBrowserEvents2, &LIBID_SHDocVw, 1, 1>
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, PCWSTR wszDescription, bool bNoExplorer) MSF_NOEXCEPT
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, PCWSTR wszDescription, bool bNoExplorer) noexcept
     {
         COleString olestrCLSID;
         ATLVERIFY(SUCCEEDED(::StringFromCLSID(__uuidof(T), olestrCLSID.GetAddress())));
@@ -65,7 +65,7 @@ public:
     }
 
 protected:
-    bool IsAttachedSite(IUnknown* pUnkSite) MSF_NOEXCEPT
+    bool IsAttachedSite(IUnknown* pUnkSite) noexcept
     {
         return m_spUnkSite && m_spUnkSite.IsEqualObject(pUnkSite);
     }

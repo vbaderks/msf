@@ -25,8 +25,9 @@ public:
     {
     }
 
+    CCfFileContentsHandler& operator=(const CCfFileContentsHandler&) = delete;
 
-    HRESULT Validate(const FORMATETC& formatetc) const MSF_NOEXCEPT override
+    HRESULT Validate(const FORMATETC& formatetc) const noexcept override
     {
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
@@ -39,7 +40,6 @@ public:
 
         return S_OK;
     }
-
 
     void GetData(const FORMATETC& formatetc, STGMEDIUM& medium) const override
     {
@@ -55,8 +55,6 @@ public:
     }
 
 private:
-
-    CCfFileContentsHandler& operator=(const CCfFileContentsHandler&); // not implemented.
 
     CCfShellIdList* GetCfShellIdList() const
     {

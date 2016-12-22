@@ -16,7 +16,7 @@ namespace MSF
 class CPropSheetHost
 {
 public:
-    ~CPropSheetHost() MSF_NOEXCEPT
+    ~CPropSheetHost()
     {
         for (auto hpropsheetpage : _propsheetpages)
         {

@@ -48,20 +48,20 @@ public:
             }
 
 
-            void push_back(LPITEMIDLIST pidl) MSF_NOEXCEPT
+            void push_back(LPITEMIDLIST pidl) noexcept
             {
                 m_ppidl[m_nCount] = pidl;
                 ++m_nCount;
             }
 
 
-            ULONG size() const MSF_NOEXCEPT
+            ULONG size() const noexcept
             {
                 return m_nCount;
             }
 
 
-            void release() MSF_NOEXCEPT
+            void release() noexcept
             {
                 m_ppidl = nullptr;
             }

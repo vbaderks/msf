@@ -15,7 +15,7 @@ namespace MSF
 class CContextCommand
 {
 public:
-    virtual ~CContextCommand() MSF_NOEXCEPT
+    virtual ~CContextCommand()
     {
     }
 

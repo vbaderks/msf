@@ -19,14 +19,14 @@ class CFormatEtc : public FORMATETC
 {
 public:
     CFormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr, 
-        DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) MSF_NOEXCEPT
+        DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept
     {
         CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
     }
 
 
     CFormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
-         DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) MSF_NOEXCEPT
+         DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept
     {
         CommonConstruct(RegisterCf(lpszFormat), dwtymed, pdvtd, dwaspect, index);
     }
@@ -56,7 +56,7 @@ public:
         return *this;
     }
 
-    void Dispose() MSF_NOEXCEPT
+    void Dispose() noexcept
     {
         if (ptd)
         {
@@ -67,7 +67,7 @@ public:
 
 private:
 
-    void CommonConstruct(CLIPFORMAT cfformat, DWORD dwtymed, DVTARGETDEVICE* pdvtd, DWORD dwaspect, LONG index) MSF_NOEXCEPT
+    void CommonConstruct(CLIPFORMAT cfformat, DWORD dwtymed, DVTARGETDEVICE* pdvtd, DWORD dwaspect, LONG index) noexcept
     {
         cfFormat = cfformat;
         tymed    = dwtymed;

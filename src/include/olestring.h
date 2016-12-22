@@ -20,25 +20,25 @@ public:
         return pwz;
     }
 
-    COleString() MSF_NOEXCEPT : m_olestrCLSID(nullptr)
+    COleString() noexcept : m_olestrCLSID(nullptr)
     {
     }
 
-    ~COleString() MSF_NOEXCEPT
+    ~COleString()
     {
         CoTaskMemFree(m_olestrCLSID);
     }
 
-    COleString(const COleString&) MSF_NOEXCEPT = delete;
+    COleString(const COleString&) = delete;
 
-    COleString& operator=(const COleString&) MSF_NOEXCEPT = delete;
+    COleString& operator=(const COleString&) = delete;
 
-    operator LPOLESTR() const MSF_NOEXCEPT
+    operator LPOLESTR() const noexcept
     {
         return m_olestrCLSID;
     }
 
-    LPOLESTR* GetAddress() MSF_NOEXCEPT
+    LPOLESTR* GetAddress() noexcept
     {
         ATLASSERT(!m_olestrCLSID || !"instance already owns a olestring"); 
         return &m_olestrCLSID;

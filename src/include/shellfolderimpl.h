@@ -8,7 +8,6 @@
 #include "msfbase.h"
 #include "updateregistry.h"
 #include "pidl.h"
-#include "catchhandler.h"
 #include "shelluuids.h"
 #include "dfmdefines.h"
 #include "cfshellidlist.h"
@@ -81,7 +80,7 @@ public:
 
     // Registration function to register the COM object + the root extension.
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootExt, UINT nFriendlyTypeNameId) MSF_NOEXCEPT
+        PCWSTR szDescription, PCWSTR szRootExt, UINT nFriendlyTypeNameId) noexcept
     {
         COleString olestrCLSID;
         StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
@@ -731,7 +730,7 @@ public:
     }
 
     // IShellFolderContextMenuSink
-    virtual HRESULT OnPasteCmCmd() MSF_NOEXCEPT override
+    virtual HRESULT OnPasteCmCmd() noexcept override
     {
         try
         {
@@ -1207,7 +1206,7 @@ protected:
         return 0;
     }
 
-    void GetColumnDetailsOf(UINT iColumn, SHELLDETAILS* psd) MSF_NOEXCEPT
+    void GetColumnDetailsOf(UINT iColumn, SHELLDETAILS* psd) noexcept
     {
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::GetColumnDetailsOf (iColumn=%d, cxChar=%d)\n", iColumn, psd->cxChar);
 
@@ -1478,7 +1477,7 @@ protected:
     }
 
     // Note: if hwndOwner is NULL, errors should only be returned as COM failures.
-    HWND GetHwndOwner() const MSF_NOEXCEPT
+    HWND GetHwndOwner() const noexcept
     {
         return m_hwndOwner;
     }

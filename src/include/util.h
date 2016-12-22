@@ -59,7 +59,7 @@ inline DWORD GetFileSize(const ATL::CString& strFile)
 
 
 // Purpose: 'StrCmp' for numeric values. Usefull for IShellFolder::CompareIDs
-inline int IntCmp(int n1, int n2) MSF_NOEXCEPT
+inline int IntCmp(int n1, int n2) noexcept
 {
     if (n1 < n2)
         return -1;
@@ -71,7 +71,7 @@ inline int IntCmp(int n1, int n2) MSF_NOEXCEPT
 }
 
 
-inline int UIntCmp(unsigned int n1, unsigned int n2) MSF_NOEXCEPT
+inline int UIntCmp(unsigned int n1, unsigned int n2) noexcept
 {
     if (n1 < n2)
         return -1;
@@ -178,7 +178,7 @@ ATLPREFAST_UNSUPPRESS()
 
 // Purpose: helper function to retrieve string from registry. Function will return string and
 //          and true if string could be obtained.
-inline bool QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, ATL::CString& strValue) MSF_NOEXCEPT
+inline bool QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, ATL::CString& strValue) noexcept
 {
     unsigned long ulLength = 0;
     if (regkey.QueryStringValue(pszValueName, nullptr, &ulLength) != ERROR_MORE_DATA)
@@ -193,7 +193,7 @@ inline bool QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, A
 
 
 // Purpose: Helper for use cases to read optional registry keys.
-inline ATL::CString QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, const ATL::CString& strDefault = ATL::CString()) MSF_NOEXCEPT
+inline ATL::CString QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, const ATL::CString& strDefault = ATL::CString()) noexcept
 {
     ATL::CString strValue;
     if (QueryRegKeyStringValue(regkey, pszValueName, strValue))

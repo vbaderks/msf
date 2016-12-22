@@ -37,7 +37,7 @@ public:
     }
 
 
-    static void SetHGlobal(STGMEDIUM& stgmedium, HGLOBAL hglobal) MSF_NOEXCEPT
+    static void SetHGlobal(STGMEDIUM& stgmedium, HGLOBAL hglobal) noexcept
     {
         stgmedium.tymed          = TYMED_HGLOBAL;
         stgmedium.hGlobal        = hglobal;
@@ -45,27 +45,27 @@ public:
     }
 
 
-    CStgMedium() MSF_NOEXCEPT
+    CStgMedium() noexcept
     {
         tymed = TYMED_NULL;
         pUnkForRelease = nullptr;
     }
 
 
-    CStgMedium(HGLOBAL hg) MSF_NOEXCEPT
+    CStgMedium(HGLOBAL hg) noexcept
     {
         SetHGlobal(*this, hg);
     }
 
 
     // Purpose: passed in STGMEDIUM will be owned after a bitwise copy.
-    CStgMedium(const STGMEDIUM& stgmedium) MSF_NOEXCEPT
+    CStgMedium(const STGMEDIUM& stgmedium) noexcept
     {
         *static_cast<STGMEDIUM*>(this) = stgmedium;
     }
 
 
-    ~CStgMedium() MSF_NOEXCEPT
+    ~CStgMedium()
     {
         if (tymed != TYMED_NULL)
         {
@@ -74,20 +74,20 @@ public:
     }
 
 
-    HGLOBAL GetHGlobal() const MSF_NOEXCEPT
+    HGLOBAL GetHGlobal() const noexcept
     {
         ATLASSERT(tymed == TYMED_HGLOBAL && "Can only get hglobal if correct type");
         return hGlobal;
     }
 
 
-    void Detach() MSF_NOEXCEPT
+    void Detach() noexcept
     {
         tymed = TYMED_NULL;
     }
 
 
-    void Detach(STGMEDIUM& stgmedium) MSF_NOEXCEPT
+    void Detach(STGMEDIUM& stgmedium) noexcept
     {
         stgmedium = *this;
         Detach();

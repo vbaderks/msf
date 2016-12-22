@@ -47,7 +47,7 @@ public:
 class CShellItemId
 {
 public:
-    CShellItemId(const ShellItemIdMember* members, unsigned int count, bool bAddEmptyId = true) MSF_NOEXCEPT
+    CShellItemId(const ShellItemIdMember* members, unsigned int count, bool bAddEmptyId = true) noexcept
     {
         size_t size = sizeof(short) + GetMembersSize(members, count);
 
@@ -74,13 +74,13 @@ public:
     }
 
 
-    ~CShellItemId() MSF_NOEXCEPT
+    ~CShellItemId()
     {
         CoTaskMemFree(_pItemId);
     }
 
 
-    SHITEMID* Detach() MSF_NOEXCEPT
+    SHITEMID* Detach() noexcept
     {
         SHITEMID* pItemId = _pItemId;
         _pItemId = nullptr;
@@ -89,14 +89,14 @@ public:
 
 private:
 
-    void SetSize(size_t size) MSF_NOEXCEPT
+    void SetSize(size_t size) noexcept
     {
         ATLASSERT(size <= USHRT_MAX && "size will be sliced!");
         _pItemId->cb = static_cast<USHORT>(size);
     }
 
 
-    static size_t GetMembersSize(const ShellItemIdMember* members, unsigned int count) MSF_NOEXCEPT
+    static size_t GetMembersSize(const ShellItemIdMember* members, unsigned int count) noexcept
     {
         size_t size = 0;
 
@@ -116,14 +116,14 @@ private:
 class CShellItemIterator
 {
 public:
-    CShellItemIterator(const SHITEMID& itemid) MSF_NOEXCEPT : _p(itemid.abID)
+    CShellItemIterator(const SHITEMID& itemid) noexcept : _p(itemid.abID)
     {
 #ifdef _DEBUG
         _pitemid = &itemid;
 #endif
     }
 
-    ~CShellItemIterator() MSF_NOEXCEPT
+    ~CShellItemIterator()
     {
 #ifdef _DEBUG
         size_t s = static_cast<size_t>(_p - _pitemid->abID);
@@ -132,7 +132,7 @@ public:
     }
 
 
-    bool GetBool() MSF_NOEXCEPT
+    bool GetBool() noexcept
     {
         bool b = *reinterpret_cast<const bool *>(_p);
         _p += sizeof(b);
@@ -140,7 +140,7 @@ public:
     }
 
 
-    unsigned int GetUnsignedInt() MSF_NOEXCEPT
+    unsigned int GetUnsignedInt() noexcept
     {
         unsigned int n = *reinterpret_cast<const unsigned int *>(_p);
         _p += sizeof(n);

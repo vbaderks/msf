@@ -21,6 +21,7 @@ public:
     {
     }
 
+    CCfFileDescriptorHandler& operator=(const CCfFileDescriptorHandler&) = delete;
 
     void GetData(const FORMATETC&, STGMEDIUM& medium) const override
     {
@@ -53,8 +54,6 @@ public:
     }
 
 private:
-
-    CCfFileDescriptorHandler& operator=(const CCfFileDescriptorHandler&); // not implemented.
 
     IDataObject* m_pdataobject;
 };

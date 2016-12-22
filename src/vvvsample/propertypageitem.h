@@ -36,6 +36,7 @@ public:
     {
     }
 
+    CPropertyPageItem& operator=(const CPropertyPageItem&) = delete;
 
     LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
     {
@@ -90,8 +91,6 @@ private:
         // Note: SHLimitInputEdit is only supported on Windows XP.
         //ATLVERIFY(SUCCEEDED(SHLimitInputEdit(GetDlgItem(IDC_EDITm_item_NAME), m_rshellfolder)));
     }
-
-    CPropertyPageItem& operator=(const CPropertyPageItem&) MSF_NOEXCEPT;
 
     // Member variables
     const CVVVItem&       m_item;

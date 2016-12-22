@@ -13,7 +13,7 @@ class CMenuItemInfo : public MENUITEMINFO
 {
 public:
 
-    CMenuItemInfo() MSF_NOEXCEPT
+    CMenuItemInfo() noexcept
     {
         cbSize = sizeof(MENUITEMINFO);
         fMask = 0;
@@ -21,25 +21,25 @@ public:
     }
 
 
-    CMenuItemInfo(UINT id) MSF_NOEXCEPT : CMenuItemInfo()
+    CMenuItemInfo(UINT id) noexcept : CMenuItemInfo()
     {
         SetID(id);
     }
 
 
-    CMenuItemInfo(UINT id, const CString& str) MSF_NOEXCEPT : CMenuItemInfo(id)
+    CMenuItemInfo(UINT id, const CString& str) noexcept : CMenuItemInfo(id)
     {
         SetString(str);
     }
 
 
-    CMenuItemInfo(UINT id, const CString& str, HMENU hsubmenu) MSF_NOEXCEPT :  CMenuItemInfo(id, str)
+    CMenuItemInfo(UINT id, const CString& str, HMENU hsubmenu) noexcept :  CMenuItemInfo(id, str)
     {
         SetSubMenu(hsubmenu);
     }
 
 
-    CMenuItemInfo(UINT id, HMENU hsubmenu) MSF_NOEXCEPT : CMenuItemInfo(id)
+    CMenuItemInfo(UINT id, HMENU hsubmenu) noexcept : CMenuItemInfo(id)
     {
         SetSubMenu(hsubmenu);
     }
@@ -47,14 +47,14 @@ public:
     CMenuItemInfo(const CMenuItemInfo&) = delete;
     CMenuItemInfo& operator=(const CMenuItemInfo&) = delete;
 
-    void SetID(UINT id) MSF_NOEXCEPT
+    void SetID(UINT id) noexcept
     {
         fMask |= MIIM_ID;
         wID = id;
     }
 
 
-    void SetString(const CString& str) MSF_NOEXCEPT
+    void SetString(const CString& str) noexcept
     {
         fMask |= MIIM_TYPE;
         fType |= MFT_STRING;
@@ -64,20 +64,20 @@ public:
     }
 
 
-    void SetSubMenu(HMENU hsubmenu) MSF_NOEXCEPT
+    void SetSubMenu(HMENU hsubmenu) noexcept
     {
         fMask |= MIIM_SUBMENU;
         hSubMenu = hsubmenu;
     }
 
 
-    void SetOwnerDraw() MSF_NOEXCEPT
+    void SetOwnerDraw() noexcept
     {
         fType |= MFT_OWNERDRAW;
     }
 
 
-    void SetCheckMarkBmps(HBITMAP hChecked, HBITMAP hUnchecked) MSF_NOEXCEPT
+    void SetCheckMarkBmps(HBITMAP hChecked, HBITMAP hUnchecked) noexcept
     {
         fMask |= MIIM_CHECKMARKS;
         hbmpChecked   = hChecked;
@@ -85,7 +85,7 @@ public:
     }
 
 
-    void SetState(UINT uiState) MSF_NOEXCEPT
+    void SetState(UINT uiState) noexcept
     {
         fMask |= MIIM_STATE;
         fState = uiState;

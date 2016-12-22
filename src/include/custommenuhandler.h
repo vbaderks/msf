@@ -16,7 +16,7 @@ namespace MSF
 class CCustomMenuHandler
 {
 public:
-    virtual ~CCustomMenuHandler() MSF_NOEXCEPT
+    virtual ~CCustomMenuHandler()
     {
     }
 

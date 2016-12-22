@@ -9,13 +9,6 @@
 #define MSF_ARRAY_SIZE(t) (sizeof(t) / sizeof(t[0]))
 
 
-#if (_MSC_VER >= 1900)
-#define MSF_NOEXCEPT noexcept
-#else
-#define MSF_NOEXCEPT throw()
-#endif
-
-
 namespace MSF
 {
 

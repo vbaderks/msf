@@ -8,7 +8,6 @@
 
 #include "sfvmdefines.h"
 #include "shelluuids.h"
-#include "catchhandler.h"
 #include "pidl.h"
 #include "util.h"
 

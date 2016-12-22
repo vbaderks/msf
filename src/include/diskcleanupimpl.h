@@ -20,7 +20,7 @@ class ATL_NO_VTABLE DiskCleanupImpl : public IEmptyVolumeCache2
 public:
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) MSF_NOEXCEPT
+        PCWSTR szDescription, PCWSTR szRootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), szRootKey);
     }

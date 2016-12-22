@@ -29,25 +29,25 @@ public:
     CCfShellIdList& operator=(const CCfShellIdList&) = delete;
 
 
-    ~CCfShellIdList() MSF_NOEXCEPT
+    ~CCfShellIdList()
     {
         m_globalLock.Dispose();
     }
 
 
-    bool IsEmpty() const MSF_NOEXCEPT
+    bool IsEmpty() const noexcept
     {
         return GetItemCount() == 0;
     }
 
 
-    size_t GetItemCount() const MSF_NOEXCEPT
+    size_t GetItemCount() const noexcept
     {
         return m_globalLock.get()->cidl;
     }
 
 
-    LPCITEMIDLIST GetItem(size_t nIdex) const MSF_NOEXCEPT
+    LPCITEMIDLIST GetItem(size_t nIdex) const noexcept
     {
         const CIDA* pcida = m_globalLock.get();
         return reinterpret_cast<LPCITEMIDLIST>

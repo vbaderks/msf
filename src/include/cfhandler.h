@@ -30,30 +30,30 @@ public:
     }
 
 
-    virtual ~CCfHandler() MSF_NOEXCEPT
+    virtual ~CCfHandler()
     {
     }
 
 
-    CLIPFORMAT GetClipFormat() const MSF_NOEXCEPT
+    CLIPFORMAT GetClipFormat() const noexcept
     {
         return m_clipformat;
     }
 
 
-    bool CanGetData() const MSF_NOEXCEPT
+    bool CanGetData() const noexcept
     {
         return m_bCanGetData;
     }
 
 
-    bool CanSetData() const MSF_NOEXCEPT
+    bool CanSetData() const noexcept
     {
         return m_bCanSetData;
     }
 
 
-    virtual HRESULT Validate(const FORMATETC& formatetc) const MSF_NOEXCEPT
+    virtual HRESULT Validate(const FORMATETC& formatetc) const noexcept
     {
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;

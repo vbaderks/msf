@@ -8,7 +8,6 @@
 #include "msfbase.h"
 #include "updateregistry.h"
 #include "shellextinitimpl.h"
-#include "catchhandler.h"
 
 #pragma comment(lib, "comctl32")
 
@@ -23,7 +22,7 @@ class ATL_NO_VTABLE IShellPropSheetExtImpl :
 public:
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) MSF_NOEXCEPT
+        PCWSTR szDescription, PCWSTR szRootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), szRootKey);
     }

@@ -7,10 +7,9 @@
 
 
 #include "msfbase.h"
-#include <atlctl.h>
 #include "stgmedium.h"
-#include "catchhandler.h"
 #include "strutil.h"
+#include <atlctl.h>
 
 
 namespace MSF

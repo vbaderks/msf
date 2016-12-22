@@ -25,6 +25,8 @@ public:
     {
     }
 
+    CCfPerformedDropEffectHandler& operator=(const CCfPerformedDropEffectHandler&) = delete;
+
     void SetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium, bool bRelease) override
     {
         ATLASSERT(IsValid(formatetc, stgmedium) && "Passed invalid arguments");
@@ -55,7 +57,6 @@ public:
     }
 
 private:
-    CCfPerformedDropEffectHandler& operator=(const CCfPerformedDropEffectHandler&); // not implemented.
 
     void NotifySink() const
     {
