@@ -345,6 +345,8 @@
     <ClInclude Include="include\infotipimpl.h">
       <Filter>Header Files\Impl</Filter>
     </ClInclude>
+    <ClInclude Include="include\diskcleanupimpl.h" />
+    <ClInclude Include="include\iconoverlayimpl.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="include\shell32missing.lib" />
