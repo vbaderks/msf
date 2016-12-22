@@ -340,12 +340,12 @@ public:
     // IFolderViewSettings
     STDMETHOD(GetColumnPropertyList)(__RPC__in REFIID /*riid*/, __RPC__deref_out_opt void ** /*ppv*/) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetColumnPropertyList");
+        ATLTRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetColumnPropertyList");
     }
 
     STDMETHOD(GetGroupByProperty)(__RPC__out PROPERTYKEY * /*pkey*/, __RPC__out BOOL * /*pfGroupAscending*/) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetGroupByProperty");
+        ATLTRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetGroupByProperty");
     }
 
     STDMETHOD(GetViewMode)(__RPC__out FOLDERLOGICALVIEWMODE *plvm) override
@@ -357,12 +357,12 @@ public:
 
     STDMETHOD(GetIconSize)(__RPC__out UINT * /*puIconSize*/) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetIconSize");
+        ATLTRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetIconSize");
     }
 
     STDMETHOD(GetFolderFlags)(__RPC__out FOLDERFLAGS * /*pfolderMask*/, __RPC__out FOLDERFLAGS * /*pfolderFlags*/) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetFolderFlags");
+        ATLTRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetFolderFlags");
     }
 
     STDMETHOD(GetSortColumns)(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, UINT cColumnsIn, __RPC__out UINT * pcColumnsOut) override
@@ -370,12 +370,12 @@ public:
         (rgSortColumns);
         (cColumnsIn);
         (pcColumnsOut);
-        MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetSortColumns");
+        ATLTRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetSortColumns");
     }
 
     STDMETHOD(GetGroupSubsetCount)(__RPC__out UINT * /*pcVisibleRows*/) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetGroupSubsetCount");
+        ATLTRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetGroupSubsetCount");
     }
 
 protected:

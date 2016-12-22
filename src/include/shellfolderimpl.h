@@ -204,7 +204,7 @@ public:
 
     STDMETHOD(GetFolderTargetInfo)(__RPC__out PERSIST_FOLDER_TARGET_INFO* /* ppfti */) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderImpl::IPersistFolder3::GetFolderTargetInfo");
+        ATLTRACENOTIMPL(L"IShellFolderImpl::IPersistFolder3::GetFolderTargetInfo");
     }
 
     // IPersistIDList
@@ -268,7 +268,7 @@ public:
     STDMETHOD(BindToStorage)(__RPC__in LPCITEMIDLIST, LPBC, __RPC__in REFIID, __RPC__deref_out_opt LPVOID* ppRetVal) override
     {
         *ppRetVal = nullptr;
-        MSF_TRACENOTIMPL(L"IShellFolderImpl::IShellFolder::BindToStorage");
+        ATLTRACENOTIMPL(L"IShellFolderImpl::IShellFolder::BindToStorage");
     }
 
     // Purpose: This function is called to sort items in details view mode.
@@ -557,12 +557,12 @@ public:
 
     STDMETHOD(GetDefaultSearchGUID)(__RPC__out GUID* /*pguid*/) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderImpl::GetDefaultSearchGUID");
+        ATLTRACENOTIMPL(L"IShellFolderImpl::GetDefaultSearchGUID");
     }
 
     STDMETHOD(EnumSearches)(__RPC__deref_out_opt IEnumExtraSearch** /*ppenum */) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderImpl::EnumSearches");
+        ATLTRACENOTIMPL(L"IShellFolderImpl::EnumSearches");
     }
 
     STDMETHOD(GetDefaultColumn)(DWORD /*dwReserved*/, __RPC__out ULONG* pSort, __RPC__out ULONG* pDisplay) override
@@ -588,12 +588,12 @@ public:
 
     STDMETHOD(GetDetailsEx)(__RPC__in_opt LPCITEMIDLIST /*pidl*/, __RPC__in const SHCOLUMNID* /*pscid*/, __RPC__out VARIANT* /*pv*/) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderImpl::GetDetailsEx");
+        ATLTRACENOTIMPL(L"IShellFolderImpl::GetDetailsEx");
     }
 
     STDMETHOD(MapColumnToSCID)(UINT /*iColumn*/, __RPC__out SHCOLUMNID* /*pscid*/) override
     {
-        MSF_TRACENOTIMPL(L"IShellFolderImpl::MapColumnToSCID");
+        ATLTRACENOTIMPL(L"IShellFolderImpl::MapColumnToSCID");
     }
 
     // Purpose: The Shell will call this function to retrieve column header names and 

@@ -6,18 +6,25 @@
 
 #pragma once
 
+// To support testing with the /Wall switch certain warning must be disabled when including
+// Win32, C\C++ runtime or ATL header files.
+
+#ifdef WALL_TESTING
+#pragma warning(disable: 4226) // '': assignment operator was implicitly defined as deleted (VS2015)
+#pragma warning(disable: 4263) // 'function' : member function does not override any base class virtual member function (VS2015)
+#pragma warning(disable: 4264) // auto generated after C4263 (VS2015)
+#pragma warning(disable: 4365) // 'argument' conversion from 'unsigned int' to 'int' (VS2015)
+#pragma warning(disable: 4464) // relative include path contains '..' (VS2015)
+#pragma warning(disable: 4514) // '...': unreferenced inline function has been removed (VS2015)
+#pragma warning(disable: 4710) // '...': function not inlined (VS2015)
+#pragma warning(disable: 4820) // 'x' bytes padding added after data member. (VS2015)
+#endif
+
 // Enabled improved type checking of the Win32 SDK header files.
 #define STRICT
 
 // Allow use of features specific to Windows 7 or later.
 #define _WIN32_WINNT 0x0601
-
-// Allow use of features specific to Windows 98 or later.
-// Change this to the appropriate value to target Windows Me or later.
-#define _WIN32_WINDOWS 0x0410
-
-// Allow use of features specific to IE.
-#define _WIN32_IE 0x0501  // Target IE 5.01 (required for definition of shell interfaces)
 
 // Enable Windows XP Side by Side functionality to use the new visual styles.
 // Note: MessageBox is not redefined by winuser.inl (by design): need to call explicit IsolationAwareMessageBox

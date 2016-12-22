@@ -56,14 +56,6 @@ public:
     }
 
 
-    ~IExtractImageImpl()
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::~IExtractImageImpl (instance=%p)\n", this);
-
-        Dispose();
-    }
-
-
     // IPersistFile
     STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID) override
     {
@@ -79,25 +71,25 @@ public:
 
     STDMETHOD(IsDirty)() override
     {
-        MSF_TRACENOTIMPL(L"IExtractImageImpl::IsDirty");
+        ATLTRACENOTIMPL(L"IExtractImageImpl::IsDirty");
     }
 
 
     STDMETHOD(Save)(LPCOLESTR, BOOL) override
     {
-        MSF_TRACENOTIMPL(L"IExtractImageImpl::Save");
+        ATLTRACENOTIMPL(L"IExtractImageImpl::Save");
     }
 
 
     STDMETHOD(SaveCompleted)(LPCOLESTR) override
     {
-        MSF_TRACENOTIMPL(L"IExtractImageImpl::SaveCompleted");
+        ATLTRACENOTIMPL(L"IExtractImageImpl::SaveCompleted");
     }
 
 
     STDMETHOD(GetCurFile)(LPOLESTR*) override
     {
-        MSF_TRACENOTIMPL(L"IExtractImageImpl::GetCurFile");
+        ATLTRACENOTIMPL(L"IExtractImageImpl::GetCurFile");
     }
 
 
@@ -182,6 +174,14 @@ public:
     }
 
 protected:
+
+    ~IExtractImageImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::~IExtractImageImpl (instance=%p)\n", this);
+
+        Dispose();
+    }
+
 
     void Dispose()
     {

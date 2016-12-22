@@ -231,9 +231,6 @@
     <ClInclude Include="include\globallock.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>
-    <ClInclude Include="include\ibrowserframeoptions.h">
-      <Filter>Header Files\Support</Filter>
-    </ClInclude>
     <ClInclude Include="include\idldatacreatefromidarray.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>

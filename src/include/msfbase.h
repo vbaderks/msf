@@ -8,8 +8,8 @@
 
 // Purpose: base include file for msf header files. Includes most common header files.
 // MSF supports the following compilers:
-// _MSC_VER = 1800 : Visual Studio 2013
 // _MSC_VER = 1900 : Visual Studio 2015
+// _MSC_VER = 1910 : Visual Studio 2017
 
 // _PREFAST_ is defined when the Visual Studio C\C++ compiler is executed with the /analyze switch, it activates the static analyzer.
 
@@ -17,16 +17,12 @@
 // Win32, C\C++ runtime or ATL header files.
 
 #pragma warning(push)
-#pragma warning(disable: 4100) // unreferenced formal parameter
-#pragma warning(disable: 4127) // conditional expression is constant
-#pragma warning(disable: 4191) // 'type cast' : unsafe conversion from 'FARPROC' to 'PFN'
-#pragma warning(disable: 4263) // 'function' : member function does not override any base class virtual member function
-#pragma warning(disable: 4264) // auto generated after C4263
-#pragma warning(disable: 4201) // nonstandard extension used : nameless struct/union
-#pragma warning(disable: 4512) // assignment operator could not be generated
-#pragma warning(disable: 4619) // #pragma warning : there is no warning number 'xxx'
-#pragma warning(disable: 4668) // not a preprocessor macro
-#pragma warning(disable: 4917) // a GUID can only be defines to a class, interface, etc.
+#pragma warning(disable: 4191) // 'type cast' : unsafe conversion from 'FARPROC' to 'PFN' (VS2015)
+#pragma warning(disable: 4625) // '...': copy constructor was implicitly defined as deleted (VS2015)
+#pragma warning(disable: 4668) // is not defined a preprocessor macro, replacing it with 0. (VS2015)
+#pragma warning(disable: 4917) // a GUID can only be defines to a class, interface, etc. (VS2015)
+#pragma warning(disable: 4987) // nonstandard extension used : 'throw (...) (VS2015)
+#pragma warning(disable: 5027) // '...': move assignment operator was implicitly defined as deleted (VS2015)
 
 // Standard C++ library
 #include <vector>

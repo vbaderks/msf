@@ -6,21 +6,17 @@
 #pragma once
 
 
-#include "ibrowserframeoptions.h"
+#include "msfbase.h"
 
 
 namespace MSF
 {
 
-// Provide a more readable name for the MIDL generated enum.
-typedef __MIDL_IBrowserFrameOptions_0001 EBrowserFrameOptions;
-
-
 class ATL_NO_VTABLE IBrowserFrameOptionsImpl :
     public IBrowserFrameOptions
 {
 public:
-    IBrowserFrameOptionsImpl(EBrowserFrameOptions browserframeoptions = BFO_NONE) :
+    IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) :
         m_browserframeoptions(browserframeoptions)
     {
     }
@@ -40,7 +36,7 @@ public:
 
 protected:
 
-    EBrowserFrameOptions m_browserframeoptions;
+    BROWSERFRAMEOPTIONS m_browserframeoptions;
 };
 
 } // namespace MSF

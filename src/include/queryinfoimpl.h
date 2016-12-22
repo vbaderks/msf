@@ -33,7 +33,7 @@ public:
         // - QIF_CACHED 
         // - QIF_DONTEXPANDFOLDER
 
-        MSF_TRACENOTIMPL(L"IQueryInfoImpl::GetInfoFlags");
+        ATLTRACENOTIMPL(L"IQueryInfoImpl::GetInfoFlags");
     }
 
     STDMETHOD(GetInfoTip)(DWORD dwFlags, _Outptr_ WCHAR** ppwszTip)

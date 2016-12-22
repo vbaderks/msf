@@ -105,19 +105,19 @@ public:
     STDMETHOD(Skip)(ULONG /*celt*/)
     {
         // Note: function not used by explorer \ system folder view.
-        MSF_TRACENOTIMPL(L"IEnumIDListImpl::Skip");
+        ATLTRACENOTIMPL(L"IEnumIDListImpl::Skip");
     }
 
     STDMETHOD(Reset)()
     {
         // Note: function not used by explorer \ system folder view.
-        MSF_TRACENOTIMPL(L"IEnumIDListImpl::Reset");
+        ATLTRACENOTIMPL(L"IEnumIDListImpl::Reset");
     }
 
     STDMETHOD(Clone)(__RPC__deref_out_opt IEnumIDList** /*ppenum*/)
     {
         // Note: function not used by explorer \ system folder view.
-        MSF_TRACENOTIMPL(L"IEnumIDListImpl::Clone");
+        ATLTRACENOTIMPL(L"IEnumIDListImpl::Clone");
     }
 };
 

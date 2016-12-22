@@ -79,7 +79,7 @@ public:
     {
         // The Shell doesn't call this function for file class Property Sheets.
         // Only for control panel objects.
-        MSF_TRACENOTIMPL(L"CPropSheetExtImpl::ReplacePage");
+        ATLTRACENOTIMPL(L"CPropSheetExtImpl::ReplacePage");
     }
 
 protected:
