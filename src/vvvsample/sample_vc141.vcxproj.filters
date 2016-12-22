@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Manifest Include="sample.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sample.def" />
+    <None Include="sample1.vvv" />
+    <None Include="sample2.xml" />
+    <None Include="menuicon.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="vvv.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="aboutmsfcommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cffilecontentshandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cffiledescriptorhandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="columns.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="contextmenuclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="copyhookclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="editwithnotepadcommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enumidlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extractimageclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="module.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propertypageitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propertypagevvv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vvvpropertysheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vvvitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vvvfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shellpropsheetextclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shellfolderviewcb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shellfolderdataobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shellfolderclsid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="contextmenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="copyhook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractimage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="infotip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shellfolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shellpropsheetext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vvvitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vvvfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{8374cdff-105f-47c4-a636-cf76af4f7f4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{cc8dc67f-3af3-4f20-b208-dcf4b5b8836c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{16739e5c-3cfc-4cb5-82f1-c27d090539b8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sample.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
