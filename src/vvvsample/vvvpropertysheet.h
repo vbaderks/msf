@@ -19,6 +19,8 @@ public:
         AddPage(CPropertyPageItem::CreateInstance(item, _wEventId, pshellfolder));
     }
 
+    CVVVPropertySheet(const CVVVPropertySheet&) = delete;
+    CVVVPropertySheet& operator=(const CVVVPropertySheet&) = delete;
 
     int DoModal(HWND hwnd, long& wEventId)
     {
@@ -30,9 +32,6 @@ public:
     }
 
 private:
-
-    CVVVPropertySheet(const CVVVPropertySheet&);            // not implemented by design
-    CVVVPropertySheet& operator=(const CVVVPropertySheet&); // not implemented by design
 
     // Members variables
     long _wEventId;

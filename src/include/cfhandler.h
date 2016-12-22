@@ -67,7 +67,7 @@ public:
         return S_OK;
     }
 
-    
+
     virtual void GetData(const FORMATETC&, STGMEDIUM&) const
     {
     }

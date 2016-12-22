@@ -8,7 +8,6 @@
 #include "msfbase.h"
 #include "cfhdrop.h"
 #include "catchhandler.h"
-#include "smartptr/dataobjectptr.h"
 
 namespace MSF
 {

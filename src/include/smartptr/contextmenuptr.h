@@ -5,8 +5,7 @@
 //
 #pragma once
 
-#include "msfbase.h"
-#include "shelluuids.h"
+#include "../msfbase.h"
 
 _COM_SMARTPTR_TYPEDEF(IContextMenu, __uuidof(IContextMenu));
 
@@ -46,13 +45,13 @@ public:
     void GetCommandString(UINT_PTR idCmd, UINT uFlags, LPSTR pszName, UINT cchMax)
     {
         RaiseExceptionIfFailed(
-            GetInterfacePtr()->GetCommandString(idCmd, uFlags, 0, pszName, cchMax));
+            GetInterfacePtr()->GetCommandString(idCmd, uFlags, nullptr, pszName, cchMax));
     }
 
     void GetCommandString(UINT_PTR idCmd, UINT uFlags, LPWSTR wszName, UINT cchMax)
     {
         RaiseExceptionIfFailed(
-            GetInterfacePtr()->GetCommandString(idCmd, uFlags, 0, reinterpret_cast<char*>(wszName), cchMax));
+            GetInterfacePtr()->GetCommandString(idCmd, uFlags, nullptr, reinterpret_cast<char*>(wszName), cchMax));
     }
 };
 

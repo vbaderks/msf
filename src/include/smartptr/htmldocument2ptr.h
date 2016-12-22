@@ -5,7 +5,7 @@
 //
 #pragma once
 
-
+#include "../msfbase.h"
 #include <mshtml.h>
 
 _COM_SMARTPTR_TYPEDEF(IHTMLDocument2, __uuidof(IHTMLDocument2));

@@ -27,7 +27,7 @@ inline bool ToBool(BOOL b)
 }
 
 
-bool ToBool(bool b); // not defined by design. Detects incorrect usage.
+bool ToBool(bool b) = delete; // not defined by design. Detects incorrect usage.
 
 
 __declspec(noreturn) inline void RaiseException(HRESULT hr = E_FAIL)

@@ -9,6 +9,7 @@
 #include "cfhandler.h"
 #include "pidl.h"
 #include "util.h"
+#include "stgmedium.h"
 
 
 namespace MSF
@@ -28,8 +29,9 @@ public:
     {
     }
 
+    CCfShellIdListHandler& operator=(const CCfShellIdListHandler&) = delete;
 
-    virtual HRESULT Validate(const FORMATETC& formatetc) const
+    HRESULT Validate(const FORMATETC& formatetc) const override
     {
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
@@ -44,7 +46,7 @@ public:
     }
 
 
-    virtual void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const
+    void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const override
     {
         UINT sizeheader = static_cast<UINT>(sizeof(CIDA) + (sizeof(UINT) * m_pidls.size()));
 
@@ -73,8 +75,6 @@ public:
     }
 
 private:
-
-    CCfShellIdListHandler& operator=(const CCfShellIdListHandler&); // not implemented by design.
 
     unsigned int AddPidlToCida(CIDA* pcida, const CPidl& pidl, UINT index, UINT offset) const MSF_NOEXCEPT
     {

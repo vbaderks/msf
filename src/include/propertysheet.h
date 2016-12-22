@@ -65,6 +65,9 @@ public:
         }
     }
 
+    CPropertySheet(const CPropertySheet&) = delete;
+
+    CPropertySheet& operator=(const CPropertySheet&) = delete;
 
     void AddPage(HPROPSHEETPAGE hpage)
     {
@@ -99,9 +102,6 @@ public:
     }
 
 private:
-
-    CPropertySheet(const CPropertySheet&);            // not implemented by design
-    CPropertySheet& operator=(const CPropertySheet&); // not implemented by design
 
     // Member variables.
     CPropSheetHeader            _propsheetheader;

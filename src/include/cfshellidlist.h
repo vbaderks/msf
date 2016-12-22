@@ -26,6 +26,9 @@ public:
     }
 
 
+    CCfShellIdList& operator=(const CCfShellIdList&) = delete;
+
+
     ~CCfShellIdList() MSF_NOEXCEPT
     {
         m_globalLock.Dispose();
@@ -52,8 +55,6 @@ public:
     }
 
 private:
-
-    CCfShellIdList& operator=(const CCfShellIdList&); // not implemented by design.
 
     CGlobalLock<CIDA> m_globalLock;
     CStgMedium        m_medium;

@@ -81,16 +81,16 @@ public:
     }
 
 
+    void Detach() MSF_NOEXCEPT
+    {
+        tymed = TYMED_NULL;
+    }
+
+
     void Detach(STGMEDIUM& stgmedium) MSF_NOEXCEPT
     {
         stgmedium = *this;
         Detach();
-    }
-
-
-    void Detach() MSF_NOEXCEPT
-    {
-        tymed = TYMED_NULL;
     }
 
 
@@ -106,7 +106,7 @@ public:
     }
 
 
-    void CopyTo(STGMEDIUM& stgmedium)
+    void CopyTo(STGMEDIUM& stgmedium) const
     {
         stgmedium.tymed          = tymed;
         stgmedium.pUnkForRelease = pUnkForRelease;

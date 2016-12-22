@@ -13,47 +13,39 @@ class CMenuItemInfo : public MENUITEMINFO
 {
 public:
 
-    CMenuItemInfo()
+    CMenuItemInfo() MSF_NOEXCEPT
     {
-        CommonConstruct();
+        cbSize = sizeof(MENUITEMINFO);
+        fMask = 0;
+        fType = 0;
     }
 
 
-    CMenuItemInfo(UINT id)
+    CMenuItemInfo(UINT id) MSF_NOEXCEPT : CMenuItemInfo()
     {
-        CommonConstruct();
-
         SetID(id);
     }
 
 
-    CMenuItemInfo(UINT id, const CString& str)
+    CMenuItemInfo(UINT id, const CString& str) MSF_NOEXCEPT : CMenuItemInfo(id)
     {
-        CommonConstruct();
-
-        SetID(id);
         SetString(str);
     }
 
 
-    CMenuItemInfo(UINT id, const CString& str, HMENU hsubmenu)
+    CMenuItemInfo(UINT id, const CString& str, HMENU hsubmenu) MSF_NOEXCEPT :  CMenuItemInfo(id, str)
     {
-        CommonConstruct();
-
-        SetID(id);
-        SetString(str);
         SetSubMenu(hsubmenu);
     }
 
 
-    CMenuItemInfo(UINT id, HMENU hsubmenu) MSF_NOEXCEPT
+    CMenuItemInfo(UINT id, HMENU hsubmenu) MSF_NOEXCEPT : CMenuItemInfo(id)
     {
-        CommonConstruct();
-
-        SetID(id);
         SetSubMenu(hsubmenu);
     }
 
+    CMenuItemInfo(const CMenuItemInfo&) = delete;
+    CMenuItemInfo& operator=(const CMenuItemInfo&) = delete;
 
     void SetID(UINT id) MSF_NOEXCEPT
     {
@@ -62,7 +54,7 @@ public:
     }
 
 
-    void SetString(const CString& str)
+    void SetString(const CString& str) MSF_NOEXCEPT
     {
         fMask |= MIIM_TYPE;
         fType |= MFT_STRING;
@@ -100,16 +92,6 @@ public:
     }
 
 private:
-
-    void CommonConstruct() MSF_NOEXCEPT
-    {
-        cbSize = sizeof(MENUITEMINFO);
-        fMask  = 0;
-        fType  = 0;
-    }
-
-    CMenuItemInfo(const CMenuItemInfo&);            // not implemented by design
-    CMenuItemInfo& operator=(const CMenuItemInfo&); // not implemented by design
 
     // Member variables.
     CString m_strCache;

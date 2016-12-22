@@ -6,8 +6,8 @@
 #pragma once
 
 
-#include <comdef.h>
-#include "..\persistfolderptr.h"
+#include "../msfbase.h"
+#include "persistfolderptr.h"
 
 
 _COM_SMARTPTR_TYPEDEF(IShellFolder2, __uuidof(IShellFolder2));

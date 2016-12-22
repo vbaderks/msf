@@ -25,7 +25,7 @@ public:
     {
     }
 
-    virtual void SetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium, bool bRelease)
+    void SetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium, bool bRelease) override
     {
         ATLASSERT(IsValid(formatetc, stgmedium) && "Passed invalid arguments");
         (formatetc); // not used in release.
@@ -47,7 +47,7 @@ public:
         }
     }
 
-    virtual void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const
+    void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const override
     {
         CStgMedium medium(GlobalAllocThrow(sizeof(DWORD)));
         *static_cast<DWORD*>(medium.GetHGlobal()) = m_dwEffect;
@@ -57,7 +57,7 @@ public:
 private:
     CCfPerformedDropEffectHandler& operator=(const CCfPerformedDropEffectHandler&); // not implemented.
 
-    void NotifySink()
+    void NotifySink() const
     {
         if (m_rperformeddropeffectsink)
         {

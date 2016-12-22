@@ -70,7 +70,7 @@ private:
         return p;
     }
 
-    CGlobalLock& operator=(const CGlobalLock&) MSF_NOEXCEPT; // not implemented by design.
+    CGlobalLock& operator=(const CGlobalLock&) MSF_NOEXCEPT = delete;
 
     // Member variables
     void* m_p;

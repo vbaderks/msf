@@ -6,8 +6,7 @@
 #pragma once
 
 
-#include "msfbase.h"
-#include "shelluuids.h"
+#include "../msfbase.h"
 
 
 _COM_SMARTPTR_TYPEDEF(IColumnProvider, __uuidof(IColumnProvider));

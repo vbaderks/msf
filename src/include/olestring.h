@@ -29,6 +29,10 @@ public:
         CoTaskMemFree(m_olestrCLSID);
     }
 
+    COleString(const COleString&) MSF_NOEXCEPT = delete;
+
+    COleString& operator=(const COleString&) MSF_NOEXCEPT = delete;
+
     operator LPOLESTR() const MSF_NOEXCEPT
     {
         return m_olestrCLSID;
@@ -41,8 +45,6 @@ public:
     }
 
 private:
-    COleString(const COleString&) MSF_NOEXCEPT;            // not implemented by design.
-    COleString& operator=(const COleString&) MSF_NOEXCEPT; // not implemented by design.
 
     LPOLESTR m_olestrCLSID;
 };

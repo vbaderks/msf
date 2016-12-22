@@ -5,8 +5,9 @@
 //
 #pragma once
 
+#include "../msfbase.h"
 #include <mshtml.h>
-#include "macros.h"
+#include "../macros.h"
 
 _COM_SMARTPTR_TYPEDEF(IHTMLElementCollection, __uuidof(IHTMLElementCollection));
 
