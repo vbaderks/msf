@@ -14,6 +14,8 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+*.opendb
+*.db
 
 # Build results
 [Bb]in/
