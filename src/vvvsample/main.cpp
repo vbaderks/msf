@@ -43,6 +43,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 }
 
 // Purpose: Used to determine whether the DLL can be unloaded by COM
+__control_entrypoint(DllExport)
 STDAPI DllCanUnloadNow()
 {
     auto hr = _Module.DllCanUnloadNow();
@@ -58,6 +59,7 @@ STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID
 }
 
 // Purpose: Adds entries to the system registry
+__control_entrypoint(DllExport)
 STDAPI DllRegisterServer()
 {
     auto hr = _Module.DllRegisterServer(/* bRegTypeLib = */ false);
@@ -75,6 +77,7 @@ STDAPI DllRegisterServer()
 }
 
 // Purpose: Removes entries from the system registry
+__control_entrypoint(DllExport)
 STDAPI DllUnregisterServer()
 {
     _Module.DllUnregisterServer(); // note: will fail if already unregistered; not an issue.

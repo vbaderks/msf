@@ -44,6 +44,8 @@
 
 #define _ATL_EX_CONVERSION_MACROS_ONLY // Only use the new Unicode <-> Ansi conversion macro's.
 
+#define _ATL_NO_HOSTING // will prevent including mshtml.h, which is not /Zc:strictStrings compatible.
+
 #include "..\include\msfbase.h"
 
 // Disable not usefull warnings.
