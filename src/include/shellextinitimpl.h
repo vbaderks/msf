@@ -17,7 +17,7 @@ public:
     // IShellExtInit
     STDMETHOD(Initialize)(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) override
     {
-        (pidlFolder);
+        UNREFERENCED_PARAMETER(pidlFolder);
         ATLTRACE2(atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, pDataObject);
         ATLASSERT(pDataObject && "Invalid argument");
 
@@ -30,6 +30,8 @@ public:
     }
 
 protected:
+    ~IShellExtInitImpl() = default;
+
     void RegisterExtension(CString strExtension)
     {
         _extensions.push_back(strExtension.MakeLower());

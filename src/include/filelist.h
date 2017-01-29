@@ -61,11 +61,13 @@ public:
     }
 
 
-public:
     LPDATAADVISEHOLDER m_spDataAdviseHolder;
 
+protected:
+    ~CFileList() = default;
+
 private:
-    void ValidateFormatEtc(const FORMATETC* pformatetc) const
+    static void ValidateFormatEtc(const FORMATETC* pformatetc)
     {
         RaiseExceptionIf(pformatetc->cfFormat != CF_HDROP, DV_E_FORMATETC);
         RaiseExceptionIf(pformatetc->dwAspect != DVASPECT_CONTENT, DV_E_DVASPECT);

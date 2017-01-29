@@ -28,7 +28,7 @@ public:
     }
 
 
-    void CreateInstance(const CLSID& clsid, IUnknown* pOuter = NULL, DWORD dwClsContext = CLSCTX_INPROC_SERVER)
+    void CreateInstance(const CLSID& clsid, IUnknown* pOuter = nullptr, DWORD dwClsContext = CLSCTX_INPROC_SERVER)
     {
         RaiseExceptionIfFailed(__super::CreateInstance(clsid, pOuter, dwClsContext));
     }

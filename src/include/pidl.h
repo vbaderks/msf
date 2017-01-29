@@ -26,7 +26,7 @@ public:
     static LPITEMIDLIST Combine(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2)
     {
         LPITEMIDLIST pidl = ILCombine(pidl1, pidl2);
-        RaiseExceptionIf(!pidl && !(pidl1 == NULL && pidl == NULL), E_OUTOFMEMORY);
+        RaiseExceptionIf(!pidl && !(pidl1 == nullptr && pidl == nullptr), E_OUTOFMEMORY);
         return pidl;
     }
 
@@ -76,7 +76,7 @@ public:
     // Purpose: special constructor for NULL pointer init.
     CPidl(int null) noexcept : m_pidl(nullptr)
     {
-        (null);
+        UNREFERENCED_PARAMETER(null);
         ATLASSERT(null == 0 && "Detected misuse of the special constructor");
     }
 

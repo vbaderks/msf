@@ -19,7 +19,7 @@ public:
     }
 
 
-    CGlobalLock(HGLOBAL hMem) : m_p(GlobalLockThrow(hMem)), m_hMem(hMem)
+    explicit CGlobalLock(HGLOBAL hMem) : m_p(GlobalLockThrow(hMem)), m_hMem(hMem)
     {
     }
 
@@ -33,7 +33,7 @@ public:
     void Attach(HGLOBAL hMem)
     {
         void* p = GlobalLockThrow(hMem);
-        
+
         Dispose();
 
         m_p = p;
@@ -46,7 +46,8 @@ public:
         if (m_hMem)
         {
             BOOL bResult = GlobalUnlock(m_hMem);
-            ATLASSERT(bResult || GetLastError() == NO_ERROR); (bResult);
+            ATLASSERT(bResult || GetLastError() == NO_ERROR);
+            UNREFERENCED_PARAMETER(bResult);
             m_hMem = nullptr;
             m_p = nullptr;
         }

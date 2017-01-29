@@ -37,11 +37,14 @@ public:
         return rdataobject;
     }
 
+protected:
+    ~CShellFolderDataObject() = default;
+
 private:
     void Initialize(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
         IPerformedDropEffectSink* pperformeddropeffectsink)
     {
-        __super::Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
+        Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
 
         RegisterCfHandler(make_unique<CCfFileDescriptorHandler>(this));
         RegisterCfHandler(make_unique<CCfFileContentsHandler>(this));

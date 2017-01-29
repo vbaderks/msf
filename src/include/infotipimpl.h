@@ -38,18 +38,6 @@ public:
     }
 
 
-    InfoTipImpl() : _bInitialized(false)
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
-    }
-
-
-    ~InfoTipImpl()
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
-    }
-
-
     // IInitializeWithFile
     STDMETHOD(Initialize)(LPCWSTR pszFilePath, DWORD dwMode) override
     {
@@ -66,6 +54,18 @@ public:
             return S_OK;
         }
         MSF_COM_CATCH_HANDLER()
+    }
+
+protected:
+    InfoTipImpl() : _bInitialized(false)
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
+    }
+
+
+    ~InfoTipImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
     }
 
 private:

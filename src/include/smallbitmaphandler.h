@@ -59,7 +59,7 @@ public:
     }
 
 
-    virtual void InitializeItemInfo(CMenuItemInfo& menuiteminfo)
+    void InitializeItemInfo(CMenuItemInfo& menuiteminfo) override
     {
         menuiteminfo.SetString(m_strText);
         menuiteminfo.SetCheckMarkBmps(nullptr, m_bitmap.GetHandle());

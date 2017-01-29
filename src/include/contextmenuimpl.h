@@ -55,11 +55,11 @@ public:
 
         CMenu(const CMenu& other)
         {
-            _hmenu = rhs._hmenu;
-            _indexMenu = rhs._indexMenu;
-            _pidCmd = rhs._pidCmd;
-            _idCmdLast = rhs._idCmdLast;
-            _pmenuhost = rhs._pmenuhost;
+            _hmenu = other._hmenu;
+            _indexMenu = other._indexMenu;
+            _pidCmd = other._pidCmd;
+            _idCmdLast = other._idCmdLast;
+            _pmenuhost = other._pmenuhost;
         }
 
         CMenu& operator=(const CMenu& rhs)
@@ -170,7 +170,7 @@ public:
         // Purpose: Every menu item must have an id between idCmdFirst and idCmdLast.
         //          If we don't have enough space, throw an exception. This will prevent
         //          that we add an incomplete menu.
-        void CheckID()
+        void CheckID() const
         {
             if (*_pidCmd >= _idCmdLast)
             {

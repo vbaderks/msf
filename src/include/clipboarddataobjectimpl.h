@@ -10,6 +10,7 @@
 #include "cfhandler.h"
 #include "enumformatetc.h"
 #include "formatetc.h"
+#include "stgmedium.h"
 #include <atlctl.h> // for IDataObjectImpl
 #include <memory>
 
@@ -32,12 +33,6 @@ public:
     }
 
 
-    ~CClipboardDataObjectImpl()
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::~CClipboardDataObjectImpl (instance=%p)\n", this);
-    }
-
-
     void RegisterCfHandler(std::unique_ptr<CCfHandler> clipFormatHandler)
     {
         ATLASSERT(!FindClipFormatHandler(clipFormatHandler->GetClipFormat()) && "Cannot register a ClipBoard handler twice!");
@@ -45,7 +40,7 @@ public:
     }
 
 
-    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, IEnumFORMATETC** ppenumFormatEtc)
+    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, IEnumFORMATETC** ppenumFormatEtc) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 
@@ -58,14 +53,14 @@ public:
             GetRegisteredFormats(formatetcs, dwDirection);
             GetExternalFormats(formatetcs);
 
-            SHCreateStdEnumFmtEtc(formatetcs, ppenumFormatEtc);
+            SHCreateStdEnumFmtEtc(static_cast<UINT>(formatetcs.size()), formatetcs.data());
             return S_OK;
         }
         MSF_COM_CATCH_HANDLER()
     }
 
 
-    STDMETHOD(QueryGetData)(FORMATETC* pformatetc)
+    STDMETHOD(QueryGetData)(FORMATETC* pformatetc) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
@@ -96,7 +91,7 @@ public:
     }
 
 
-    STDMETHOD(GetData)(FORMATETC *pformatetc, STGMEDIUM *pstgmedium)
+    STDMETHOD(GetData)(FORMATETC *pformatetc, STGMEDIUM *pstgmedium) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData cfformat=%d (%s)\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
@@ -130,7 +125,7 @@ public:
     }
 
 
-    STDMETHOD(SetData)(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease)
+    STDMETHOD(SetData)(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
@@ -183,6 +178,13 @@ public:
     // Required by ATL base class.
     LPDATAADVISEHOLDER m_spDataAdviseHolder;
 
+protected:
+
+    ~CClipboardDataObjectImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::~CClipboardDataObjectImpl (instance=%p)\n", this);
+    }
+
 private:
 
     class CExternalData
@@ -207,7 +209,7 @@ private:
         }
 
 
-            HRESULT Validate(const FORMATETC& formatetc) const noexcept
+        HRESULT Validate(const FORMATETC& formatetc) const noexcept
         {
             if (formatetc.dwAspect != DVASPECT_CONTENT)
                 return DV_E_DVASPECT;
@@ -229,7 +231,7 @@ private:
         }
 
 
-        void Copy(STGMEDIUM& stgmedium)
+        void Copy(STGMEDIUM& stgmedium) const
         {
             _stgmedium.CopyTo(stgmedium);
         }
@@ -255,7 +257,7 @@ private:
 
     CExternalData* FindExternalData(CLIPFORMAT clipformat) const noexcept
     {
-        for (CExternalDatas::const_iterator it = m_externaldatas.begin(); it != m_externaldatas.end(); ++it)
+        for (typename CExternalDatas::const_iterator it = m_externaldatas.begin(); it != m_externaldatas.end(); ++it)
         {
             if ((*it)->GetClipFormat() == clipformat)
             {
@@ -270,7 +272,7 @@ private:
     void AddExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium)
     {
         ATLASSERT(!FindExternalData(formatetc.cfFormat) && "External format already set");
-        m_externaldatas.push_back(make_unique<CExternalData>(formatetc, stgmedium));
+        m_externaldatas.push_back(std::make_unique<CExternalData>(formatetc, stgmedium));
     }
 
 

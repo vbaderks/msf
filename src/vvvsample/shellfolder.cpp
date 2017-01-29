@@ -33,15 +33,6 @@ class ATL_NO_VTABLE CShellFolder :
     public IItemNameLimitsImpl<CShellFolder, CVVVItem>
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
-    {
-        return IShellFolderImpl<CShellFolder, CVVVItem>::UpdateRegistry(
-            bRegister, IDR_SHELLFOLDER,
-            L"VVV Sample ShellFolder ShellExtension ", wszVVVFileRootExt, IDS_SHELLFOLDER_TYPE);
-    }
-
-    DECLARE_PROTECT_FINAL_CONSTRUCT()
-
     BEGIN_COM_MAP(CShellFolder)
         COM_INTERFACE_ENTRY2(IPersist, IPersistFolder2)
         COM_INTERFACE_ENTRY(IPersistFolder)
@@ -59,14 +50,14 @@ public:
         COM_INTERFACE_ENTRY(IExplorerPaneVisibility) // used by Windows Vista and up.
     END_COM_MAP()
 
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    CShellFolder()
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
-        // Register the columns the folder supports in 'detailed' mode.
-        RegisterColumn(IDS_SHELLEXT_NAME, LVCFMT_LEFT);
-        RegisterColumn(IDS_SHELLEXT_SIZE, LVCFMT_RIGHT);
+        return IShellFolderImpl<CShellFolder, CVVVItem>::UpdateRegistry(
+            bRegister, IDR_SHELLFOLDER,
+            L"VVV Sample ShellFolder ShellExtension ", wszVVVFileRootExt, IDS_SHELLFOLDER_TYPE);
     }
-
 
     // Purpose: called by MSF when the shellfolder needs to show a subfolder.
     void InitializeSubFolder(const CVVVItemList& items)
@@ -266,6 +257,14 @@ public:
 
         IsolationAwareMessageBox(hwnd, strMsg,
             LoadString(IDS_SHELLEXT_ERROR_CAPTION), MB_OK | MB_ICONERROR);
+    }
+
+protected:
+    CShellFolder()
+    {
+        // Register the columns the folder supports in 'detailed' mode.
+        RegisterColumn(IDS_SHELLEXT_NAME, LVCFMT_LEFT);
+        RegisterColumn(IDS_SHELLEXT_SIZE, LVCFMT_RIGHT);
     }
 
 private:

@@ -43,8 +43,7 @@ public:
     }
 
     // Purpose: called by the 'impl' class. Request to configure the menu
-    void OnQueryContextMenu(IContextMenuImpl<CContextMenu>::CMenu& menu,
-                            const vector<CString>& filenames)
+    void OnQueryContextMenu(CMenu& menu, const vector<CString>& filenames)
     {
         if (ContainsUnknownExtension(filenames))
             return; // only extend the menu when only .vvv files are selected.

@@ -366,9 +366,9 @@ public:
 
     STDMETHOD(GetSortColumns)(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, UINT cColumnsIn, __RPC__out UINT * pcColumnsOut) override
     {
-        (rgSortColumns);
-        (cColumnsIn);
-        (pcColumnsOut);
+        UNREFERENCED_PARAMETER(rgSortColumns);
+        UNREFERENCED_PARAMETER(cColumnsIn);
+        UNREFERENCED_PARAMETER(pcColumnsOut);
         ATLTRACENOTIMPL(L"IShellFolderViewCBImpl::IFolderViewSettings::GetSortColumns");
     }
 

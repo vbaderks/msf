@@ -20,7 +20,7 @@ public:
     }
 
     // IShellIconOverlayIdentifier
-    STDMETHOD(IsMemberOf)(PCWSTR pwszPath, DWORD dwAttrib)
+    STDMETHOD(IsMemberOf)(PCWSTR pwszPath, DWORD dwAttrib) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::IsMemberOf (instance=%p, filename=%s, mode=%d)\n", this, pwszPath, dwAttrib);
 
@@ -32,12 +32,13 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(GetOverlayInfo)(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags)
+    STDMETHOD(GetOverlayInfo)(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetOverlayInfo (instance=%p)\n", this);
+        return S_OK;
     }
 
-    STDMETHOD(GetPriority)(int* pIPriority)
+    STDMETHOD(GetPriority)(int* pIPriority) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetPriority (instance=%p)\n", this);
 

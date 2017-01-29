@@ -6,8 +6,6 @@
 #pragma once
 
 #include "msfbase.h"
-#include <shellapi.h>
-
 
 namespace MSF
 {

@@ -27,16 +27,6 @@ public:
         return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), szRootKey);
     }
 
-    IShellPropSheetExtImpl()
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::IShellPropSheetExtImpl (instance=%p)\n", this);
-    }
-
-    ~IShellPropSheetExtImpl()
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::~IShellPropSheetExtImpl (instance=%p)\n", this);
-    }
-
     class CAddPage
     {
     public:
@@ -82,6 +72,16 @@ public:
     }
 
 protected:
+    IShellPropSheetExtImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::IShellPropSheetExtImpl (instance=%p)\n", this);
+    }
+
+    ~IShellPropSheetExtImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::~IShellPropSheetExtImpl (instance=%p)\n", this);
+    }
+
     // OnAddPages must be implemented by derived classes.
     void OnAddPages(const CAddPage& /*addpages*/, const std::vector<CString>& /*filenames*/);
 };

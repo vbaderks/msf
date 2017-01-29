@@ -44,10 +44,10 @@ public:
     ~CBrowserHelperObjectImpl()
     {
         // If COM object is destructed, make sure ref to site is cleared.
-        SetSite(nullptr);
+        CBrowserHelperObjectImpl<T>::SetSite(nullptr);
     }
 
-    STDMETHOD(SetSite)(IUnknown* pUnkSite)
+    STDMETHOD(SetSite)(IUnknown* pUnkSite) override
     {
         // Unadvise from current site.
         if (m_bAdvised)

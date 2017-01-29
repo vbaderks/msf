@@ -12,9 +12,12 @@
 namespace MSF
 {
 
-struct IShellFolderContextMenuSink : public IUnknown
+struct IShellFolderContextMenuSink : IUnknown
 {
     virtual HRESULT OnPasteCmCmd() noexcept = 0;
+
+protected:
+    ~IShellFolderContextMenuSink() = default;
 };
 
 
@@ -51,7 +54,7 @@ public:
     }
 
 
-    STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici)
+    STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n", this);
 

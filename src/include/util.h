@@ -135,7 +135,7 @@ class CStartupInfo : public STARTUPINFO
 public:
     CStartupInfo()
     {
-        ATLASSERT(sizeof(CStartupInfo) == sizeof(STARTUPINFO) && "Helper should not add size!");
+        static_assert(sizeof(CStartupInfo) == sizeof(STARTUPINFO), "Helper should not add size!");
 
         ZeroMemory(static_cast<STARTUPINFO*>(this), sizeof(STARTUPINFO));
         cb = sizeof(STARTUPINFO);
@@ -368,7 +368,7 @@ inline bool IsShell6OrHigher()
 
 inline int GetSystemImageListIndex(const wchar_t* pszPath)
 {
-    SHFILEINFO sfi = {0};
+    SHFILEINFO sfi = {nullptr};
     if (!SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof(sfi),
                        SHGFI_USEFILEATTRIBUTES | SHGFI_ICON))
         return 0;

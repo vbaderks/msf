@@ -34,10 +34,15 @@ public:
         return renumidlist;
     }
 
-
     LPITEMIDLIST GetNextItem()
     {
         return m_qfile->GetNextItem(m_grfFlags, m_nItemIterator);
+    }
+
+protected:
+
+    CEnumIDList() : m_grfFlags(0), m_nItemIterator(0)
+    {
     }
 
 private:
@@ -46,7 +51,6 @@ private:
     {
         m_qfile = make_unique<CVVVFile>(strFilename, strFolder);
         m_grfFlags = grfFlags;
-        m_nItemIterator = 0;
     }
 
     // Member variables

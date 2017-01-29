@@ -31,7 +31,7 @@ public:
     }
 
     // IEmptyVolumeCache
-    STDMETHOD(Initialize)(HKEY hkRegKey, LPCWSTR pcwszVolume, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, DWORD *pdwFlags)
+    STDMETHOD(Initialize)(HKEY hkRegKey, LPCWSTR pcwszVolume, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, DWORD *pdwFlags) override
     {
         LPWSTR pwszBtnText;
         auto result = InitializeEx(hkRegKey, pcwszVolume, nullptr, ppwszDisplayName, ppwszDescription, &pwszBtnText, pdwFlags);
@@ -41,7 +41,7 @@ public:
         // TODO: research if this function is still used or if we can just return E_FAIL / E_NOTIMPLEMENTED.
     }
 
-    STDMETHOD(GetSpaceUsed)(__RPC__out DWORDLONG *pdwlSpaceUsed, __RPC__in_opt IEmptyVolumeCacheCallBack *picb)
+    STDMETHOD(GetSpaceUsed)(__RPC__out DWORDLONG *pdwlSpaceUsed, __RPC__in_opt IEmptyVolumeCacheCallBack *picb) override
     {
         try
         {
@@ -55,7 +55,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(Purge)(DWORDLONG dwSpaceToFree, __RPC__in_opt IEmptyVolumeCacheCallBack *picb)
+    STDMETHOD(Purge)(DWORDLONG dwSpaceToFree, __RPC__in_opt IEmptyVolumeCacheCallBack *picb) override
     {
         try
         {
@@ -69,7 +69,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(ShowProperties)(__RPC__in HWND hwnd)
+    STDMETHOD(ShowProperties)(__RPC__in HWND hwnd) override
     {
         try
         {
@@ -83,7 +83,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(Deactivate)(__RPC__out DWORD *pdwFlags)
+    STDMETHOD(Deactivate)(__RPC__out DWORD *pdwFlags) override
     {
         try
         {
@@ -103,7 +103,7 @@ public:
     }
 
     // IEmptyVolumeCache2
-    STDMETHOD(InitializeEx)(HKEY hkRegKey, LPCWSTR pcwszVolume, LPCWSTR pcwszKeyName, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, LPWSTR *ppwszBtnText, DWORD *pdwFlags)
+    STDMETHOD(InitializeEx)(HKEY hkRegKey, LPCWSTR pcwszVolume, LPCWSTR pcwszKeyName, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, LPWSTR *ppwszBtnText, DWORD *pdwFlags) override
     {
         try
         {

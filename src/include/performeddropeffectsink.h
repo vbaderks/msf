@@ -9,9 +9,12 @@
 namespace MSF
 {
 
-struct IPerformedDropEffectSink : public IUnknown
+struct IPerformedDropEffectSink : IUnknown
 {
-	virtual void OnDeleteAfterPaste(IDataObject* pdataobject) = 0;
+    virtual void OnDeleteAfterPaste(IDataObject* pdataobject) = 0;
+
+protected:
+    ~IPerformedDropEffectSink() = default;
 };
 
 } // end of MSF namespace

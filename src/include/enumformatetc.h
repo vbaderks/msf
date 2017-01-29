@@ -63,12 +63,12 @@ public:
         return renum;
     }
 
+protected:
 
     CEnumFORMATETC() noexcept
     {
         ATLTRACE2(atlTraceCOM, 0, L"CEnumFORMATETC::CEnumFORMATETC (instance=%p)\n", this);
     }
-
 
     ~CEnumFORMATETC()
     {

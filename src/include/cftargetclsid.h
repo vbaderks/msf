@@ -16,33 +16,33 @@ class CCfTargetCLSID
 {
 public:
 
-	static void Get(IDataObject* pdataobject, CLSID& clsid)
-	{
-		RaiseExceptionIfFailed(GetImpl(pdataobject, clsid));
-	}
+    static void Get(IDataObject* pdataobject, CLSID& clsid)
+    {
+        RaiseExceptionIfFailed(GetImpl(pdataobject, clsid));
+    }
 
 
-	static bool GetOptional(IDataObject* pdataobject, CLSID& clsid)
-	{
-		HRESULT hr = GetImpl(pdataobject, clsid);
-		return SUCCEEDED(hr);
-	}
+    static bool GetOptional(IDataObject* pdataobject, CLSID& clsid)
+    {
+        HRESULT hr = GetImpl(pdataobject, clsid);
+        return SUCCEEDED(hr);
+    }
 
 private:
 
-	HRESULT GetImpl(IDataObject* pdataobject, CLSID& clsid)
-	{
-		CFormatEtc formatetc(CFSTR_TARGETCLSID);
-		CStgMedium medium;
-		HRESULT hr = pdataobject->GetData(&formatetc, &medium);
-		if (FAILED(hr))
-			return hr;
+    static HRESULT GetImpl(IDataObject* pdataobject, CLSID& clsid)
+    {
+        CFormatEtc formatetc(CFSTR_TARGETCLSID);
+        CStgMedium medium;
+        HRESULT hr = pdataobject->GetData(&formatetc, &medium);
+        if (FAILED(hr))
+            return hr;
 
-		CGlobalLock<CLSID> globallock(medium.hGlobal);
+        CGlobalLock<CLSID> globallock(medium.hGlobal);
 
-		clsid = *globallock.get();
-		return S_OK;
-	}
+        clsid = *globallock.get();
+        return S_OK;
+    }
 };
 
 } // end of MSF namespace

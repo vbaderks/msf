@@ -193,8 +193,8 @@ public:
     // IPersistFolder3
     STDMETHOD(InitializeEx)(__RPC__in_opt IBindCtx* pbc, __RPC__in LPCITEMIDLIST pidlRoot, __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* ppfti) override
     {
-        (pbc);
-        (ppfti);
+        UNREFERENCED_PARAMETER(pbc);
+        UNREFERENCED_PARAMETER(ppfti);
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IPersistFolder3::InitializeEx (instance=%p, pcb=%p, pidlRoot=%p, ppfti=%p)\n", this, pbc, pidlRoot, ppfti);
 
         // Note: if ppfti is NULL InitializeEx should act as Initialize.
@@ -225,7 +225,7 @@ public:
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n", this, uiColumn);
 
         // mark parameters as not used in release build.
-        (uiColumn);
+        UNREFERENCED_PARAMETER(uiColumn);
 
         // Shell 6.0 (Vista and up) can sort by itself, return S_FALSE to trigger this.
         return S_FALSE;
@@ -490,17 +490,17 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(ParseDisplayName)(__RPC__in_opt HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, __reserved DWORD*, __RPC__deref_out_opt LPITEMIDLIST*, __RPC__inout_opt DWORD* pdwAttributes)
+    STDMETHOD(ParseDisplayName)(__RPC__in_opt HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, __reserved DWORD*, __RPC__deref_out_opt LPITEMIDLIST*, __RPC__inout_opt DWORD* pdwAttributes) override
     {
         // mark parameters as not used in release build.
-        (hwnd);
-        (pbc);
-        (pwszDisplayName);
-        (pdwAttributes);
+        UNREFERENCED_PARAMETER(hwnd);
+        UNREFERENCED_PARAMETER(pbc);
+        UNREFERENCED_PARAMETER(pwszDisplayName);
+        UNREFERENCED_PARAMETER(pdwAttributes);
 
         #ifdef _DEBUG
 
-        DWORD dwAttributes = pdwAttributes == NULL ? 0 : *pdwAttributes;
+        DWORD dwAttributes = pdwAttributes == nullptr ? 0 : *pdwAttributes;
 
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n", hwnd, pbc, pwszDisplayName, dwAttributes);
 
@@ -626,7 +626,7 @@ public:
     STDMETHOD(SetMode)(FOLDER_ENUM_MODE feMode) override
     {
         // Note: it seems that the shell always passes FEM_VIEWRESULT.
-        (feMode);
+        UNREFERENCED_PARAMETER(feMode);
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IObjectWithFolderEnumMode::SetMode (feMode=%d, 0=FEM_VIEWRESULT, 1=FEM_NAVIGATION)\n", feMode);
         return S_OK;
     }
@@ -664,7 +664,7 @@ public:
 
         try
         {
-            if (pdataobject == NULL || !static_cast<T*>(this)->IsSupportedClipboardFormat(pdataobject))
+            if (pdataobject == nullptr || !static_cast<T*>(this)->IsSupportedClipboardFormat(pdataobject))
             {
                 *pdwEffect = DROPEFFECT_NONE;
                 m_bCachedIsSupportedClipboardFormat = false;
@@ -708,7 +708,7 @@ public:
 
     STDMETHOD(Drop)(_In_ IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
     {
-        (grfKeyState);
+        UNREFERENCED_PARAMETER(grfKeyState);
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IDropTarget::Drop (grfKeyState=%d, dwEffect=%d)\n", grfKeyState, *pdwEffect);
 
         try
@@ -1189,9 +1189,9 @@ protected:
     }
 
     // IPerformedDropEffectSink
-    virtual void OnDeleteAfterPaste(IDataObject* pdataobject)
+    void OnDeleteAfterPaste(IDataObject* pdataobject) override
     {
-        OnDeleteFromDataObject(NULL, pdataobject);
+        OnDeleteFromDataObject(nullptr, pdataobject);
     }
 
     // Purpose: override this function to enable paste and drop into the shellfolder.
@@ -1245,7 +1245,7 @@ protected:
     {
         CComPtr<IDropTarget> rdroptarget;
 
-        static_cast<T*>(this)->QueryInterface(__uuidof(IDropTarget), (void **)&rdroptarget);
+        static_cast<T*>(this)->QueryInterface(__uuidof(IDropTarget), reinterpret_cast<void **>(&rdroptarget));
         return rdroptarget;
     }
 
@@ -1357,7 +1357,7 @@ protected:
 
     HRESULT OnErrorHandler(HRESULT hr, HWND hwnd, EErrorContext errorcontext)
     {
-        if (hwnd != NULL)
+        if (hwnd != nullptr)
         {
             static_cast<T*>(this)->OnError(hr, hwnd, errorcontext);
         }

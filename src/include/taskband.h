@@ -31,12 +31,15 @@ struct IShellItemArray : public IUnknown
 };
 #endif
 
-struct IUIElement : public IUnknown
+struct IUIElement : IUnknown
 {
     // IUIElement methods
     STDMETHOD(get_Name)(IShellItemArray* pItemArray, BSTR* bstrName) = 0;
     STDMETHOD(get_Icon)(IShellItemArray* pItemArray, BSTR* bstrName) = 0;
     STDMETHOD(get_Tooltip)(IShellItemArray* pItemArray, BSTR* bstrName) = 0;
+
+protected:
+    ~IUIElement() = default;
 };
 
 

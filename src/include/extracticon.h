@@ -69,6 +69,11 @@ public:
     };
 
 
+    CExtractIcon(): m_nIconIndex(-1), m_uFlags(0)
+    {
+    }
+
+
     static CComPtr<IExtractIcon> CreateInstance(const TItem& item)
     {
         CComObject<CExtractIcon<TItem> >* pinstance;
@@ -101,12 +106,11 @@ public:
 
     void Initialize(const TItem& item)
     {
-        m_nIconIndex = -1;
         m_pidl.CloneFrom(item.GetItemIdList());
     }
 
 
-    STDMETHOD(GetIconLocation)(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags)
+    STDMETHOD(GetIconLocation)(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
 
@@ -122,7 +126,7 @@ public:
     }
 
 
-    STDMETHOD(Extract)(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize)
+    STDMETHOD(Extract)(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
 

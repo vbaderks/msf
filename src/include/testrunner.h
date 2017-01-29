@@ -10,6 +10,7 @@
 #include <conio.h>  // for _getch
 #include <cstdlib> // for EXIT_SUCCESS / EXIT_FAILURE
 #include <iostream>
+#include <tchar.h>
 
 #pragma warning(pop)
 

@@ -30,7 +30,7 @@ public:
     void SetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium, bool bRelease) override
     {
         ATLASSERT(IsValid(formatetc, stgmedium) && "Passed invalid arguments");
-        (formatetc); // not used in release.
+        UNREFERENCED_PARAMETER(formatetc); // not used in release.
 
         CGlobalLock<DWORD> globallock(stgmedium.hGlobal);
 

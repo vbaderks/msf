@@ -7,7 +7,7 @@
 
 
 // Purpose: this file contains small unit test helper functions. 
-
+#include "msfbase.h"
 #include "macros.h"
 
 

@@ -72,7 +72,7 @@ public:
     };
 
     // IEnumIDList
-    STDMETHOD(Next)(ULONG celt, _Out_writes_to_(celt, *pceltFetched) LPITEMIDLIST* ppidl, _Out_opt_ ULONG* pceltFetched)
+    STDMETHOD(Next)(ULONG celt, _Out_writes_to_(celt, *pceltFetched) LPITEMIDLIST* ppidl, _Out_opt_ ULONG* pceltFetched) override
     {
         try
         {
@@ -102,19 +102,19 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(Skip)(ULONG /*celt*/)
+    STDMETHOD(Skip)(ULONG /*celt*/) override
     {
         // Note: function not used by explorer \ system folder view.
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Skip");
     }
 
-    STDMETHOD(Reset)()
+    STDMETHOD(Reset)() override
     {
         // Note: function not used by explorer \ system folder view.
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Reset");
     }
 
-    STDMETHOD(Clone)(__RPC__deref_out_opt IEnumIDList** /*ppenum*/)
+    STDMETHOD(Clone)(__RPC__deref_out_opt IEnumIDList** /*ppenum*/) override
     {
         // Note: function not used by explorer \ system folder view.
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Clone");

@@ -94,7 +94,7 @@ public:
 
     STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode) override
     {
-        (dwMode); // unused in release.
+        UNREFERENCED_PARAMETER(dwMode); // unused in release.
 
         ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
         try

@@ -10,11 +10,13 @@
 // INTERFACE: IFrameLayoutDefinition 
 // IFrameLayoutDefinition  is an undocumented interface introduced in Windows Vista. The definition below is based on info from Geoff Chappell.
 
-interface IFrameLayoutDefinition  : public IUnknown
+interface IFrameLayoutDefinition  : IUnknown
 {
-public:
     virtual HRESULT STDMETHODCALLTYPE GetLayoutDefinition (PCIDLIST_ABSOLUTE, HWND, IFrameLayoutDefinition **) = 0;
     virtual HRESULT STDMETHODCALLTYPE GetPossibleRedirectTarget (REFCLSID, INT *, PIDLIST_ABSOLUTE *) = 0;
+
+protected:
+    ~IFrameLayoutDefinition() = default;
 };
 
 struct __declspec(uuid("176C11B1-4302-4164-8430-D5A9F0EEACDB")) IFrameLayoutDefinition;

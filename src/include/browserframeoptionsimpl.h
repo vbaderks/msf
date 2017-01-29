@@ -23,7 +23,7 @@ public:
 
 
     // IBrowserFrameOptions
-    STDMETHOD(GetFrameOptions)(_In_ BROWSERFRAMEOPTIONS dwMask, _Out_ BROWSERFRAMEOPTIONS* pdwOptions)
+    STDMETHOD(GetFrameOptions)(_In_ BROWSERFRAMEOPTIONS dwMask, _Out_ BROWSERFRAMEOPTIONS* pdwOptions) override
     {
         ATLTRACE2(atlTraceCOM, 0,
                   "IBrowserFrameOptionsImpl::GetFrameOptions (instance=%p, dwMask=%d, dwOptions=%d)\n",

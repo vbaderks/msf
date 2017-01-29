@@ -20,13 +20,6 @@ class ATL_NO_VTABLE CShellPropSheetExt :
     public IShellPropSheetExtImpl<CShellPropSheetExt>
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
-    {
-        return IShellPropSheetExtImpl<CShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
-            L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
-    }
-
-
     BEGIN_COM_MAP(CShellPropSheetExt)
         COM_INTERFACE_ENTRY(IShellExtInit)
         COM_INTERFACE_ENTRY(IShellPropSheetExt)
@@ -34,12 +27,11 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-
-    CShellPropSheetExt()
+    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
-        RegisterExtension(tszVVVExtension);
+        return IShellPropSheetExtImpl<CShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
+            L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
     }
-
 
     // Purpose: called by MSF when it is time to add our pages to the propertysheet.
     void OnAddPages(const CAddPage& addpage, const vector<CString>& filenames)
@@ -49,6 +41,13 @@ public:
             return;
 
         addpage(CPropertyPageVVV::CreateInstance(filenames.front()));
+    }
+
+protected:
+
+    CShellPropSheetExt()
+    {
+        RegisterExtension(tszVVVExtension);
     }
 };
 

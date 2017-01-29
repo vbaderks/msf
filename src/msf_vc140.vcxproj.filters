@@ -4,7 +4,6 @@
     <CustomBuild Include="include\shell32missing.def" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.txt" />
     <None Include="Undocumented Shell Interfaces.reg" />
     <None Include="Undocumented Shell Interfaces Windows 8.reg" />
     <None Include="include\browserhelperobject.rgs">
@@ -53,9 +52,6 @@
   <ItemGroup>
     <ClInclude Include="include\msfbase.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\smartptr\browserframeoptionsptr.h">
-      <Filter>Header Files\Smart Pointers</Filter>
     </ClInclude>
     <ClInclude Include="include\smartptr\columnproviderptr.h">
       <Filter>Header Files\Smart Pointers</Filter>
@@ -124,9 +120,6 @@
       <Filter>Header Files\Smart Pointers</Filter>
     </ClInclude>
     <ClInclude Include="include\browserframeoptionsimpl.h">
-      <Filter>Header Files\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="include\browserhelperobjectimpl.h">
       <Filter>Header Files\Impl</Filter>
     </ClInclude>
     <ClInclude Include="include\clipboarddataobjectimpl.h">
@@ -205,9 +198,6 @@
       <Filter>Header Files\Support</Filter>
     </ClInclude>
     <ClInclude Include="include\custommenuhandler.h">
-      <Filter>Header Files\Support</Filter>
-    </ClInclude>
-    <ClInclude Include="include\defview.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>
     <ClInclude Include="include\dfmdefines.h">
@@ -338,9 +328,6 @@
     </ClInclude>
     <ClInclude Include="include\version.h">
       <Filter>Header Files\Support</Filter>
-    </ClInclude>
-    <ClInclude Include="include\shellviewimpl.h">
-      <Filter>Header Files\Impl</Filter>
     </ClInclude>
     <ClInclude Include="include\infotipimpl.h">
       <Filter>Header Files\Impl</Filter>

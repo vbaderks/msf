@@ -10,6 +10,7 @@
 #include "enumformatetc.h"
 #include "formatetc.h"
 #include "cfperformeddropeffecthandler.h"
+#include "idldatacreatefromidarray.h"
 #include "smartptr/dataobjectptr.h"
 #include <memory>
 
@@ -22,33 +23,6 @@ class CShellFolderDataObjectImpl : public IDataObject
 public:
     typedef std::vector<std::unique_ptr<CCfHandler>> CCfHandlers;
     typedef std::vector<CFormatEtc>  CFormatEtcs;
-
-
-    CShellFolderDataObjectImpl() noexcept
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::CShellFolderDataObjectImpl (instance=%p)\n", this);
-    }
-
-
-    ~CShellFolderDataObjectImpl()
-    {
-        ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::~CShellFolderDataObjectImpl (instance=%p)\n", this);
-    }
-
-
-    void Init(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
-        IPerformedDropEffectSink* pperformeddropeffectsink = nullptr)
-    {
-        m_pidldata = static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl));
-        RegisterCfHandler(make_unique<CCfPerformedDropEffectHandler>(pperformeddropeffectsink, this));
-    }
-
-
-    void RegisterCfHandler(std::unique_ptr<CCfHandler> qcfhandler)
-    {
-        ATLASSERT(!FindClipFormatHandler(qcfhandler->GetClipFormat()) && "Cannot register a ClipBoard handler twice!");
-        m_cfhandlers.push_back(std::move(qcfhandler));
-    }
 
 
     STDMETHOD(GetData)(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) override
@@ -177,7 +151,7 @@ public:
             GetRegisteredFormats(dwDirection, formatetcs);
             GetPidlDataFormats(dwDirection, formatetcs);
 
-            *ppenumFormatEtc = SHCreateStdEnumFmtEtc(static_cast<UINT>(formatetcs.size()), &(formatetcs[0])).Detach();
+            *ppenumFormatEtc = SHCreateStdEnumFmtEtc(static_cast<UINT>(formatetcs.size()), formatetcs.data()).Detach();
 
             return S_OK;
         }
@@ -208,9 +182,35 @@ public:
         return m_pidldata->EnumDAdvise(ppenumAdvise);
     }
 
+protected:
+    CShellFolderDataObjectImpl() noexcept
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::CShellFolderDataObjectImpl (instance=%p)\n", this);
+    }
+
+
+    ~CShellFolderDataObjectImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::~CShellFolderDataObjectImpl (instance=%p)\n", this);
+    }
+
+
+    void Init(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
+        IPerformedDropEffectSink* pperformeddropeffectsink = nullptr)
+    {
+        m_pidldata = static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl));
+        RegisterCfHandler(make_unique<CCfPerformedDropEffectHandler>(pperformeddropeffectsink, this));
+    }
+
+
+    void RegisterCfHandler(std::unique_ptr<CCfHandler> qcfhandler)
+    {
+        ATLASSERT(!FindClipFormatHandler(qcfhandler->GetClipFormat()) && "Cannot register a ClipBoard handler twice!");
+        m_cfhandlers.push_back(std::move(qcfhandler));
+    }
+
 
 private:
-
     CCfHandler* FindClipFormatHandler(CLIPFORMAT clipFormat) const noexcept
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
