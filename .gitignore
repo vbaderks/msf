@@ -29,6 +29,7 @@ Debug_141/
 Release_140/
 x64/    # Ignore all file in this binary build directory
 src/.vs
+.vscode/
 *.obj
 *.lib
 *.pdb
