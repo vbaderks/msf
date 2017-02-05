@@ -28,7 +28,7 @@ public:
     }
 
 
-    CCfHDrop(IDataObjectPtr dataobject)
+    explicit CCfHDrop(IDataObjectPtr dataobject)
     {
         dataobject.GetData(CFormatEtc(CF_HDROP), m_stgmedium);
     }

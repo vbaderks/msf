@@ -16,7 +16,7 @@ class CPropertyPageVVV : public CShellExtPropertyPageImpl<CPropertyPageVVV>
 public:
     static HPROPSHEETPAGE CreateInstance(const CString& strFilename)
     {
-        CPropertyPageVVV* ppage = new CPropertyPageVVV(strFilename);
+        auto ppage = new CPropertyPageVVV(strFilename);
         return ppage->Create();
     }
 
@@ -28,7 +28,7 @@ public:
         CHAIN_MSG_MAP(CShellExtPropertyPageImpl<CPropertyPageVVV>)
     END_MSG_MAP()
 
-    CPropertyPageVVV(const CString& strFilename) :
+    explicit CPropertyPageVVV(const CString& strFilename) :
         _strFilename(strFilename)
     {
         CVVVFile vvvfile(strFilename);

@@ -21,7 +21,7 @@ public:
     }
 
 
-    CMenuItemInfo(UINT id) noexcept : CMenuItemInfo()
+    explicit CMenuItemInfo(UINT id) noexcept : CMenuItemInfo()
     {
         SetID(id);
     }

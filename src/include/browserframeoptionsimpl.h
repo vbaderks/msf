@@ -16,7 +16,7 @@ class ATL_NO_VTABLE IBrowserFrameOptionsImpl :
     public IBrowserFrameOptions
 {
 public:
-    IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) :
+    explicit IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) :
         m_browserframeoptions(browserframeoptions)
     {
     }

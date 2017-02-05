@@ -67,7 +67,7 @@ public:
 
         try
         {
-            const CCfHandler* pcfhandler = FindCfHandler(pformatetc->cfFormat);
+            const CCfHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
@@ -98,7 +98,7 @@ public:
 
         try
         {
-            CCfHandler* pcfhandler = FindCfHandler(pformatetc->cfFormat);
+            CCfHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
@@ -138,7 +138,7 @@ public:
             if (pformatetc->tymed != pstgmedium->tymed)
                 return DV_E_TYMED;
 
-            CCfHandler* pcfhandler = FindCfHandler(pformatetc->cfFormat);
+            CCfHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanSetData())
@@ -278,7 +278,7 @@ private:
 
     void GetRegisteredFormats(std::vector<FORMATETC>& formatetcs, DWORD dwDirection) const
     {
-        for (CCfHandlers::const_iterator it = m_cfhandlers.begin(); it != m_cfhandlers.end(); ++it)
+        for (auto it = m_cfhandlers.begin(); it != m_cfhandlers.end(); ++it)
         {
             if (dwDirection == DATADIR_GET)
             {

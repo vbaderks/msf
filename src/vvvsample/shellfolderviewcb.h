@@ -7,8 +7,6 @@
 
 
 #include "../include/shellfolderviewcbimpl.h"
-#include "../include/taskband.h"
-#include "resource.h"
 
 
 class ATL_NO_VTABLE CShellFolderViewCB :

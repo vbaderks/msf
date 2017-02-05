@@ -50,25 +50,23 @@ SFGAOF CVVVItem::GetAttributeOf(bool bSingleSelect, bool bReadOnly) const
     {
         return SFGAO_FOLDER | SFGAO_HASSUBFOLDER;
     }
-    else
+
+    SFGAOF sfgaof = SFGAO_CANCOPY;
+
+    // Tip: to debug error handling, disable the readonly check and make the .vvv readonly
+    if (!bReadOnly)
     {
-        SFGAOF sfgaof = SFGAO_CANCOPY;
+        sfgaof |= SFGAO_CANRENAME | SFGAO_CANDELETE | SFGAO_CANMOVE;
 
-        // Tip: to debug error handling, disable the readonly check and make the .vvv readonly
-        if (!bReadOnly)
-        {
-            sfgaof |= SFGAO_CANRENAME | SFGAO_CANDELETE | SFGAO_CANMOVE;
-
-            // Note: standard windows UI allows the rename option for multiple items.
-        }
-
-        if (bSingleSelect)
-        {
-            sfgaof |= SFGAO_HASPROPSHEET; 
-        }
-
-        return sfgaof;
+        // Note: standard windows UI allows the rename option for multiple items.
     }
+
+    if (bSingleSelect)
+    {
+        sfgaof |= SFGAO_HASPROPSHEET; 
+    }
+
+    return sfgaof;
 }
 
 
@@ -97,10 +95,12 @@ CString CVVVItem::GetItemDetailsOf(UINT iColumn) const
         return GetDisplayName(SHGDN_NORMAL);
 
     case COLUMN_SIZE:
-        if (IsFolder())
-            return CString();
-        else
+        {
+            if (IsFolder())
+                return CString();
+
             return ToString(GetSize());
+        }
 
     default:
         ATLASSERT(false);

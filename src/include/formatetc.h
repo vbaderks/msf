@@ -18,14 +18,14 @@ namespace MSF
 class CFormatEtc : public FORMATETC
 {
 public:
-    CFormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr, 
+    explicit CFormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
         DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept
     {
         CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
     }
 
 
-    CFormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
+    explicit CFormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
          DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept
     {
         CommonConstruct(RegisterCf(lpszFormat), dwtymed, pdvtd, dwaspect, index);
@@ -36,7 +36,7 @@ public:
         ptd = nullptr;
     }
 
-    CFormatEtc(const FORMATETC& formatetc)
+    explicit CFormatEtc(const FORMATETC& formatetc)
     {
         Copy(*this, formatetc);
     }

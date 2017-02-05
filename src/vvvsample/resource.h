@@ -2,6 +2,8 @@
 // Microsoft Visual C++ generated include file.
 // Used by sample.rc
 //
+#pragma once
+
 #define IDB_MENUICON                    200
 #define IDI_ICON_VVV                    204
 #define IDS_SHELLEXT_NAME               300

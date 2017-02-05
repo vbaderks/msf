@@ -18,7 +18,7 @@ namespace MSF
 class CMenu
 {
 public:
-    CMenu(bool bCreate = true) :
+    explicit CMenu(bool bCreate = true) :
         m_hmenu(bCreate ? CreateMenu() : nullptr)
     {
     }
@@ -30,13 +30,13 @@ public:
     }
 
 
-    void AddItem(UINT id, UINT nIDText)
+    void AddItem(UINT id, UINT nIDText) const
     {
         AddItem(id, LoadString(nIDText));
     }
 
 
-    void AddItem(UINT id, const CString& strText)
+    void AddItem(UINT id, const CString& strText) const
     {
         CMenuItemInfo menuiteminfo(id, strText);
 
@@ -44,7 +44,7 @@ public:
     }
 
 
-    void AddDefaultItem(UINT id, const CString& strText)
+    void AddDefaultItem(UINT id, const CString& strText) const
     {
         CMenuItemInfo menuiteminfo(id, strText);
 
@@ -53,7 +53,7 @@ public:
     }
 
 
-    void InsertMenuItem(const CMenuItemInfo& menuiteminfo, UINT uItem, bool bByPosition = true)
+    void InsertMenuItem(const CMenuItemInfo& menuiteminfo, UINT uItem, bool bByPosition = true) const
     {
         RaiseLastErrorExceptionIf(!::InsertMenuItem(m_hmenu, uItem, bByPosition, &menuiteminfo));
     }

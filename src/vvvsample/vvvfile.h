@@ -12,7 +12,7 @@
 class CVVVFile
 {
 public:
-    CVVVFile(const CString& strFilename, const CString& strFolder = CString()) :
+    explicit CVVVFile(const CString& strFilename, const CString& strFolder = CString()) :
         _strFilename(strFilename),
         _strFolder(strFolder)
     {

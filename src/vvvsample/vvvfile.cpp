@@ -160,7 +160,7 @@ unsigned int CVVVFile::FindFreeEntry() const
 }
 
 
-void CVVVFile::SetFileCount(UINT nNewFileCount) const
+void CVVVFile::SetFileCount(unsigned int nNewFileCount) const
 {
     return WritePrivateProfileInt(GetAppNameDirectory(), TSZ_FILE_COUNT, nNewFileCount);
 }
@@ -197,7 +197,7 @@ CString CVVVFile::GetAppNameItem(unsigned int nID) const
 }
 
 
-CString CVVVFile::GetPrivateProfileString(LPCTSTR lpAppName, LPCTSTR lpKeyName) const
+CString CVVVFile::GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName) const
 {
     wchar_t tszBuf[255];
 
@@ -207,19 +207,19 @@ CString CVVVFile::GetPrivateProfileString(LPCTSTR lpAppName, LPCTSTR lpKeyName) 
 }
 
 
-UINT CVVVFile::GetPrivateProfileInt(LPCTSTR lpAppName, LPCTSTR lpKeyName, int nDefault) const
+unsigned int  CVVVFile::GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault) const
 {
     return ::GetPrivateProfileInt(lpAppName, lpKeyName, nDefault, _strFilename);
 }
 
 
-void CVVVFile::WritePrivateProfileString(LPCTSTR lpAppName, LPCTSTR lpKeyName, LPCTSTR lpString) const
+void CVVVFile::WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName, const wchar_t* lpString) const
 {
     RaiseLastErrorExceptionIf(!::WritePrivateProfileString(lpAppName, lpKeyName, lpString, _strFilename));
 }
 
 
-void CVVVFile::WritePrivateProfileInt(LPCTSTR lpAppName, LPCTSTR lpKeyName, UINT nValue) const
+void CVVVFile::WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const
 {
     WritePrivateProfileString(lpAppName, lpKeyName, ToString(nValue));
 }

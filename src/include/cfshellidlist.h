@@ -18,7 +18,7 @@ namespace MSF
 class CCfShellIdList
 {
 public:
-    CCfShellIdList(IDataObjectPtr dataObject)
+    explicit CCfShellIdList(IDataObjectPtr dataObject)
     {
         CFormatEtc formatetc(RegisterCf(CFSTR_SHELLIDLIST));
         dataObject.GetData(formatetc, m_medium);

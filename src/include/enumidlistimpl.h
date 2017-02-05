@@ -30,7 +30,7 @@ public:
     class CItemIdListVector
     {
         public:
-            CItemIdListVector(LPITEMIDLIST* ppidl) :
+            explicit CItemIdListVector(LPITEMIDLIST* ppidl) :
                 m_nCount(0), m_ppidl(ppidl)
             {
             }

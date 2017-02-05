@@ -46,7 +46,7 @@
 
 #define _ATL_NO_HOSTING // will prevent including mshtml.h, which is not /Zc:strictStrings compatible.
 
-#include "..\include\msfbase.h"
+#include "../include/msfbase.h"
 
 // Disable not usefull warnings.
 #pragma warning(disable: 4505) // unreferenced local function has been removed

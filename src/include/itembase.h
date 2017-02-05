@@ -15,7 +15,7 @@ namespace MSF
 class CItemBase
 {
 public:
-    CItemBase(LPCITEMIDLIST pidl) noexcept :
+    explicit CItemBase(LPCITEMIDLIST pidl) noexcept :
         m_pidl(pidl)
     {
     }

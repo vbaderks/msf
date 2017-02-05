@@ -6,11 +6,10 @@
 #pragma once
 
 
-#include <cstring>
-#include <vector>
 #include "../include/macros.h"
 #include "../include/pidl.h"
 #include "../include/itembase.h"
+#include <vector>
 
 
 class CVVVItem : public CItemBase

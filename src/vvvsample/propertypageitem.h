@@ -4,12 +4,12 @@
 // See README.TXT for the details of the software licence.
 //
 #pragma once
-#include <atlsnap.h>
+
 #include "../include/strutil.h"
-#include "../include/util.h"
 #include "../include/pidl.h"
 #include "vvvitem.h"
 #include "resource.h"
+#include <atlsnap.h>
 
 
 class CPropertyPageItem : public CSnapInPropertyPageImpl<CPropertyPageItem>
@@ -17,7 +17,7 @@ class CPropertyPageItem : public CSnapInPropertyPageImpl<CPropertyPageItem>
 public:
     static HPROPSHEETPAGE CreateInstance(CVVVItem& item, long& wEventId, IShellFolder* pshellfolder)
     {
-        CPropertyPageItem* ppage = new CPropertyPageItem(item, wEventId, pshellfolder);
+        auto ppage = new CPropertyPageItem(item, wEventId, pshellfolder);
         return ppage->Create();
     }
 
@@ -68,7 +68,7 @@ public:
         {
             m_pidlNew.Attach(CVVVItem::CreateItemIdList(m_item.GetID(),  
                 nSize, m_item.IsFolder(), strName));
-        }   
+        }
 
         return true;
     }

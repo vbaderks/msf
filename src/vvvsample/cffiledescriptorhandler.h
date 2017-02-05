@@ -15,7 +15,7 @@
 class CCfFileDescriptorHandler : public CCfHandler
 {
 public:
-    CCfFileDescriptorHandler(IDataObject* pdataobjectOuter) :
+    explicit CCfFileDescriptorHandler(IDataObject* pdataobjectOuter) :
         CCfHandler(CFSTR_FILEDESCRIPTOR, true, false),
         m_pdataobject(pdataobjectOuter)
     {

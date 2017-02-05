@@ -19,9 +19,9 @@
 class CCfFileContentsHandler : public CCfHandler
 {
 public:
-    CCfFileContentsHandler(IDataObject* pdataobjectOuter) :
+    explicit CCfFileContentsHandler(IDataObject* dataObjectOuter) :
         CCfHandler(CFSTR_FILECONTENTS, true, false),
-        m_pdataobject(pdataobjectOuter)
+        m_dataObject(dataObjectOuter)
     {
     }
 
@@ -58,14 +58,14 @@ private:
 
     CCfShellIdList* GetCfShellIdList() const
     {
-        if (!m_qcfshellidlist)
+        if (!m_cfShellIdList)
         {
-            m_qcfshellidlist = make_unique<CCfShellIdList>(m_pdataobject);
+            m_cfShellIdList = make_unique<CCfShellIdList>(m_dataObject);
         }
 
-        return m_qcfshellidlist.get();
+        return m_cfShellIdList.get();
     }
 
-    IDataObject* m_pdataobject;
-    mutable unique_ptr<CCfShellIdList> m_qcfshellidlist;
+    IDataObject* m_dataObject;
+    mutable unique_ptr<CCfShellIdList> m_cfShellIdList;
 };
