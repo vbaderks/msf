@@ -29,7 +29,7 @@ inline ATL::CString GetSystemDirectory()
 {
     wchar_t tsz[MAX_PATH];
     if (!::GetSystemDirectory(tsz, MAX_PATH))
-        throw new _com_error(HRESULT_FROM_WIN32(GetLastError()));
+        throw _com_error(HRESULT_FROM_WIN32(GetLastError()));
     return tsz;
 }
 
@@ -95,7 +95,7 @@ inline ATL::CString FormatLastError(DWORD dwLastError)
                   reinterpret_cast<LPTSTR>(&lpMsgBuf),
                   0,
                   nullptr))
-        throw new _com_error(HRESULT_FROM_WIN32(GetLastError()));
+        throw _com_error(HRESULT_FROM_WIN32(GetLastError()));
 
     ATL::CString str(lpMsgBuf);
     LocalFree(lpMsgBuf);
@@ -200,10 +200,8 @@ inline ATL::CString QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValu
     {
         return strValue;
     }
-    else
-    {
-        return strDefault;
-    }
+
+    return strDefault;
 }
 
 
