@@ -12,7 +12,7 @@
 namespace MSF
 {
 
-constexpr inline bool ToBool(BOOL b)
+constexpr bool ToBool(BOOL b)
 {
     return b != FALSE;
 }
@@ -53,7 +53,7 @@ inline void RaiseLastErrorExceptionIf(BOOL bTest)
 }
 
 
-constexpr inline bool IsBitSet(unsigned long lValue, unsigned long lTestMask)
+constexpr bool IsBitSet(unsigned long lValue, unsigned long lTestMask)
 {
     return (lValue & lTestMask) != 0;
 }

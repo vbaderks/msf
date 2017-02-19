@@ -36,9 +36,6 @@
     <ClInclude Include="enumidlist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="extractimageclsid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="propertypageitem.h">
       <Filter>Header Files</Filter>
     </ClInclude>

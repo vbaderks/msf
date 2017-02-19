@@ -6,14 +6,13 @@
 
 #include "stdafx.h"
 
-#include "extractimageclsid.h"
 #include "shellfolderclsid.h"
 #include "resource.h"
 
 #include "../include/extractimageimpl.h"
 
 
-class ATL_NO_VTABLE CExtractImage :
+class ATL_NO_VTABLE __declspec(uuid("959ACDA2-A398-4204-8378-610979C01557")) CExtractImage :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CExtractImage, &__uuidof(CExtractImage)>,
     public IExtractImageImpl<CExtractImage>

@@ -8,7 +8,6 @@
 
 #include "msfbase.h"
 #include "stgmedium.h"
-#include "strutil.h"
 #include <atlctl.h>
 
 

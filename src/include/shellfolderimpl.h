@@ -331,8 +331,9 @@ public:
             {
                 ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellDetails)\n", this);
                 return static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
-            } 
-            else if (riid == __uuidof(IShellView))
+            }
+
+            if (riid == __uuidof(IShellView))
             {
                 ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellView)\n", this);
                 *ppRetVal = static_cast<T*>(this)->CreateShellFolderView().Detach();
@@ -376,9 +377,9 @@ public:
             }
             else
             {
-                #ifdef _ATL_DEBUG_QI
+#ifdef _ATL_DEBUG_QI
                 AtlDumpIID(riid, L"IShellFolderImpl::CreateViewObject (?)", E_NOINTERFACE);
-                #endif //  _ATL_DEBUG_QI
+#endif //  _ATL_DEBUG_QI
 
                 *ppRetVal = nullptr;
             }
@@ -730,7 +731,7 @@ public:
     }
 
     // IShellFolderContextMenuSink
-    virtual HRESULT OnPasteCmCmd() noexcept override
+    HRESULT OnPasteCmCmd() noexcept override
     {
         try
         {
@@ -780,11 +781,9 @@ protected:
         {
             return static_cast<const T*>(this)->CompareIDsAllFields(item1, item2);
         }
-        else
-        {
-            return item1.Compare(item2, 
-                static_cast<USHORT>(lParam), IsBitSet(static_cast<ULONG>(lParam), SHCIDS_CANONICALONLY));
-        }
+
+        return item1.Compare(item2,
+                             static_cast<USHORT>(lParam), IsBitSet(static_cast<ULONG>(lParam), SHCIDS_CANONICALONLY));
     }
 
     CString GetPathFolderFile() const
@@ -1424,10 +1423,8 @@ protected:
 
             return true;
         }
-        else
-        {
-            return IsBitSet(sfgaof, sfgaofMask);
-        }
+
+        return IsBitSet(sfgaof, sfgaofMask);
     }
 
     void ReportAddItem(LPCITEMIDLIST pidlItem) const

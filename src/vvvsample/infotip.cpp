@@ -12,11 +12,7 @@
 #include "../include/infotipimpl.h"
 #include "../include/strutil.h"
 
-// Attach a GUID to the COM class.
-// Note: Don't copy this GUID. Always use the 'Create GUID' tool to create new GUIDs.
-class DECLSPEC_UUID("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71") CInfoTip;
-
-class ATL_NO_VTABLE CInfoTip :
+class ATL_NO_VTABLE __declspec(uuid("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71")) CInfoTip :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CInfoTip, &__uuidof(CInfoTip)>,
     public InfoTipImpl<CInfoTip>

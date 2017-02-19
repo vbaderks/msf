@@ -40,7 +40,7 @@ public:
     }
 
 
-    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, IEnumFORMATETC** ppenumFormatEtc) override
+    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, IEnumFORMATETC** /*ppenumFormatEtc*/) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 

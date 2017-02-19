@@ -32,7 +32,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(GetOverlayInfo)(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags) override
+    STDMETHOD(GetOverlayInfo)(PWSTR /*pwszIconFile*/, int /*cchMax*/, int* /*pIndex*/, DWORD* /*pdwFlags*/) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetOverlayInfo (instance=%p)\n", this);
         return S_OK;
@@ -55,6 +55,8 @@ public:
         {
             if (_bInitialized)
                 return HRESULT_FROM_WIN32(E_FAIL);
+
+            return S_OK;
         }
         MSF_COM_CATCH_HANDLER()
     }
