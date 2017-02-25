@@ -39,9 +39,9 @@ public:
         COM_INTERFACE_ENTRY(IPersistFolder2)
         COM_INTERFACE_ENTRY(IPersistFolder3)
         COM_INTERFACE_ENTRY(IPersistIDList)
-        COM_INTERFACE_ENTRY(IShellFolder)  // included in this sample for backwards (win9x) compatiblity.
+        COM_INTERFACE_ENTRY(IShellFolder)  // included in this sample for backwards (win9x) compatibility.
         COM_INTERFACE_ENTRY(IShellFolder2)
-        COM_INTERFACE_ENTRY(IShellDetails) // included in this sample for backwards (win9x) compatiblity.
+        COM_INTERFACE_ENTRY(IShellDetails) // included in this sample for backwards (win9x) compatibility.
         COM_INTERFACE_ENTRY(IBrowserFrameOptions)
         COM_INTERFACE_ENTRY(IShellIcon)
         COM_INTERFACE_ENTRY(IItemNameLimits)
@@ -59,7 +59,7 @@ public:
             L"VVV Sample ShellFolder ShellExtension ", wszVVVFileRootExt, IDS_SHELLFOLDER_TYPE);
     }
 
-    // Purpose: called by MSF when the shellfolder needs to show a subfolder.
+    // Purpose: called by MSF when the shell folder needs to show a sub folder.
     void InitializeSubFolder(const CVVVItemList& items)
     {
         m_strSubFolder.Empty();
@@ -235,7 +235,7 @@ public:
     }
 
 
-    // Purpose: called when items are pasted or droped on the shellfolder.
+    // Purpose: called when items are pasted or dropped on the shellfolder.
     DWORD AddItemsFromDataObject(DWORD dwEffect, IDataObject* pdataobject)
     {
         CCfHDrop cfhdrop(pdataobject);

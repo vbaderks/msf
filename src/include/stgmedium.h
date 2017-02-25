@@ -52,14 +52,14 @@ public:
     }
 
 
-    CStgMedium(HGLOBAL hg) noexcept
+    explicit CStgMedium(HGLOBAL hg) noexcept
     {
         SetHGlobal(*this, hg);
     }
 
 
     // Purpose: passed in STGMEDIUM will be owned after a bitwise copy.
-    CStgMedium(const STGMEDIUM& stgmedium) noexcept
+    explicit CStgMedium(const STGMEDIUM& stgmedium) noexcept
     {
         *static_cast<STGMEDIUM*>(this) = stgmedium;
     }

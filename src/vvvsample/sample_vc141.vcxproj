@@ -450,12 +450,9 @@
     <ClInclude Include="cffilecontentshandler.h" />
     <ClInclude Include="cffiledescriptorhandler.h" />
     <ClInclude Include="columns.h" />
-    <ClInclude Include="contextmenuclsid.h" />
     <ClInclude Include="copyhookclsid.h" />
     <ClInclude Include="editwithnotepadcommand.h" />
     <ClInclude Include="enumidlist.h" />
-    <ClInclude Include="extractimageclsid.h" />
-    <ClInclude Include="module.h" />
     <ClInclude Include="propertypageitem.h" />
     <ClInclude Include="propertypagevvv.h" />
     <ClInclude Include="resource.h" />

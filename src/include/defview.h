@@ -22,7 +22,7 @@ namespace MSF
 class CCallback
 {
 public:
-    CCallback(IShellFolderViewCB* pshellfolderviewcb) :
+    explicit CCallback(IShellFolderViewCB* pshellfolderviewcb) :
         _rshellfolderviewcb(pshellfolderviewcb)
     {
     }
@@ -45,7 +45,7 @@ public:
     }
 
 
-    // Purpose: used during startup to retrieve sorting defauls.
+    // Purpose: used during startup to retrieve sorting defaults.
     HRESULT GetSortDefaults(int* piDirection, int* piColumn)
     {
         return CallCB(SFVM_GETSORTDEFAULTS,
@@ -150,7 +150,7 @@ public:
 
         //_callback. // enum done?
     }
-};
+}
 
 
 class CViewState
@@ -243,7 +243,7 @@ public:
         params.pfs      = pfs;
         params.psbOwner = psb;
         params.prcView  = prcView;
-        params.pvid     = NULL; // todo
+        params.pvid     = nullptr; // todo
 
         HRESULT hr = CreateViewWindow2(params);
         *phWnd = params.hwndView;

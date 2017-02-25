@@ -27,7 +27,7 @@ public:
     {
         CCfShellIdList cfshellidlist(m_pdataobject);
 
-        size_t size = sizeof(FILEGROUPDESCRIPTOR) + 
+        size_t size = sizeof(FILEGROUPDESCRIPTOR) +
             (cfshellidlist.GetItemCount() * sizeof(FILEDESCRIPTOR));
 
         HGLOBAL hg = GlobalAllocThrow(size);

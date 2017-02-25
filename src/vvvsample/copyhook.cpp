@@ -16,10 +16,7 @@
 // When the name includes the substring 'VVV' it will display an conformation dialogbox.
 // Note: explorer.exe only read at startup the CopyHook extensions from the registry.
 
-// Note: don't use this UUID for from this sample project but create a new one using the 'Create GUID' tool.
-class DECLSPEC_UUID("B7096869-8E27-4f13-A9B9-3164F6D30BAB") CCopyHook;
-
-class ATL_NO_VTABLE CCopyHook :
+class ATL_NO_VTABLE __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CCopyHook :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CCopyHook, &__uuidof(CCopyHook)>,
     public ICopyHookImpl<CCopyHook>
@@ -36,7 +33,6 @@ public:
         return ICopyHookImpl<CCopyHook>::UpdateRegistry(bRegister, IDR_COPYHOOK,
             L"VVV Sample CopyHook ShellExtension", L"VVV CopyHook");
     }
-
 
     // ICopyHook overrides
     STDMETHOD_(UINT, CopyCallback)(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ LPCTSTR pszSrcFile, DWORD /*dwSrcAttribs*/,

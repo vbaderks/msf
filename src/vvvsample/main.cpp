@@ -35,7 +35,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 
     if (dwReason == DLL_PROCESS_ATTACH)
     {
-        // Optimalization: dont't notify when a thread is created.
+        // Optimization: don't notify when a thread is created.
         ATLVERIFY(DisableThreadLibraryCalls(hInstance));
     }
 

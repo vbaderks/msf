@@ -15,7 +15,7 @@ namespace MSF
 
 // Note: ICopyHook is a #define. It stands for ICopyHookA or ICopyHookW. 
 //       The shell will query both interfaces and use the one that is returned.
-//       For Win NT the prefered interface is ICopyHookW, this can be achived by 
+//       For Win NT the preferred interface is ICopyHookW, this can be achieved by 
 //       compiling with UNICODE defines.
 
 // Comment: ICopyHook is a bad example of a OLE\COM interface. It doesn't return a HRESULT

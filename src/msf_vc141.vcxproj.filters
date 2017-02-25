@@ -207,9 +207,6 @@
     <ClInclude Include="include\custommenuhandler.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>
-    <ClInclude Include="include\defview.h">
-      <Filter>Header Files\Support</Filter>
-    </ClInclude>
     <ClInclude Include="include\dfmdefines.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>

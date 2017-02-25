@@ -48,7 +48,7 @@
 
 #include "../include/msfbase.h"
 
-// Disable not usefull warnings.
+// Disable not useful warnings.
 #pragma warning(disable: 4505) // unreferenced local function has been removed
 
 

@@ -33,7 +33,7 @@ public:
             L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
     }
 
-    // Purpose: called by MSF when it is time to add our pages to the propertysheet.
+    // Purpose: called by MSF when it is time to add our pages to the property sheet.
     void OnAddPages(const CAddPage& addpage, const vector<CString>& filenames)
     {
         // Only add the page if only 1 file is selected and is of our own extension.

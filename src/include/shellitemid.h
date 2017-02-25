@@ -22,21 +22,21 @@ struct ShellItemIdMember
 class CShellItemIdMember : public ShellItemIdMember
 {
 public:
-    CShellItemIdMember(const bool* pbValue)
+    explicit CShellItemIdMember(const bool* pbValue)
     {
-        size = sizeof(*pbValue);
+        size = sizeof *pbValue;
         pdata = pbValue;
     }
 
 
-    CShellItemIdMember(const unsigned int* pnValue)
+    explicit CShellItemIdMember(const unsigned int* pnValue)
     {
         size = sizeof(*pnValue);
         pdata = pnValue;
     }
 
 
-    CShellItemIdMember(PCWSTR wszValue)
+    explicit CShellItemIdMember(PCWSTR wszValue)
     {
         size = (wcslen(wszValue) + 1) * sizeof(wchar_t);
         pdata = wszValue;
@@ -116,7 +116,7 @@ private:
 class CShellItemIterator
 {
 public:
-    CShellItemIterator(const SHITEMID& itemid) noexcept : _p(itemid.abID)
+    explicit CShellItemIterator(const SHITEMID& itemid) noexcept : _p(itemid.abID)
     {
 #ifdef _DEBUG
         _pitemid = &itemid;

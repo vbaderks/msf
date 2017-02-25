@@ -5,7 +5,6 @@
 //
 #include "stdafx.h"
 
-#include "contextmenuclsid.h"
 #include "editwithnotepadcommand.h"
 #include "aboutmsfcommand.h"
 #include "resource.h"
@@ -14,7 +13,7 @@
 #include "../include/smallbitmaphandler.h"
 
 
-class ATL_NO_VTABLE CContextMenu :
+class ATL_NO_VTABLE __declspec(uuid("B498A476-9EB6-46c3-8146-CE77FF7EA063")) CContextMenu :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CContextMenu, &__uuidof(CContextMenu)>,
     public IContextMenuImpl<CContextMenu>,

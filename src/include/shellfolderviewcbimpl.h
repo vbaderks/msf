@@ -24,7 +24,7 @@ class ATL_NO_VTABLE IShellFolderViewCBImpl :
     public IFolderViewSettings
 {
 public:
-    IShellFolderViewCBImpl(long notifyevents = 0) :
+    explicit IShellFolderViewCBImpl(long notifyevents = 0) :
         _notifyevents(notifyevents)
     {
         ATLTRACE2(atlTraceCOM, 0, L"IShellFolderViewCBImpl::IShellFolderViewCBImpl (instance=%p)\n", this);

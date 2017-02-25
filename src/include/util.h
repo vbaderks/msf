@@ -214,13 +214,13 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
         return;
 
     std::vector<wchar_t> buffer(ulLength);
-    if (regkey.QueryMultiStringValue(pszValueName, &(buffer[0]), &ulLength) != ERROR_SUCCESS)
+    if (regkey.QueryMultiStringValue(pszValueName, buffer.data(), &ulLength) != ERROR_SUCCESS)
         return;
 
     for (size_t i = 0; i < buffer.size() && buffer[i];
          i += rgStrings.back().GetLength() + 1)
     {
-        rgStrings.push_back(CString(&(buffer[i])));
+        rgStrings.push_back(CString(&buffer[i]));
     }
 }
 
@@ -245,9 +245,9 @@ inline CString GetAppPath(const CString& strApp)
 
 /// <summary>Allocates memory that can be used in OLE clipboard transactions.</summary>
 /// <remarks>
-/// The SDK docs are very uncleary about GMEM_FIXED / GMEM_MOVEABLE.
+/// The SDK docs are very unclear about GMEM_FIXED / GMEM_MOVEABLE.
 /// The shell itself uses GMEM_FIXED, which is easier to use as there
-/// is no need to lock/unlock (GMEM_FIXED is ofcourse still just moveable virtual memory).
+/// is no need to lock/unlock (GMEM_FIXED is of course still just movable virtual memory).
 /// </remarks>
 inline HGLOBAL GlobalAllocThrow(SIZE_T dwBytes, UINT uFlags = GMEM_FIXED)
 {
@@ -335,8 +335,8 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName)
         {
             DLLVERSIONINFO dvi;
 
-            ZeroMemory(&dvi, sizeof(dvi));
-            dvi.cbSize = sizeof(dvi);
+            ZeroMemory(&dvi, sizeof dvi);
+            dvi.cbSize = sizeof dvi;
 
             HRESULT hr = (*pDllGetVersion)(&dvi);
             if (SUCCEEDED(hr))
@@ -367,7 +367,7 @@ inline bool IsShell6OrHigher()
 inline int GetSystemImageListIndex(const wchar_t* pszPath)
 {
     SHFILEINFO sfi = {nullptr};
-    if (!SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof(sfi),
+    if (!SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof sfi,
                        SHGFI_USEFILEATTRIBUTES | SHGFI_ICON))
         return 0;
 

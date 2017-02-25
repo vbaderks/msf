@@ -213,7 +213,6 @@
     <ClInclude Include="include\contextmenuimpl.h" />
     <ClInclude Include="include\copyhookimpl.h" />
     <ClInclude Include="include\custommenuhandler.h" />
-    <ClInclude Include="include\defview.h" />
     <ClInclude Include="include\dfmdefines.h" />
     <ClInclude Include="include\enumformatetc.h" />
     <ClInclude Include="include\enumidlistimpl.h" />
