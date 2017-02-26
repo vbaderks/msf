@@ -339,6 +339,9 @@
     <ClInclude Include="include\msf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\iconoverlayimpl.h">
+      <Filter>Header Files\Impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="include\shell32missing.lib" />

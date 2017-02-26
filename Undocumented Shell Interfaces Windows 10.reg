@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+
+; This registry file can be imported to improve the debugging experience.
+; The ATL framework has the ability to trace which interfaces are queried.
+; ATL will trace the interface name if that interface GUID is present in the registry.
+; On a default Windows 10 installation not all GUID are present by default.
+
+; Note: Interfaces are sorted by GUID.
+
+
+; IShellIconOverlayIdentifier
+[HKEY_CLASSES_ROOT\Interface\{0C6C4200-C589-11D0-999A-00C04FD655E1}]
+@="IShellIconOverlayIdentifier"
+
+[HKEY_CLASSES_ROOT\Interface\{0C6C4200-C589-11D0-999A-00C04FD655E1}\NumMethods]
+@="3"

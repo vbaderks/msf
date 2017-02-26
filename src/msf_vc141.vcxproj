@@ -221,6 +221,7 @@
     <ClInclude Include="include\filelist.h" />
     <ClInclude Include="include\formatetc.h" />
     <ClInclude Include="include\globallock.h" />
+    <ClInclude Include="include\iconoverlayimpl.h" />
     <ClInclude Include="include\idldatacreatefromidarray.h" />
     <ClInclude Include="include\ifoldertype.h" />
     <ClInclude Include="include\iframelayoutdefinition.h" />

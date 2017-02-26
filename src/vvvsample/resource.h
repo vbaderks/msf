@@ -2,10 +2,9 @@
 // Microsoft Visual C++ generated include file.
 // Used by sample.rc
 //
-#pragma once
-
 #define IDB_MENUICON                    200
 #define IDI_ICON_VVV                    204
+#define IDI_ICON_OVERLAY                205
 #define IDS_SHELLEXT_NAME               300
 #define IDS_SHELLEXT_FILECOUNT          301
 #define IDS_SHELLEXT_SIZE               302
@@ -40,6 +39,7 @@
 #define IDR_COPYHOOK                    1007
 #define IDR_SHELLFOLDER_VISTA           1008
 #define IDR_EXTENSION                   1009
+#define IDR_ICONOVERLAY                 1010
 #define IDD_PROPERTY_PAGE_VVV           2000
 #define IDC_STATIC_LABEL                2001
 #define IDC_EDIT_LABEL                  2002
@@ -55,7 +55,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        205
+#define _APS_NEXT_RESOURCE_VALUE        206
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         201
 #define _APS_NEXT_SYMED_VALUE           102

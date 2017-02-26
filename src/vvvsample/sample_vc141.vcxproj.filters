@@ -13,6 +13,14 @@
     <None Include="vvv.ico">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\include\infotip.rgs" />
+    <None Include="..\include\contextmenu.rgs" />
+    <None Include="..\include\propertysheetext.rgs" />
+    <None Include="..\include\shellfolder.rgs" />
+    <None Include="..\include\extractimage_sf.rgs" />
+    <None Include="..\include\copyhookfolder.rgs" />
+    <None Include="..\include\extension.rgs" />
+    <None Include="..\include\iconoverlay.rgs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aboutmsfcommand.h">
@@ -95,6 +103,9 @@
     <ClCompile Include="vvvfile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="iconoverlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -111,5 +122,8 @@
     <ResourceCompile Include="sample.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
 </Project>

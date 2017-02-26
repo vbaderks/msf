@@ -16,6 +16,7 @@
 #include "browserframeoptionsimpl.h"
 #include "itemnamelimitsimpl.h"
 #include "contextmenuimpl.h"
+#include "iconoverlayimpl.h"
 
 #include "strutil.h"
 #include "cfhdrop.h"

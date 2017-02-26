@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -27,12 +25,21 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 //
 
 IDR_INFOTIP             REGISTRY                "../include/infotip.rgs"
+
 IDR_CONTEXTMENU         REGISTRY                "../include/contextmenu.rgs"
+
 IDR_PROPERTYSHEETEXT    REGISTRY                "../include/propertysheetext.rgs"
+
 IDR_SHELLFOLDER         REGISTRY                "../include/shellfolder.rgs"
+
 IDR_EXTRACTIMAGE        REGISTRY                "../include/extractimage_sf.rgs"
+
 IDR_COPYHOOK            REGISTRY                "../include/copyhookfolder.rgs"
+
 IDR_EXTENSION           REGISTRY                "../include/extension.rgs"
+
+IDR_ICONOVERLAY         REGISTRY                "../include/iconoverlay.rgs"
+
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -105,22 +112,19 @@ END
 //
 
 IDD_PROPERTY_PAGE_VVV DIALOGEX 0, 0, 227, 215
-STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | DS_FIXEDSYS | 
-    WS_POPUP | WS_CAPTION
+STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
 CAPTION "VVV"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "*Name:",IDC_STATIC_LABEL,7,12,48,9
     EDITTEXT        IDC_EDIT_LABEL,66,12,153,12,ES_AUTOHSCROLL
     LTEXT           "*FileCount:",IDC_STATIC_FILECOUNT,7,28,48,9
-    EDITTEXT        IDC_EDIT_FILECOUNT,66,28,153,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_FILECOUNT,66,28,153,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,5,60,216,1
 END
 
 IDD_PROPERTY_PAGE_ITEM DIALOGEX 0, 0, 227, 215
-STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | DS_FIXEDSYS | 
-    WS_POPUP | WS_CAPTION
+STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
 CAPTION "General"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
@@ -137,7 +141,7 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_SHELLEXT_NAME       "VVV Name"
     IDS_SHELLEXT_FILECOUNT  "VVV Files"
@@ -145,12 +149,12 @@ BEGIN
     IDS_SHELLEXT_ERROR_CAPTION "Error"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_SHELLEXT_LABEL      "Label"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_SHELLFOLDER_DELETE  "Are you sure that you want to delete '%1'?"
     IDS_SHELLFOLDER_MULTIPLE_DELETE 
@@ -164,13 +168,13 @@ BEGIN
     IDS_SHELLFOLDER_DFM_HELP_OPEN "Open"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_PROPERTYPAGE_UNABLE_TO_UPDATE 
                             "Unable to update changed settings, reason:\n\n"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_CONTEXTMENU_VVV_SUBMENU "VVV"
     IDS_CONTEXTMENU_VVV_SUBMENU_HELP "Special commands for VVV files"
@@ -183,13 +187,13 @@ BEGIN
     IDS_CONTEXTMENU_ABOUT_MASK "Build with MSF version %2d.%d"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_COPYHOOK_CAPTION   "Sample CopyHook"
-    IDS_COPYHOOK_QUESTION  "Are you sure that you want to delete this folder?"
+    IDS_COPYHOOK_CAPTION    "Sample CopyHook"
+    IDS_COPYHOOK_QUESTION   "Are you sure that you want to delete this folder?"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -197,17 +201,8 @@ END
 // Neutral (Sys. Default) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUSD)
-#ifdef _WIN32
 LANGUAGE LANG_NEUTRAL, SUBLANG_SYS_DEFAULT
 #pragma code_page(1252)
-#endif //_WIN32
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
-IDB_MENUICON            BITMAP                  "menuicon.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -217,6 +212,17 @@ IDB_MENUICON            BITMAP                  "menuicon.bmp"
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_ICON_VVV            ICON                    "vvv.ico"
+
+IDI_ICON_OVERLAY        ICON                    "icon1.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_MENUICON            BITMAP                  "menuicon.bmp"
+
 #endif    // Neutral (Sys. Default) resources
 /////////////////////////////////////////////////////////////////////////////
 
