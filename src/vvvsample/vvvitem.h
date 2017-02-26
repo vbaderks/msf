@@ -12,7 +12,7 @@
 #include <vector>
 
 
-class CVVVItem : public CItemBase
+class VVVItem : public CItemBase
 {
 public:
     static int GetMaxNameLength(LPCWSTR /*pszName*/) noexcept
@@ -32,7 +32,7 @@ public:
     }
 
 
-    explicit CVVVItem(LPCITEMIDLIST pidl) : CItemBase(pidl)
+    explicit VVVItem(LPCITEMIDLIST pidl) : CItemBase(pidl)
     {
         // Shell item IDs can be passed from external sources, validate
         // It is valid to pass a PIDL that is larger then the original (done by Search functionality in XP).
@@ -40,7 +40,7 @@ public:
 #ifdef _DEBUG
         if (!bValid)
         {
-            ATLTRACE2(atlTraceCOM, 0, L"CVVVItem::Constructor, PIDL not valid (dsize=%d, ssize=%d)\n", GetDataSize(), sizeof(SItemData));
+            ATLTRACE2(atlTraceCOM, 0, L"VVVItem::Constructor, PIDL not valid (dsize=%d, ssize=%d)\n", GetDataSize(), sizeof(SItemData));
         }
 #endif
         RaiseExceptionIf(!bValid);
@@ -75,7 +75,7 @@ public:
     }
 
 
-    int Compare(const CVVVItem& directoryitem, int nCompareBy, bool bCanonicalOnly) const;
+    int Compare(const VVVItem& directoryitem, int nCompareBy, bool bCanonicalOnly) const;
     CString GetItemDetailsOf(UINT iColumn) const;
     CString GetInfoTipText() const;
     int GetIconOf(UINT flags) const; 
@@ -113,7 +113,7 @@ private:
         return *reinterpret_cast<const SItemData*>(GetData());
     }
 
-    int CompareByName(const CVVVItem& item) const;
+    int CompareByName(const VVVItem& item) const;
 };
 
-typedef std::vector<CVVVItem> CVVVItemList;
+typedef std::vector<VVVItem> CVVVItemList;

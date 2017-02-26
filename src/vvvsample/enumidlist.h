@@ -49,12 +49,12 @@ private:
 
     void Initialize(const CString& strFilename, const CString& strFolder, DWORD grfFlags)
     {
-        m_qfile = make_unique<CVVVFile>(strFilename, strFolder);
+        m_qfile = make_unique<VVVFile>(strFilename, strFolder);
         m_grfFlags = grfFlags;
     }
 
     // Member variables
     DWORD m_grfFlags;
-    unique_ptr<CVVVFile> m_qfile;
+    unique_ptr<VVVFile> m_qfile;
     unsigned int m_nItemIterator;
 };

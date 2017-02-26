@@ -236,6 +236,7 @@
     <ClInclude Include="include\macros.h" />
     <ClInclude Include="include\menu.h" />
     <ClInclude Include="include\menuiteminfo.h" />
+    <ClInclude Include="include\msf.h" />
     <ClInclude Include="include\msfbase.h" />
     <ClInclude Include="include\olestring.h" />
     <ClInclude Include="include\performeddropeffectsink.h" />

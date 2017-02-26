@@ -21,22 +21,21 @@ protected:
 };
 
 
-class ATL_NO_VTABLE CShellFolderContextMenu :
+class ATL_NO_VTABLE ShellFolderContextMenu :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public IContextMenuImpl<CShellFolderContextMenu>
+    public ContextMenuImpl<ShellFolderContextMenu>
 {
 public:
-    DECLARE_NOT_AGGREGATABLE(CShellFolderContextMenu)
+    DECLARE_NOT_AGGREGATABLE(ShellFolderContextMenu)
 
-    BEGIN_COM_MAP(CShellFolderContextMenu)
+    BEGIN_COM_MAP(ShellFolderContextMenu)
         COM_INTERFACE_ENTRY(IContextMenu)
     END_COM_MAP()
 
-
     static CComPtr<IContextMenu> CreateInstance(IShellFolderContextMenuSink* pshellfoldercontextmenusink)
     {
-        CComObject<CShellFolderContextMenu>* pinstance;
-        HRESULT hr = CComObject<CShellFolderContextMenu>::CreateInstance(&pinstance);
+        CComObject<ShellFolderContextMenu>* pinstance;
+        HRESULT hr = CComObject<ShellFolderContextMenu>::CreateInstance(&pinstance);
         if (FAILED(hr))
             RaiseException(hr);
 
@@ -47,16 +46,9 @@ public:
         return contextmenu;
     }
 
-
-    void Init(IShellFolderContextMenuSink* pshellfoldercontextmenusink)
-    {
-        _rshellfoldercontextmenusink = pshellfoldercontextmenusink;
-    }
-
-
     STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n", this);
 
         if (strcmp(pici->lpVerb, "paste") == 0)
             return _rshellfoldercontextmenusink->OnPasteCmCmd();
@@ -65,6 +57,12 @@ public:
     }
 
 private:
+
+    void Init(IShellFolderContextMenuSink* pshellfoldercontextmenusink)
+    {
+        _rshellfoldercontextmenusink = pshellfoldercontextmenusink;
+    }
+
     CComPtr<IShellFolderContextMenuSink> _rshellfoldercontextmenusink;
 };
 

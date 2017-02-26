@@ -18,7 +18,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE IContextMenuImpl :
+class ATL_NO_VTABLE ContextMenuImpl :
     public IShellExtInitImpl,
     public IContextMenu3
 {
@@ -44,7 +44,7 @@ public:
         }
 
 
-        CMenu(HMENU hmenu, UINT indexMenu, UINT& idCmd, UINT idCmdLast, IContextMenuImpl<T>* pmenuhost) :
+        CMenu(HMENU hmenu, UINT indexMenu, UINT& idCmd, UINT idCmdLast, ContextMenuImpl<T>* pmenuhost) :
             _hmenu(hmenu),
             _indexMenu(indexMenu),
             _pidCmd(&idCmd),
@@ -83,7 +83,7 @@ public:
         }
 
 
-        // Purpose: Create and add a submenu to the contextmenu.
+        // Purpose: Create and add a sub menu to the context menu.
         CMenu AddSubMenu(const CString& strText, const CString& strHelp)
         {
             auto hmenu = CreateSubMenu();
@@ -101,7 +101,7 @@ public:
         }
 
 
-        // Purpose: create and add a owner drawn custom submenu to the contextmenu.
+        // Purpose: create and add a owner drawn custom sub menu to the context menu.
         CMenu AddSubMenu(const CString& strHelp, std::unique_ptr<CCustomMenuHandler> qcustommenuhandler)
         {
             auto hmenu = CreateSubMenu();
@@ -219,11 +219,11 @@ public:
         UINT                 _indexMenu;
         UINT*                _pidCmd;
         UINT                 _idCmdLast;
-        IContextMenuImpl<T>* _pmenuhost;
+        ContextMenuImpl<T>* _pmenuhost;
     };
 
 
-    /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
+    /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szRootKey) noexcept
     {
@@ -232,15 +232,15 @@ public:
     }
 
 
-    IContextMenuImpl()
+    ContextMenuImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::Constructor (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::Constructor (instance=%p)\n", this);
     }
 
 
-    ~IContextMenuImpl()
+    ~ContextMenuImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::~IContextMenuImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::~ContextMenuImpl (instance=%p)\n", this);
 
         ClearMenuItems();
     }
@@ -249,7 +249,7 @@ public:
     // IContextMenu
     STDMETHOD(QueryContextMenu)( _In_ HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
+        ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
             this, indexMenu, idCmdFirst, idCmdLast, uFlags);
 
         try
@@ -275,7 +275,7 @@ public:
 
     STDMETHOD(GetCommandString)(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x", this, uFlags);
+        ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x", this, uFlags);
 
         try
         {
@@ -326,7 +326,7 @@ public:
     // IContextMenu2
     STDMETHOD(HandleMenuMsg)(UINT uMsg, WPARAM wParam, LPARAM lParam) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n");
+        ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n");
         return HandleMenuMsg2(uMsg, wParam, lParam, nullptr);
     }
 
@@ -351,19 +351,19 @@ public:
             switch (uMsg)
             {
             case WM_INITMENUPOPUP:
-                ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnInitMenuPopup)\n");
+                ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnInitMenuPopup)\n");
                 return static_cast<T*>(this)->OnInitMenuPopup(reinterpret_cast<HMENU>(wParam), LOWORD(lParam));
 
             case WM_DRAWITEM:
-                ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnDrawItem)\n");
+                ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnDrawItem)\n");
                 return static_cast<T*>(this)->OnDrawItem(reinterpret_cast<DRAWITEMSTRUCT*>(lParam));
 
             case WM_MEASUREITEM:
-                ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMeasureItem)\n");
+                ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMeasureItem)\n");
                 return static_cast<T*>(this)->OnMeasureItem(reinterpret_cast<MEASUREITEMSTRUCT*>(lParam));
 
             case WM_MENUCHAR:
-                ATLTRACE2(atlTraceCOM, 0, L"IContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n");
+                ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n");
                 if (!plResult)
                     return E_FAIL;
 

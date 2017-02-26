@@ -31,7 +31,7 @@ public:
     explicit CPropertyPageVVV(const CString& strFilename) :
         _strFilename(strFilename)
     {
-        CVVVFile vvvfile(strFilename);
+        VVVFile vvvfile(strFilename);
 
         // Retrieve the file data: the sample don't shows the page if this fails.
         _strLabel   = vvvfile.GetLabel();
@@ -64,7 +64,7 @@ public:
 
         try
         {
-            CVVVFile(_strFilename).SetLabel(str);
+            VVVFile(_strFilename).SetLabel(str);
             _strLabel = str;
             return true;
         }

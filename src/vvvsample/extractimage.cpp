@@ -8,17 +8,16 @@
 
 #include "shellfolderclsid.h"
 #include "resource.h"
+#include <msf.h>
 
-#include "../include/extractimageimpl.h"
 
-
-class ATL_NO_VTABLE __declspec(uuid("959ACDA2-A398-4204-8378-610979C01557")) CExtractImage :
+class ATL_NO_VTABLE __declspec(uuid("959ACDA2-A398-4204-8378-610979C01557")) ExtractImage :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CExtractImage, &__uuidof(CExtractImage)>,
-    public IExtractImageImpl<CExtractImage>
+    public CComCoClass<ExtractImage, &__uuidof(ExtractImage)>,
+    public ExtractImageImpl<ExtractImage>
 {
 public:
-    BEGIN_COM_MAP(CExtractImage)
+    BEGIN_COM_MAP(ExtractImage)
         COM_INTERFACE_ENTRY(IPersistFile)
         COM_INTERFACE_ENTRY(IExtractImage)
         COM_INTERFACE_ENTRY(IExtractImage2)
@@ -29,7 +28,7 @@ public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
         // TODO: update to new reg model.
-        return IExtractImageImpl<CExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,
+        return ExtractImageImpl<ExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,
             L"VVV Sample ExtractImage ShellExtension", __uuidof(CShellFolder), wszVVVExtension);
     }
 
@@ -106,4 +105,4 @@ HBITMAP hbmp= CreateDIBSection( dc,
 
 #endif
 
-OBJECT_ENTRY_AUTO(__uuidof(CExtractImage), CExtractImage)
+OBJECT_ENTRY_AUTO(__uuidof(ExtractImage), ExtractImage)

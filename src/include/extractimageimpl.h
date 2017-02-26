@@ -15,7 +15,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE IExtractImageImpl :
+class ATL_NO_VTABLE ExtractImageImpl :
     public IPersistFile,
     public IExtractImage2
 {
@@ -38,27 +38,27 @@ public:
     }
 
 
-    // All-in-one registration function for 1 extenstion, call 'ForExt' to register
-    // aditional functions.
+    // All-in-one registration function for 1 extension, call 'ForExt' to register
+    // additional functions.
     static HRESULT WINAPI UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,
         PCWSTR szDescription, PCWSTR szRootExt, PCWSTR szExtension) noexcept
     {
-        return ::UpdateRegistry(nResIdRoot, nResIdExt, bRegister,
+        return T::UpdateRegistry(nResIdRoot, nResIdExt, bRegister,
             szDescription, T::GetObjectCLSID(), szRootExt, szExtension);
     }
 
 
-    IExtractImageImpl() :
+    ExtractImageImpl() :
         _hbitmap(nullptr)
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::IExtractImageImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
     }
 
 
     // IPersistFile
     STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::GetClassID\n");
+        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::GetClassID\n");
 
         if (!pClassID)
             return E_POINTER;
@@ -70,25 +70,25 @@ public:
 
     STDMETHOD(IsDirty)() override
     {
-        ATLTRACENOTIMPL(L"IExtractImageImpl::IsDirty");
+        ATLTRACENOTIMPL(L"ExtractImageImpl::IsDirty");
     }
 
 
     STDMETHOD(Save)(LPCOLESTR, BOOL) override
     {
-        ATLTRACENOTIMPL(L"IExtractImageImpl::Save");
+        ATLTRACENOTIMPL(L"ExtractImageImpl::Save");
     }
 
 
     STDMETHOD(SaveCompleted)(LPCOLESTR) override
     {
-        ATLTRACENOTIMPL(L"IExtractImageImpl::SaveCompleted");
+        ATLTRACENOTIMPL(L"ExtractImageImpl::SaveCompleted");
     }
 
 
     STDMETHOD(GetCurFile)(LPOLESTR*) override
     {
-        ATLTRACENOTIMPL(L"IExtractImageImpl::GetCurFile");
+        ATLTRACENOTIMPL(L"ExtractImageImpl::GetCurFile");
     }
 
 
@@ -96,7 +96,7 @@ public:
     {
         UNREFERENCED_PARAMETER(dwMode); // unused in release.
 
-        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
+        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
         try
         {
             _strFilename = CW2T(wszFilename);
@@ -112,7 +112,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
+            ATLTRACE2(atlTraceCOM, 0, "ExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
 
             Dispose();
             _hbitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
@@ -134,7 +134,7 @@ public:
 
     STDMETHOD(Extract)(__RPC__deref_out_opt HBITMAP* phBmpThumbnail) override
     {
-        ATLTRACE2(atlTraceCOM, 0, "IExtractImageImpl::Extract (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, "ExtractImageImpl::Extract (instance=%p)\n", this);
 
         if (!_hbitmap)
             return E_FAIL;
@@ -149,7 +149,7 @@ public:
     // IExtractImage2
     STDMETHOD(GetDateStamp)(__RPC__in FILETIME* pDateStamp) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::GetDateStamp (instance=%p, pdatastampe=%p)\n", this, pDateStamp);
+        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, pDateStamp);
 
         if (!pDateStamp)
             return E_POINTER;
@@ -174,9 +174,9 @@ public:
 
 protected:
 
-    ~IExtractImageImpl()
+    ~ExtractImageImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IExtractImageImpl::~IExtractImageImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::~ExtractImageImpl (instance=%p)\n", this);
 
         Dispose();
     }

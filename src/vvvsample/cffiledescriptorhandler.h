@@ -43,7 +43,7 @@ public:
             fd.dwFlags = FD_FILESIZE;
             fd.nFileSizeHigh = 0;
 
-            CVVVItem vvvitem(cfshellidlist.GetItem(i));
+            VVVItem vvvitem(cfshellidlist.GetItem(i));
 
             fd.nFileSizeLow = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
             if (lstrcpyn(fd.cFileName, vvvitem.GetDisplayName(), MAX_PATH))

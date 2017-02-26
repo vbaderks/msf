@@ -15,7 +15,7 @@
 class CPropertyPageItem : public CSnapInPropertyPageImpl<CPropertyPageItem>
 {
 public:
-    static HPROPSHEETPAGE CreateInstance(CVVVItem& item, long& wEventId, IShellFolder* pshellfolder)
+    static HPROPSHEETPAGE CreateInstance(VVVItem& item, long& wEventId, IShellFolder* pshellfolder)
     {
         auto ppage = new CPropertyPageItem(item, wEventId, pshellfolder);
         return ppage->Create();
@@ -29,7 +29,7 @@ public:
     END_MSG_MAP()
 
 
-    CPropertyPageItem(CVVVItem& item, long& wEventId, IShellFolder* pshellfolder) :
+    CPropertyPageItem(VVVItem& item, long& wEventId, IShellFolder* pshellfolder) :
         m_item(item),
         m_wEventId(wEventId),
         m_rshellfolder(pshellfolder)
@@ -66,7 +66,7 @@ public:
 
         if (m_wEventId != 0)
         {
-            m_pidlNew.Attach(CVVVItem::CreateItemIdList(m_item.GetID(),  
+            m_pidlNew.Attach(VVVItem::CreateItemIdList(m_item.GetID(),  
                 nSize, m_item.IsFolder(), strName));
         }
 
@@ -93,7 +93,7 @@ private:
     }
 
     // Member variables
-    const CVVVItem&       m_item;
+    const VVVItem&       m_item;
     CPidl                 m_pidlNew;
     long&                 m_wEventId;
     CComPtr<IShellFolder> m_rshellfolder;

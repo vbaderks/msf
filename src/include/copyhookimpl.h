@@ -44,7 +44,7 @@ public:
         return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
     }
 
-
+protected:
     ICopyHookImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, L"ICopyHookImpl::Constructor (instance=%p)\n", this);

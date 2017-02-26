@@ -12,7 +12,7 @@
 class CVVVPropertySheet : public CPropertySheet
 {
 public:
-    CVVVPropertySheet(CVVVItem& item, IShellFolder* pshellfolder) :
+    CVVVPropertySheet(VVVItem& item, IShellFolder* pshellfolder) :
         CPropertySheet(item.GetDisplayName(), PSH_NOAPPLYNOW | PSH_PROPTITLE | PSH_NOCONTEXTHELP),
         _wEventId(0)
     {

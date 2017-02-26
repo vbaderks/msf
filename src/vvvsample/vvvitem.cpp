@@ -17,9 +17,9 @@
 
 
 // Note: 'switch' is used in this example to show all the possible options.
-CString CVVVItem::GetDisplayName(SHGDNF shgdnf) const
+CString VVVItem::GetDisplayName(SHGDNF shellGetDisplayNameType) const
 {
-    switch (shgdnf)
+    switch (shellGetDisplayNameType)
     {
     case SHGDN_NORMAL:
     case SHGDN_INFOLDER:
@@ -33,10 +33,10 @@ CString CVVVItem::GetDisplayName(SHGDNF shgdnf) const
 
     case SHGDN_INFOLDER | SHGDN_FORPARSING:
     case SHGDN_FORPARSING: // note parent should append folder name before item name.
-        return ToString(GetID()); // return unique string (vvv items are unique by ID)
+        return ToString(GetID()); // return unique string (VVV items are unique by ID)
 
     default:
-        ATLTRACE2(atlTraceCOM, 0, L"CVVVItem::GetDisplayName (shgdnf=%d)\n", shgdnf);
+        ATLTRACE2(atlTraceCOM, 0, L"VVVItem::GetDisplayName (shellGetDisplayNameType=%d)\n", shellGetDisplayNameType);
         break;
     }
 
@@ -44,35 +44,35 @@ CString CVVVItem::GetDisplayName(SHGDNF shgdnf) const
 }
 
 
-SFGAOF CVVVItem::GetAttributeOf(bool bSingleSelect, bool bReadOnly) const
+SFGAOF VVVItem::GetAttributeOf(bool bSingleSelect, bool bReadOnly) const
 {
     if (IsFolder())
     {
         return SFGAO_FOLDER | SFGAO_HASSUBFOLDER;
     }
 
-    SFGAOF sfgaof = SFGAO_CANCOPY;
+    SFGAOF shellFileGetAttributesOfFlags = SFGAO_CANCOPY;
 
-    // Tip: to debug error handling, disable the readonly check and make the .vvv readonly
+    // Tip: to debug error handling, disable the read only check and make the .vvv read only
     if (!bReadOnly)
     {
-        sfgaof |= SFGAO_CANRENAME | SFGAO_CANDELETE | SFGAO_CANMOVE;
+        shellFileGetAttributesOfFlags |= SFGAO_CANRENAME | SFGAO_CANDELETE | SFGAO_CANMOVE;
 
         // Note: standard windows UI allows the rename option for multiple items.
     }
 
     if (bSingleSelect)
     {
-        sfgaof |= SFGAO_HASPROPSHEET; 
+        shellFileGetAttributesOfFlags |= SFGAO_HASPROPSHEET; 
     }
 
-    return sfgaof;
+    return shellFileGetAttributesOfFlags;
 }
 
 
-int CVVVItem::Compare(const CVVVItem& item, int nCompareBy, bool /*bCanonicalOnly*/) const
+int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/) const
 {
-    switch (nCompareBy)
+    switch (compareBy)
     {
     case COLUMN_NAME:
         return CompareByName(item);
@@ -87,9 +87,9 @@ int CVVVItem::Compare(const CVVVItem& item, int nCompareBy, bool /*bCanonicalOnl
 }
 
 
-CString CVVVItem::GetItemDetailsOf(UINT iColumn) const
+CString VVVItem::GetItemDetailsOf(UINT columnIndex) const
 {
-    switch (iColumn)
+    switch (columnIndex)
     {
     case COLUMN_NAME:
         return GetDisplayName(SHGDN_NORMAL);
@@ -109,7 +109,7 @@ CString CVVVItem::GetItemDetailsOf(UINT iColumn) const
 }
 
 
-CString CVVVItem::GetInfoTipText() const
+CString VVVItem::GetInfoTipText() const
 {
     CString strText = LoadString(IDS_SHELLEXT_NAME) + L": " + GetDisplayName() + L"\n";
     strText += LoadString(IDS_SHELLEXT_SIZE) + L": " + ToString(GetSize());
@@ -118,7 +118,7 @@ CString CVVVItem::GetInfoTipText() const
 }
 
 
-int CVVVItem::GetIconOf(UINT flags) const
+int VVVItem::GetIconOf(UINT flags) const
 {
     if (IsFolder())
         return IsBitSet(flags, GIL_OPENICON) ?
@@ -130,7 +130,7 @@ int CVVVItem::GetIconOf(UINT flags) const
 
 
 // Note: can only return 0 if same items are compared.
-int CVVVItem::CompareByName(const CVVVItem& item) const
+int VVVItem::CompareByName(const VVVItem& item) const
 {
     // Compare first by folder, to make sure folders are listed before files.
     if (IsFolder())

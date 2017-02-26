@@ -8,25 +8,23 @@
 #include "editwithnotepadcommand.h"
 #include "aboutmsfcommand.h"
 #include "resource.h"
-
-#include "../include/contextmenuimpl.h"
-#include "../include/smallbitmaphandler.h"
+#include <msf.h>
 
 
-class ATL_NO_VTABLE __declspec(uuid("B498A476-9EB6-46c3-8146-CE77FF7EA063")) CContextMenu :
+class ATL_NO_VTABLE __declspec(uuid("B498A476-9EB6-46c3-8146-CE77FF7EA063")) ContextMenu :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CContextMenu, &__uuidof(CContextMenu)>,
-    public IContextMenuImpl<CContextMenu>,
-    public IObjectWithSiteImpl<CContextMenu>
+    public CComCoClass<ContextMenu, &__uuidof(ContextMenu)>,
+    public ContextMenuImpl<ContextMenu>,
+    public IObjectWithSiteImpl<ContextMenu>
 {
 public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
-        return IContextMenuImpl<CContextMenu>::UpdateRegistry(bRegister, IDR_CONTEXTMENU,
+        return ContextMenuImpl<ContextMenu>::UpdateRegistry(bRegister, IDR_CONTEXTMENU,
             L"VVV Sample Context Menu ShellExtension", wszVVVFileRootExt);
     }
 
-    BEGIN_COM_MAP(CContextMenu)
+    BEGIN_COM_MAP(ContextMenu)
         COM_INTERFACE_ENTRY(IShellExtInit)
         COM_INTERFACE_ENTRY(IContextMenu)
         COM_INTERFACE_ENTRY(IContextMenu2)
@@ -36,12 +34,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    CContextMenu()
-    {
-        RegisterExtension(tszVVVExtension);
-    }
-
-    // Purpose: called by the 'impl' class. Request to configure the menu
+    // Purpose: called by the implementation class. Request to configure the menu
     void OnQueryContextMenu(CMenu& menu, const vector<CString>& filenames)
     {
         if (ContainsUnknownExtension(filenames))
@@ -50,20 +43,26 @@ public:
         if (filenames.size() != 1)
             return; // only add to the context menu when 1 file is selected.
 
-        std::unique_ptr<CCustomMenuHandler> qsmallbitmaphandler(new CSmallBitmapHandler(IDS_CONTEXTMENU_VVV_SUBMENU, IDB_MENUICON));
-        CMenu menuVVV = menu.AddSubMenu(IDS_CONTEXTMENU_VVV_SUBMENU_HELP, std::move(qsmallbitmaphandler));
-
-        std::unique_ptr<CContextCommand> qeditwithnotepadcommand(new CEditWithNotepadCommand());
+        CMenu menuVVV = menu.AddSubMenu(IDS_CONTEXTMENU_VVV_SUBMENU_HELP,
+                                        make_unique<CSmallBitmapHandler>(IDS_CONTEXTMENU_VVV_SUBMENU, IDB_MENUICON));
         menuVVV.AddItem(IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD,
-                        IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD_HELP, std::move(qeditwithnotepadcommand));
+                        IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD_HELP,
+                        make_unique<CEditWithNotepadCommand>());
 
-        std::unique_ptr<CContextCommand> qaboutmsfcommand(new CAboutMSFCommand());
-        std::unique_ptr<CCustomMenuHandler> qsmallbitmaphandler2(new CSmallBitmapHandler(IDS_CONTEXTMENU_ABOUT_MSF, IDB_MENUICON));
-        menuVVV.AddItem(IDS_CONTEXTMENU_ABOUT_MSF_HELP, std::move(qaboutmsfcommand), std::move(qsmallbitmaphandler2));
+        menuVVV.AddItem(IDS_CONTEXTMENU_ABOUT_MSF_HELP,
+                        make_unique<CAboutMSFCommand>(),
+                        make_unique<CSmallBitmapHandler>(IDS_CONTEXTMENU_ABOUT_MSF, IDB_MENUICON));
 
-        // ... optional add more submenu's or more menu items.
+        // ... optional add more sub menu's or more menu items.
+    }
+
+protected:
+
+    ContextMenu()
+    {
+        RegisterExtension(tszVVVExtension);
     }
 };
 
 
-OBJECT_ENTRY_AUTO(__uuidof(CContextMenu), CContextMenu)
+OBJECT_ENTRY_AUTO(__uuidof(ContextMenu), ContextMenu)

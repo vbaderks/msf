@@ -18,21 +18,20 @@ public:
 
     // Purpose: small helper class to free managed handle.
     // For more advanced features use bitmap class in WTL or MFC
-    class CBitmap
+    class Bitmap
     {
     public:
-        CBitmap(HBITMAP handle = nullptr) : m_handle(handle)
+        explicit Bitmap(HBITMAP handle = nullptr) : m_handle(handle)
         {
         }
 
-        ~CBitmap()
+        ~Bitmap()
         {
             if (m_handle)
             {
                 ATLVERIFY(DeleteObject(m_handle));
             }
         }
-
 
         HBITMAP GetHandle() const
         {
@@ -45,38 +44,38 @@ public:
     };
 
 
-    CSmallBitmapHandler(CString strText, UINT nResID) :
-        m_strText(strText),
-        m_bitmap(LoadBitmap(nResID))
+    CSmallBitmapHandler(CString text, UINT resourceID) :
+        _text(text),
+        _bitmap(LoadBitmap(resourceID))
     {
     }
 
 
-    CSmallBitmapHandler(UINT nTextID, UINT nResID) :
-        m_strText(LoadString(nTextID)),
-        m_bitmap(LoadBitmap(nResID))
+    CSmallBitmapHandler(UINT textID, UINT resourceID) :
+        _text(LoadString(textID)),
+        _bitmap(LoadBitmap(resourceID))
     {
     }
 
 
-    void InitializeItemInfo(CMenuItemInfo& menuiteminfo) override
+    void InitializeItemInfo(CMenuItemInfo& menuItemInfo) override
     {
-        menuiteminfo.SetString(m_strText);
-        menuiteminfo.SetCheckMarkBmps(nullptr, m_bitmap.GetHandle());
+        menuItemInfo.SetString(_text);
+        menuItemInfo.SetCheckMarkBmps(nullptr, _bitmap.GetHandle());
     }
 
 private:
 
-    static HBITMAP LoadBitmap(UINT nResID) noexcept
+    static HBITMAP LoadBitmap(UINT resourceID) noexcept
     {
-        HBITMAP hbitmap = ::LoadBitmap(_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(nResID));
+        HBITMAP hbitmap = ::LoadBitmap(_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceID));
         ATLASSERT(hbitmap && "Failed to load the bitmap, check resource id, etc");
         return hbitmap;
     }
 
     // Member variables.
-    CString m_strText;
-    CBitmap m_bitmap;
+    CString _text;
+    Bitmap _bitmap;
 };
 
 } // end namespace MSF

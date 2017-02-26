@@ -6,8 +6,7 @@
 #pragma once
 
 
-#include "../include/contextcommand.h"
-#include "../include/util.h"
+#include <msf.h>
 
 
 class CEditWithNotepadCommand : public CContextCommand
@@ -17,7 +16,7 @@ public:
     {
         ATLASSERT(filenames.size() == 1); // can only handle 1 file.
 
-        // Use the command line param to pass the exe filename. This causes
+        // Use the command line parameters to pass the exe filename. This causes
         // Windows to use the path to find notepad.
         CString strCmd = L"notepad.exe \"" + filenames[0] + L"\"";
 

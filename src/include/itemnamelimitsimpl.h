@@ -70,9 +70,8 @@ public:
 
 
     // Purpose: called by the shell to retrieve the max length.
-    //          Lenght can depend on the current string. (UNC pathname has
+    //          Length can depend on the current string. (UNC pathname has
     //          different length then local path, etc).
-    //
     STDMETHOD(GetMaxLength)(__RPC__in_string LPCWSTR pszName, __RPC__out int* piMaxNameLen) override
     {
         try

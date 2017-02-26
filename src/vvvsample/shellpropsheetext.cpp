@@ -6,7 +6,6 @@
 
 #include "stdafx.h"
 
-#include "shellpropsheetextclsid.h"
 #include "shellfolderclsid.h"
 #include "propertypagevvv.h"
 #include "resource.h"
@@ -14,13 +13,13 @@
 #include "../include/shellpropsheetextimpl.h"
 
 
-class ATL_NO_VTABLE CShellPropSheetExt :
+class ATL_NO_VTABLE __declspec(uuid("E53D1A20-D87F-42ad-A6CD-F2E155CAAADC")) ShellPropSheetExt :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CShellPropSheetExt, &__uuidof(CShellPropSheetExt)>,
-    public IShellPropSheetExtImpl<CShellPropSheetExt>
+    public CComCoClass<ShellPropSheetExt, &__uuidof(ShellPropSheetExt)>,
+    public IShellPropSheetExtImpl<ShellPropSheetExt>
 {
 public:
-    BEGIN_COM_MAP(CShellPropSheetExt)
+    BEGIN_COM_MAP(ShellPropSheetExt)
         COM_INTERFACE_ENTRY(IShellExtInit)
         COM_INTERFACE_ENTRY(IShellPropSheetExt)
     END_COM_MAP()
@@ -29,27 +28,27 @@ public:
 
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
-        return IShellPropSheetExtImpl<CShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
+        return IShellPropSheetExtImpl<ShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
             L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
     }
 
     // Purpose: called by MSF when it is time to add our pages to the property sheet.
-    void OnAddPages(const CAddPage& addpage, const vector<CString>& filenames)
+    void OnAddPages(const CAddPage& addPage, const vector<CString>& filenames)
     {
         // Only add the page if only 1 file is selected and is of our own extension.
         if (filenames.size() != 1 || ContainsUnknownExtension(filenames))
             return;
 
-        addpage(CPropertyPageVVV::CreateInstance(filenames.front()));
+        addPage(CPropertyPageVVV::CreateInstance(filenames.front()));
     }
 
 protected:
 
-    CShellPropSheetExt()
+    ShellPropSheetExt()
     {
         RegisterExtension(tszVVVExtension);
     }
 };
 
 
-OBJECT_ENTRY_AUTO(__uuidof(CShellPropSheetExt), CShellPropSheetExt)
+OBJECT_ENTRY_AUTO(__uuidof(ShellPropSheetExt), ShellPropSheetExt)

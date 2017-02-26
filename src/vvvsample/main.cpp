@@ -7,16 +7,14 @@
 #include "stdafx.h"
 
 #include "resource.h"
-
-#include "../include/util.h"
-#include "../include/updateregistry.h"
+#include <msf.h>
 
 
 // ATL COM DLLs require a single "module" instance.
-class CModule : public CAtlDllModuleT<CModule>
+class Module : public CAtlDllModuleT<Module>
 {
 };
-CModule _Module;
+Module _Module;
 
 
 // Purpose: DLL Entry Point
@@ -47,7 +45,7 @@ __control_entrypoint(DllExport)
 STDAPI DllCanUnloadNow()
 {
     auto hr = _Module.DllCanUnloadNow();
-    ATLTRACE2(atlTraceCOM, 0, L"SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload ok)\n", hr);
+    ATLTRACE2(atlTraceCOM, 0, L"SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload OK)\n", hr);
     return hr;
 }
 

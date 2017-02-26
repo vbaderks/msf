@@ -45,7 +45,7 @@ public:
     {
         ATLASSERT(SUCCEEDED(Validate(formatetc)));
 
-        CVVVItem vvvitem(GetCfShellIdList()->GetItem(static_cast<UINT>(formatetc.lindex)));
+        VVVItem vvvitem(GetCfShellIdList()->GetItem(static_cast<UINT>(formatetc.lindex)));
 
         size_t size = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
         HGLOBAL hg = GlobalAllocThrow(size);

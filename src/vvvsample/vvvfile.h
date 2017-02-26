@@ -9,12 +9,12 @@
 #include "vvvitem.h"
 
 
-class CVVVFile
+class VVVFile
 {
 public:
-    explicit CVVVFile(const CString& strFilename, const CString& strFolder = CString()) :
-        _strFilename(strFilename),
-        _strFolder(strFolder)
+    explicit VVVFile(const CString& filename, const CString& folder = CString()) :
+        _filename(filename),
+        _folder(folder)
     {
     }
 
@@ -23,15 +23,15 @@ public:
     unsigned int GetFileCount() const;
     LPITEMIDLIST GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) const;
     void DeleteItems(const CVVVItemList& itemsToDelete) const;
-    void SetItem(const CVVVItem& item) const;
+    void SetItem(const VVVItem& item) const;
 
     LPITEMIDLIST AddItem(const CString& strFile) const;
     LPITEMIDLIST AddItem(unsigned int nSize, const CString& strName) const;
 
 private:
 
-    void AddItem(const CVVVItem& item) const;
-    void DeleteItem(const CVVVItem& item) const;
+    void AddItem(const VVVItem& item) const;
+    void DeleteItem(const VVVItem& item) const;
 
     void SetFileCount(unsigned int nNewFileCount) const;
     unsigned int FindFreeEntry() const;
@@ -46,6 +46,6 @@ private:
     void WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const;
 
     // Member variables
-    CString _strFilename;
-    CString _strFolder;
+    CString _filename;
+    CString _folder;
 };

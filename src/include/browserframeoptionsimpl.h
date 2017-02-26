@@ -16,12 +16,6 @@ class ATL_NO_VTABLE IBrowserFrameOptionsImpl :
     public IBrowserFrameOptions
 {
 public:
-    explicit IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) :
-        m_browserframeoptions(browserframeoptions)
-    {
-    }
-
-
     // IBrowserFrameOptions
     STDMETHOD(GetFrameOptions)(_In_ BROWSERFRAMEOPTIONS dwMask, _Out_ BROWSERFRAMEOPTIONS* pdwOptions) override
     {
@@ -35,6 +29,11 @@ public:
     }
 
 protected:
+
+    explicit IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) :
+        m_browserframeoptions(browserframeoptions)
+    {
+    }
 
     BROWSERFRAMEOPTIONS m_browserframeoptions;
 };

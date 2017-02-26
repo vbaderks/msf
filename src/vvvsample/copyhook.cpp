@@ -7,22 +7,20 @@
 #include "stdafx.h"
 
 #include "resource.h"
-
-#include "../include/copyhookimpl.h"
-#include "../include/strutil.h"
+#include <msf.h>
 
 
 // This sample will watch folder delete requests. 
 // When the name includes the substring 'VVV' it will display an conformation dialogbox.
 // Note: explorer.exe only read at startup the CopyHook extensions from the registry.
 
-class ATL_NO_VTABLE __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CCopyHook :
+class ATL_NO_VTABLE __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CopyHook :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CCopyHook, &__uuidof(CCopyHook)>,
-    public ICopyHookImpl<CCopyHook>
+    public CComCoClass<CopyHook, &__uuidof(CopyHook)>,
+    public ICopyHookImpl<CopyHook>
 {
 public:
-    BEGIN_COM_MAP(CCopyHook)
+    BEGIN_COM_MAP(CopyHook)
         COM_INTERFACE_ENTRY(ICopyHook)
     END_COM_MAP()
 
@@ -30,7 +28,7 @@ public:
 
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
-        return ICopyHookImpl<CCopyHook>::UpdateRegistry(bRegister, IDR_COPYHOOK,
+        return ICopyHookImpl<CopyHook>::UpdateRegistry(bRegister, IDR_COPYHOOK,
             L"VVV Sample CopyHook ShellExtension", L"VVV CopyHook");
     }
 
@@ -49,4 +47,4 @@ public:
 };
 
 
-OBJECT_ENTRY_AUTO(__uuidof(CCopyHook), CCopyHook)
+OBJECT_ENTRY_AUTO(__uuidof(CopyHook), CopyHook)

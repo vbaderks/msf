@@ -336,6 +336,9 @@
     <ClInclude Include="include\infotipimpl.h">
       <Filter>Header Files\Impl</Filter>
     </ClInclude>
+    <ClInclude Include="include\msf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="include\shell32missing.lib" />

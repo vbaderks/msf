@@ -1252,7 +1252,7 @@ protected:
     // The system folder view has a default impl that will be displayed (if NULL is returned).
     CComPtr<IContextMenu> CreateFolderContextMenu()
     {
-        return CShellFolderContextMenu::CreateInstance(this);
+        return ShellFolderContextMenu::CreateInstance(this);
     }
 
     // IShellFolderImpl override functions: derived class must implement these functions.

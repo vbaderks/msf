@@ -13,13 +13,7 @@
 #include "vvvfile.h"
 #include "vvvpropertysheet.h"
 #include "resource.h"
-
-#include "../include/shellfolderimpl.h"
-#include "../include/browserframeoptionsimpl.h"
-#include "../include/itemnamelimitsimpl.h"
-#include "../include/strutil.h"
-#include "../include/cfhdrop.h"
-#include "../include/menu.h"
+#include <msf.h>
 
 
 // Defines for the item context menu.
@@ -28,9 +22,9 @@ const UINT ID_DFM_CMD_OPEN = 0;
 class ATL_NO_VTABLE CShellFolder :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CShellFolder, &__uuidof(CShellFolder)>,
-    public IShellFolderImpl<CShellFolder, CVVVItem>,
+    public IShellFolderImpl<CShellFolder, VVVItem>,
     public IBrowserFrameOptionsImpl,
-    public IItemNameLimitsImpl<CShellFolder, CVVVItem>
+    public IItemNameLimitsImpl<CShellFolder, VVVItem>
 {
 public:
     BEGIN_COM_MAP(CShellFolder)
@@ -54,7 +48,7 @@ public:
 
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
-        return IShellFolderImpl<CShellFolder, CVVVItem>::UpdateRegistry(
+        return IShellFolderImpl<CShellFolder, VVVItem>::UpdateRegistry(
             bRegister, IDR_SHELLFOLDER,
             L"VVV Sample ShellFolder ShellExtension ", wszVVVFileRootExt, IDS_SHELLFOLDER_TYPE);
     }
@@ -101,7 +95,7 @@ public:
 
 
     // Purpose: called by MSF when there is no global settings for all items.
-    SFGAOF GetAttributeOf(unsigned int cidl, const CVVVItem& item, SFGAOF /*sfgofMask*/) const
+    SFGAOF GetAttributeOf(unsigned int cidl, const VVVItem& item, SFGAOF /*sfgofMask*/) const
     {
         return item.GetAttributeOf(cidl == 1, IsReadOnly(GetPathFolderFile()));
     }
@@ -124,7 +118,7 @@ public:
     {
         CCfShellIdList itemlist(pdataobject);
 
-        if (itemlist.GetItemCount() == 1 && !CVVVItem(itemlist.GetItem(0)).IsFolder())
+        if (itemlist.GetItemCount() == 1 && !VVVItem(itemlist.GetItem(0)).IsFolder())
         {
             // Add 'open' if only 1 item is selected.
             CMenu menu(true);
@@ -169,7 +163,7 @@ public:
         CCfShellIdList cfshellidlist(pdataobject); 
         ATLASSERT(cfshellidlist.GetItemCount() == 1);
 
-        CVVVItem item(cfshellidlist.GetItem(0));
+        VVVItem item(cfshellidlist.GetItem(0));
 
         if (item.IsFolder())
         {
@@ -185,13 +179,13 @@ public:
 
 
     // Purpose: Called by the shell/MSF when an item must be renamed.
-    LPITEMIDLIST OnSetNameOf(HWND /*hwnd*/, const CVVVItem& item, const wchar_t* szNewName, SHGDNF shgndf)
+    LPITEMIDLIST OnSetNameOf(HWND /*hwnd*/, const VVVItem& item, const wchar_t* szNewName, SHGDNF shgndf)
     {
         RaiseExceptionIf(shgndf != SHGDN_NORMAL && shgndf != SHGDN_INFOLDER); // not supported 'name'.
 
-        CPidl pidl(CVVVItem::CreateItemIdList(item.GetID(), item.GetSize(), item.IsFolder(), szNewName));
+        CPidl pidl(VVVItem::CreateItemIdList(item.GetID(), item.GetSize(), item.IsFolder(), szNewName));
 
-        CVVVFile(GetPathFolderFile(), m_strSubFolder).SetItem(CVVVItem(pidl));
+        VVVFile(GetPathFolderFile(), m_strSubFolder).SetItem(VVVItem(pidl));
 
         return pidl.Detach();
     }
@@ -203,12 +197,12 @@ public:
     long OnProperties(HWND hwnd, CVVVItemList& items)
     {
         ATLASSERT(items.size() == 1);
-        CVVVItem& item = items[0];
+        VVVItem& item = items[0];
 
         long wEventId;
         if (CVVVPropertySheet(item, this).DoModal(hwnd, wEventId) > 0 && wEventId != 0)
         {
-            CVVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
+            VVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
             vvvfile.SetItem(item);
         }
 
@@ -222,7 +216,7 @@ public:
         if (!hwnd && !UserConfirmsFileDelete(hwnd, items))
             return 0; // user wants to abort the file deletion process.
 
-        CVVVFile(GetPathFolderFile(), m_strSubFolder).DeleteItems(items);
+        VVVFile(GetPathFolderFile(), m_strSubFolder).DeleteItems(items);
 
         return SHCNE_DELETE;
     }
@@ -295,7 +289,7 @@ private:
 
     void AddItem(const CString& strFile) const
     {
-        CVVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
+        VVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
 
         CPidl pidlItem(vvvfile.AddItem(strFile));
 
