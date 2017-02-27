@@ -10,14 +10,14 @@ provide support for implementing COM objects.
 Shell Extensions
 ==========================
 
-Suported
---------
-* Info Tip (IPersistFile, IQueryInfo) 
-* Shell PropertySheet Extension (IShellExtInitImpl, IShellPropSheetExt) 
-* Context Menu Extension (IContextMenu, IContextMenu2, IContextMenu3) 
-* Copy Hook Extension (ICopyHook) 
-* Extract Image Extension (IExtractImage, IExtractImage2) 
-* Custom Shell Folder (IShellView, IShellFolder)
+Supported
+---------
+* Info Tip Handler (IPersistFile, IQueryInfo) 
+* Property Sheet Handler (IShellExtInitImpl, IShellPropSheetExt) 
+* Shortcut Menu Handler (IContextMenu, IContextMenu2, IContextMenu3) 
+* Copy Hook Handler (ICopyHook)
+* Icon Overlay Handler (IShellIconOverlayIdentifier)
+* Namespace Extension (IShellView, IShellFolder, IShellFolder2)
 
 Legacy Shell Extensions
 -----------------------
@@ -34,19 +34,19 @@ A couple of articles discussing how to create shell extensions are available on 
 
 Operating Systems and Compilers
 ===============================
-To reduce maintaince effort MSF has 3 support levels:
+To reduce maintenance effort MSF has 3 support levels:
  - Supported. This is the compiler \ OS used to validate MSF.
    In practice this will be latest available RTM versions of the OS and compiler.
    The thought behind it is that most people that create shell extensions are
    using the latest available compiler and target the latest version of Windows.
-   
+
  - On-demand. These versions are not longer developed or tested, but support is
    not removed from the code base.
-   
+
  - Legacy support. These versions are 
-   not longer activly maintained and support is removed to keep the code clean.
+   not longer actively maintained and support is removed to keep the code clean.
    The source code in the repository is tagged to make it easy to retrieve 
-   old versions that have support for these compilers \ Windows versions.  
+   old versions that have support for these compilers \ Windows versions.
 
 Supported Operating Systems
 ---------------------------
@@ -61,9 +61,9 @@ Legacy Operating Systems
 * Windows 8.1
 * Windows 8.0
 * Windows Vista
-* Windows XP 
-* Windows 2000 
-* Windows ME 
+* Windows XP
+* Windows 2000
+* Windows ME
 * Windows 98
 
 Supported Compilers
@@ -75,12 +75,12 @@ Legacy Compilers
 ----------------
  Support has been removed from latest code, requires older release.
 
-* Visual Studio 2013 Update 5 (ATL 12.0) 
-* Visual Studio 2012 Update 5 (ATL 11.0) 
-* Visual Studio 2010 SP1 (ATL 10.0) 
-* Visual Studio 2008 SP1 (ATL 9.0) 
-* Visual Studio 2005 SP1 (ATL 8.0) 
-* Visual Studio .NET 2003 (ATL 7.1) 
+* Visual Studio 2013 Update 5 (ATL 12.0)
+* Visual Studio 2012 Update 5 (ATL 11.0)
+* Visual Studio 2010 SP1 (ATL 10.0)
+* Visual Studio 2008 SP1 (ATL 9.0)
+* Visual Studio 2005 SP1 (ATL 8.0)
+* Visual Studio .NET 2003 (ATL 7.1)
 * Visual Studio .NET 2002 (ATL 7.0), needs latest Windows SDK
 
 Note: Latest source code is only validated with Visual Studio 2017 RC and tested on Windows 10 x64.

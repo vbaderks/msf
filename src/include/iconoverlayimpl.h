@@ -25,6 +25,9 @@ public:
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::IsMemberOf (instance=%p, filename=%s, mode=%d)\n", this, pwszPath, dwAttrib);
 
+        if (!pwszPath)
+            return E_POINTER;
+
         try
         {
             // Note: IsMemberOfImpl must be implemented by the derived class.
@@ -35,7 +38,10 @@ public:
 
     STDMETHOD(GetOverlayInfo)(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetOverlayInfo (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetOverlayInfo (instance=%p, pwszIconFile=%s, cchMax=%d, pIndex=%p, pdwFlags=%p)\n", this, pwszIconFile, cchMax, pIndex, pdwFlags);
+
+        if (!pwszIconFile || !pIndex || !pdwFlags)
+            return E_POINTER;
 
         if (!GetModuleFileNameW(_AtlBaseModule.GetModuleInstance(), pwszIconFile, cchMax))
             return HRESULT_FROM_WIN32(GetLastError());
@@ -48,6 +54,9 @@ public:
     STDMETHOD(GetPriority)(int* pIPriority) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetPriority (instance=%p)\n", this);
+
+        if (!pIPriority)
+            return E_POINTER;
 
         // In most cases the value zero (highest priority) is fine.
         // In rare cases multiple Icon overlay handler could be registered for one file type.
