@@ -77,7 +77,10 @@ public:
             _filename = wszFilename;
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // IDropTarget
@@ -101,7 +104,10 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
@@ -121,7 +127,10 @@ public:
             }
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(DragLeave)() override
@@ -142,7 +151,10 @@ public:
             *pdwEffect = static_cast<T*>(this)->OnDrop(dataObject, grfKeyState, pt, *pdwEffect);
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
 protected:

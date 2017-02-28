@@ -6,7 +6,6 @@
 
 #include "stdafx.h"
 
-#include "vvvfile.h"
 #include "resource.h"
 #include <msf.h>
 
