@@ -22,7 +22,7 @@ public:
     class CPropSheetHeader : public PROPSHEETHEADER
     {
     public:
-        CPropSheetHeader(const CString& strCaption, DWORD dwflags = 0)
+        explicit CPropSheetHeader(const CString& strCaption, DWORD dwflags = 0)
         {
             ZeroMemory(static_cast<PROPSHEETHEADER*>(this), sizeof(PROPSHEETHEADER));
             dwSize = PROPSHEETHEADER_V1_SIZE;
@@ -44,13 +44,13 @@ public:
     };
 
 
-    CPropertySheet(const CString& strCaption, DWORD dwFlags = 0)
+    explicit CPropertySheet(const CString& strCaption, DWORD dwFlags = 0)
         : _propsheetheader(strCaption, dwFlags), _wEventId(0)
     {
     }
 
 
-    CPropertySheet(UINT nIDCaption, DWORD dwFlags = 0)
+    explicit CPropertySheet(UINT nIDCaption, DWORD dwFlags = 0)
         : _propsheetheader(LoadString(nIDCaption), dwFlags), _wEventId(0)
     {
     }

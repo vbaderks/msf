@@ -43,12 +43,12 @@ public:
         return 1;
     }
 
-    CShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) :
+    explicit CShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) :
         CSnapInPropertyPageImpl<T>(lpszTitle),
         _nRef(0)
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::CShellExtPropertyPageImpl (instance=%p)\n", this);
-        _pAtlModule->Lock(); // propertypage is not a COM object, but DLL must stay in memory.
+        _pAtlModule->Lock(); // property page is not a COM object, but DLL must stay in memory.
     }
 
     ~CShellExtPropertyPageImpl()

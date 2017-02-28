@@ -33,7 +33,7 @@ public:
         COM_INTERFACE_ENTRY(IQueryInfo)
     END_COM_MAP()
 
-    CString GetInfoTip(DWORD /* dwFlags */)
+    CString GetInfoTip(DWORD /* dwFlags */) const
     {
         return m_strTip;
     }

@@ -25,7 +25,7 @@ public:
         wszFolder[0] = 0;
     }
 
-    CSHColumnInit(PCWSTR pwszFolder)
+    explicit CSHColumnInit(PCWSTR pwszFolder)
     {
         dwFlags = 0; // reserved.
         dwReserved = 0;
@@ -44,7 +44,7 @@ public:
     }
 
 
-    IColumnProviderPtr(const CLSID& clsid, wchar_t* pwszFolder = nullptr) :
+    explicit IColumnProviderPtr(const CLSID& clsid, wchar_t* pwszFolder = nullptr) :
         ::IColumnProviderPtr(clsid, nullptr, CLSCTX_INPROC_SERVER)
     {
         Initialize(pwszFolder);
@@ -122,7 +122,7 @@ private:
     class CShColumnData : public SHCOLUMNDATA
     {
     public:
-        CShColumnData(PCWSTR wszFilename, ULONG dwflags = 0, DWORD dwfileattributes = FILE_ATTRIBUTE_NORMAL)
+        explicit CShColumnData(PCWSTR wszFilename, ULONG dwflags = 0, DWORD dwfileattributes = FILE_ATTRIBUTE_NORMAL)
         {
             dwFlags = dwflags;
             dwFileAttributes = dwfileattributes;

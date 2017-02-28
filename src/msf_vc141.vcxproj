@@ -198,7 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\browserframeoptionsimpl.h" />
-    <ClInclude Include="include\browserhelperobjectimpl.h" />
     <ClInclude Include="include\cfeffect.h" />
     <ClInclude Include="include\cfhandler.h" />
     <ClInclude Include="include\cfhdrop.h" />
@@ -262,7 +261,6 @@
     <ClInclude Include="include\shellviewimpl.h" />
     <ClInclude Include="include\shlobjhidden.h" />
     <ClInclude Include="include\smallbitmaphandler.h" />
-    <ClInclude Include="include\smartptr\browserframeoptionsptr.h" />
     <ClInclude Include="include\smartptr\columnproviderptr.h" />
     <ClInclude Include="include\smartptr\contextmenuptr.h" />
     <ClInclude Include="include\smartptr\dataobjectptr.h" />

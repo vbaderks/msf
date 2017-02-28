@@ -54,9 +54,6 @@
     <ClInclude Include="include\msfbase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\smartptr\browserframeoptionsptr.h">
-      <Filter>Header Files\Smart Pointers</Filter>
-    </ClInclude>
     <ClInclude Include="include\smartptr\columnproviderptr.h">
       <Filter>Header Files\Smart Pointers</Filter>
     </ClInclude>
@@ -124,9 +121,6 @@
       <Filter>Header Files\Smart Pointers</Filter>
     </ClInclude>
     <ClInclude Include="include\browserframeoptionsimpl.h">
-      <Filter>Header Files\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="include\browserhelperobjectimpl.h">
       <Filter>Header Files\Impl</Filter>
     </ClInclude>
     <ClInclude Include="include\clipboarddataobjectimpl.h">

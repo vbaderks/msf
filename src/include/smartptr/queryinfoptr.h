@@ -6,8 +6,8 @@
 #pragma once
 
 
-#include "..\msfbase.h"
-#include "..\shelluuids.h"
+#include "../msfbase.h"
+#include "../shelluuids.h"
 
 
 _COM_SMARTPTR_TYPEDEF(IQueryInfo, __uuidof(IQueryInfo));

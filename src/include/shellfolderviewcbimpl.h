@@ -9,7 +9,6 @@
 #include "sfvmdefines.h"
 #include "shelluuids.h"
 #include "pidl.h"
-#include "util.h"
 
 
 struct SFVM_WEBVIEW_CONTENT_DATA;
@@ -24,19 +23,6 @@ class ATL_NO_VTABLE IShellFolderViewCBImpl :
     public IFolderViewSettings
 {
 public:
-    explicit IShellFolderViewCBImpl(long notifyevents = 0) :
-        _notifyevents(notifyevents)
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderViewCBImpl::IShellFolderViewCBImpl (instance=%p)\n", this);
-    }
-
-
-    ~IShellFolderViewCBImpl()
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderViewCBImpl::~IShellFolderViewCBImpl (instance=%p)\n", this);
-    }
-
-
     // IShellFolderViewCB
     STDMETHOD(MessageSFVCB)(UINT uMsg, WPARAM wParam, LPARAM lParam) override
     {
@@ -381,6 +367,16 @@ public:
     }
 
 protected:
+    explicit IShellFolderViewCBImpl(long notifyevents = 0) :
+        _notifyevents(notifyevents)
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderViewCBImpl::IShellFolderViewCBImpl (instance=%p)\n", this);
+    }
+
+    ~IShellFolderViewCBImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderViewCBImpl::~IShellFolderViewCBImpl (instance=%p)\n", this);
+    }
 
     // Purpose: Controls which folder (file) is watched for change events.
     void SetFolder(LPCITEMIDLIST pidlFolder)
@@ -395,24 +391,20 @@ protected:
         return E_NOTIMPL;
     }
 
-
     HRESULT OnInvokeCommand(unsigned int /*idCmd*/)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnGetHelpText(unsigned short /* idCmd */, unsigned short /* cchMax */, LPTSTR /* pszText */)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnGetToolTipText(unsigned short /* idCmd */, unsigned short /* cchMax */, LPTSTR /* pszText */)
     {
         return E_NOTIMPL;
     }
-
 
     // Purpose: Notify the system shell view that we have buttons that need to be added
     //          to one of the toolbars.
@@ -424,84 +416,70 @@ protected:
         return E_NOTIMPL;
     }
 
-
     HRESULT OnGetButtons(unsigned short /*idCmdFirst*/, unsigned short /*cbtnMax*/, TBBUTTON* /*ptbbutton*/)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnInitMenuPopup(unsigned short /* idCmd */, unsigned short /* nIndex */, HMENU /*hemu*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnFSNotify(LPCITEMIDLIST /*pidl*/, DWORD /*lEvent*/)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnAddPropertyPages(SFVM_PROPPAGE_DATA* /*pData*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnBackgroundEnumDone()
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnGetSortDefaults(int* /*piDirection*/, int* /*piColumn*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnGetDetailsOf(int /*iColumn*/, DETAILSINFO*)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnDefItemCount(UINT* /*pcItems*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnGetZone(DWORD* /*pwdZone*/)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnSize()
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnBackGroundEnum()
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnDidDragDrop(DWORD /*dwEffect*/, IDataObject* /*pIdo*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnGetAnimation(HINSTANCE* /*phinst*/, WCHAR* /*pwszName*/)
     {
         return E_NOTIMPL;
     }
-
 
     // Purpose: return S_OK and TRUE/FALSE to indicate to the defshellview which 
     //          folder view modes should be enabled (only works on XP?)
@@ -510,43 +488,36 @@ protected:
         return E_NOTIMPL;
     }
 
-
     // Purpose: save this hwnd to use the SHShellFolderView_Message function.
     HRESULT OnWndMain(HWND /*hwndMain*/)
     {
         return S_OK;
     }
 
-
     HRESULT OnDefViewMode(FOLDERVIEWMODE* /*pfolderviewmode*/)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnUpdateStatusbar(BOOL /*fInitialize*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnUnmergeMenu(HMENU /*hmenuCurrent*/)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnThisIDList(LPITEMIDLIST /*pidl*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnSetInterfaceSiteFolderView(IUnknown* /*site*/)
     {
         return S_OK;
     }
-
 
     // Purpose: called when the 'SHELLDLL_DefView' window is created.
     //          This window is the parent of the 'syslistview32'.
@@ -555,12 +526,10 @@ protected:
         return S_OK;
     }
 
-
     HRESULT OnColumnClick(UINT /*uiColumn*/)
     {
         return S_FALSE;
     }
-
 
     // Purpose: indicates in which statusbar pane to display internet zone info
     HRESULT OnGetPane(int /*paneID*/, DWORD* /*pdwpane*/)
@@ -568,18 +537,15 @@ protected:
         return E_NOTIMPL;
     }
 
-
     HRESULT OnGetHelpTopic(SFVM_HELPTOPIC_DATA* /*phtd*/)
     {
         return E_NOTIMPL;
     }
 
-
     HRESULT OnQueryFSNotify(SHChangeNotifyEntry* /*shcne*/)
     {
         return E_NOTIMPL;
     }
-
 
     HRESULT OnFindItem(WPARAM /*wParam*/, LPITEMIDLIST /*ppidlToFind*/)
     {
@@ -587,12 +553,10 @@ protected:
         return E_NOTIMPL;
     }
 
-
     HRESULT OnGetWebViewContent(SFVM_WEBVIEW_CONTENT_DATA* /*pcontentdata*/)
     {
         return E_NOTIMPL;
     }
-
 
     // Purpose: called by the shells default viewfolder implementation to retrieve
     //          the settings for SHChangeNotifyRegister.

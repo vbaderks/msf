@@ -6,7 +6,7 @@
 #pragma once
 
 
-#include "..\msfbase.h"
+#include "../msfbase.h"
 
 #if !defined(_WIN32_IE) || _WIN32_IE < 0x0501
 #error IE 5.01 target is required for definition of shell interfaces.

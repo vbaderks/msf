@@ -28,11 +28,10 @@ public:
     public:
         static HMENU CreateSubMenu()
         {
-            auto hmenu = ::CreatePopupMenu();
+            auto hmenu = CreatePopupMenu();
             RaiseLastErrorExceptionIf(!hmenu);
             return hmenu;
         }
-
 
         CMenu() :
             _hmenu(nullptr),
@@ -42,7 +41,6 @@ public:
             _pmenuhost(nullptr)
         {
         }
-
 
         CMenu(HMENU hmenu, UINT indexMenu, UINT& idCmd, UINT idCmdLast, ContextMenuImpl<T>* pmenuhost) :
             _hmenu(hmenu),

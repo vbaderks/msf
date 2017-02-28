@@ -21,13 +21,13 @@ class CCoInitialize
 public:
     CCoInitialize()
     {
-        ATLVERIFY(SUCCEEDED(::CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED)));
+        ATLVERIFY(SUCCEEDED(CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED)));
     }
 
 
     ~CCoInitialize()
     {
-        ::CoUninitialize();
+        CoUninitialize();
     }
 };
 

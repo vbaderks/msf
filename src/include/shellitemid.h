@@ -95,7 +95,6 @@ private:
         _pItemId->cb = static_cast<USHORT>(size);
     }
 
-
     static size_t GetMembersSize(const ShellItemIdMember* members, unsigned int count) noexcept
     {
         size_t size = 0;
@@ -139,7 +138,6 @@ public:
         return b;
     }
 
-
     unsigned int GetUnsignedInt() noexcept
     {
         unsigned int n = *reinterpret_cast<const unsigned int *>(_p);
@@ -147,15 +145,10 @@ public:
         return n;
     }
 
-
-    CString GetString()
+    CString GetString() const
     {
         // Note: strings are always stored in Unicode to prevent ANSI/Unicode mismatches.
-        CStringW strW(reinterpret_cast<PCWSTR>(_p));
-        _p += (strW.GetLength() + 1) * sizeof(wchar_t);
-
-        CString str = CW2T(strW);
-        return str;
+        return CString(reinterpret_cast<PCWSTR>(_p));
     }
 
 private:

@@ -245,7 +245,7 @@ public:
     }
 
 
-    void OnError(HRESULT hr, HWND hwnd, EErrorContext /*errorcontext*/)
+    void OnError(HRESULT hr, HWND hwnd, ErrorContext /*errorContext*/)
     {
         CString strMsg = LoadString(IDS_SHELLFOLDER_CANNOT_PERFORM) + FormatLastError(static_cast<DWORD>(hr));
 

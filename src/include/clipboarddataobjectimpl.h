@@ -13,6 +13,7 @@
 #include "stgmedium.h"
 #include <atlctl.h> // for IDataObjectImpl
 #include <memory>
+#include <algorithm>
 
 namespace MSF
 {

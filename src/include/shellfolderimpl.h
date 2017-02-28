@@ -64,18 +64,18 @@ public:
 
     typedef std::vector<TItem> TItems;
 
-    enum EErrorContext
+    enum class ErrorContext
     {
-        EC_UNKNOWN             = 0,
-        EC_CREATE_ENUMIDLIST   = 1,
-        EC_ON_SET_NAME_OF      = 2,
-        EC_ON_PROPERTIES       = 3,
-        EC_ON_DELETE           = 4,
-        EC_ON_COPY             = 5,
-        EC_ON_CUT              = 6,
-        EC_ON_DROP             = 7,
-        EC_ON_PASTE            = 8,
-        EC_ON_INVOKE_ADDED_CMD = 9
+        Unknown           = 0,
+        CreateEnumIDList  = 1,
+        OnSetNameOf       = 2,
+        OnProperties      = 3,
+        OnDelete          = 4,
+        OnCopy            = 5,
+        OnCut             = 6,
+        OnDrop            = 7,
+        OnPaste           = 8,
+        OnInvokeAddedCmd  = 9
     };
 
     // Registration function to register the COM object + the root extension.
@@ -134,20 +134,6 @@ public:
         CComPtr<T> rshellfolder(pinstance);
 
         return rshellfolder;
-    }
-
-    IShellFolderImpl(ULONG ulSort = 0, ULONG ulDisplay = 0) :
-        m_ulSort(ulSort),
-        m_ulDisplay(ulDisplay),
-        m_hwndOwner(nullptr),
-        m_bCachedIsSupportedClipboardFormat(false)
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolderImpl (instance=%p)\n", this);
-    }
-
-    ~IShellFolderImpl()
-    {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::~IShellFolderImpl (instance=%p)\n", this);
     }
 
     // IPersistFolder
@@ -557,7 +543,7 @@ public:
         }
         catch (...)
         {
-            return HandleException(hwndOwner, EC_ON_SET_NAME_OF);
+            return HandleException(hwndOwner, ErrorContext::OnSetNameOf);
         }
     }
 
@@ -578,7 +564,7 @@ public:
         }
         catch (...)
         {
-            return HandleException(hwnd, EC_CREATE_ENUMIDLIST);
+            return HandleException(hwnd, ErrorContext::CreateEnumIDList);
         }
     }
 
@@ -758,7 +744,7 @@ public:
         }
         catch (...)
         {
-            return HandleException(m_hwndOwner, EC_ON_DROP);
+            return HandleException(m_hwndOwner, ErrorContext::OnDrop);
         }
     }
 
@@ -782,17 +768,31 @@ public:
         }
         catch (...)
         {
-            return HandleException(m_hwndOwner, EC_ON_PASTE);
+            return HandleException(m_hwndOwner, ErrorContext::OnPaste);
         }
     }
 
     void InitializeSubFolder(const TItems& /*items*/)
     {
-        ATLASSERT(!"Derived class needs to implement this function, if subfolders are used");
+        ATLASSERT(!"Derived class needs to implement this function, if sub folders are used");
         RaiseException();
     }
 
 protected:
+
+    explicit IShellFolderImpl(ULONG ulSort = 0, ULONG ulDisplay = 0) :
+        m_ulSort(ulSort),
+        m_ulDisplay(ulDisplay),
+        m_hwndOwner(nullptr),
+        m_bCachedIsSupportedClipboardFormat(false)
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::IShellFolderImpl (instance=%p)\n", this);
+    }
+
+    ~IShellFolderImpl()
+    {
+        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::~IShellFolderImpl (instance=%p)\n", this);
+    }
 
     // Purpose: Handle 'paste' command. If the folder cannot use 'optimize move'.
     //          for source operations the source must be notified of this.
@@ -863,7 +863,7 @@ protected:
 
     // Purpose: Called by the shell/MSF when it needs an object that support an IQueryInfo
     //          interface to display a tooltip for an item.
-    //          Override this function to handle tooltip at the shellfolder level.
+    //          Override this function to handle tooltip at the shell folder level.
     CComPtr<IQueryInfo> CreateQueryInfo(const TItem& item)
     {
         CString strText = item.GetInfoTipText();
@@ -903,7 +903,7 @@ protected:
         return EPS_DONTCARE;
     }
 
-    // Purpose: default callback, used to receive cmd from CDefFolderMenu_Create2.
+    // Purpose: default callback, used to receive a command from CDefFolderMenu_Create2.
     static HRESULT CALLBACK OnDfmCommand(IShellFolder* psf, HWND hwnd, IDataObject* pdtobj,
                                          UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
@@ -986,7 +986,7 @@ protected:
         }
         catch (...)
         {
-            return HandleException(hwnd, EC_UNKNOWN);
+            return HandleException(hwnd, ErrorContext::Unknown);
         }
     }
 
@@ -998,7 +998,7 @@ protected:
 
     HRESULT OnDfmInvokeCommand(HWND hwnd, IDataObject* pdataobject, int nId, wchar_t* /*wszArgs*/)
     {
-        EErrorContext errorcontext = EC_UNKNOWN;
+        ErrorContext errorContext = ErrorContext::Unknown;
 
         try
         {
@@ -1011,19 +1011,19 @@ protected:
 
             case DFM_CMD_DELETE:
                 ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_DELETE'\n");
-                errorcontext = EC_ON_DELETE;
+                errorContext = ErrorContext::OnDelete;
                 static_cast<T*>(this)->OnDeleteFromDataObject(hwnd, pdataobject);
                 return S_OK;
 
             case DFM_CMD_MOVE:
                 ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_CUT'\n");
-                errorcontext = EC_ON_CUT;
+                errorContext = ErrorContext::OnCut;
                 static_cast<T*>(this)->OnCut(hwnd, pdataobject);
                 return S_OK;
 
             case DFM_CMD_COPY:
                 ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_COPY'\n");
-                errorcontext = EC_ON_COPY;
+                errorContext = ErrorContext::OnCopy;
                 static_cast<T*>(this)->OnCopy(hwnd, pdataobject);
                 return S_OK;
 
@@ -1037,13 +1037,13 @@ protected:
 
             default:
                 ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::OnDfmInvokeCommand (id=%d)\n", nId);
-                errorcontext = EC_ON_INVOKE_ADDED_CMD;
+                errorContext = ErrorContext::OnInvokeAddedCmd;
                 return static_cast<T*>(this)->OnDfmInvokeAddedCommand(hwnd, pdataobject, nId);
             }
         }
         catch (...)
         {
-            return HandleException(hwnd, errorcontext);
+            return HandleException(hwnd, errorContext);
         }
     }
 
@@ -1152,7 +1152,7 @@ protected:
         }
         catch (...)
         {
-            return HandleException(hwnd, EC_ON_PROPERTIES);
+            return HandleException(hwnd, ErrorContext::OnProperties);
         }
     }
 
@@ -1407,18 +1407,18 @@ protected:
         RaiseException();
     }
 
-    HRESULT OnErrorHandler(HRESULT hr, HWND hwnd, EErrorContext errorcontext)
+    HRESULT OnErrorHandler(HRESULT hr, HWND hwnd, ErrorContext errorContext)
     {
         if (hwnd != nullptr)
         {
-            static_cast<T*>(this)->OnError(hr, hwnd, errorcontext);
+            static_cast<T*>(this)->OnError(hr, hwnd, errorContext);
         }
 
         return hr;
     }
 
     // Purpose: derive this function to report error to the user.
-    void OnError(HRESULT /*hr*/, HWND /*hwnd*/, EErrorContext /*errorcontext*/)
+    void OnError(HRESULT /*hr*/, HWND /*hwnd*/, ErrorContext /*errorContext*/)
     {
     }
 
@@ -1545,7 +1545,7 @@ protected:
 
 private:
 
-    HRESULT HandleException(HWND hwnd, EErrorContext errorcontext)
+    HRESULT HandleException(HWND hwnd, ErrorContext errorContext)
     {
         HRESULT result;
 
@@ -1566,7 +1566,7 @@ private:
             result = E_UNEXPECTED;
         }
 
-        return OnErrorHandler(result, hwnd, errorcontext);
+        return OnErrorHandler(result, hwnd, errorContext);
     }
 
     CString GetExplorerPaneName(_In_ REFEXPLORERPANE ep)

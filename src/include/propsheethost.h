@@ -6,6 +6,7 @@
 #pragma once
 
 #include "msfbase.h"
+#include <vector>
 
 #pragma comment(lib, "comctl32") // required to link DestroyPropertySheetPage.
 

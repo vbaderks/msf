@@ -13,6 +13,7 @@
 #include "idldatacreatefromidarray.h"
 #include "smartptr/dataobjectptr.h"
 #include <memory>
+#include <algorithm>
 
 namespace MSF
 {
