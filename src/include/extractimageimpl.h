@@ -47,13 +47,11 @@ public:
             szDescription, T::GetObjectCLSID(), szRootExt, szExtension);
     }
 
-
     ExtractImageImpl() :
         _hbitmap(nullptr)
     {
         ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
     }
-
 
     // IPersistFile
     STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID) override
@@ -67,44 +65,41 @@ public:
         return S_OK;
     }
 
-
     STDMETHOD(IsDirty)() override
     {
         ATLTRACENOTIMPL(L"ExtractImageImpl::IsDirty");
     }
-
 
     STDMETHOD(Save)(LPCOLESTR, BOOL) override
     {
         ATLTRACENOTIMPL(L"ExtractImageImpl::Save");
     }
 
-
     STDMETHOD(SaveCompleted)(LPCOLESTR) override
     {
         ATLTRACENOTIMPL(L"ExtractImageImpl::SaveCompleted");
     }
-
 
     STDMETHOD(GetCurFile)(LPOLESTR*) override
     {
         ATLTRACENOTIMPL(L"ExtractImageImpl::GetCurFile");
     }
 
-
-    STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode) override
+    STDMETHOD(Load)(LPCOLESTR filename, DWORD dwMode) override
     {
         UNREFERENCED_PARAMETER(dwMode); // unused in release.
 
-        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
+        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, filename);
         try
         {
-            _strFilename = CW2T(wszFilename);
+            _strFilename = filename;
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     // IExtractImage
     STDMETHOD(GetLocation)(LPWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
@@ -128,9 +123,11 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(Extract)(__RPC__deref_out_opt HBITMAP* phBmpThumbnail) override
     {
@@ -144,7 +141,6 @@ public:
 
         return S_OK;
     }
-
 
     // IExtractImage2
     STDMETHOD(GetDateStamp)(__RPC__in FILETIME* pDateStamp) override
@@ -162,12 +158,11 @@ public:
         return S_OK;
     }
 
-
     // Purpose: returns the identifier for the file that is used to 
     //          extract the image from. Can be used to optimize
     //          cases were the image is extracted from a different file 
     //          then set by IPersistFile::Load.
-    CString GetPathBuffer()
+    CString GetPathBuffer() const
     {
         return _strFilename;
     }
@@ -180,7 +175,6 @@ protected:
 
         Dispose();
     }
-
 
     void Dispose()
     {

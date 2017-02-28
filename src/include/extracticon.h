@@ -109,7 +109,6 @@ public:
         m_pidl.CloneFrom(item.GetItemIdList());
     }
 
-
     STDMETHOD(GetIconLocation)(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
@@ -122,9 +121,11 @@ public:
             *pwFlags = GIL_NOTFILENAME;
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(Extract)(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize) override
     {
@@ -161,7 +162,10 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
 private:

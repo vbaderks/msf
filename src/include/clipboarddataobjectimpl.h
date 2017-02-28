@@ -56,9 +56,11 @@ public:
             SHCreateStdEnumFmtEtc(static_cast<UINT>(formatetcs.size()), formatetcs.data());
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(QueryGetData)(FORMATETC* pformatetc) override
     {
@@ -87,9 +89,11 @@ public:
             ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(GetData)(FORMATETC *pformatetc, STGMEDIUM *pstgmedium) override
     {
@@ -121,9 +125,11 @@ public:
             ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(SetData)(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease) override
     {
@@ -171,9 +177,11 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     // Required by ATL base class.
     LPDATAADVISEHOLDER m_spDataAdviseHolder;
@@ -196,18 +204,15 @@ private:
         {
         }
 
-
         CLIPFORMAT GetClipFormat() const noexcept
         {
             return _formatetc.cfFormat;
         }
 
-
         const FORMATETC& GetFormatetc() const noexcept
         {
             return _formatetc;
         }
-
 
         HRESULT Validate(const FORMATETC& formatetc) const noexcept
         {
@@ -223,13 +228,11 @@ private:
             return S_OK;
         }
 
-
         void Update(const FORMATETC& formatetc, STGMEDIUM& stgmedium)
         {
             _formatetc = formatetc;
             _stgmedium = stgmedium;
         }
-
 
         void Copy(STGMEDIUM& stgmedium) const
         {
@@ -243,7 +246,6 @@ private:
         CStgMedium _stgmedium;
     };
 
-
     CCfHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const noexcept
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
@@ -253,7 +255,6 @@ private:
         });
         return handler == m_cfhandlers.end() ? nullptr : handler;
     }
-
 
     CExternalData* FindExternalData(CLIPFORMAT clipformat) const noexcept
     {
@@ -268,13 +269,11 @@ private:
         return nullptr;
     }
 
-
     void AddExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium)
     {
         ATLASSERT(!FindExternalData(formatetc.cfFormat) && "External format already set");
         m_externaldatas.push_back(std::make_unique<CExternalData>(formatetc, stgmedium));
     }
-
 
     void GetRegisteredFormats(std::vector<FORMATETC>& formatetcs, DWORD dwDirection) const
     {
@@ -297,7 +296,6 @@ private:
         }
     }
 
-
     void GetExternalFormats(std::vector<FORMATETC>& formatetcs) const
     {
         for (auto externalData : m_externaldatas)
@@ -305,7 +303,6 @@ private:
             formatetcs.push_back(externalData->GetFormatetc());
         }
     }
-
 
     // Member variables.
     CCfHandlers    m_cfhandlers;

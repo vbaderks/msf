@@ -33,7 +33,10 @@ public:
             // Note: IsMemberOfImpl must be implemented by the derived class.
             return static_cast<T*>(this)->IsMemberOfImpl(pwszPath, dwAttrib) ? S_OK : S_FALSE;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(GetOverlayInfo)(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags) override

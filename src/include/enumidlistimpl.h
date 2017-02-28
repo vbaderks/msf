@@ -99,7 +99,10 @@ public:
 
             return celt == itemidlistvector.size() ? S_OK : S_FALSE;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(Skip)(ULONG /*celt*/) override

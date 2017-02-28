@@ -334,6 +334,7 @@
     </ClInclude>
     <ClInclude Include="include\diskcleanupimpl.h" />
     <ClInclude Include="include\iconoverlayimpl.h" />
+    <ClInclude Include="include\droptargetimpl.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="include\shell32missing.lib" />

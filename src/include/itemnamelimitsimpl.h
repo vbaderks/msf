@@ -22,7 +22,6 @@ public:
         return nullptr;
     }
 
-
     // Purpose: Override this function to control which chars are invalid.
     static const wchar_t* GetInvalidChars()
     {
@@ -65,9 +64,11 @@ public:
             }
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     // Purpose: called by the shell to retrieve the max length.
     //          Length can depend on the current string. (UNC pathname has
@@ -84,7 +85,10 @@ public:
             ATLASSERT(*piMaxNameLen >= 0 && "negative length?");
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
  };
 

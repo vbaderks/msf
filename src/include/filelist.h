@@ -25,7 +25,6 @@ public:
         COM_INTERFACE_ENTRY(IDataObject)
     END_COM_MAP()
 
-
     static CComPtr<CFileList> CreateInstance()
     {
         CComObject<CFileList>* pinstance;
@@ -36,7 +35,6 @@ public:
 
         return filelist;
     }
-
 
     virtual HRESULT IDataObject_GetData(FORMATETC* pformatetc, STGMEDIUM* pmedium)
     {
@@ -50,15 +48,16 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     void Add(const wchar_t* szFilename)
     {
         m_filenames.push_back(szFilename);
     }
-
 
     LPDATAADVISEHOLDER m_spDataAdviseHolder;
 
@@ -97,7 +96,6 @@ private:
 
         return hg;
     }
-
 
     size_t GetDataSize() const
     {

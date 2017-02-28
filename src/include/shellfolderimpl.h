@@ -174,7 +174,10 @@ public:
             m_pidlFolder.CloneFrom(pidl);
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // IPersistFolder2
@@ -187,7 +190,10 @@ public:
             *ppidl = m_pidlFolder.Clone();
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // IPersistFolder3
@@ -261,7 +267,10 @@ public:
 
             return rinstance->QueryInterface(riid, ppRetVal);
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(BindToStorage)(__RPC__in LPCITEMIDLIST, LPBC, __RPC__in REFIID, __RPC__deref_out_opt LPVOID* ppRetVal) override
@@ -314,7 +323,10 @@ public:
 
             return MAKE_HRESULT(SEVERITY_SUCCESS, 0, static_cast<USHORT>(nResult));
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // Purpose: the shell calls this function to get interfaces to objects such as:
@@ -386,7 +398,10 @@ public:
 
             return !(*ppRetVal) ? E_NOINTERFACE : S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // Purpose: The shell will call this function to get an object that can be applied
@@ -443,7 +458,10 @@ public:
 
             return !(*ppv) ? E_NOINTERFACE : S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // Purpose: The Shell will call this function to get the name (string) of the item.
@@ -459,7 +477,10 @@ public:
                       this, shgdnf, item.GetDisplayName(shgdnf).GetString());
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // Purpose: The shell uses this function to retrieve info about what can be done with an item.
@@ -488,7 +509,10 @@ public:
             *prgfInOut = sfgaof & *prgfInOut;
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(ParseDisplayName)(__RPC__in_opt HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, __reserved DWORD*, __RPC__deref_out_opt LPITEMIDLIST*, __RPC__inout_opt DWORD* pdwAttributes) override
@@ -500,11 +524,8 @@ public:
         UNREFERENCED_PARAMETER(pdwAttributes);
 
         #ifdef _DEBUG
-
-        DWORD dwAttributes = pdwAttributes == nullptr ? 0 : *pdwAttributes;
-
-        ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n", hwnd, pbc, pwszDisplayName, dwAttributes);
-
+            DWORD dwAttributes = pdwAttributes == nullptr ? 0 : *pdwAttributes;
+            ATLTRACE2(atlTraceCOM, 0, L"IShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n", hwnd, pbc, pwszDisplayName, dwAttributes);
         #endif
 
         return E_NOTIMPL;
@@ -534,7 +555,10 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER_ON_ERROR(hwndOwner, EC_ON_SET_NAME_OF)
+        catch (...)
+        {
+            return HandleException(hwndOwner, EC_ON_SET_NAME_OF);
+        }
     }
 
     // IShellFolder2
@@ -552,7 +576,10 @@ public:
             *ppRetVal = static_cast<T*>(this)->CreateEnumIDList(hwnd, grfFlags).Detach();
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, EC_CREATE_ENUMIDLIST)
+        catch (...)
+        {
+            return HandleException(hwnd, EC_CREATE_ENUMIDLIST);
+        }
     }
 
     STDMETHOD(GetDefaultSearchGUID)(__RPC__out GUID* /*pguid*/) override
@@ -620,7 +647,10 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // IObjectWithFolderEnumMode
@@ -655,7 +685,10 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // IDropTarget
@@ -678,7 +711,10 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
@@ -697,7 +733,10 @@ public:
             }
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(DragLeave)() override
@@ -717,7 +756,10 @@ public:
             *pdwEffect = static_cast<T*>(this)->OnDrop(pDataObj, grfKeyState, pt, *pdwEffect);
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER_ON_ERROR(m_hwndOwner, EC_ON_DROP)
+        catch (...)
+        {
+            return HandleException(m_hwndOwner, EC_ON_DROP);
+        }
     }
 
     // IExplorerPaneVisibility (introduced with Vista)
@@ -738,7 +780,10 @@ public:
             static_cast<T*>(this)->OnPaste();
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER_ON_ERROR(m_hwndOwner, EC_ON_PASTE)
+        catch (...)
+        {
+            return HandleException(m_hwndOwner, EC_ON_PASTE);
+        }
     }
 
     void InitializeSubFolder(const TItems& /*items*/)
@@ -747,14 +792,13 @@ public:
         RaiseException();
     }
 
-
 protected:
 
     // Purpose: Handle 'paste' command. If the folder cannot use 'optimize move'.
     //          for source operations the source must be notified of this.
     void OnPaste()
     {
-        MSF::IDataObjectPtr dataobject = OleGetClipboard();
+        IDataObjectPtr dataobject = OleGetClipboard();
 
         // Detect if the source was 'cut'
         DWORD dwDropEffect = CCfPreferredDropEffect::GetOptional(dataobject);
@@ -940,7 +984,10 @@ protected:
 
             return E_NOTIMPL;
         }
-        MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, EC_UNKNOWN);
+        catch (...)
+        {
+            return HandleException(hwnd, EC_UNKNOWN);
+        }
     }
 
     // Purpose: override this function to extend the default DFM menu.
@@ -994,7 +1041,10 @@ protected:
                 return static_cast<T*>(this)->OnDfmInvokeAddedCommand(hwnd, pdataobject, nId);
             }
         }
-        MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, errorcontext)
+        catch (...)
+        {
+            return HandleException(hwnd, errorcontext);
+        }
     }
 
     // Purpose: called to ask the default menu item.
@@ -1100,7 +1150,10 @@ protected:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER_ON_ERROR(hwnd, EC_ON_PROPERTIES)
+        catch (...)
+        {
+            return HandleException(hwnd, EC_ON_PROPERTIES);
+        }
     }
 
     // Purpose: provides a simple delete loop.
@@ -1491,6 +1544,30 @@ protected:
     ULONG m_ulDisplay; // column that is used when item is displayed in tree view 
 
 private:
+
+    HRESULT HandleException(HWND hwnd, EErrorContext errorcontext)
+    {
+        HRESULT result;
+
+        try
+        {
+            throw;
+        }
+        catch (const _com_error& e)
+        {
+            result = e.Error();
+        }
+        catch (const std::bad_alloc&)
+        {
+            result = E_OUTOFMEMORY;
+        }
+        catch (const std::exception&)
+        {
+            result = E_UNEXPECTED;
+        }
+
+        return OnErrorHandler(result, hwnd, errorcontext);
+    }
 
     CString GetExplorerPaneName(_In_ REFEXPLORERPANE ep)
     {

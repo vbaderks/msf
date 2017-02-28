@@ -221,6 +221,7 @@
     <ClInclude Include="include\custommenuhandler.h" />
     <ClInclude Include="include\dfmdefines.h" />
     <ClInclude Include="include\diskcleanupimpl.h" />
+    <ClInclude Include="include\droptargetimpl.h" />
     <ClInclude Include="include\enumformatetc.h" />
     <ClInclude Include="include\enumidlistimpl.h" />
     <ClInclude Include="include\enumidlistptr.h" />

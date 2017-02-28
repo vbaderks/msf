@@ -333,7 +333,10 @@ public:
 
             return E_NOTIMPL;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // IFolderViewSettings

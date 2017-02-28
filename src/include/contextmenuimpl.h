@@ -76,12 +76,10 @@ public:
             return *this;
         }
 
-
         operator HMENU() const
         {
             return _hmenu;
         }
-
 
         // Purpose: Create and add a sub menu to the context menu.
         CMenu AddSubMenu(const CString& strText, const CString& strHelp)
@@ -269,9 +267,11 @@ public:
             const UINT nAdded = nID - _idCmdFirst;
             return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, static_cast<USHORT>(nAdded));
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(GetCommandString)(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax) override
     {
@@ -302,9 +302,11 @@ public:
             ATLTRACE2(atlTraceCOM, 0, L"\n");
             return E_NOTIMPL;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici) override
     {
@@ -319,9 +321,11 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     // IContextMenu2
     STDMETHOD(HandleMenuMsg)(UINT uMsg, WPARAM wParam, LPARAM lParam) override
@@ -337,7 +341,6 @@ public:
     //       WM_MENUCHAR but this is not true (seen on XP sp2).
     //       HandleMenuMsg2 is called also directly for WM_INITMENUPOPUP, etc when 
     //       the shell detects that IContextMenu3 is supported.
-    //
     STDMETHOD(HandleMenuMsg2)(UINT uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult) override
     {
         try
@@ -375,9 +378,11 @@ public:
                 return E_FAIL;
             }
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     // 'IMenuHost'
     void OnAddMenuItem(const CString& strHelp,
@@ -407,12 +412,10 @@ protected:
     {
     }
 
-
     HRESULT OnInitMenuPopup(HMENU /*hmenu*/, unsigned short /*nIndex*/)
     {
         return S_OK;
     }
-
 
     HRESULT OnDrawItem(DRAWITEMSTRUCT* pdrawitem)
     {
@@ -423,13 +426,11 @@ protected:
         return S_OK;
     }
 
-
     HRESULT OnMeasureItem(MEASUREITEMSTRUCT* pmeasureitem)
     {
         GetMenuItem(pmeasureitem->itemID - _idCmdFirst).GetCustomMenuHandler().Measure(*pmeasureitem);
         return S_OK;
     }
-
 
     LRESULT OnMenuChar(HMENU hmenu, unsigned short nChar)
     {
@@ -445,7 +446,6 @@ protected:
         return MAKELONG(0, MNC_IGNORE);
     }
 
-
 private:
 
     class CMenuItem
@@ -460,7 +460,6 @@ private:
         {
         }
 
-
         void Clear() noexcept
         {
             delete _pcontextcommand;
@@ -470,12 +469,10 @@ private:
             _pcustommenuhandler = nullptr;
         }
 
-
         CString GetHelpString() const
         {
             return _strHelp;
         }
-
 
         CContextCommand& GetContextCommand() const noexcept
         {
@@ -495,7 +492,6 @@ private:
         CCustomMenuHandler* _pcustommenuhandler;
     };
 
-
     void ClearMenuItems() noexcept
     {
         for (auto& menuitem : _menuitems)
@@ -505,13 +501,11 @@ private:
         _menuitems.clear();
     }
 
-
     const CMenuItem& GetMenuItem(UINT nIndex)
     {
         RaiseExceptionIf(nIndex >= _menuitems.size(), E_INVALIDARG);
         return _menuitems[nIndex];
     }
-
 
     // Member variables
     std::vector<CMenuItem> _menuitems;

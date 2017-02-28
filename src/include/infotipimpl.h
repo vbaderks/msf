@@ -29,14 +29,13 @@ class ATL_NO_VTABLE InfoTipImpl :
     public IQueryInfoImpl<T>
 {
 public:
-    /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
+    /// <summary>Registration function to register the info tip COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szRootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), szRootKey);
     }
-
 
     // IInitializeWithFile
     STDMETHOD(Initialize)(LPCWSTR pszFilePath, DWORD dwMode) override
@@ -45,23 +44,25 @@ public:
 
         try
         {
-            if (_bInitialized)
+            if (m_bInitialized)
                 return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
 
             // Note: InitializeImpl must be implemented by the derived class.
-            static_cast<T*>(this)->InitializeImpl(CW2T(pszFilePath), dwMode);
-            _bInitialized = true;
+            static_cast<T*>(this)->InitializeImpl(pszFilePath, dwMode);
+            m_bInitialized = true;
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
 protected:
-    InfoTipImpl() : _bInitialized(false)
+    InfoTipImpl() : m_bInitialized(false)
     {
         ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
     }
-
 
     ~InfoTipImpl()
     {
@@ -69,7 +70,7 @@ protected:
     }
 
 private:
-    bool _bInitialized;
+    bool m_bInitialized;
 };
 
 } // namespace MSF

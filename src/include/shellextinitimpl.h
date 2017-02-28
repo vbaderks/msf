@@ -7,6 +7,7 @@
 
 #include "msfbase.h"
 #include "cfhdrop.h"
+#include <algorithm>
 
 namespace MSF
 {
@@ -26,10 +27,14 @@ public:
             CacheFiles(pDataObject);
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
 protected:
+
     ~IShellExtInitImpl() = default;
 
     void RegisterExtension(CString strExtension)

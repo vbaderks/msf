@@ -24,7 +24,6 @@ public:
     typedef std::vector<std::unique_ptr<CCfHandler>> CCfHandlers;
     typedef std::vector<CFormatEtc>  CFormatEtcs;
 
-
     STDMETHOD(GetData)(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) override
     {
         ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
@@ -56,9 +55,11 @@ public:
             ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(GetDataHere)(_In_ FORMATETC* pformatetc, _Inout_ STGMEDIUM* pmedium) override
     {
@@ -66,7 +67,6 @@ public:
 
         return m_pidldata->GetDataHere(pformatetc, pmedium);
     }
-
 
     STDMETHOD(QueryGetData)(__RPC__in_opt FORMATETC* pformatetc) override
     {
@@ -94,7 +94,10 @@ public:
 
             return m_pidldata->QueryGetData(pformatetc);
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
 
@@ -104,7 +107,6 @@ public:
 
         return m_pidldata->GetCanonicalFormatEtc(pformatetc, pformatetcOut);
     }
-
 
     STDMETHOD(SetData)(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease) override
     {
@@ -134,9 +136,11 @@ public:
 
             return m_pidldata->SetData(pformatetc, pstgmedium, fRelease);
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(EnumFormatEtc)(DWORD dwDirection, _In_ IEnumFORMATETC** ppenumFormatEtc) override
     {
@@ -155,9 +159,11 @@ public:
 
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
-
 
     STDMETHOD(DAdvise)(__RPC__in FORMATETC* pformatetc, DWORD advf, __RPC__in_opt IAdviseSink* pAdvSink, __RPC__out DWORD* pdwConnection) override
     {
@@ -166,14 +172,12 @@ public:
         return m_pidldata->DAdvise(pformatetc, advf, pAdvSink, pdwConnection);
     }
 
-
     STDMETHOD(DUnadvise)(DWORD dwConnection) override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::DUnadvise (instance=%p)\n", this);
 
         return m_pidldata->DUnadvise(dwConnection);
     }
-
 
     STDMETHOD(EnumDAdvise)(__RPC__deref_out_opt IEnumSTATDATA** ppenumAdvise) override
     {
@@ -183,17 +187,16 @@ public:
     }
 
 protected:
+
     CShellFolderDataObjectImpl() noexcept
     {
         ATLTRACE2(atlTraceCOM, 0, L"CShellFolderDataObjectImpl::CShellFolderDataObjectImpl (instance=%p)\n", this);
     }
 
-
     ~CShellFolderDataObjectImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, "CShellFolderDataObjectImpl::~CShellFolderDataObjectImpl (instance=%p)\n", this);
     }
-
 
     void Init(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
         IPerformedDropEffectSink* pperformeddropeffectsink = nullptr)
@@ -202,13 +205,11 @@ protected:
         RegisterCfHandler(make_unique<CCfPerformedDropEffectHandler>(pperformeddropeffectsink, this));
     }
 
-
     void RegisterCfHandler(std::unique_ptr<CCfHandler> qcfhandler)
     {
         ATLASSERT(!FindClipFormatHandler(qcfhandler->GetClipFormat()) && "Cannot register a ClipBoard handler twice!");
         m_cfhandlers.push_back(std::move(qcfhandler));
     }
-
 
 private:
     CCfHandler* FindClipFormatHandler(CLIPFORMAT clipFormat) const noexcept
@@ -220,7 +221,6 @@ private:
         });
         return handler == m_cfhandlers.end() ? nullptr : (*handler).get();
     }
-
 
     void GetRegisteredFormats(DWORD dwDirection, CFormatEtcs& formatetcs) const
     {
@@ -243,7 +243,6 @@ private:
         }
     }
 
-
     void GetPidlDataFormats(DWORD dwDirection, CFormatEtcs& formatetcs)
     {
         IEnumFORMATETCPtr renumformatetc = m_pidldata.EnumFormatEtc(dwDirection);
@@ -254,7 +253,6 @@ private:
             formatetcs.push_back(formatetc);
         }
     }
-
 
     // Member variables.
     IDataObjectPtr m_pidldata;

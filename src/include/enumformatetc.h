@@ -101,7 +101,10 @@ inline HRESULT CreateStdEnumFmtEtc(std::unique_ptr<std::vector<FORMATETC> > qfor
 
         return S_OK;
     }
-    MSF_COM_CATCH_HANDLER()
+    catch (...)
+    {
+        return ExceptionToHResult();
+    }
 }
 
 } // end of MSF namespace

@@ -17,6 +17,7 @@
 #include "itemnamelimitsimpl.h"
 #include "contextmenuimpl.h"
 #include "iconoverlayimpl.h"
+#include "droptargetimpl.h"
 
 #include "strutil.h"
 #include "cfhdrop.h"

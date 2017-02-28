@@ -9,6 +9,7 @@
 // Purpose: this file contains small helper functions. 
 #include "msfbase.h"
 #include <shellapi.h>
+#include <vector>
 
 
 namespace MSF
@@ -163,8 +164,8 @@ public:
 
 
 // Purpose: 'short' version of Win32 function CreateProcess. 
-//          Usefull for shell extensions that just need a quick way to start apps.
-ATLPREFAST_SUPPRESS(6335) // supress sa noise: leaking process handle
+//          Useful for shell extensions that just need a quick way to start apps.
+ATLPREFAST_SUPPRESS(6335) // suppress sa noise: leaking process handle
 inline void CreateProcess(LPCTSTR szApplicationName, LPTSTR szCmdLine, LPCTSTR lpCurrentDirectory = nullptr)
 {
     CStartupInfo startupinfo;

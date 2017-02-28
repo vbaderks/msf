@@ -61,7 +61,10 @@ public:
             static_cast<T*>(this)->OnAddPages(addpage, GetFilenames());
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     STDMETHOD(ReplacePage)(EXPPS /*uPageID*/, _In_ LPFNSVADDPROPSHEETPAGE /*pfnReplaceWith*/, LPARAM /*lParam*/) override

@@ -24,10 +24,6 @@
 #pragma warning(disable: 4987) // nonstandard extension used : 'throw (...) (VS2015)
 #pragma warning(disable: 5027) // '...': move assignment operator was implicitly defined as deleted (VS2015)
 
-// Standard C++ library
-#include <vector>
-#include <algorithm>
-
 // Win32 include files.
 #include <shlobj.h>
 #include <shobjidl.h>
@@ -46,4 +42,3 @@
 
 // Core MSF include files
 #include "macros.h"
-#include "catchhandler.h"

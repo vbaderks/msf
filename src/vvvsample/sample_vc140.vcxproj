@@ -415,7 +415,9 @@
   <ItemGroup>
     <ClCompile Include="contextmenu.cpp" />
     <ClCompile Include="copyhook.cpp" />
+    <ClCompile Include="droptarget.cpp" />
     <ClCompile Include="extractimage.cpp" />
+    <ClCompile Include="iconoverlay.cpp" />
     <ClCompile Include="infotip.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="shellfolder.cpp" />

@@ -15,10 +15,13 @@ class ATL_NO_VTABLE IQueryInfoImpl :
     public IQueryInfo
 {
 public:
+    IQueryInfoImpl(const IQueryInfoImpl &) = delete;
+    IQueryInfoImpl & operator=(const IQueryInfoImpl &) = delete;
+
     // IQueryInfo
     STDMETHOD(GetInfoFlags)(_Out_ DWORD* /* pdwFlags */) override
     {
-        // The Vista shell will call GetInfoFlags. The msdn docs are incomplete about the use of this function.
+        // The Vista shell will call GetInfoFlags. The MSDN docs are incomplete about the use of this function.
         // Possible return values are:
         // - QIF_CACHED 
         // - QIF_DONTEXPANDFOLDER
@@ -33,10 +36,14 @@ public:
             ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (dwFlags=%d)\n", dwFlags);
             return SHStrDup(static_cast<T*>(this)->GetInfoTip(dwFlags), ppwszTip);
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
 protected:
+
     IQueryInfoImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n", this);
