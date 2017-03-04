@@ -9,6 +9,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace MSF;
+using std::wstring;
 
 namespace test
 {
@@ -27,13 +28,13 @@ namespace test
 
         DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-        void InitializeImpl(const wchar_t* szFilename, DWORD /*dwMode*/)
+        void InitializeCore(const wchar_t* szFilename, DWORD /*dwMode*/) override
         {
         }
 
-        CString GetInfoTip(DWORD /* dwFlags */)
+        wstring GetInfoTip(DWORD /* dwFlags */) override
         {
-            return CString();
+            return wstring();
         }
     };
 

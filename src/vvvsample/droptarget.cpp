@@ -9,6 +9,7 @@
 #include "resource.h"
 #include <msf.h>
 
+using namespace MSF;
 
 class ATL_NO_VTABLE __declspec(uuid("8EB377DD-BB66-419D-8E76-F6FDD5C020DD")) DropTarget :
     public CComObjectRootEx<CComSingleThreadModel>,
@@ -31,7 +32,7 @@ public:
 
     bool IsSupportedClipboardFormat(IDataObject* dataObject)
     {
-        return CCfHDrop::IsFormat(dataObject);
+        return CfHDrop::IsFormat(dataObject);
     }
 
     DWORD OnDragOver(DWORD /*grfKeyState*/, POINTL /*pt*/, DWORD /*dwEffect*/)
@@ -41,7 +42,7 @@ public:
 
     DWORD OnDrop(IDataObject* dataObject, DWORD /*grfKeyState*/, POINTL /*pt*/, DWORD dwEffect)
     {
-        CCfHDrop cfhdrop(dataObject);
+        CfHDrop cfhdrop(dataObject);
 
         unsigned int nFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < nFiles; ++i)
