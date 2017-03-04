@@ -17,13 +17,13 @@ namespace MSF
 
 // Note: handler expect that pidls are alive as long as handler is used.
 
-class CCfShellIdListHandler : public CCfHandler
+class CCfShellIdListHandler : public ClipboardFormatHandler
 {
 public:
     typedef std::vector<CPidl> CPidls;
 
     CCfShellIdListHandler(LPCITEMIDLIST pidlFolder, CPidls& pidls) :
-        CCfHandler(CFSTR_SHELLIDLIST, true, false),
+        ClipboardFormatHandler(CFSTR_SHELLIDLIST, true, false),
         m_pidlFolder(pidlFolder),
         m_pidls(pidls)
     {

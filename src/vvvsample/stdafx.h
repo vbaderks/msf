@@ -20,9 +20,6 @@
 #pragma warning(disable: 4820) // 'x' bytes padding added after data member. (VS2015)
 #endif
 
-// Enabled improved type checking of the Win32 SDK header files.
-#define STRICT
-
 // Allow use of features specific to Windows 7 or later.
 #define _WIN32_WINNT 0x0601
 
@@ -46,14 +43,10 @@
 
 #define _ATL_NO_HOSTING // will prevent including mshtml.h, which is not /Zc:strictStrings compatible.
 
-#include "../include/msfbase.h"
+#include <msf.h>
 
 // Disable not useful warnings.
 #pragma warning(disable: 4505) // unreferenced local function has been removed
-
-
-using namespace std;
-using namespace MSF;
 
 
 PCWSTR const wszVVVFileRootExt     = L"VVVFile";

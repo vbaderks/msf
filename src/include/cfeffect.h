@@ -39,7 +39,7 @@ inline HRESULT GetCfEffect(LPCTSTR lpszFormat, _In_ IDataObject* pdataobject, DW
     if (FAILED(hr))
         return hr;
 
-    CGlobalLock<DWORD> globallock(medium.hGlobal);
+    util::GlobalLock<DWORD> globallock(medium.hGlobal);
 
     dwEffect = *globallock.get();
     return S_OK;

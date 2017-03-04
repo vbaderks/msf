@@ -15,7 +15,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE IShellPropSheetExtImpl :
+class ATL_NO_VTABLE ShellPropSheetExtImpl :
     public IShellExtInitImpl,
     public IShellPropSheetExt
 {
@@ -31,14 +31,14 @@ public:
     {
     public:
         CAddPage(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) :
-            _pfnAddPage(pfnAddPage),
-            _lParam(lParam)
+            m_pfnAddPage(pfnAddPage),
+            m_lParam(lParam)
         {
         }
 
         void operator()(HPROPSHEETPAGE hPage) const
         {
-            if (!_pfnAddPage(hPage, _lParam))
+            if (!m_pfnAddPage(hPage, m_lParam))
             {
                 ATLVERIFY(::DestroyPropertySheetPage(hPage));
                 RaiseException(E_FAIL);
@@ -46,8 +46,8 @@ public:
         }
 
     private:
-        LPFNSVADDPROPSHEETPAGE _pfnAddPage;
-        LPARAM                 _lParam;
+        LPFNSVADDPROPSHEETPAGE m_pfnAddPage;
+        LPARAM                 m_lParam;
     };
 
     // IShellPropSheetExt
@@ -55,10 +55,10 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::IShellPropSheetExt::AddPages (instance=%p, pfnAddPage=%p, lParam=&p)\n", this, pfnAddPage, lParam);
+            ATLTRACE2(atlTraceCOM, 0, L"ShellPropSheetExtImpl::AddPages (instance=%p, pfnAddPage=%p, lParam=&p)\n", this, pfnAddPage, lParam);
             CAddPage addpage(pfnAddPage, lParam);
 
-            static_cast<T*>(this)->OnAddPages(addpage, GetFilenames());
+            AddPagesCore(addpage, GetFilenames());
             return S_OK;
         }
         catch (...)
@@ -71,22 +71,21 @@ public:
     {
         // The Shell doesn't call this function for file class Property Sheets.
         // Only for control panel objects.
-        ATLTRACENOTIMPL(L"CPropSheetExtImpl::ReplacePage");
+        ATLTRACENOTIMPL(L"ShellPropSheetExtImpl::ReplacePage");
     }
 
 protected:
-    IShellPropSheetExtImpl()
+    ShellPropSheetExtImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::IShellPropSheetExtImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ShellPropSheetExtImpl::ShellPropSheetExtImpl (instance=%p)\n", this);
     }
 
-    ~IShellPropSheetExtImpl()
+    ~ShellPropSheetExtImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellPropSheetExtImpl::~IShellPropSheetExtImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ShellPropSheetExtImpl::~ShellPropSheetExtImpl (instance=%p)\n", this);
     }
 
-    // OnAddPages must be implemented by derived classes.
-    void OnAddPages(const CAddPage& /*addpages*/, const std::vector<CString>& /*filenames*/);
+    virtual void AddPagesCore(const CAddPage& /*addpages*/, const std::vector<std::wstring>& /*filenames*/) = 0;
 };
 
 } // namespace MSF

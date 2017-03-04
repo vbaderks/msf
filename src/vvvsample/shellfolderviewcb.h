@@ -5,45 +5,43 @@
 //
 #pragma once
 
+#include <msf.h>
 
-#include "../include/shellfolderviewcbimpl.h"
 
-
-class ATL_NO_VTABLE CShellFolderViewCB :
+class ATL_NO_VTABLE ShellFolderViewCB :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public IShellFolderViewCBImpl<CShellFolderViewCB>
+    public MSF::ShellFolderViewCBImpl<ShellFolderViewCB>
 {
 public:
     static CComPtr<IShellFolderViewCB> CreateInstance(LPCITEMIDLIST pidlFolder)
     {
-        CComObject<CShellFolderViewCB>* pinstance;
-        HRESULT hr = CComObject<CShellFolderViewCB>::CreateInstance(&pinstance);
+        CComObject<ShellFolderViewCB>* pinstance;
+        HRESULT hr = CComObject<ShellFolderViewCB>::CreateInstance(&pinstance);
         if (FAILED(hr))
-            RaiseException();
+            MSF::RaiseException();
 
         CComPtr<IShellFolderViewCB> shellfolderviewcb(pinstance);
         pinstance->SetFolder(pidlFolder);
         return shellfolderviewcb;
     }
 
-    DECLARE_NOT_AGGREGATABLE(CShellFolderViewCB)
+    DECLARE_NOT_AGGREGATABLE(ShellFolderViewCB)
 
-    BEGIN_COM_MAP(CShellFolderViewCB)
+    BEGIN_COM_MAP(ShellFolderViewCB)
         COM_INTERFACE_ENTRY(IShellFolderViewCB)
         COM_INTERFACE_ENTRY(IFolderViewSettings)
     END_COM_MAP()
 
-    CShellFolderViewCB() :
-        IShellFolderViewCBImpl<CShellFolderViewCB>(SHCNE_RENAMEITEM |
-                                                   SHCNE_RENAMEFOLDER |
-                                                   SHCNE_DELETE |
-                                                   SHCNE_ATTRIBUTES |
-                                                   SHCNE_UPDATEDIR |
-                                                   SHCNE_CREATE |
-                                                   SHCNE_UPDATEITEM)
+    ShellFolderViewCB() :
+        ShellFolderViewCBImpl<ShellFolderViewCB>(SHCNE_RENAMEITEM |
+                                                  SHCNE_RENAMEFOLDER |
+                                                  SHCNE_DELETE |
+                                                  SHCNE_ATTRIBUTES |
+                                                  SHCNE_UPDATEDIR |
+                                                  SHCNE_CREATE |
+                                                  SHCNE_UPDATEITEM)
     {
     }
-
 
     HRESULT OnGetButtonInfo(TBINFO* /*ptbinfo*/)
     {
@@ -54,7 +52,6 @@ public:
         */
         return E_FAIL;
     }
-
 
     HRESULT OnGetButtons(unsigned short /*idCmdFirst*/, unsigned short /*cbtnMax*/, TBBUTTON* /*ptbbutton*/)
     {
@@ -77,7 +74,6 @@ public:
         */
         return E_FAIL;
     }
-
 
     HRESULT OnInvokeCommand(unsigned int idCmd)
     {

@@ -14,11 +14,11 @@
 namespace MSF
 {
 
-class CCfPerformedDropEffectHandler : public CCfHandler
+class CCfPerformedDropEffectHandler : public ClipboardFormatHandler
 {
 public:
     CCfPerformedDropEffectHandler(IPerformedDropEffectSink* pperformeddropeffectsink, IDataObject* pdataobject) :
-        CCfHandler(CFSTR_PERFORMEDDROPEFFECT, false, true),
+        ClipboardFormatHandler(CFSTR_PERFORMEDDROPEFFECT, false, true),
         m_rperformeddropeffectsink(pperformeddropeffectsink),
         m_pdataobject(pdataobject),
         m_dwEffect(DROPEFFECT_NONE)
@@ -32,7 +32,7 @@ public:
         ATLASSERT(IsValid(formatetc, stgmedium) && "Passed invalid arguments");
         UNREFERENCED_PARAMETER(formatetc); // not used in release.
 
-        CGlobalLock<DWORD> globallock(stgmedium.hGlobal);
+        util::GlobalLock<DWORD> globallock(stgmedium.hGlobal);
 
         m_dwEffect = *globallock.get();
 

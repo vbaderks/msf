@@ -29,31 +29,27 @@ public:
         ATLVERIFY(DestroyMenu(m_hmenu));
     }
 
-
     void AddItem(UINT id, UINT nIDText) const
     {
-        AddItem(id, LoadString(nIDText));
+        AddItem(id, LoadResourceString(nIDText));
     }
 
-
-    void AddItem(UINT id, const CString& strText) const
+    void AddItem(UINT id, const std::wstring& strText) const
     {
-        CMenuItemInfo menuiteminfo(id, strText);
+        MenuItemInfo menuiteminfo(id, strText);
 
         InsertMenuItem(menuiteminfo, GetMenuItemCount());
     }
 
-
-    void AddDefaultItem(UINT id, const CString& strText) const
+    void AddDefaultItem(UINT id, const std::wstring& strText) const
     {
-        CMenuItemInfo menuiteminfo(id, strText);
+        MenuItemInfo menuiteminfo(id, strText);
 
         menuiteminfo.SetState(MFS_DEFAULT);
         InsertMenuItem(menuiteminfo, GetMenuItemCount());
     }
 
-
-    void InsertMenuItem(const CMenuItemInfo& menuiteminfo, UINT uItem, bool bByPosition = true) const
+    void InsertMenuItem(const MenuItemInfo& menuiteminfo, UINT uItem, bool bByPosition = true) const
     {
         RaiseLastErrorExceptionIf(!::InsertMenuItem(m_hmenu, uItem, bByPosition, &menuiteminfo));
     }

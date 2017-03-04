@@ -10,8 +10,7 @@
 #include "util.h"
 #include "globallock.h"
 
-namespace MSF
-{
+namespace MSF {
 
 // A CStgMedium class is owner of the stgmedium. 
 
@@ -28,14 +27,13 @@ public:
         if (!hglobIn)
             return nullptr;
 
-        CGlobalLock<void> globallock(hglobIn);
+        util::GlobalLock<void> globallock(hglobIn);
 
         size_t cb = GlobalSize(hglobIn);
         HGLOBAL hglobOut = GlobalAllocThrow(cb);
         CopyMemory(hglobOut, globallock.get(), cb);
         return hglobOut;
     }
-
 
     static void SetHGlobal(STGMEDIUM& stgmedium, HGLOBAL hglobal) noexcept
     {
@@ -44,26 +42,22 @@ public:
         stgmedium.pUnkForRelease = nullptr;
     }
 
-
     CStgMedium() noexcept
     {
         tymed = TYMED_NULL;
         pUnkForRelease = nullptr;
     }
 
-
     explicit CStgMedium(HGLOBAL hg) noexcept
     {
         SetHGlobal(*this, hg);
     }
-
 
     // Purpose: passed in STGMEDIUM will be owned after a bitwise copy.
     explicit CStgMedium(const STGMEDIUM& stgmedium) noexcept
     {
         *static_cast<STGMEDIUM*>(this) = stgmedium;
     }
-
 
     ~CStgMedium()
     {
@@ -73,26 +67,22 @@ public:
         }
     }
 
-
     HGLOBAL GetHGlobal() const noexcept
     {
         ATLASSERT(tymed == TYMED_HGLOBAL && "Can only get hglobal if correct type");
         return hGlobal;
     }
 
-
     void Detach() noexcept
     {
         tymed = TYMED_NULL;
     }
-
 
     void Detach(STGMEDIUM& stgmedium) noexcept
     {
         stgmedium = *this;
         Detach();
     }
-
 
     CStgMedium& operator = (STGMEDIUM& stgmedium)
     {
@@ -104,7 +94,6 @@ public:
 
         return *this;
     }
-
 
     void CopyTo(STGMEDIUM& stgmedium) const
     {

@@ -276,9 +276,6 @@
     <ClInclude Include="include\queryinfo.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>
-    <ClInclude Include="include\sfvcreate.h">
-      <Filter>Header Files\Support</Filter>
-    </ClInclude>
     <ClInclude Include="include\sfvmdefines.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>

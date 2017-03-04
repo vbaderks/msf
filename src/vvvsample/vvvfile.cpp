@@ -9,6 +9,9 @@
 #include "vvvfile.h"
 #include <msf.h>
 
+using std::wstring;
+using namespace MSF;
+
 
 const wchar_t* TSZ_APP_NAME_DIRECTORY = L"directory";
 const wchar_t* TSZ_FILE_COUNT         = L"filecount";
@@ -20,15 +23,15 @@ const wchar_t* TSZ_ACTIVE             = L"active";
 const wchar_t* TSZ_FOLDER             = L"folder";
 
 
-CString VVVFile::GetLabel() const
+std::wstring VVVFile::GetLabel() const
 {
-    return GetPrivateProfileString(GetAppNameDirectory(), TSZ_LABEL);
+    return GetPrivateProfileString(GetAppNameDirectory().c_str(), TSZ_LABEL);
 }
 
 
-void VVVFile::SetLabel(const CString& strLabel) const
+void VVVFile::SetLabel(const std::wstring& label) const
 {
-    WritePrivateProfileString(GetAppNameDirectory(), TSZ_LABEL, strLabel);
+    WritePrivateProfileString(GetAppNameDirectory().c_str(), TSZ_LABEL, label.c_str());
 }
 
 
@@ -54,9 +57,9 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
 {
     for (;;)
     {
-        CString strAppName = GetAppNameItem(nItemIterator);
+        auto strAppName = GetAppNameItem(nItemIterator);
 
-        unsigned int nActive = GetPrivateProfileInt(strAppName, TSZ_ACTIVE, -1);
+        unsigned int nActive = GetPrivateProfileInt(strAppName.c_str(), TSZ_ACTIVE, -1);
         if (nActive == -1)
             return nullptr;
 
@@ -64,16 +67,16 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
 
         if (nActive == 1)
         {
-            bool bFolder = GetPrivateProfileInt(strAppName, TSZ_FOLDER) == 1;
+            bool bFolder = GetPrivateProfileInt(strAppName.c_str(), TSZ_FOLDER) == 1;
 
             if ((IsBitSet(grfFlags, SHCONTF_NONFOLDERS) && !bFolder) ||
                 (IsBitSet(grfFlags, SHCONTF_FOLDERS) && bFolder))
             {
-                unsigned int nSize = GetPrivateProfileInt(strAppName, TSZ_SIZE);
+                unsigned int nSize = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
                 RaiseExceptionIf(nSize == static_cast<UINT>(-1));
-                CString strName = GetPrivateProfileString(strAppName, TSZ_NAME);
+                auto strName = GetPrivateProfileString(strAppName.c_str(), TSZ_NAME);
 
-                return VVVItem::CreateItemIdList(nItemIterator, nSize, bFolder, strName);
+                return VVVItem::CreateItemIdList(nItemIterator, nSize, bFolder, strName.c_str());
             }
         }
     }
@@ -95,17 +98,17 @@ void VVVFile::DeleteItems(const CVVVItemList& items) const
 
 void VVVFile::SetItem(const VVVItem& item) const
 {
-    CString strAppNameItem = GetAppNameItem(item.GetID());
+    auto strAppNameItem = GetAppNameItem(item.GetID());
 
-    WritePrivateProfileString(strAppNameItem, TSZ_NAME, CString(item.GetName()));
-    WritePrivateProfileInt(strAppNameItem, TSZ_SIZE, item.GetSize());
+    WritePrivateProfileString(strAppNameItem.c_str(), TSZ_NAME, item.GetName().c_str());
+    WritePrivateProfileInt(strAppNameItem.c_str(), TSZ_SIZE, item.GetSize());
 }
 
 
-LPITEMIDLIST VVVFile::AddItem(const CString& strFile) const
+LPITEMIDLIST VVVFile::AddItem(const std::wstring& strFile) const
 {
-    CString strName = PathFindFileName(strFile);
-    DWORD dwSize    = GetFileSize(strFile);
+    CString strName = PathFindFileName(strFile.c_str());
+    DWORD dwSize    = GetFileSize(strFile.c_str());
 
     return AddItem(dwSize, strName);
 }
@@ -126,20 +129,16 @@ LPITEMIDLIST VVVFile::AddItem(unsigned int nSize, const CString& strName) const
 void VVVFile::AddItem(const VVVItem& item) const
 {
     SetItem(item);
-
-    WritePrivateProfileInt(GetAppNameItem(item.GetID()), TSZ_ACTIVE, 1);
-
+    WritePrivateProfileInt(GetAppNameItem(item.GetID()).c_str(), TSZ_ACTIVE, 1);
     SetFileCount(GetFileCount() + 1);
 }
 
 
 void VVVFile::DeleteItem(const VVVItem& item) const
 {
-    CString strAppNameItem = GetAppNameItem(item.GetID());
-
-    ATLASSERT(GetPrivateProfileInt(strAppNameItem, TSZ_ACTIVE) == 1); // item was already deleted!
-
-    WritePrivateProfileInt(strAppNameItem, TSZ_ACTIVE, 0);
+    auto strAppNameItem = GetAppNameItem(item.GetID());
+    ATLASSERT(GetPrivateProfileInt(strAppNameItem.c_str(), TSZ_ACTIVE) == 1); // item was already deleted!
+    WritePrivateProfileInt(strAppNameItem.c_str(), TSZ_ACTIVE, 0);
 }
 
 
@@ -147,9 +146,8 @@ unsigned int VVVFile::FindFreeEntry() const
 {
     for (unsigned int n = 0;; ++n)
     {
-        CString strAppName = GetAppNameItem(n);
-
-        unsigned int nActive = GetPrivateProfileInt(strAppName, TSZ_ACTIVE);
+        auto strAppName = GetAppNameItem(n);
+        unsigned int nActive = GetPrivateProfileInt(strAppName.c_str(), TSZ_ACTIVE);
 
         if (nActive != 1)
             return n;
@@ -159,64 +157,62 @@ unsigned int VVVFile::FindFreeEntry() const
 
 void VVVFile::SetFileCount(unsigned int nNewFileCount) const
 {
-    return WritePrivateProfileInt(GetAppNameDirectory(), TSZ_FILE_COUNT, nNewFileCount);
+    return WritePrivateProfileInt(GetAppNameDirectory().c_str(), TSZ_FILE_COUNT, nNewFileCount);
 }
 
 
-CString VVVFile::GetAppNameDirectory() const
+wstring VVVFile::GetAppNameDirectory() const
 {
-    CString strAppName;
+    wstring strAppName;
 
-    if (_folder.IsEmpty())
+    if (m_folder.empty())
     {
         strAppName = TSZ_APP_NAME_DIRECTORY;
     }
     else
     {
-        strAppName = _folder + L"\\" + TSZ_APP_NAME_DIRECTORY;
+        strAppName = m_folder + L"\\" + TSZ_APP_NAME_DIRECTORY;
     }
 
     return strAppName;
 }
 
 
-CString VVVFile::GetAppNameItem(unsigned int nID) const
+wstring VVVFile::GetAppNameItem(unsigned int nID) const
 {
     CString strAppName;
-    strAppName.Format(TSZ_FILE_FORMAT, nID);
+    strAppName.Format(TSZ_FILE_FORMAT, nID); // TODO
 
-    if (!_folder.IsEmpty())
+    if (!m_folder.empty())
     {
-        strAppName = _folder + L"\\" + strAppName;
+        strAppName = m_folder.c_str() + CString(L"\\") + strAppName;
     }
 
-    return strAppName;
+    return strAppName.GetString();
 }
 
 
-CString VVVFile::GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName) const
+wstring VVVFile::GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName) const
 {
     wchar_t tszBuf[255];
-
-    ::GetPrivateProfileString(lpAppName, lpKeyName, L"", tszBuf, 255, _filename);
-
+    ::GetPrivateProfileString(lpAppName, lpKeyName, L"", tszBuf, 255, m_filename.c_str());
     return tszBuf;
 }
 
 
 unsigned int  VVVFile::GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault) const
 {
-    return ::GetPrivateProfileInt(lpAppName, lpKeyName, nDefault, _filename);
+    return ::GetPrivateProfileInt(lpAppName, lpKeyName, nDefault, m_filename.c_str());
 }
 
 
 void VVVFile::WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName, const wchar_t* lpString) const
 {
-    RaiseLastErrorExceptionIf(!::WritePrivateProfileString(lpAppName, lpKeyName, lpString, _filename));
+    RaiseLastErrorExceptionIf(!::WritePrivateProfileString(lpAppName, lpKeyName, lpString, m_filename.c_str()));
 }
 
 
 void VVVFile::WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const
 {
-    WritePrivateProfileString(lpAppName, lpKeyName, ToString(nValue));
+    WritePrivateProfileString(lpAppName, lpKeyName, ToString(nValue).c_str());
 }

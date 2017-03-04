@@ -248,7 +248,6 @@
     <ClInclude Include="include\propsheethost.h" />
     <ClInclude Include="include\queryinfo.h" />
     <ClInclude Include="include\queryinfoimpl.h" />
-    <ClInclude Include="include\sfvcreate.h" />
     <ClInclude Include="include\sfvmdefines.h" />
     <ClInclude Include="include\shellextinitimpl.h" />
     <ClInclude Include="include\shellfoldercontextmenu.h" />

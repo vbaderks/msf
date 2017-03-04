@@ -14,7 +14,7 @@
 
 class CShellFolderDataObject :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public CShellFolderDataObjectImpl<CShellFolderDataObject>
+    public MSF::ShellFolderDataObjectImpl<CShellFolderDataObject>
 {
 public:
     DECLARE_NOT_AGGREGATABLE(CShellFolderDataObject)
@@ -23,14 +23,13 @@ public:
         COM_INTERFACE_ENTRY(IDataObject)
     END_COM_MAP()
 
-
     static CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl,
-        LPCITEMIDLIST* ppidl, IPerformedDropEffectSink* pperformeddropeffectsink)
+        LPCITEMIDLIST* ppidl, MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         CComObject<CShellFolderDataObject>* pinstance;
         HRESULT hr = CComObject<CShellFolderDataObject>::CreateInstance(&pinstance);
         if (FAILED(hr))
-            RaiseException(hr);
+            MSF::RaiseException(hr);
 
         CComPtr<IDataObject> rdataobject(pinstance);
         pinstance->Initialize(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
@@ -42,11 +41,11 @@ protected:
 
 private:
     void Initialize(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
-        IPerformedDropEffectSink* pperformeddropeffectsink)
+                    MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
 
-        RegisterCfHandler(make_unique<CCfFileDescriptorHandler>(this));
-        RegisterCfHandler(make_unique<CCfFileContentsHandler>(this));
+        RegisterClipboardFormatHandler(std::make_unique<CCfFileDescriptorHandler>(this));
+        RegisterClipboardFormatHandler(std::make_unique<CfFileContentsHandler>(this));
     }
 };

@@ -16,23 +16,23 @@
 // Note: owner of the instance of this class must keep passed dataobject alive.
 //       This class doesn't do addref to prevent circulair referencing.
 
-class CCfFileContentsHandler : public CCfHandler
+class CfFileContentsHandler : public MSF::ClipboardFormatHandler
 {
 public:
-    explicit CCfFileContentsHandler(IDataObject* dataObjectOuter) :
-        CCfHandler(CFSTR_FILECONTENTS, true, false),
+    explicit CfFileContentsHandler(IDataObject* dataObjectOuter) :
+        ClipboardFormatHandler(CFSTR_FILECONTENTS, true, false),
         m_dataObject(dataObjectOuter)
     {
     }
 
-    CCfFileContentsHandler& operator=(const CCfFileContentsHandler&) = delete;
+    CfFileContentsHandler& operator=(const CfFileContentsHandler&) = delete;
 
     HRESULT Validate(const FORMATETC& formatetc) const noexcept override
     {
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
 
-        if (!IsBitSet(formatetc.tymed, TYMED_HGLOBAL)) 
+        if (!MSF::IsBitSet(formatetc.tymed, TYMED_HGLOBAL)) 
             return DV_E_TYMED;
 
         if (static_cast<UINT>(formatetc.lindex) >= GetCfShellIdList()->GetItemCount())
@@ -48,24 +48,24 @@ public:
         VVVItem vvvitem(GetCfShellIdList()->GetItem(static_cast<UINT>(formatetc.lindex)));
 
         size_t size = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
-        HGLOBAL hg = GlobalAllocThrow(size);
+        HGLOBAL hg = MSF::GlobalAllocThrow(size);
         ZeroMemory(hg, size);
 
-        CStgMedium::SetHGlobal(medium, hg);
+        MSF::CStgMedium::SetHGlobal(medium, hg);
     }
 
 private:
 
-    CCfShellIdList* GetCfShellIdList() const
+    MSF::CCfShellIdList* GetCfShellIdList() const
     {
         if (!m_cfShellIdList)
         {
-            m_cfShellIdList = make_unique<CCfShellIdList>(m_dataObject);
+            m_cfShellIdList = std::make_unique<MSF::CCfShellIdList>(m_dataObject);
         }
 
         return m_cfShellIdList.get();
     }
 
     IDataObject* m_dataObject;
-    mutable unique_ptr<CCfShellIdList> m_cfShellIdList;
+    mutable std::unique_ptr<MSF::CCfShellIdList> m_cfShellIdList;
 };

@@ -9,6 +9,7 @@
 #include "resource.h"
 #include <msf.h>
 
+using namespace MSF;
 
 // This sample will watch folder delete requests. 
 // When the name includes the substring 'VVV' it will display an conformation dialogbox.
@@ -38,8 +39,8 @@ public:
     {
         if (wFunc == FO_DELETE && CString(pszSrcFile).Find(L"VVV") != -1)
         {
-            return IsolationAwareMessageBox(hwnd, LoadString(IDS_COPYHOOK_QUESTION),
-                LoadString(IDS_COPYHOOK_CAPTION), MB_YESNOCANCEL);
+            return IsolationAwareMessageBox(hwnd, LoadResourceString(IDS_COPYHOOK_QUESTION).c_str(),
+                LoadResourceString(IDS_COPYHOOK_CAPTION).c_str(), MB_YESNOCANCEL);
         }
 
         return IDYES;

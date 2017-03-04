@@ -11,23 +11,23 @@
 #include <memory>
 
 
-class ATL_NO_VTABLE CEnumIDList :
+class ATL_NO_VTABLE EnumIDList :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public IEnumIDListImpl<CEnumIDList>
+    public MSF::IEnumIDListImpl<EnumIDList>
 {
 public:
-    DECLARE_NOT_AGGREGATABLE(CEnumIDList)
+    DECLARE_NOT_AGGREGATABLE(EnumIDList)
 
-    BEGIN_COM_MAP(CEnumIDList)
+    BEGIN_COM_MAP(EnumIDList)
         COM_INTERFACE_ENTRY(IEnumIDList)
     END_COM_MAP()
 
-    static CComPtr<IEnumIDList> CreateInstance(const CString& strFilename, const CString& strFolder, DWORD grfFlags)
+    static CComPtr<IEnumIDList> CreateInstance(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
     {
-        CComObject<CEnumIDList>* pinstance;
-        HRESULT hr = CComObject<CEnumIDList>::CreateInstance(&pinstance);
+        CComObject<EnumIDList>* pinstance;
+        HRESULT hr = CComObject<EnumIDList>::CreateInstance(&pinstance);
         if (FAILED(hr))
-            RaiseException(hr);
+            MSF::RaiseException(hr);
 
         CComPtr<IEnumIDList> renumidlist(pinstance);
         pinstance->Initialize(strFilename, strFolder, grfFlags);
@@ -36,25 +36,25 @@ public:
 
     LPITEMIDLIST GetNextItem()
     {
-        return m_qfile->GetNextItem(m_grfFlags, m_nItemIterator);
+        return m_file->GetNextItem(m_grfFlags, m_nItemIterator);
     }
 
 protected:
 
-    CEnumIDList() : m_grfFlags(0), m_nItemIterator(0)
+    EnumIDList() : m_grfFlags(0), m_nItemIterator(0)
     {
     }
 
 private:
 
-    void Initialize(const CString& strFilename, const CString& strFolder, DWORD grfFlags)
+    void Initialize(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
     {
-        m_qfile = make_unique<VVVFile>(strFilename, strFolder);
+        m_file = std::make_unique<VVVFile>(strFilename, strFolder);
         m_grfFlags = grfFlags;
     }
 
     // Member variables
     DWORD m_grfFlags;
-    unique_ptr<VVVFile> m_qfile;
+    std::unique_ptr<VVVFile> m_file;
     unsigned int m_nItemIterator;
 };

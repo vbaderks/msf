@@ -14,10 +14,10 @@ namespace MSF
 {
 
 /// <purpose>Owns a collection of property sheet pages.</purpose>
-class CPropSheetHost
+class PropSheetHost
 {
 public:
-    ~CPropSheetHost()
+    ~PropSheetHost()
     {
         for (auto hpropsheetpage : _propsheetpages)
         {
@@ -32,7 +32,7 @@ public:
 
     static BOOL CALLBACK AddPage(HPROPSHEETPAGE hpropsheetpage, LPARAM lparam)
     {
-        CPropSheetHost* ppropsheethost = reinterpret_cast<CPropSheetHost*>(lparam);
+        PropSheetHost* ppropsheethost = reinterpret_cast<PropSheetHost*>(lparam);
         ppropsheethost->Add(hpropsheetpage);
         return TRUE;
     }

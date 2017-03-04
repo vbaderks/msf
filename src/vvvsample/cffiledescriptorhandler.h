@@ -10,13 +10,13 @@
 #include "../include/cfshellidlist.h"
 
 // Note: owner of the instance of this class must keep passed dataobject alive.
-//       This class doesn't do addref to prevent circulair referencing.
+//       This class doesn't do addref to prevent circular referencing.
 
-class CCfFileDescriptorHandler : public CCfHandler
+class CCfFileDescriptorHandler : public MSF::ClipboardFormatHandler
 {
 public:
     explicit CCfFileDescriptorHandler(IDataObject* pdataobjectOuter) :
-        CCfHandler(CFSTR_FILEDESCRIPTOR, true, false),
+        ClipboardFormatHandler(CFSTR_FILEDESCRIPTOR, true, false),
         m_pdataobject(pdataobjectOuter)
     {
     }
@@ -25,12 +25,12 @@ public:
 
     void GetData(const FORMATETC&, STGMEDIUM& medium) const override
     {
-        CCfShellIdList cfshellidlist(m_pdataobject);
+        MSF::CCfShellIdList cfshellidlist(m_pdataobject);
 
         size_t size = sizeof(FILEGROUPDESCRIPTOR) +
             (cfshellidlist.GetItemCount() * sizeof(FILEDESCRIPTOR));
 
-        HGLOBAL hg = GlobalAllocThrow(size);
+        HGLOBAL hg = MSF::GlobalAllocThrow(size);
 
         FILEGROUPDESCRIPTOR* pfgd = static_cast<FILEGROUPDESCRIPTOR*>(hg);
 
@@ -46,11 +46,11 @@ public:
             VVVItem vvvitem(cfshellidlist.GetItem(i));
 
             fd.nFileSizeLow = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
-            if (lstrcpyn(fd.cFileName, vvvitem.GetDisplayName(), MAX_PATH))
+            if (lstrcpyn(fd.cFileName, vvvitem.GetDisplayName().c_str(), MAX_PATH))
                 _com_raise_error(E_FAIL);
         }
 
-        CStgMedium::SetHGlobal(medium, hg);
+        MSF::CStgMedium::SetHGlobal(medium, hg);
     }
 
 private:

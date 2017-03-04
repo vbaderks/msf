@@ -10,6 +10,7 @@
 #include "resource.h"
 #include <msf.h>
 
+using namespace MSF;
 
 class ATL_NO_VTABLE __declspec(uuid("959ACDA2-A398-4204-8378-610979C01557")) ExtractImage :
     public CComObjectRootEx<CComSingleThreadModel>,
@@ -29,7 +30,7 @@ public:
     {
         // TODO: update to new reg model.
         return ExtractImageImpl<ExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,
-            L"VVV Sample ExtractImage ShellExtension", __uuidof(CShellFolder), wszVVVExtension);
+            L"VVV Sample ExtractImage ShellExtension", __uuidof(ShellFolder), wszVVVExtension);
     }
 
 

@@ -12,20 +12,20 @@
 class VVVFile
 {
 public:
-    explicit VVVFile(const CString& filename, const CString& folder = CString()) :
-        _filename(filename),
-        _folder(folder)
+    explicit VVVFile(const std::wstring filename, const std::wstring& folder = std::wstring()) :
+        m_filename(filename.c_str()), // TODO
+        m_folder(folder.c_str()) // TODO
     {
     }
 
-    CString GetLabel() const;
-    void SetLabel(const CString& strLabel) const;
+    std::wstring GetLabel() const;
+    void SetLabel(const std::wstring& label) const;
     unsigned int GetFileCount() const;
     LPITEMIDLIST GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) const;
     void DeleteItems(const CVVVItemList& itemsToDelete) const;
     void SetItem(const VVVItem& item) const;
 
-    LPITEMIDLIST AddItem(const CString& strFile) const;
+    LPITEMIDLIST AddItem(const std::wstring& strFile) const;
     LPITEMIDLIST AddItem(unsigned int nSize, const CString& strName) const;
 
 private:
@@ -36,16 +36,16 @@ private:
     void SetFileCount(unsigned int nNewFileCount) const;
     unsigned int FindFreeEntry() const;
 
-    CString GetAppNameDirectory() const;
-    CString GetAppNameItem(unsigned int nID) const;
+    std::wstring GetAppNameDirectory() const;
+    std::wstring GetAppNameItem(unsigned int nID) const;
 
-    CString GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName) const;
+    std::wstring GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName) const;
     unsigned int GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault = -1) const;
 
     void WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName, const wchar_t* lpString) const;
     void WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const;
 
     // Member variables
-    CString _filename;
-    CString _folder;
+    std::wstring m_filename;
+    std::wstring m_folder;
 };

@@ -48,7 +48,7 @@ public:
     }
 
     ExtractImageImpl() :
-        _hbitmap(nullptr)
+        m_hbitmap(nullptr)
     {
         ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
     }
@@ -92,7 +92,7 @@ public:
         ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, filename);
         try
         {
-            _strFilename = filename;
+            m_strFilename = filename;
             return S_OK;
         }
         catch (...)
@@ -110,9 +110,9 @@ public:
             ATLTRACE2(atlTraceCOM, 0, "ExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
 
             Dispose();
-            _hbitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
+            m_hbitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
 
-            ATLVERIFY(lstrcpynW(pszPathBuffer, CT2W(static_cast<T*>(this)->GetPathBuffer()), static_cast<int>(cch)));
+            ATLVERIFY(lstrcpynW(pszPathBuffer, static_cast<T*>(this)->GetPathBuffer().c_str(), static_cast<int>(cch)));
             *pdwFlags |= IEIFLAG_CACHE;
 
             //  Note: The SDK docs are unclear if it passing a NULL pointer is allowed.
@@ -133,11 +133,11 @@ public:
     {
         ATLTRACE2(atlTraceCOM, 0, "ExtractImageImpl::Extract (instance=%p)\n", this);
 
-        if (!_hbitmap)
+        if (!m_hbitmap)
             return E_FAIL;
 
-        *phBmpThumbnail = _hbitmap;
-        _hbitmap = nullptr;
+        *phBmpThumbnail = m_hbitmap;
+        m_hbitmap = nullptr;
 
         return S_OK;
     }
@@ -151,7 +151,7 @@ public:
             return E_POINTER;
 
         WIN32_FILE_ATTRIBUTE_DATA fileattributedata;
-        if (!GetFileAttributesEx(static_cast<T*>(this)->GetPathBuffer(), GetFileExInfoStandard, &fileattributedata))
+        if (!GetFileAttributesEx(static_cast<T*>(this)->GetPathBuffer().c_str(), GetFileExInfoStandard, &fileattributedata))
             return E_FAIL;
         
         *pDateStamp = fileattributedata.ftLastWriteTime;
@@ -162,9 +162,9 @@ public:
     //          extract the image from. Can be used to optimize
     //          cases were the image is extracted from a different file 
     //          then set by IPersistFile::Load.
-    CString GetPathBuffer() const
+    const std::wstring& GetPathBuffer() const
     {
-        return _strFilename;
+        return m_strFilename;
     }
 
 protected:
@@ -172,22 +172,21 @@ protected:
     ~ExtractImageImpl()
     {
         ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::~ExtractImageImpl (instance=%p)\n", this);
-
         Dispose();
     }
 
     void Dispose()
     {
-        if (_hbitmap)
+        if (m_hbitmap)
         {
-            ATLVERIFY(DeleteObject(_hbitmap));
-            _hbitmap = nullptr;
+            ATLVERIFY(DeleteObject(m_hbitmap));
+            m_hbitmap = nullptr;
         }
     }
 
     // member variables.
-    CString _strFilename;
-    HBITMAP _hbitmap;
+    std::wstring m_strFilename;
+    HBITMAP      m_hbitmap;
 };
 
 } // namespace MSF

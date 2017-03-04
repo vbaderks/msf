@@ -9,10 +9,13 @@
 
 namespace MSF
 {
-/// <purpose>Can hold and COM allocated string and will release it when it goes out of scope.</purpose>
-class COleString
+/// <purpose>Can hold a COM allocated string and will release it when it goes out of scope.</purpose>
+class OleString final
 {
 public:
+    OleString(const OleString&) = delete;
+    OleString& operator=(const OleString&) = delete;
+
     static wchar_t* Dup(LPCTSTR pszSrc)
     {
         wchar_t* pwz;
@@ -20,33 +23,29 @@ public:
         return pwz;
     }
 
-    COleString() noexcept : m_olestrCLSID(nullptr)
+    OleString() noexcept : m_string(nullptr)
     {
     }
 
-    ~COleString()
+    ~OleString()
     {
-        CoTaskMemFree(m_olestrCLSID);
+        CoTaskMemFree(m_string);
     }
-
-    COleString(const COleString&) = delete;
-
-    COleString& operator=(const COleString&) = delete;
 
     operator LPOLESTR() const noexcept
     {
-        return m_olestrCLSID;
+        return m_string;
     }
 
     LPOLESTR* GetAddress() noexcept
     {
-        ATLASSERT(!m_olestrCLSID || !"instance already owns a OLE string"); 
-        return &m_olestrCLSID;
+        ATLASSERT(!m_string || !"instance already owns a OLE string"); 
+        return &m_string;
     }
 
 private:
 
-    LPOLESTR m_olestrCLSID;
+    LPOLESTR m_string;
 };
 
 } // end namespace

@@ -7,20 +7,16 @@
 
 
 #include "resource.h"
-
-#include "../include/contextcommand.h"
-#include "../include/strutil.h"
-#include "../include/version.h"
+#include <msf.h>
 
 
-class CAboutMSFCommand : public CContextCommand
+class AboutMSFCommand : public MSF::ContextMenuCommand
 {
 public:
-    void operator()(const CMINVOKECOMMANDINFO* pici, const std::vector<CString>& /* filenames */) override
+    void operator()(const CMINVOKECOMMANDINFO* pici, const std::vector<std::wstring>& /* filenames */) override
     {
-        CString strText;
-        strText.Format(IDS_CONTEXTMENU_ABOUT_MASK, HIWORD(MSF_VER), LOWORD(MSF_VER));
-
-        IsolationAwareMessageBox(pici->hwnd, strText, LoadString(IDS_CONTEXTMENU_CAPTION), MB_OK);
+        IsolationAwareMessageBox(pici->hwnd,
+                                 MSF::FormatResourceMessage(IDS_CONTEXTMENU_ABOUT_MASK, HIWORD(MSF_VER), LOWORD(MSF_VER)).c_str(),
+                                 MSF::LoadResourceString(IDS_CONTEXTMENU_CAPTION).c_str(), MB_OK);
     }
 };

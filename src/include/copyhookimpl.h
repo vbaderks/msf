@@ -30,7 +30,7 @@ public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szCopyHookName) noexcept
     {
-        COleString olestrCLSID;
+        OleString olestrCLSID;
         StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
 
         _ATL_REGMAP_ENTRY regmapEntries[] =

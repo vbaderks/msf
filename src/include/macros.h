@@ -27,6 +27,11 @@ bool ToBool(bool b) = delete; // not defined by design. Detects incorrect usage.
     _com_raise_error(hr);
 }
 
+[[noreturn]] inline void RaiseLastErrorException()
+{
+    RaiseException(HRESULT_FROM_WIN32(GetLastError()));
+}
+
 inline void RaiseExceptionIfFailed(HRESULT hr)
 {
     if (FAILED(hr))

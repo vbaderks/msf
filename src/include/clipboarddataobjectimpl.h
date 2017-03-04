@@ -15,35 +15,32 @@
 #include <memory>
 #include <algorithm>
 
-namespace MSF
-{
+namespace MSF {
 
 template<typename T>
-class CClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>
+class ClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>
 {
     class CExternalData;
 
-    typedef std::vector<std::unique_ptr<CCfHandler>> CCfHandlers;
+    typedef std::vector<std::unique_ptr<ClipboardFormatHandler>> CCfHandlers;
     typedef std::vector<std::unique_ptr<CExternalData>> CExternalDatas;
 
 public:
 
-    CClipboardDataObjectImpl() noexcept
+    ClipboardDataObjectImpl() noexcept
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::CClipboardDataObjectImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::ClipboardDataObjectImpl (instance=%p)\n", this);
     }
 
-
-    void RegisterCfHandler(std::unique_ptr<CCfHandler> clipFormatHandler)
+    void RegisterCfHandler(std::unique_ptr<ClipboardFormatHandler> clipFormatHandler)
     {
         ATLASSERT(!FindClipFormatHandler(clipFormatHandler->GetClipFormat()) && "Cannot register a ClipBoard handler twice!");
         m_cfhandlers.push_back(clipFormatHandler);
     }
 
-
     STDMETHOD(EnumFormatEtc)(DWORD dwDirection, IEnumFORMATETC** /*ppenumFormatEtc*/) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
+        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 
         try
         {
@@ -65,12 +62,12 @@ public:
 
     STDMETHOD(QueryGetData)(FORMATETC* pformatetc) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
+        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
 
         try
         {
-            const CCfHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
+            const ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
@@ -87,7 +84,7 @@ public:
                 }
             }
 
-            ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
+            ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
         catch (...)
@@ -98,12 +95,12 @@ public:
 
     STDMETHOD(GetData)(FORMATETC *pformatetc, STGMEDIUM *pstgmedium) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData cfformat=%d (%s)\n",
+        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData cfformat=%d (%s)\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
 
         try
         {
-            CCfHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
+            ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
@@ -123,7 +120,7 @@ public:
                 }
             }
 
-            ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
+            ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
         catch (...)
@@ -134,7 +131,7 @@ public:
 
     STDMETHOD(SetData)(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
+        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
 
         try
@@ -145,7 +142,7 @@ public:
             if (pformatetc->tymed != pstgmedium->tymed)
                 return DV_E_TYMED;
 
-            CCfHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
+            ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanSetData())
@@ -189,9 +186,9 @@ public:
 
 protected:
 
-    ~CClipboardDataObjectImpl()
+    ~ClipboardDataObjectImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CClipboardDataObjectImpl::~CClipboardDataObjectImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::~ClipboardDataObjectImpl (instance=%p)\n", this);
     }
 
 private:
@@ -200,19 +197,19 @@ private:
     {
     public:
         CExternalData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) noexcept :
-            _formatetc(formatetc),
-            _stgmedium(stgmedium)
+            m_formatetc(formatetc),
+            m_stgmedium(stgmedium)
         {
         }
 
         CLIPFORMAT GetClipFormat() const noexcept
         {
-            return _formatetc.cfFormat;
+            return m_formatetc.cfFormat;
         }
 
         const FORMATETC& GetFormatetc() const noexcept
         {
-            return _formatetc;
+            return m_formatetc;
         }
 
         HRESULT Validate(const FORMATETC& formatetc) const noexcept
@@ -220,7 +217,7 @@ private:
             if (formatetc.dwAspect != DVASPECT_CONTENT)
                 return DV_E_DVASPECT;
 
-            if (formatetc.tymed != _formatetc.tymed)
+            if (formatetc.tymed != m_formatetc.tymed)
                 return DV_E_TYMED;
 
             if (formatetc.lindex != -1)
@@ -231,26 +228,26 @@ private:
 
         void Update(const FORMATETC& formatetc, STGMEDIUM& stgmedium)
         {
-            _formatetc = formatetc;
-            _stgmedium = stgmedium;
+            m_formatetc = formatetc;
+            m_stgmedium = stgmedium;
         }
 
         void Copy(STGMEDIUM& stgmedium) const
         {
-            _stgmedium.CopyTo(stgmedium);
+            m_stgmedium.CopyTo(stgmedium);
         }
 
     private:
 
         // Member variables.
-        CFormatEtc _formatetc;
-        CStgMedium _stgmedium;
+        CFormatEtc m_formatetc;
+        CStgMedium m_stgmedium;
     };
 
-    CCfHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const noexcept
+    ClipboardFormatHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const noexcept
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
-            [=](CCfHandler* cfHandler)
+            [=](ClipboardFormatHandler* cfHandler)
         { 
             return cfHandler->GetClipFormat() == clipformat;
         });

@@ -4,40 +4,37 @@
 // See README.TXT for the details of the software licence.
 //
 #pragma once
-#include "../include/propertypageimpl.h"
-#include "../include/strutil.h"
-#include "../include/util.h"
+
 #include "vvvfile.h"
 #include "resource.h"
+#include <msf.h>
 
-
-class CPropertyPageVVV : public CShellExtPropertyPageImpl<CPropertyPageVVV>
+class PropertyPageVVV : public MSF::ShellExtPropertyPageImpl<PropertyPageVVV>
 {
 public:
-    static HPROPSHEETPAGE CreateInstance(const CString& strFilename)
+    static HPROPSHEETPAGE CreateInstance(std::wstring filename)
     {
-        auto ppage = new CPropertyPageVVV(strFilename);
+        auto ppage = new PropertyPageVVV(filename);
         return ppage->Create();
     }
 
     enum { IDD = IDD_PROPERTY_PAGE_VVV };
 
-    BEGIN_MSG_MAP(CPropertyPageVVV)
+    BEGIN_MSG_MAP(PropertyPageVVV)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
         COMMAND_HANDLER(IDC_EDIT_LABEL, EN_CHANGE, OnChangeEditName)
-        CHAIN_MSG_MAP(CShellExtPropertyPageImpl<CPropertyPageVVV>)
+        CHAIN_MSG_MAP(ShellExtPropertyPageImpl<PropertyPageVVV>)
     END_MSG_MAP()
 
-    explicit CPropertyPageVVV(const CString& strFilename) :
-        _strFilename(strFilename)
+    explicit PropertyPageVVV(std::wstring strFilename) :
+        m_filename(strFilename)
     {
         VVVFile vvvfile(strFilename);
 
         // Retrieve the file data: the sample don't shows the page if this fails.
-        _strLabel   = vvvfile.GetLabel();
-        _nFileCount = vvvfile.GetFileCount();
+        m_label   = vvvfile.GetLabel();
+        m_fileCount = vvvfile.GetFileCount();
     }
-
 
     LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
     {
@@ -46,33 +43,31 @@ public:
         return 1;
     }
 
-
     LRESULT OnChangeEditName(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& bHandled)
     {
-        CString str = GetLabel();
-        SetModified(str != _strLabel);
+        auto label = GetLabel();
+        SetModified(label != m_label);
         bHandled = true;
         return 1;
     }
 
-
     BOOL OnApply()
     {
-        CString str = GetLabel();
-        if (str.IsEmpty())
+        auto label = GetLabel();
+        if (label.empty())
             return false; // an empty name is invalid (in our VVV example).
 
         try
         {
-            VVVFile(_strFilename).SetLabel(str);
-            _strLabel = str;
+            VVVFile(m_filename).SetLabel(label);
+            m_label = label;
             return true;
         }
         catch (const _com_error& e)
         {
-            CString strMsg = LoadString(IDS_PROPERTYPAGE_UNABLE_TO_UPDATE) +
-                             FormatLastError(static_cast<DWORD>(e.Error()));
-            IsolationAwareMessageBox(GetParent().m_hWnd, strMsg, MSF::LoadString(IDS_SHELLEXT_ERROR_CAPTION), MB_OK | MB_ICONERROR);
+            auto message = MSF::LoadResourceString(IDS_PROPERTYPAGE_UNABLE_TO_UPDATE) +
+                MSF::FormatLastError(static_cast<DWORD>(e.Error()));
+            IsolationAwareMessageBox(GetParent().m_hWnd, message.c_str(), MSF::LoadString(IDS_SHELLEXT_ERROR_CAPTION), MB_OK | MB_ICONERROR);
         }
 
         return false;
@@ -83,31 +78,25 @@ private:
     // strings then to maintain copies of the dialog resource.
     void InitializeStaticString()
     {
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_LABEL, LoadString(IDS_SHELLEXT_LABEL) + L":"));
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_FILECOUNT, LoadString(IDS_SHELLEXT_FILECOUNT) + L":"));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_LABEL, (MSF::LoadResourceString(IDS_SHELLEXT_LABEL) + L":").c_str()));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_FILECOUNT, (MSF::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L":").c_str()));
     }
-
 
     void InitializeControls()
     {
-        ATLVERIFY(SetDlgItemText(IDC_EDIT_LABEL, _strLabel));
-        ATLVERIFY(SetDlgItemInt(IDC_EDIT_FILECOUNT, _nFileCount));
+        ATLVERIFY(SetDlgItemText(IDC_EDIT_LABEL, m_label.c_str()));
+        ATLVERIFY(SetDlgItemInt(IDC_EDIT_FILECOUNT, m_fileCount));
     }
 
-
-    CString GetLabel() const
+    std::wstring GetLabel() const
     {
-        CString str;
-
-        GetDlgItemText(IDC_EDIT_LABEL, str);
-        str.Trim();
-
-        return str;
+        auto label = GetDlgItemText(IDC_EDIT_LABEL);
+        MSF::trim(label);
+        return label;
     }
-
 
     // Member variables
-    CString _strFilename;
-    CString _strLabel;
-    UINT    _nFileCount;
+    std::wstring m_filename;
+    std::wstring m_label;
+    unsigned int m_fileCount;
 };

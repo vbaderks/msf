@@ -155,9 +155,6 @@
     <ClInclude Include="include\shellpropsheetextimpl.h">
       <Filter>Header Files\Impl</Filter>
     </ClInclude>
-    <ClInclude Include="include\catchhandler.h">
-      <Filter>Header Files\Support</Filter>
-    </ClInclude>
     <ClInclude Include="include\cfeffect.h">
       <Filter>Header Files\Support</Filter>
     </ClInclude>

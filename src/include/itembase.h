@@ -12,26 +12,23 @@ namespace MSF
 
 // Purpose: base class for items contained in a shellfolder.
 //          The itembase doesn't own the actual item.
-class CItemBase
+class ItemBase
 {
 public:
-    explicit CItemBase(LPCITEMIDLIST pidl) noexcept :
+    explicit ItemBase(LPCITEMIDLIST pidl) noexcept :
         m_pidl(pidl)
     {
     }
-
 
     USHORT GetDataSize() const noexcept
     {
         return m_pidl->mkid.cb - sizeof(short);
     }
 
-
     const BYTE* GetData() const noexcept
     {
         return m_pidl->mkid.abID;
     }
-
 
     LPCITEMIDLIST GetItemIdList() const
     {

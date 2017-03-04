@@ -18,7 +18,10 @@
 #include "contextmenuimpl.h"
 #include "iconoverlayimpl.h"
 #include "droptargetimpl.h"
+#include "propertypageimpl.h"
+#include "shellfolderviewcbimpl.h"
 
+#include "propertysheet.h"
 #include "strutil.h"
 #include "cfhdrop.h"
 #include "pidl.h"
@@ -27,3 +30,4 @@
 #include "contextcommand.h"
 #include "smallbitmaphandler.h"
 #include "updateregistry.h"
+#include "version.h"

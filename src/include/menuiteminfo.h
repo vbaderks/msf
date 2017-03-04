@@ -6,46 +6,41 @@
 #pragma once
 
 
-namespace MSF
-{
+namespace MSF {
 
-class CMenuItemInfo : public MENUITEMINFO
+class MenuItemInfo : public MENUITEMINFO
 {
 public:
 
-    CMenuItemInfo() noexcept
+    MenuItemInfo() noexcept
     {
         cbSize = sizeof(MENUITEMINFO);
         fMask = 0;
         fType = 0;
     }
 
-
-    explicit CMenuItemInfo(UINT id) noexcept : CMenuItemInfo()
+    explicit MenuItemInfo(UINT id) noexcept : MenuItemInfo()
     {
         SetID(id);
     }
 
-
-    CMenuItemInfo(UINT id, const CString& str) noexcept : CMenuItemInfo(id)
+    MenuItemInfo(UINT id, const std::wstring& str) noexcept : MenuItemInfo(id)
     {
         SetString(str);
     }
 
-
-    CMenuItemInfo(UINT id, const CString& str, HMENU hsubmenu) noexcept :  CMenuItemInfo(id, str)
+    MenuItemInfo(UINT id, const std::wstring& str, HMENU hsubmenu) noexcept :  MenuItemInfo(id, str)
     {
         SetSubMenu(hsubmenu);
     }
 
-
-    CMenuItemInfo(UINT id, HMENU hsubmenu) noexcept : CMenuItemInfo(id)
+    MenuItemInfo(UINT id, HMENU hsubmenu) noexcept : MenuItemInfo(id)
     {
         SetSubMenu(hsubmenu);
     }
 
-    CMenuItemInfo(const CMenuItemInfo&) = delete;
-    CMenuItemInfo& operator=(const CMenuItemInfo&) = delete;
+    MenuItemInfo(const MenuItemInfo&) = delete;
+    MenuItemInfo& operator=(const MenuItemInfo&) = delete;
 
     void SetID(UINT id) noexcept
     {
@@ -53,16 +48,14 @@ public:
         wID = id;
     }
 
-
-    void SetString(const CString& str) noexcept
+    void SetString(std::wstring str) noexcept
     {
         fMask |= MIIM_TYPE;
         fType |= MFT_STRING;
 
         m_strCache = str;
-        dwTypeData = const_cast<wchar_t*>(m_strCache.GetString());
+        dwTypeData = const_cast<wchar_t*>(m_strCache.c_str());
     }
-
 
     void SetSubMenu(HMENU hsubmenu) noexcept
     {
@@ -70,12 +63,10 @@ public:
         hSubMenu = hsubmenu;
     }
 
-
     void SetOwnerDraw() noexcept
     {
         fType |= MFT_OWNERDRAW;
     }
-
 
     void SetCheckMarkBmps(HBITMAP hChecked, HBITMAP hUnchecked) noexcept
     {
@@ -83,7 +74,6 @@ public:
         hbmpChecked   = hChecked;
         hbmpUnchecked = hUnchecked;
     }
-
 
     void SetState(UINT uiState) noexcept
     {
@@ -94,7 +84,7 @@ public:
 private:
 
     // Member variables.
-    CString m_strCache;
+    std::wstring m_strCache;
 };
 
 } // end namespace MSF

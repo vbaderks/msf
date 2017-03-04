@@ -15,9 +15,12 @@
 #include "../include/util.h"
 #include "../include/imagelistindex.h"
 
+using std::wstring;
+using namespace MSF;
+
 
 // Note: 'switch' is used in this example to show all the possible options.
-CString VVVItem::GetDisplayName(SHGDNF shellGetDisplayNameType) const
+std::wstring VVVItem::GetDisplayName(SHGDNF shellGetDisplayNameType) const
 {
     switch (shellGetDisplayNameType)
     {
@@ -87,7 +90,7 @@ int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/
 }
 
 
-CString VVVItem::GetItemDetailsOf(UINT columnIndex) const
+wstring VVVItem::GetItemDetailsOf(UINT columnIndex) const
 {
     switch (columnIndex)
     {
@@ -97,7 +100,7 @@ CString VVVItem::GetItemDetailsOf(UINT columnIndex) const
     case COLUMN_SIZE:
         {
             if (IsFolder())
-                return CString();
+                return wstring();
 
             return ToString(GetSize());
         }
@@ -109,12 +112,10 @@ CString VVVItem::GetItemDetailsOf(UINT columnIndex) const
 }
 
 
-CString VVVItem::GetInfoTipText() const
+std::wstring VVVItem::GetInfoTipText() const
 {
-    CString strText = LoadString(IDS_SHELLEXT_NAME) + L": " + GetDisplayName() + L"\n";
-    strText += LoadString(IDS_SHELLEXT_SIZE) + L": " + ToString(GetSize());
-
-    return strText;
+    return LoadResourceString(IDS_SHELLEXT_NAME) + L": " + wstring(GetDisplayName()) + L"\n" +
+           LoadResourceString(IDS_SHELLEXT_SIZE) + L": " + wstring(ToString(GetSize()));
 }
 
 

@@ -12,7 +12,7 @@
 namespace MSF
 {
 
-class CSmallBitmapHandler : public CCustomMenuHandler
+class SmallBitmapHandler : public CustomMenuHandler
 {
 public:
 
@@ -43,25 +43,22 @@ public:
         HBITMAP m_handle;
     };
 
-
-    CSmallBitmapHandler(CString text, UINT resourceID) :
-        _text(text),
-        _bitmap(LoadBitmap(resourceID))
+    SmallBitmapHandler(std::wstring text, UINT resourceID) :
+        m_text(text),
+        m_bitmap(LoadBitmap(resourceID))
     {
     }
 
-
-    CSmallBitmapHandler(UINT textID, UINT resourceID) :
-        _text(LoadString(textID)),
-        _bitmap(LoadBitmap(resourceID))
+    SmallBitmapHandler(UINT textID, UINT resourceID) :
+        m_text(LoadResourceString(textID)),
+        m_bitmap(LoadBitmap(resourceID))
     {
     }
 
-
-    void InitializeItemInfo(CMenuItemInfo& menuItemInfo) override
+    void InitializeItemInfo(MenuItemInfo& menuItemInfo) override
     {
-        menuItemInfo.SetString(_text);
-        menuItemInfo.SetCheckMarkBmps(nullptr, _bitmap.GetHandle());
+        menuItemInfo.SetString(m_text);
+        menuItemInfo.SetCheckMarkBmps(nullptr, m_bitmap.GetHandle());
     }
 
 private:
@@ -74,8 +71,8 @@ private:
     }
 
     // Member variables.
-    CString _text;
-    Bitmap _bitmap;
+    std::wstring m_text;
+    Bitmap m_bitmap;
 };
 
 } // end namespace MSF

@@ -8,6 +8,7 @@
 #include "msfbase.h"
 #include "cfhdrop.h"
 #include <algorithm>
+#include <cctype>
 
 namespace MSF
 {
@@ -37,48 +38,55 @@ protected:
 
     ~IShellExtInitImpl() = default;
 
-    void RegisterExtension(CString strExtension)
+    void RegisterExtension(std::wstring extension)
     {
-        _extensions.push_back(strExtension.MakeLower());
+        std::transform(extension.begin(), extension.end(), extension.begin(), string_tolower_functional);
+        m_extensions.push_back(extension);
     }
 
     void CacheFiles(IDataObject* pDataObject)
     {
-        CCfHDrop cfhdrop(pDataObject);
+        CfHDrop cfhdrop(pDataObject);
 
-        _filenames.clear();
+        m_filenames.clear();
 
         const auto uFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < uFiles; ++i)
         {
             auto strFilename = cfhdrop.GetFile(i);
-            _filenames.push_back(strFilename);
+            m_filenames.push_back(std::wstring(strFilename)); // TODO
         }
     }
 
     // Purpose: helper function, can be used to filter unsupported filename in a collection.
-    bool ContainsUnknownExtension(const std::vector<CString>& filenames) const
+    bool ContainsUnknownExtension(const std::vector<std::wstring>& filenames) const
     {
         return std::find_if(filenames.begin(), filenames.end(),
-            [=](const CString& fileName) { return IsUnknownExtension(fileName); }) != filenames.end();
+            [=](const std::wstring& fileName) { return IsUnknownExtension(fileName); }) != filenames.end();
     }
 
-    bool IsUnknownExtension(const wchar_t* szFileName) const
+    bool IsUnknownExtension(const std::wstring fileName) const
     {
-        CString strExtension(PathFindExtension(szFileName));
-        strExtension.MakeLower();
-        return std::find(_extensions.begin(), _extensions.end(), strExtension) == _extensions.end();
+        std::wstring extension(PathFindExtension(fileName.c_str()));
+        std::transform(extension.begin(), extension.end(), extension.begin(), string_tolower_functional);
+        return std::find(m_extensions.begin(), m_extensions.end(), extension) == m_extensions.end();
     }
 
-    const std::vector<CString>& GetFilenames() const
+    const std::vector<std::wstring>& GetFilenames() const
     {
-        return _filenames;
+        return m_filenames;
     }
 
 private:
+
+    static wchar_t string_tolower_functional(wchar_t c)
+    {
+        return static_cast<wchar_t>(std::tolower(c));
+    }
+
     // Member variables.
-    std::vector<CString> _extensions;
-    std::vector<CString> _filenames;
+    std::vector<std::wstring> m_extensions;
+    std::vector<std::wstring> m_filenames;
 };
 
 } // end MSF namespace

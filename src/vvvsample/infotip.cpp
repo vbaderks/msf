@@ -11,6 +11,10 @@
 #include <msf.h>
 
 
+using std::wstring;
+using namespace MSF;
+
+
 class ATL_NO_VTABLE __declspec(uuid("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71")) InfoTip :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<InfoTip, &__uuidof(InfoTip)>,
@@ -30,25 +34,25 @@ public:
             L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);
     }
 
-    void InitializeImpl(const wchar_t* szFilename, DWORD /*dwMode*/)
+    void InitializeCore(const wchar_t* szFilename, DWORD /*dwMode*/) override
     {
         VVVFile vvvfile(szFilename);
 
-        _strLabel = vvvfile.GetLabel();
-        _strFileCount = MSF::ToString(vvvfile.GetFileCount());
+        m_label = vvvfile.GetLabel();
+        m_fileCount = MSF::ToString(vvvfile.GetFileCount());
     }
 
     // Purpose: called by the shell/MSF when it needs the text for the infotip.
     //          The string is used for the tooltip and the text in the status bar.
-    CString GetInfoTip(DWORD /* dwFlags */) const
+    wstring GetInfoTip(DWORD /* dwFlags */) override
     {
-        return LoadString(IDS_SHELLEXT_LABEL) + L": " + _strLabel + L"\n" +
-               LoadString(IDS_SHELLEXT_FILECOUNT) + L": " + _strFileCount;
+        return LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + m_label + L"\n" +
+               LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + m_fileCount;
     }
 
 private:
-    CString _strLabel;
-    CString _strFileCount;
+    wstring m_label;
+    wstring m_fileCount;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(InfoTip), InfoTip)

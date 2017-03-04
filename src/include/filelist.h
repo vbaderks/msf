@@ -14,24 +14,24 @@
 namespace MSF
 {
 
-class CFileList :
+class FileList :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public ATL::IDataObjectImpl<CFileList>
+    public ATL::IDataObjectImpl<FileList>
 {
 public:
-    DECLARE_NOT_AGGREGATABLE(CFileList)
+    DECLARE_NOT_AGGREGATABLE(FileList)
 
-    BEGIN_COM_MAP(CFileList)
+    BEGIN_COM_MAP(FileList)
         COM_INTERFACE_ENTRY(IDataObject)
     END_COM_MAP()
 
-    static CComPtr<CFileList> CreateInstance()
+    static CComPtr<FileList> CreateInstance()
     {
-        CComObject<CFileList>* pinstance;
+        CComObject<FileList>* pinstance;
         RaiseExceptionIfFailed(
-            CComObject<CFileList>::CreateInstance(&pinstance));
+            CComObject<FileList>::CreateInstance(&pinstance));
 
-        CComPtr<CFileList> filelist(pinstance);
+        CComPtr<FileList> filelist(pinstance);
 
         return filelist;
     }
@@ -62,7 +62,7 @@ public:
     LPDATAADVISEHOLDER m_spDataAdviseHolder;
 
 protected:
-    ~CFileList() = default;
+    ~FileList() = default;
 
 private:
     static void ValidateFormatEtc(const FORMATETC* pformatetc)
@@ -72,7 +72,6 @@ private:
         RaiseExceptionIf(pformatetc->lindex != -1, DV_E_LINDEX);
         RaiseExceptionIf(pformatetc->tymed != TYMED_HGLOBAL, DV_E_TYMED);
     }
-
 
     HGLOBAL CreateData() const
     {

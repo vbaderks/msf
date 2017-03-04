@@ -7,28 +7,25 @@
 
 #include "msfbase.h"
 
-namespace MSF
-{
+namespace MSF {
+namespace util {
 
 template <typename T>
-class CGlobalLock
+class GlobalLock
 {
 public:
-    CGlobalLock() : m_p(nullptr), m_hMem(nullptr)
+    GlobalLock() : m_p(nullptr), m_hMem(nullptr)
     {
     }
 
-
-    explicit CGlobalLock(HGLOBAL hMem) : m_p(GlobalLockThrow(hMem)), m_hMem(hMem)
+    explicit GlobalLock(HGLOBAL hMem) : m_p(GlobalLockThrow(hMem)), m_hMem(hMem)
     {
     }
 
-
-    ~CGlobalLock()
+    ~GlobalLock()
     {
         Dispose();
     }
-
 
     void Attach(HGLOBAL hMem)
     {
@@ -39,7 +36,6 @@ public:
         m_p = p;
         m_hMem = hMem;
     }
-
 
     void Dispose() noexcept
     {
@@ -53,7 +49,6 @@ public:
         }
     }
 
-
     T* get() const noexcept
     {
         return reinterpret_cast<T*>(m_p);
@@ -66,16 +61,17 @@ private:
         if (!hMem)
             return nullptr;
 
-        void* p = GlobalLock(hMem);
+        void* p = ::GlobalLock(hMem);
         RaiseLastErrorExceptionIf(!p);
         return p;
     }
 
-    CGlobalLock& operator=(const CGlobalLock&) = delete;
+    GlobalLock& operator=(const GlobalLock&) = delete;
 
     // Member variables
     void* m_p;
     HGLOBAL m_hMem;
 };
 
-} // namespace MSF
+}
+}

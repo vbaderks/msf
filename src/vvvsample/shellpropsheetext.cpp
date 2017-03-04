@@ -13,10 +13,15 @@
 #include "../include/shellpropsheetextimpl.h"
 
 
+using std::wstring;
+using std::vector;
+using namespace MSF;
+
+
 class ATL_NO_VTABLE __declspec(uuid("E53D1A20-D87F-42ad-A6CD-F2E155CAAADC")) ShellPropSheetExt :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<ShellPropSheetExt, &__uuidof(ShellPropSheetExt)>,
-    public IShellPropSheetExtImpl<ShellPropSheetExt>
+    public ShellPropSheetExtImpl<ShellPropSheetExt>
 {
 public:
     BEGIN_COM_MAP(ShellPropSheetExt)
@@ -28,18 +33,18 @@ public:
 
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
-        return IShellPropSheetExtImpl<ShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
+        return ShellPropSheetExtImpl<ShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
             L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
     }
 
     // Purpose: called by MSF when it is time to add our pages to the property sheet.
-    void OnAddPages(const CAddPage& addPage, const vector<CString>& filenames)
+    void AddPagesCore(const CAddPage& addPage, const vector<wstring>& filenames) override
     {
         // Only add the page if only 1 file is selected and is of our own extension.
         if (filenames.size() != 1 || ContainsUnknownExtension(filenames))
             return;
 
-        addPage(CPropertyPageVVV::CreateInstance(filenames.front()));
+        addPage(PropertyPageVVV::CreateInstance(filenames.front()));
     }
 
 protected:

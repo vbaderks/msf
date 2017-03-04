@@ -202,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\browserframeoptionsimpl.h" />
-    <ClInclude Include="include\catchhandler.h" />
     <ClInclude Include="include\cfeffect.h" />
     <ClInclude Include="include\cfhandler.h" />
     <ClInclude Include="include\cfhdrop.h" />

@@ -11,7 +11,7 @@ namespace MSF
 {
 
 // Purpose: Management class for pidls. A CPidl class is owner of the wrapped ITEMIDLIST.
-class CPidl
+class CPidl final
 {
 public:
     static LPITEMIDLIST Clone(_In_ LPCITEMIDLIST pidlSrc)
@@ -67,55 +67,39 @@ public:
         return pidlNext;
     }
 
-
     CPidl() noexcept : m_pidl(nullptr)
     {
     }
 
-
-    // Purpose: special constructor for NULL pointer init.
-    CPidl(int null) noexcept : m_pidl(nullptr)
-    {
-        UNREFERENCED_PARAMETER(null);
-        ATLASSERT(null == 0 && "Detected misuse of the special constructor");
-    }
-
-
-    CPidl(LPITEMIDLIST pidl) noexcept : m_pidl(pidl)
+    explicit CPidl(LPITEMIDLIST pidl) noexcept : m_pidl(pidl)
     {
     }
-
 
     CPidl(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2) :
         m_pidl(Combine(pidl1, pidl2))
     {
     }
 
-
     CPidl(const CPidl& pidl1, LPCITEMIDLIST pidl2) :
         m_pidl(Combine(pidl1.m_pidl, pidl2))
     {
     }
 
-
-    CPidl(const wchar_t* pszPath) :
+    explicit CPidl(const wchar_t* pszPath) :
         m_pidl(CreateFromPath(pszPath))
     {
     }
-
 
     ~CPidl()
     {
         ILFree(m_pidl);
     }
 
-
     void Attach(LPITEMIDLIST pidl) noexcept
     {
         ILFree(m_pidl);
         m_pidl = pidl;
     }
-
 
     LPITEMIDLIST Detach() noexcept
     {
@@ -124,18 +108,15 @@ public:
         return pidl;
     }
 
-
     void CloneFrom(LPCITEMIDLIST pidl)
     {
         Attach(Clone(pidl));
     }
 
-
     LPITEMIDLIST Clone() const
     {
         return Clone(m_pidl);
     }
-
 
     void AppendID(const SHITEMID* pmkid)
     {
@@ -145,30 +126,25 @@ public:
         m_pidl = pidl;
     }
 
-
     LPITEMIDLIST get() const noexcept
     {
         return m_pidl;
     }
-
 
     operator LPCITEMIDLIST() const noexcept
     {
         return get();
     }
 
-
     LPCITEMIDLIST operator->() const noexcept
     {
         return get();
     }
 
-
     UINT GetSize() const noexcept
     {
         return ILGetSize(m_pidl);
     }
-
 
     // Purpose: Adres operator to be used for passing address to be used as an out-parameter.
     LPITEMIDLIST* operator&() noexcept

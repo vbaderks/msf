@@ -9,17 +9,17 @@
 #include <msf.h>
 
 
-class CEditWithNotepadCommand : public CContextCommand
+class EditWithNotepadCommand : public MSF::ContextMenuCommand
 {
 public:
-    void operator()(const CMINVOKECOMMANDINFO* /* pici */, const std::vector<CString>& filenames) override
+    void operator()(const CMINVOKECOMMANDINFO* /* pici */, const std::vector<std::wstring>& filenames) override
     {
         ATLASSERT(filenames.size() == 1); // can only handle 1 file.
 
         // Use the command line parameters to pass the exe filename. This causes
         // Windows to use the path to find notepad.
-        CString strCmd = L"notepad.exe \"" + filenames[0] + L"\"";
+        auto command = L"notepad.exe \"" + filenames[0] + L"\"";
 
-        CreateProcess(nullptr, strCmd.GetBuffer());
+        MSF::CreateProcess(nullptr, command);
     }
 };

@@ -14,26 +14,24 @@ namespace MSF
 {
 
 template <typename TItem>
-class ATL_NO_VTABLE CExtractIcon :
+class ATL_NO_VTABLE ExtractIcon :
     public CComObjectRootEx<CComSingleThreadModel>,
     public IExtractIcon
 {
 public:
 
-    class CIcon
+    class Icon
     {
     public:
-        explicit CIcon(HICON hicon = nullptr) :
+        explicit Icon(HICON hicon = nullptr) :
             m_hicon(hicon)
         {
         }
 
-
-        ~CIcon()
+        ~Icon()
         {
             dispose();
         }
-
 
         HICON operator=(HICON hicon) noexcept
         {
@@ -42,12 +40,10 @@ public:
             return m_hicon;
         }
 
-
         void release() noexcept
         {
             m_hicon = nullptr;
         }
-
 
         HICON get() const noexcept
         {
@@ -68,16 +64,10 @@ public:
         HICON m_hicon;
     };
 
-
-    CExtractIcon(): m_nIconIndex(-1), m_uFlags(0)
-    {
-    }
-
-
     static CComPtr<IExtractIcon> CreateInstance(const TItem& item)
     {
-        CComObject<CExtractIcon<TItem> >* pinstance;
-        HRESULT hr = CComObject<CExtractIcon<TItem> >::CreateInstance(&pinstance);
+        CComObject<ExtractIcon<TItem> >* pinstance;
+        HRESULT hr = CComObject<ExtractIcon<TItem> >::CreateInstance(&pinstance);
         if (FAILED(hr))
             RaiseException(hr);
 
@@ -88,7 +78,6 @@ public:
         return extracticon;
     }
 
-
     static HICON GetIcon(HIMAGELIST himl, int i, UINT flags = 0)
     {
         HICON hicon = ImageList_GetIcon(himl, i, flags);
@@ -96,13 +85,16 @@ public:
         return hicon;
     }
 
+    DECLARE_NOT_AGGREGATABLE(ExtractIcon)
 
-    DECLARE_NOT_AGGREGATABLE(CExtractIcon)
-
-    BEGIN_COM_MAP(CExtractIcon)
+    BEGIN_COM_MAP(ExtractIcon)
         COM_INTERFACE_ENTRY(IExtractIcon)
     END_COM_MAP()
 
+protected:
+    ExtractIcon() : m_nIconIndex(-1), m_uFlags(0)
+    {
+    }
 
     void Initialize(const TItem& item)
     {
@@ -111,7 +103,7 @@ public:
 
     STDMETHOD(GetIconLocation)(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
+        ATLTRACE2(atlTraceCOM, 0, L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
 
         try
         {
@@ -129,7 +121,7 @@ public:
 
     STDMETHOD(Extract)(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize) override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
+        ATLTRACE2(atlTraceCOM, 0, L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
 
         try
         {
@@ -140,7 +132,7 @@ public:
             HIMAGELIST himSmall;
             RaiseExceptionIf(!Shell_GetImageLists(&himLarge, &himSmall));
 
-            CIcon iconLarge;
+            Icon iconLarge;
             if (phiconLarge)
             {
                 if (LOWORD(nIconSize) != 32)

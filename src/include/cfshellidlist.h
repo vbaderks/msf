@@ -11,8 +11,7 @@
 #include "util.h"
 #include "smartptr/dataobjectptr.h"
 
-namespace MSF
-{
+namespace MSF {
 
 /// <summary>Wraps a data object as a collection of ITEMIDLIST pointers.</summary>
 class CCfShellIdList
@@ -56,8 +55,8 @@ public:
 
 private:
 
-    CGlobalLock<CIDA> m_globalLock;
-    CStgMedium        m_medium;
+    util::GlobalLock<CIDA> m_globalLock;
+    CStgMedium m_medium;
 };
 
 } // namespace MSF

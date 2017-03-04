@@ -26,15 +26,6 @@ inline ATL::CStringW GetModuleDirectoryW()
 }
 
 
-inline ATL::CString GetSystemDirectory()
-{
-    wchar_t tsz[MAX_PATH];
-    if (!::GetSystemDirectory(tsz, MAX_PATH))
-        throw _com_error(HRESULT_FROM_WIN32(GetLastError()));
-    return tsz;
-}
-
-
 // Note: use ANSI version and convert self. Win 9x only has ANSI version.
 inline ATL::CStringW GetFolderPath(int nFolder)
 {
@@ -44,7 +35,6 @@ inline ATL::CStringW GetFolderPath(int nFolder)
     ATLVERIFY(SHGetSpecialFolderPath(nullptr, tszFolderPath, nFolder, false));
     return ATL::CStringW(ATL::CT2W(tszFolderPath));
 }
-
 
 inline DWORD GetFileSize(const ATL::CString& strFile)
 {
@@ -84,24 +74,24 @@ inline int UIntCmp(unsigned int n1, unsigned int n2) noexcept
 }
 
 
-inline ATL::CString FormatLastError(DWORD dwLastError)
+inline std::wstring FormatLastError(DWORD dwLastError)
 {
-    LPTSTR lpMsgBuf;
-    if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                  FORMAT_MESSAGE_FROM_SYSTEM |
-                  FORMAT_MESSAGE_IGNORE_INSERTS,
-                  nullptr,
-                  dwLastError,
-                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-                  reinterpret_cast<LPTSTR>(&lpMsgBuf),
-                  0,
-                  nullptr))
+    LPWSTR lpMsgBuf;
+    auto size = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
+        FORMAT_MESSAGE_FROM_SYSTEM |
+        FORMAT_MESSAGE_IGNORE_INSERTS,
+        nullptr,
+        dwLastError,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+        reinterpret_cast<LPTSTR>(&lpMsgBuf),
+        0,
+        nullptr);
+    if (!size)
         throw _com_error(HRESULT_FROM_WIN32(GetLastError()));
 
-    ATL::CString str(lpMsgBuf);
-    LocalFree(lpMsgBuf);
-
-    return str;
+    std::wstring result(lpMsgBuf, lpMsgBuf + size);
+    HeapFree(GetProcessHeap(), 0, lpMsgBuf);
+    return result;
 }
 
 
@@ -145,17 +135,16 @@ public:
 
 
 // Small helper class that initializes and cleans PROCESS_INFORMATION (used by CreateProcess)
-class CProcessInformation : public PROCESS_INFORMATION
+class ProcessInformation : public PROCESS_INFORMATION
 {
 public:
-    CProcessInformation()
+    ProcessInformation()
     {
         hProcess = INVALID_HANDLE_VALUE;
         hThread  = INVALID_HANDLE_VALUE;
     }
 
-
-    ~CProcessInformation()
+    ~ProcessInformation()
     {
         ATLVERIFY(CloseHandle(hProcess));
         ATLVERIFY(CloseHandle(hThread));
@@ -166,12 +155,13 @@ public:
 // Purpose: 'short' version of Win32 function CreateProcess. 
 //          Useful for shell extensions that just need a quick way to start apps.
 ATLPREFAST_SUPPRESS(6335) // suppress sa noise: leaking process handle
-inline void CreateProcess(LPCTSTR szApplicationName, LPTSTR szCmdLine, LPCTSTR lpCurrentDirectory = nullptr)
+inline void CreateProcess(LPCWSTR szApplicationName, std::wstring& cmdLine, LPCWSTR lpCurrentDirectory = nullptr)
 {
     CStartupInfo startupinfo;
-    CProcessInformation process_information; 
+    ProcessInformation process_information;
+    std::vector<wchar_t> cmdLineWritable(cmdLine.begin(), cmdLine.end());
 
-    RaiseLastErrorExceptionIf(!::CreateProcess(szApplicationName, szCmdLine, 
+    RaiseLastErrorExceptionIf(!::CreateProcess(szApplicationName, cmdLineWritable.data(),
         nullptr, nullptr, false, 0, nullptr, lpCurrentDirectory, &startupinfo, &process_information));
 }
 ATLPREFAST_UNSUPPRESS()

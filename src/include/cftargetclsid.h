@@ -38,7 +38,7 @@ private:
         if (FAILED(hr))
             return hr;
 
-        CGlobalLock<CLSID> globallock(medium.hGlobal);
+        GlobalLock<CLSID> globallock(medium.hGlobal);
 
         clsid = *globallock.get();
         return S_OK;

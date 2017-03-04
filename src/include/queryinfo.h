@@ -13,17 +13,17 @@ namespace MSF
 {
 class ATL_NO_VTABLE CQueryInfo :
     public CComObjectRootEx<CComSingleThreadModel>,
-    public IQueryInfoImpl<CQueryInfo>
+    public IQueryInfoImpl
 {
 public:
-    static CComPtr<IQueryInfo> CreateInstance(const CString& strTip)
+    static CComPtr<IQueryInfo> CreateInstance(std::wstring infoTipText)
     {
         CComObject<CQueryInfo>* p;
         HRESULT hr = CComObject<CQueryInfo>::CreateInstance(&p);
         if (FAILED(hr))
             RaiseException(hr);
 
-        p->m_strTip = strTip;
+        p->m_infoTipText = infoTipText;
         return p;
     }
 
@@ -33,13 +33,15 @@ public:
         COM_INTERFACE_ENTRY(IQueryInfo)
     END_COM_MAP()
 
-    CString GetInfoTip(DWORD /* dwFlags */) const
+protected:
+
+    std::wstring GetInfoTip(DWORD /* dwFlags */) override
     {
-        return m_strTip;
+        return m_infoTipText;
     }
 
 private:
-    CString m_strTip;
+    std::wstring m_infoTipText;
 };
 
 } // namespace MSF

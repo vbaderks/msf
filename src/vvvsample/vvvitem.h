@@ -12,7 +12,7 @@
 #include <vector>
 
 
-class VVVItem : public CItemBase
+class VVVItem : public MSF::ItemBase
 {
 public:
     static int GetMaxNameLength(LPCWSTR /*pszName*/) noexcept
@@ -20,10 +20,9 @@ public:
         return 10; // note: limit is 10 for easy testing.
     }
 
-
     static LPITEMIDLIST CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const CString& strName)
     {
-        LPITEMIDLIST pidl = CPidl::CreateItemIdListWithTerminator(sizeof(SItemData));
+        LPITEMIDLIST pidl = MSF::CPidl::CreateItemIdListWithTerminator(sizeof(SItemData));
 
         InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
             nId, nSize, bFolder, strName);
@@ -31,8 +30,7 @@ public:
         return pidl;
     }
 
-
-    explicit VVVItem(LPCITEMIDLIST pidl) : CItemBase(pidl)
+    explicit VVVItem(LPCITEMIDLIST pidl) : ItemBase(pidl)
     {
         // Shell item IDs can be passed from external sources, validate
         // It is valid to pass a PIDL that is larger then the original (done by Search functionality in XP).
@@ -43,11 +41,10 @@ public:
             ATLTRACE2(atlTraceCOM, 0, L"VVVItem::Constructor, PIDL not valid (dsize=%d, ssize=%d)\n", GetDataSize(), sizeof(SItemData));
         }
 #endif
-        RaiseExceptionIf(!bValid);
+        MSF::RaiseExceptionIf(!bValid);
     }
 
-
-    CString GetDisplayName(SHGDNF shgdnf = SHGDN_NORMAL) const;
+    std::wstring GetDisplayName(SHGDNF shgdnf = SHGDN_NORMAL) const;
 
     SFGAOF GetAttributeOf(bool bSingleSelect, bool bReadOnly) const;
 
@@ -56,28 +53,24 @@ public:
         return GetItemData().nID;
     }
 
-
     unsigned int GetSize() const noexcept
     {
         return GetItemData().nSize;
     }
 
-
-    CString GetName() const
+    std::wstring GetName() const
     {
-        return CString(CW2CT(GetItemData().wszName));
+        return GetItemData().wszName;
     }
-
 
     bool IsFolder() const noexcept
     {
         return GetItemData().bFolder;
     }
 
-
     int Compare(const VVVItem& directoryitem, int nCompareBy, bool bCanonicalOnly) const;
-    CString GetItemDetailsOf(UINT iColumn) const;
-    CString GetInfoTipText() const;
+    std::wstring GetItemDetailsOf(UINT iColumn) const;
+    std::wstring GetInfoTipText() const;
     int GetIconOf(UINT flags) const; 
 
 private:

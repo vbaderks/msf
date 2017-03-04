@@ -11,17 +11,17 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE CShellExtPropertyPageImpl : public CSnapInPropertyPageImpl<T>
+class ATL_NO_VTABLE ShellExtPropertyPageImpl : public CSnapInPropertyPageImpl<T>
 {
 public:
     static UINT CALLBACK PropPageCallback(HWND hWnd, UINT uMsg, LPPROPSHEETPAGE ppsp)
     {
-        CShellExtPropertyPageImpl<T>* pT = reinterpret_cast<T*>(ppsp->lParam);
+        ShellExtPropertyPageImpl<T>* pT = reinterpret_cast<T*>(ppsp->lParam);
 
         switch (uMsg)
         {
         case PSPCB_ADDREF:
-            ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::Callback (instance=%p, uMsg=AddRef)\n", pT);
+            ATLTRACE2(atlTraceCOM, 0, L"ShellExtPropertyPageImpl::Callback (instance=%p, uMsg=AddRef)\n", pT);
             ++(pT->_nRef); // only 5.80 (IE5) and up sends 'addref'.
             break;
 
@@ -29,7 +29,7 @@ public:
             return CSnapInPropertyPageImpl<T>::PropPageCallback(hWnd, uMsg, ppsp);
 
         case PSPCB_RELEASE:
-            ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::Callback (instance=%p, uMsg=Release)\n", pT);
+            ATLTRACE2(atlTraceCOM, 0, L"ShellExtPropertyPageImpl::Callback (instance=%p, uMsg=Release)\n", pT);
             --(pT->_nRef);
             if (pT->_nRef <= 0)
                 delete pT;
@@ -43,18 +43,26 @@ public:
         return 1;
     }
 
-    explicit CShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) :
+    explicit ShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) :
         CSnapInPropertyPageImpl<T>(lpszTitle),
         _nRef(0)
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::CShellExtPropertyPageImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ShellExtPropertyPageImpl::ShellExtPropertyPageImpl (instance=%p)\n", this);
         _pAtlModule->Lock(); // property page is not a COM object, but DLL must stay in memory.
     }
 
-    ~CShellExtPropertyPageImpl()
+    ~ShellExtPropertyPageImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"CShellExtPropertyPageImpl::~CShellExtPropertyPageImpl (instance=%p)\n", this);
+        ATLTRACE2(atlTraceCOM, 0, L"ShellExtPropertyPageImpl::~ShellExtPropertyPageImpl (instance=%p)\n", this);
         _pAtlModule->Unlock();
+    }
+
+    std::wstring GetDlgItemText(int nID) const
+    {
+        // Use ATL's implementation of GetDlgItemText.
+        CString str;
+        CSnapInPropertyPageImpl<T>::GetDlgItemText(nID, str);
+        return str.GetString();
     }
 
     BEGIN_MSG_MAP(CShellExtPropertyPageImpl)

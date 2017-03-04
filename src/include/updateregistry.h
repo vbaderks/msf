@@ -13,7 +13,7 @@
 namespace MSF
 {
 
-inline void StringFromCLSID(REFCLSID clsid, COleString& olestrCLSID)
+inline void StringFromCLSID(REFCLSID clsid, OleString& olestrCLSID)
 {
     ATLVERIFY(SUCCEEDED(::StringFromCLSID(clsid, olestrCLSID.GetAddress())));
 }
@@ -21,7 +21,7 @@ inline void StringFromCLSID(REFCLSID clsid, COleString& olestrCLSID)
 
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR szDescription, const CLSID& clsid) noexcept
 {
-    COleString olestrCLSID;
+    OleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
@@ -39,7 +39,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR sz
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     PCWSTR szDescription, const CLSID& clsid, PCWSTR szRootExt) noexcept
 {
-    COleString olestrCLSID;
+    OleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
@@ -72,10 +72,10 @@ inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegiste
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     PCWSTR szShellExtDescription, const CLSID& clsid, const CLSID& clsidShellFolder, PCWSTR szExtension) noexcept
 {
-    COleString olestrCLSID;
+    OleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
-    COleString olestrClsidShellFolder;
+    OleString olestrClsidShellFolder;
     StringFromCLSID(clsidShellFolder, olestrClsidShellFolder);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
@@ -94,7 +94,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     PCWSTR szShellExtDescription, const CLSID& clsid, PCWSTR szExtension, UINT nFriendlyTypeNameId) noexcept
 {
-    COleString olestrCLSID;
+    OleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
     CStringW strFriendlyTypenameId = ToStringW(nFriendlyTypeNameId);

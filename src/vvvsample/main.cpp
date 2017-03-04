@@ -9,6 +9,7 @@
 #include "resource.h"
 #include <msf.h>
 
+using namespace MSF;
 
 // ATL COM DLLs require a single "module" instance.
 class Module : public CAtlDllModuleT<Module>

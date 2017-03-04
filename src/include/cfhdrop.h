@@ -17,7 +17,7 @@ namespace MSF
 /// The CF_HDROP format is used by the shell to transfer a group of existing files.
 /// The handle refers to a set of DROPFILES structures.
 /// </remarks>
-class CCfHDrop
+class CfHDrop
 {
 public:
     /// <summary>Returns true when the data object has the CF_HDROP format.</summary>
@@ -27,18 +27,15 @@ public:
         return SUCCEEDED(pdataobject->QueryGetData(&formatetc));
     }
 
-
-    explicit CCfHDrop(IDataObjectPtr dataobject)
+    explicit CfHDrop(IDataObjectPtr dataobject)
     {
         dataobject.GetData(CFormatEtc(CF_HDROP), m_stgmedium);
     }
-
 
     bool IsEmpty() const noexcept
     {
         return GetFileCount() == 0;
     }
-
 
     unsigned int GetFileCount() const noexcept
     {
@@ -46,8 +43,7 @@ public:
         return ::DragQueryFile(static_cast<HDROP>(m_stgmedium.hGlobal), static_cast<UINT>(-1), nullptr, 0);
     }
 
-
-    CString GetFile(unsigned int iFile) const
+    std::wstring GetFile(unsigned int iFile) const
     {
         ATLASSERT(iFile < GetFileCount() && "Index out of bounds");
 

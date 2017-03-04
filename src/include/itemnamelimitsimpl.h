@@ -54,12 +54,12 @@ public:
                 }
                 else
                 {
-                    *ppwszInvalidChars = COleString::Dup(pszInvalidChars);
+                    *ppwszInvalidChars = OleString::Dup(pszInvalidChars);
                 }
             }
             else
             {
-                *ppwszValidChars   = COleString::Dup(pszValidChars);
+                *ppwszValidChars   = OleString::Dup(pszValidChars);
                 *ppwszInvalidChars = nullptr;
             }
             return S_OK;

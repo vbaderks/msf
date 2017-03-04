@@ -7,106 +7,99 @@
 
 #include "strutil.h"
 
-namespace MSF
-{
+namespace MSF {
 
-
-// Purpose: Simple class to create a propertysheet.
+// Purpose: Simple class to create a property sheet.
 //          For more advanced functionality use WTL OR MFC.
 //          There is extra support to return a mask that can be used
 //          to reflect if the user made any actual changes.
 //
-class CPropertySheet
+class PropertySheet
 {
 public:
-    class CPropSheetHeader : public PROPSHEETHEADER
+    PropertySheet(const PropertySheet&) = delete;
+    PropertySheet& operator=(const PropertySheet&) = delete;
+
+    class PropSheetHeader : public PROPSHEETHEADER
     {
     public:
-        explicit CPropSheetHeader(const CString& strCaption, DWORD dwflags = 0)
+        explicit PropSheetHeader(std::wstring caption, DWORD dwflags = 0)
         {
             ZeroMemory(static_cast<PROPSHEETHEADER*>(this), sizeof(PROPSHEETHEADER));
             dwSize = PROPSHEETHEADER_V1_SIZE;
             dwFlags = dwflags;
 
-            m_strCaption = strCaption;
-            pszCaption = m_strCaption.GetString();
+            m_caption = caption;
+            pszCaption = m_caption.c_str();
         }
-
 
         void SetPages(std::vector<HPROPSHEETPAGE>& hpages)
         {
-            phpage = &hpages[0];
+            phpage = hpages.data();
             nPages = static_cast<UINT>(hpages.size());
         }
 
     private:
-        CString m_strCaption;
+        std::wstring m_caption;
     };
 
-
-    explicit CPropertySheet(const CString& strCaption, DWORD dwFlags = 0)
-        : _propsheetheader(strCaption, dwFlags), _wEventId(0)
+    explicit PropertySheet(std::wstring strCaption, DWORD dwFlags = 0) :
+        m_propertySheetHeader(strCaption, dwFlags),
+        m_eventID(0)
     {
     }
 
-
-    explicit CPropertySheet(UINT nIDCaption, DWORD dwFlags = 0)
-        : _propsheetheader(LoadString(nIDCaption), dwFlags), _wEventId(0)
+    explicit PropertySheet(UINT nIDCaption, DWORD dwFlags = 0) :
+        m_propertySheetHeader(LoadResourceString(nIDCaption), dwFlags),
+        m_eventID(0)
     {
     }
 
-
-    ~CPropertySheet()
+    ~PropertySheet()
     {
         // Clean up pages that are added but never used.
-        for (auto hpage : _hpages)
+        for (auto hpage : m_hpages)
         { 
             ATLVERIFY(DestroyPropertySheetPage(hpage));
         }
     }
 
-    CPropertySheet(const CPropertySheet&) = delete;
-
-    CPropertySheet& operator=(const CPropertySheet&) = delete;
-
     void AddPage(HPROPSHEETPAGE hpage)
     {
-        _hpages.push_back(hpage);
+        m_hpages.push_back(hpage);
     }
-
 
     int DoModal(HWND hwndParent)
     {
-        _propsheetheader.hwndParent = hwndParent;
-        _propsheetheader.SetPages(_hpages);
+        m_propertySheetHeader.hwndParent = hwndParent;
+        m_propertySheetHeader.SetPages(m_hpages);
 
-        int result = static_cast<int>(PropertySheet(&_propsheetheader));
-        _hpages.clear();
+        auto result = static_cast<int>(::PropertySheet(&m_propertySheetHeader));
+        m_hpages.clear();
         return result;
     }
 
-
     long DoModalReturnChanges(HWND hwndParent)
     {
-        _wEventId = 0;
+        m_eventID = 0;
         int result = DoModal(hwndParent);
         if (result <= 0)
             return 0;
 
-        return _wEventId;
+        return m_eventID;
     }
 
     long& GetEventId()
     {
-        return _wEventId;
+        return m_eventID;
     }
 
 private:
 
     // Member variables.
-    CPropSheetHeader            _propsheetheader;
-    std::vector<HPROPSHEETPAGE> _hpages;
-    long                        _wEventId;
+    PropSheetHeader             m_propertySheetHeader;
+    std::vector<HPROPSHEETPAGE> m_hpages;
+    long                        m_eventID;
 };
 
 } // end MSF namespace.

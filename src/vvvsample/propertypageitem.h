@@ -28,7 +28,6 @@ public:
         CHAIN_MSG_MAP(CSnapInPropertyPageImpl<CPropertyPageItem>)
     END_MSG_MAP()
 
-
     CPropertyPageItem(VVVItem& item, long& wEventId, IShellFolder* pshellfolder) :
         m_item(item),
         m_wEventId(wEventId),
@@ -45,7 +44,6 @@ public:
         return 1;
     }
 
-
     BOOL OnApply()
     {
         m_wEventId = 0;
@@ -53,7 +51,9 @@ public:
         CString strName;
         GetDlgItemText(IDC_EDIT_ITEM_NAME, strName);
         strName.Trim();
-        if (m_item.GetDisplayName() != strName)
+        std::wstring name(strName); // TODO
+
+        if (m_item.GetDisplayName() != name)
         {
             m_wEventId |= SHCNE_RENAMEITEM;
         }
@@ -78,14 +78,13 @@ private:
     // strings then to maintain copies of the dialog resource.
     void InitializeStaticString()
     {
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_NAME, LoadString(IDS_SHELLEXT_NAME) + L":"));
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_SIZE, LoadString(IDS_SHELLEXT_SIZE) + L":"));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_NAME, (MSF::LoadResourceString(IDS_SHELLEXT_NAME) + L":").c_str()));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_SIZE, (MSF::LoadResourceString(IDS_SHELLEXT_SIZE) + L":").c_str()));
     }
-
 
     void InitializeControls()
     {
-        ATLVERIFY(SetDlgItemText(IDC_EDIT_ITEM_NAME, m_item.GetName()));
+        ATLVERIFY(SetDlgItemText(IDC_EDIT_ITEM_NAME, m_item.GetName().c_str()));
         ATLVERIFY(SetDlgItemInt(IDC_EDIT_ITEM_SIZE, m_item.GetSize()));
 
         // Note: SHLimitInputEdit is only supported on Windows XP.
@@ -93,8 +92,8 @@ private:
     }
 
     // Member variables
-    const VVVItem&       m_item;
-    CPidl                 m_pidlNew;
-    long&                 m_wEventId;
+    const VVVItem &       m_item;
+    MSF::CPidl            m_pidlNew;
+    long &                m_wEventId;
     CComPtr<IShellFolder> m_rshellfolder;
 };

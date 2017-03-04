@@ -7,51 +7,44 @@
 
 #include "util.h"
 
-namespace MSF
-{
+namespace MSF {
 
 /// <summary>Base class for the Clipboard format handlers.</summary>
-class CCfHandler
+class ClipboardFormatHandler
 {
 public:
-    CCfHandler(CLIPFORMAT clipformat, bool bCanGetData, bool bCanSetData) :
+    ClipboardFormatHandler(CLIPFORMAT clipformat, bool bCanGetData, bool bCanSetData) :
         m_clipformat(clipformat),
         m_bCanGetData(bCanGetData),
         m_bCanSetData(bCanSetData)
     {
     }
 
-
-    CCfHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
+    ClipboardFormatHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
         m_clipformat(RegisterCf(lpszFormat)),
         m_bCanGetData(bCanGetData),
         m_bCanSetData(bCanSetData)
     {
     }
 
-
-    virtual ~CCfHandler()
+    virtual ~ClipboardFormatHandler()
     {
     }
-
 
     CLIPFORMAT GetClipFormat() const noexcept
     {
         return m_clipformat;
     }
 
-
     bool CanGetData() const noexcept
     {
         return m_bCanGetData;
     }
 
-
     bool CanSetData() const noexcept
     {
         return m_bCanSetData;
     }
-
 
     virtual HRESULT Validate(const FORMATETC& formatetc) const noexcept
     {
@@ -67,16 +60,13 @@ public:
         return S_OK;
     }
 
-
     virtual void GetData(const FORMATETC&, STGMEDIUM&) const
     {
     }
 
-
     virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*bRelease*/)
     {
     }
-
 
     bool IsValid(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) const
     {

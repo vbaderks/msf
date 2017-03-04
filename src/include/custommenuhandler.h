@@ -13,15 +13,15 @@ namespace MSF
 {
 
 // Purpose: handles owner draw menu items.
-class CCustomMenuHandler
+class CustomMenuHandler
 {
 public:
-    virtual ~CCustomMenuHandler()
+    virtual ~CustomMenuHandler()
     {
     }
 
 
-    virtual void InitializeItemInfo(CMenuItemInfo& menuiteminfo)
+    virtual void InitializeItemInfo(MenuItemInfo& menuiteminfo)
     {
         menuiteminfo.SetOwnerDraw();
     }

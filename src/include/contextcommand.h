@@ -12,18 +12,11 @@
 namespace MSF
 {
 
-class CContextCommand
+class ContextMenuCommand
 {
 public:
-    virtual ~CContextCommand()
-    {
-    }
-
-
-    virtual void operator()(const CMINVOKECOMMANDINFO* /* pici */,
-                            const std::vector<ATL::CString>& /* filenames */)
-    {
-    }
+    virtual ~ContextMenuCommand() = default;
+    virtual void operator()(const CMINVOKECOMMANDINFO* /* pici */, const std::vector<std::wstring>& /* filenames */) = 0;
 };
 
 } // end namespace MSF

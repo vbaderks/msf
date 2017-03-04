@@ -9,6 +9,7 @@
 #include "resource.h"
 #include <msf.h>
 
+using namespace MSF;
 
 class ATL_NO_VTABLE __declspec(uuid("D7DCE46C-98DB-4446-B1C0-E787325B1FBC")) IconOverlay :
     public CComObjectRootEx<CComSingleThreadModel>,

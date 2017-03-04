@@ -10,7 +10,6 @@
 namespace MSF
 {
 
-template <typename T>
 class ATL_NO_VTABLE IQueryInfoImpl :
     public IQueryInfo
 {
@@ -34,7 +33,7 @@ public:
         try
         {
             ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (dwFlags=%d)\n", dwFlags);
-            return SHStrDup(static_cast<T*>(this)->GetInfoTip(dwFlags), ppwszTip);
+            return SHStrDup(GetInfoTip(dwFlags).c_str(), ppwszTip);
         }
         catch (...)
         {
@@ -53,6 +52,8 @@ protected:
     {
         ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n", this);
     }
+
+    virtual std::wstring GetInfoTip(DWORD dwFlags) = 0;
 };
 
 } // namespace MSF

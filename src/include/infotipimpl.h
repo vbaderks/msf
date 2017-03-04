@@ -26,7 +26,7 @@ namespace MSF
 template <typename T>
 class ATL_NO_VTABLE InfoTipImpl :
     public IInitializeWithFile,
-    public IQueryInfoImpl<T>
+    public IQueryInfoImpl
 {
 public:
     /// <summary>Registration function to register the info tip COM object and a ProgId/extension.</summary>
@@ -44,12 +44,12 @@ public:
 
         try
         {
-            if (m_bInitialized)
+            if (m_initialized)
                 return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
 
             // Note: InitializeImpl must be implemented by the derived class.
-            static_cast<T*>(this)->InitializeImpl(pszFilePath, dwMode);
-            m_bInitialized = true;
+            InitializeCore(pszFilePath, dwMode);
+            m_initialized = true;
             return S_OK;
         }
         catch (...)
@@ -59,7 +59,7 @@ public:
     }
 
 protected:
-    InfoTipImpl() : m_bInitialized(false)
+    InfoTipImpl() : m_initialized(false)
     {
         ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
     }
@@ -69,8 +69,10 @@ protected:
         ATLTRACE2(atlTraceCOM, 0, L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
     }
 
+    virtual void InitializeCore(LPCWSTR pszFilePath, DWORD dwMode) = 0;
+
 private:
-    bool m_bInitialized;
+    bool m_initialized;
 };
 
 } // namespace MSF

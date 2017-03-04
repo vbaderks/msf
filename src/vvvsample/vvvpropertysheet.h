@@ -5,34 +5,33 @@
 //
 #pragma once
 
-#include "../include/propertysheet.h"
 #include "propertypageitem.h"
+#include <msf.h>
 
-
-class CVVVPropertySheet : public CPropertySheet
+class VVVPropertySheet : public MSF::PropertySheet
 {
 public:
-    CVVVPropertySheet(VVVItem& item, IShellFolder* pshellfolder) :
-        CPropertySheet(item.GetDisplayName(), PSH_NOAPPLYNOW | PSH_PROPTITLE | PSH_NOCONTEXTHELP),
-        _wEventId(0)
-    {
-        AddPage(CPropertyPageItem::CreateInstance(item, _wEventId, pshellfolder));
-    }
+    VVVPropertySheet(const VVVPropertySheet&) = delete;
+    VVVPropertySheet& operator=(const VVVPropertySheet&) = delete;
 
-    CVVVPropertySheet(const CVVVPropertySheet&) = delete;
-    CVVVPropertySheet& operator=(const CVVVPropertySheet&) = delete;
+    VVVPropertySheet(VVVItem& item, IShellFolder* shellFolder) :
+        PropertySheet(item.GetDisplayName(), PSH_NOAPPLYNOW | PSH_PROPTITLE | PSH_NOCONTEXTHELP),
+        m_eventID(0)
+    {
+        AddPage(CPropertyPageItem::CreateInstance(item, m_eventID, shellFolder));
+    }
 
     int DoModal(HWND hwnd, long& wEventId)
     {
-        _wEventId = 0;
+        m_eventID = 0;
         int result = __super::DoModal(hwnd);
 
-        wEventId = _wEventId;
+        wEventId = m_eventID;
         return result;
     }
 
 private:
 
     // Members variables
-    long _wEventId;
+    long m_eventID;
 };
