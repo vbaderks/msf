@@ -192,7 +192,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
-    <None Include="readme.txt" />
     <None Include="Undocumented Shell Interfaces Windows 8.reg" />
     <None Include="Undocumented Shell Interfaces.reg" />
   </ItemGroup>
