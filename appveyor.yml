@@ -1,5 +1,5 @@
 version: 0.94.{build}
-os: Visual Studio 2015
+os: Visual Studio 2017
 configuration:
 - Debug
 - Release
@@ -10,5 +10,5 @@ platform:
 before_build:
 - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 build:
-  project: src/msf_vc140.sln
+  project: src/msf_vc141.sln
   verbosity: minimal
