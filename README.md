@@ -68,13 +68,13 @@ Legacy Operating Systems
 
 Supported Compilers
 -------------------
-* Visual Studio 2017 RC (ATL 14.0)
-* Visual Studio 2015 Update 3 (ATL 14.0)
+* Visual Studio 2017 (ATL 14.0)
 
 Legacy Compilers
 ----------------
  Support has been removed from latest code, requires older release.
 
+* Visual Studio 2015 Update 3 (ATL 14.0)
 * Visual Studio 2013 Update 5 (ATL 12.0)
 * Visual Studio 2012 Update 5 (ATL 11.0)
 * Visual Studio 2010 SP1 (ATL 10.0)
@@ -83,4 +83,4 @@ Legacy Compilers
 * Visual Studio .NET 2003 (ATL 7.1)
 * Visual Studio .NET 2002 (ATL 7.0), needs latest Windows SDK
 
-Note: Latest source code is only validated with Visual Studio 2017 RC and tested on Windows 10 x64.
+Note: Latest source code is only validated with Visual Studio 2017 and tested on Windows 10 x64.
