@@ -92,7 +92,7 @@ public:
         // Purpose: alternative format, that loads the strings from the resource.
         Menu AddSubMenu(UINT nIDText, UINT nIDHelp)
         {
-            return AddSubMenu(LoadString(nIDText), LoadString(nIDHelp));
+            return AddSubMenu(LoadResourceString(nIDText).c_str(), LoadResourceString(nIDHelp).c_str());
         }
 
         // Purpose: create and add a owner drawn custom sub menu to the context menu.
@@ -307,10 +307,10 @@ public:
 
 
     // IContextMenu3
-    
-    // Note: The SDK docs tell that this function is only called for 
+
+    // Note: The SDK docs tell that this function is only called for
     //       WM_MENUCHAR but this is not true (seen on XP sp2).
-    //       HandleMenuMsg2 is called also directly for WM_INITMENUPOPUP, etc when 
+    //       HandleMenuMsg2 is called also directly for WM_INITMENUPOPUP, etc when
     //       the shell detects that IContextMenu3 is supported.
     STDMETHOD(HandleMenuMsg2)(UINT uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult) override
     {

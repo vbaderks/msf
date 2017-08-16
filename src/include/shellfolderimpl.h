@@ -105,7 +105,7 @@ public:
         return strPath;
     }
 
-    // Purpose: small helper to support 'type' system. 
+    // Purpose: small helper to support 'type' system.
     static void ChangeNotifyPidl(long wEventId, UINT uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = nullptr)
     {
         ::SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
@@ -230,7 +230,7 @@ public:
         try
         {
             ATLTRACE2(atlTraceCOM, 0, L"ShellFolderImpl::IShellFolder::BindToObject (instance=%p)\n", this);
-            
+
             // Quick check if requested interface is supported at all (on ourself).
             HRESULT hr = static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
             if (FAILED(hr))
@@ -608,7 +608,7 @@ public:
         ATLTRACENOTIMPL(L"ShellFolderImpl::MapColumnToSCID");
     }
 
-    // Purpose: The Shell will call this function to retrieve column header names and 
+    // Purpose: The Shell will call this function to retrieve column header names and
     //          the individual names of the items in the folder.
     // Note: Some windows versions use GetDisplayName to get column 0.
     STDMETHOD(GetDetailsOf)(__RPC__in_opt LPCITEMIDLIST pidl, UINT iColumn, __RPC__out SHELLDETAILS* psd) override
@@ -1212,7 +1212,7 @@ protected:
         RaiseExceptionIfFailed(OleSetClipboard(pdataobject));
 
         // Notify the folderview object that our items are on the clipboard.
-        // This will allow the view to update the look of the items and to handle 
+        // This will allow the view to update the look of the items and to handle
         // the escape key to abort a move operation.
         // Note: SDK docs are incorrect. Lparam is actual the command id.
         ShellFolderView_SetClipboard(GetHwndOwner(), DFM_CMD_MOVE);
@@ -1331,7 +1331,7 @@ protected:
 
         dwEffect = static_cast<T*>(this)->AddItemsFromDataObject(dwEffect, pdataobject);
 
-        if (IsBitSet(grfKeyState, MK_SHIFT) && IsBitSet(dwEffect, DROPEFFECT_MOVE) && 
+        if (IsBitSet(grfKeyState, MK_SHIFT) && IsBitSet(dwEffect, DROPEFFECT_MOVE) &&
             !static_cast<T*>(this)->CanPerformOptimizedMove(pdataobject))
         {
             CCfPerformedDropEffect::SetOptional(pdataobject, DROPEFFECT_MOVE);
@@ -1375,13 +1375,13 @@ protected:
 
     void RegisterColumn(UINT nResourceID, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
     {
-        RegisterColumn(MSF::LoadString(nResourceID), fmt, csFlags);
+        RegisterColumn(MSF::LoadResourceString(nResourceID).c_str(), fmt, csFlags);
     }
 
     // Implement this function and return the attributes or SFGAO_UNDEFINED
     SFGAOF GetAttributesOfGlobal(UINT /*cidl*/, SFGAOF /*sfgofMask*/) const
     {
-        // As default implementation, return SFGAO_UNDEFINED to start the 
+        // As default implementation, return SFGAO_UNDEFINED to start the
         // loop to ask attributes for every item explicit.
         return SFGAO_UNDEFINED;
     }
@@ -1515,7 +1515,7 @@ protected:
         {
             LPCITEMIDLIST pidlOld = cfshellidlist.GetItem(i);
 
-            ChangeNotifyPidl(SHCNE_RENAMEITEM, SHCNF_FLUSH, 
+            ChangeNotifyPidl(SHCNE_RENAMEITEM, SHCNF_FLUSH,
                 CPidl(m_pidlFolder, pidlOld), CPidl(m_pidlFolder, itemsNew[i].GetItemIdList()));
         }
     }
@@ -1535,7 +1535,7 @@ protected:
 
     // Update these members if dynamic behavior is required.
     ULONG m_ulSort;    // initial column used for sorting.
-    ULONG m_ulDisplay; // column that is used when item is displayed in tree view 
+    ULONG m_ulDisplay; // column that is used when item is displayed in tree view
 
 private:
 

@@ -86,7 +86,7 @@ public:
         return CShellFolderDataObject::CreateInstance(pidlFolder, cidl, ppidl, this);
     }
 
-    // Purpose: called by MSF/shell when it want the current list of 
+    // Purpose: called by MSF/shell when it want the current list of
     //          all items  The shell will walk all IDs and then release the enum.
     CComPtr<IEnumIDList> CreateEnumIDList(HWND /*hwnd*/, DWORD grfFlags) const
     {
@@ -154,7 +154,7 @@ public:
     // Purpose: handle 'open' by showing the name of the selected item.
     void OnOpen(HWND hwnd, IDataObject* pdataobject) const
     {
-        CCfShellIdList cfshellidlist(pdataobject); 
+        CCfShellIdList cfshellidlist(pdataobject);
         ATLASSERT(cfshellidlist.GetItemCount() == 1);
 
         VVVItem item(cfshellidlist.GetItem(0));
@@ -184,7 +184,7 @@ public:
     }
 
     // Purpose: handles the 'properties request.
-    //          The property sheet/page allows the user to change 
+    //          The property sheet/page allows the user to change
     //          the name and size of an item.
     long OnProperties(HWND hwnd, CVVVItemList& items)
     {
@@ -237,7 +237,7 @@ public:
     {
         auto message = LoadResourceString(IDS_SHELLFOLDER_CANNOT_PERFORM) + FormatLastError(static_cast<DWORD>(hr));
         IsolationAwareMessageBox(hwnd, message.c_str(),
-            LoadString(IDS_SHELLEXT_ERROR_CAPTION), MB_OK | MB_ICONERROR);
+            LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
     }
 
 protected:

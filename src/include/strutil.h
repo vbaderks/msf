@@ -71,19 +71,20 @@ inline int CompareString(_In_ LCID Locale, _In_ DWORD dwCmpFlags, LPCTSTR lpStri
 }
 
 // trim from start (in place)
-inline void ltrim(std::wstring &s) {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-        std::not1(std::ptr_fun<int, int>(std::isspace))));
+inline void ltrim(std::wstring &s)
+{
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
 }
 
 // trim from end (in place)
-inline void rtrim(std::wstring &s) {
-    s.erase(std::find_if(s.rbegin(), s.rend(),
-        std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+inline void rtrim(std::wstring &s)
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
 }
 
 // trim from both ends (in place)
-inline void trim(std::wstring &s) {
+inline void trim(std::wstring &s)
+{
     ltrim(s);
     rtrim(s);
 }

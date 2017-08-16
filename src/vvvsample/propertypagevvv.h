@@ -67,7 +67,7 @@ public:
         {
             auto message = MSF::LoadResourceString(IDS_PROPERTYPAGE_UNABLE_TO_UPDATE) +
                 MSF::FormatLastError(static_cast<DWORD>(e.Error()));
-            IsolationAwareMessageBox(GetParent().m_hWnd, message.c_str(), MSF::LoadString(IDS_SHELLEXT_ERROR_CAPTION), MB_OK | MB_ICONERROR);
+            IsolationAwareMessageBox(GetParent().m_hWnd, message.c_str(), MSF::LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
         }
 
         return false;
