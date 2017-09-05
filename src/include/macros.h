@@ -12,13 +12,6 @@
 namespace MSF
 {
 
-constexpr bool ToBool(BOOL b)
-{
-    return b != FALSE;
-}
-
-bool ToBool(bool b) = delete; // not defined by design. Detects incorrect usage.
-
 [[noreturn]] inline void RaiseException(HRESULT hr = E_FAIL)
 {
     _com_raise_error(hr);
