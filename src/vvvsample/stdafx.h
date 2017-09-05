@@ -6,19 +6,21 @@
 
 #pragma once
 
-// To support testing with the /Wall switch certain warning must be disabled when including
-// Win32, C\C++ runtime or ATL header files.
-
-#ifdef WALL_TESTING
-#pragma warning(disable: 4226) // '': assignment operator was implicitly defined as deleted (VS2015)
-#pragma warning(disable: 4263) // 'function' : member function does not override any base class virtual member function (VS2015)
-#pragma warning(disable: 4264) // auto generated after C4263 (VS2015)
-#pragma warning(disable: 4365) // 'argument' conversion from 'unsigned int' to 'int' (VS2015)
-#pragma warning(disable: 4464) // relative include path contains '..' (VS2015)
-#pragma warning(disable: 4514) // '...': unreferenced inline function has been removed (VS2015)
-#pragma warning(disable: 4710) // '...': function not inlined (VS2015)
-#pragma warning(disable: 4820) // 'x' bytes padding added after data member. (VS2015)
-#endif
+// To support testing with the /Wall switch certain warning must be disabled as they are just noise.
+#pragma warning(disable: 4263) // 'function' : member function does not override any base class virtual member function (VS2017)
+#pragma warning(disable: 4264) // auto generated after C4263 (VS2017)
+#pragma warning(disable: 4265) // '':  class has virtual functions, but destructor is not virtual (VS2017)
+#pragma warning(disable: 4365) // 'argument' conversion from 'unsigned int' to 'int' (VS2017)
+#pragma warning(disable: 4464) // relative include path contains '..' (VS2017)
+#pragma warning(disable: 4514) // '...': unreferenced inline function has been removed (VS2017)
+#pragma warning(disable: 4571) // Informational: catch (...) semantics changed since Visual C++ 7.1; (VS2017)
+#pragma warning(disable: 4625) // copy constructor was implicitly defined as deleted (VS2017)
+#pragma warning(disable: 4626) // assignment operator was implicitly defined as deleted (VS2017)
+#pragma warning(disable: 4710) // '...': function not inlined (VS2017)
+#pragma warning(disable: 4774) // format string expected in argument 3 is not a string literal (VS2017)
+#pragma warning(disable: 4820) // 'x' bytes padding added after data member. (VS2017)
+#pragma warning(disable: 5026) // move constructor was implicitly defined as deleted (VS2017)
+#pragma warning(disable: 5027) // move assignment operator was implicitly defined as deleted (VS2017)
 
 // Allow use of features specific to Windows 7 or later.
 #define _WIN32_WINNT 0x0601
@@ -42,6 +44,10 @@
 #define _ATL_EX_CONVERSION_MACROS_ONLY // Only use the new Unicode <-> Ansi conversion macro's.
 
 #define _ATL_NO_HOSTING // will prevent including mshtml.h, which is not /Zc:strictStrings compatible.
+
+#define _ATL_ALL_WARNINGS
+
+#define _ATL_ALL_USER_WARNINGS
 
 #include <msf.h>
 

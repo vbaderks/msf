@@ -9,9 +9,6 @@
 #include <stdexcept>
 
 
-#define MSF_ARRAY_SIZE(t) (sizeof(t) / sizeof(t[0]))
-
-
 namespace MSF
 {
 

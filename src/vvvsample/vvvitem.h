@@ -71,11 +71,11 @@ public:
     int Compare(const VVVItem& directoryitem, int nCompareBy, bool bCanonicalOnly) const;
     std::wstring GetItemDetailsOf(UINT iColumn) const;
     std::wstring GetInfoTipText() const;
-    int GetIconOf(UINT flags) const; 
+    int GetIconOf(UINT flags) const;
 
 private:
 
-    // By setting and checking for a TypeId (or cookie) we can ensure that the PIDL 
+    // By setting and checking for a TypeId (or cookie) we can ensure that the PIDL
     // was created by us. Using a version # will allows to handle older persisted PIDLs
     const static unsigned int TYPE_ID = 0x5601; // 'V' + version #
 
@@ -97,7 +97,7 @@ private:
         pitemdata->nID     = nId;
         pitemdata->bFolder = bFolder;
         pitemdata->nSize   = nSize;
-        wcscpy_s(pitemdata->wszName, MSF_ARRAY_SIZE(pitemdata->wszName), CStringW(strName));
+        wcscpy_s(pitemdata->wszName, _countof(pitemdata->wszName), CStringW(strName));
     }
 
 

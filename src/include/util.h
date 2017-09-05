@@ -6,7 +6,7 @@
 #pragma once
 
 
-// Purpose: this file contains small helper functions. 
+// Purpose: this file contains small helper functions.
 #include "msfbase.h"
 #include <shellapi.h>
 #include <vector>
@@ -152,7 +152,7 @@ public:
 };
 
 
-// Purpose: 'short' version of Win32 function CreateProcess. 
+// Purpose: 'short' version of Win32 function CreateProcess.
 //          Useful for shell extensions that just need a quick way to start apps.
 ATLPREFAST_SUPPRESS(6335) // suppress sa noise: leaking process handle
 inline void CreateProcess(LPCWSTR szApplicationName, std::wstring& cmdLine, LPCWSTR lpCurrentDirectory = nullptr)
@@ -216,8 +216,8 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
 }
 
 
-// Purpose: The App Path registry entry is used by the shell to find apps 
-// (.exe's) that are not in the PATH. The user can start these apps by 
+// Purpose: The App Path registry entry is used by the shell to find apps
+// (.exe's) that are not in the PATH. The user can start these apps by
 // using the 'run' menu.
 // Shell extensions can use these entries to detect installed software.
 //
@@ -282,7 +282,7 @@ inline ATL::CString GetClipboardFormatName(UINT format)
         {
             wchar_t szName[255];
 
-            ATLVERIFY(::GetClipboardFormatName(format, szName, MSF_ARRAY_SIZE(szName)));
+            ATLVERIFY(::GetClipboardFormatName(format, szName, _countof(szName)));
             return szName;
         }
     }
@@ -315,11 +315,11 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName)
     HINSTANCE hinstDll = LoadLibrary(lpszDllName);
     if (hinstDll)
     {
-        DLLGETVERSIONPROC pDllGetVersion = 
+        DLLGETVERSIONPROC pDllGetVersion =
             reinterpret_cast<DLLGETVERSIONPROC>(GetProcAddress(hinstDll, "DllGetVersion"));
 
         // Because some DLLs might not implement this function, you
-        // must test for it explicitly. Depending on the particular 
+        // must test for it explicitly. Depending on the particular
         // DLL, the lack of a DllGetVersion function can be a useful
         // indicator of the version.
         if (pDllGetVersion)

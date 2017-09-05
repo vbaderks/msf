@@ -49,7 +49,7 @@ public:
 
         wchar_t szFileName[MAX_PATH];
         if (!::DragQueryFile(reinterpret_cast<HDROP>(m_stgmedium.hGlobal), iFile, szFileName,
-                            MSF_ARRAY_SIZE(szFileName)))
+                             _countof(szFileName)))
             throw _com_error(HRESULT_FROM_WIN32(GetLastError()));
 
         return szFileName;

@@ -29,7 +29,7 @@ public:
     {
         dwFlags = 0; // reserved.
         dwReserved = 0;
-        lstrcpynW(wszFolder, pwszFolder, MSF_ARRAY_SIZE(wszFolder));
+        lstrcpynW(wszFolder, pwszFolder, _countof(wszFolder));
     }
 };
 
@@ -127,7 +127,7 @@ private:
             dwFlags = dwflags;
             dwFileAttributes = dwfileattributes;
             dwReserved = 0;
-            lstrcpynW(wszFile, wszFilename, MSF_ARRAY_SIZE(wszFile));
+            lstrcpynW(wszFile, wszFilename, _countof(wszFile));
             wcscpy(wszFile, wszFilename);
             pwszExt = wcsrchr(wszFile, '.');
         }
