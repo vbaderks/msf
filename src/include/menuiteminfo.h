@@ -24,9 +24,9 @@ public:
         SetID(id);
     }
 
-    MenuItemInfo(UINT id, const std::wstring& str) noexcept : MenuItemInfo(id)
+    MenuItemInfo(UINT id, const std::wstring str) noexcept : MenuItemInfo(id)
     {
-        SetString(str);
+        SetString(std::move(str));
     }
 
     MenuItemInfo(UINT id, const std::wstring& str, HMENU hsubmenu) noexcept :  MenuItemInfo(id, str)
@@ -53,7 +53,7 @@ public:
         fMask |= MIIM_TYPE;
         fType |= MFT_STRING;
 
-        m_strCache = str;
+        m_strCache = std::move(str);
         dwTypeData = const_cast<wchar_t*>(m_strCache.c_str());
     }
 

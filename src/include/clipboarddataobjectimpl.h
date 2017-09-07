@@ -22,8 +22,8 @@ class ClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>
 {
     class CExternalData;
 
-    typedef std::vector<std::unique_ptr<ClipboardFormatHandler>> CCfHandlers;
-    typedef std::vector<std::unique_ptr<CExternalData>> CExternalDatas;
+    using CfHandlerVector = std::vector<std::unique_ptr<ClipboardFormatHandler>>;
+    using ExternalDataVector = std::vector<std::unique_ptr<CExternalData>>;
 
 public:
 
@@ -38,7 +38,7 @@ public:
         m_cfhandlers.push_back(clipFormatHandler);
     }
 
-    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, IEnumFORMATETC** /*ppenumFormatEtc*/) override
+    HRESULT __stdcall EnumFormatEtc(DWORD dwDirection, IEnumFORMATETC** /*ppenumFormatEtc*/) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 
@@ -60,7 +60,7 @@ public:
         }
     }
 
-    STDMETHOD(QueryGetData)(FORMATETC* pformatetc) override
+    HRESULT __stdcall QueryGetData(FORMATETC* pformatetc) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
@@ -93,7 +93,7 @@ public:
         }
     }
 
-    STDMETHOD(GetData)(FORMATETC *pformatetc, STGMEDIUM *pstgmedium) override
+    HRESULT __stdcall GetData(FORMATETC *pformatetc, STGMEDIUM *pstgmedium) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData cfformat=%d (%s)\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
@@ -129,7 +129,7 @@ public:
         }
     }
 
-    STDMETHOD(SetData)(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease) override
+    HRESULT __stdcall SetData(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
@@ -248,7 +248,7 @@ private:
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
             [=](ClipboardFormatHandler* cfHandler)
-        { 
+        {
             return cfHandler->GetClipFormat() == clipformat;
         });
         return handler == m_cfhandlers.end() ? nullptr : handler;
@@ -303,7 +303,7 @@ private:
     }
 
     // Member variables.
-    CCfHandlers    m_cfhandlers;
+    CfHandlerVector m_cfhandlers;
     CExternalDatas m_externaldatas;
 };
 

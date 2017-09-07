@@ -14,7 +14,7 @@ class PropertyPageVVV : public MSF::ShellExtPropertyPageImpl<PropertyPageVVV>
 public:
     static HPROPSHEETPAGE CreateInstance(std::wstring filename)
     {
-        auto ppage = new PropertyPageVVV(filename);
+        auto ppage = new PropertyPageVVV(std::move(filename));
         return ppage->Create();
     }
 

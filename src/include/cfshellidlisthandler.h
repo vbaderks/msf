@@ -20,9 +20,7 @@ namespace MSF
 class CCfShellIdListHandler : public ClipboardFormatHandler
 {
 public:
-    typedef std::vector<CPidl> CPidls;
-
-    CCfShellIdListHandler(LPCITEMIDLIST pidlFolder, CPidls& pidls) :
+    CCfShellIdListHandler(LPCITEMIDLIST pidlFolder, std::vector<CPidl>& pidls) :
         ClipboardFormatHandler(CFSTR_SHELLIDLIST, true, false),
         m_pidlFolder(pidlFolder),
         m_pidls(pidls)
@@ -86,7 +84,7 @@ private:
     }
 
     CPidl   m_pidlFolder;
-    CPidls& m_pidls;
+    std::vector<CPidl>& m_pidls;
 };
 
 } // end of MSF namespace

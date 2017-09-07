@@ -36,7 +36,7 @@ public:
     }
 
     // IPersistFile
-    STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID) override
+    HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::GetClassID (instance=%p, pClassID=%p)\n", this, pClassID);
 
@@ -47,27 +47,27 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(IsDirty)() override
+    HRESULT __stdcall IsDirty() noexcept override
     {
         ATLTRACENOTIMPL(L"DropTargetImpl::IsDirty");
     }
 
-    STDMETHOD(Save)(LPCOLESTR, BOOL) override
+    HRESULT __stdcall Save(LPCOLESTR, BOOL) noexcept override
     {
         ATLTRACENOTIMPL(L"DropTargetImpl::Save");
     }
 
-    STDMETHOD(SaveCompleted)(LPCOLESTR) override
+    HRESULT __stdcall SaveCompleted(LPCOLESTR) noexcept override
     {
         ATLTRACENOTIMPL(L"DropTargetImpl::SaveCompleted");
     }
 
-    STDMETHOD(GetCurFile)(LPOLESTR*) override
+    HRESULT __stdcall GetCurFile(LPOLESTR*) noexcept override
     {
         ATLTRACENOTIMPL(L"DropTargetImpl::GetCurFile");
     }
 
-    STDMETHOD(Load)(LPCOLESTR wszFilename, DWORD dwMode) override
+    HRESULT __stdcall Load(LPCOLESTR wszFilename, DWORD dwMode) noexcept override
     {
         UNREFERENCED_PARAMETER(dwMode); // unused in release.
 
@@ -84,7 +84,7 @@ public:
     }
 
     // IDropTarget
-    STDMETHOD(DragEnter)(_In_ IDataObject* dataObject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
+    HRESULT __stdcall DragEnter(_In_ IDataObject* dataObject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragEnter (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
 
@@ -110,7 +110,7 @@ public:
         }
     }
 
-    STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
+    HRESULT __stdcall DragOver(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragOver (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
 
@@ -133,14 +133,14 @@ public:
         }
     }
 
-    STDMETHOD(DragLeave)() override
+    HRESULT __stdcall DragLeave() noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragLeave (instance=%p)\n", this);
         _isCachedSupportedClipboardFormat = false;
         return S_OK;
     }
 
-    STDMETHOD(Drop)(_In_ IDataObject* dataObject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
+    HRESULT __stdcall Drop(_In_ IDataObject* dataObject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
         UNREFERENCED_PARAMETER(grfKeyState);
         ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::Drop (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);

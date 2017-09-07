@@ -86,6 +86,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\version.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)include\shell32missing.def" />
     <None Include="$(MSBuildThisFileDirectory)include\browserhelperobject.rgs" />
     <None Include="$(MSBuildThisFileDirectory)include\contextmenu.rgs" />
     <None Include="$(MSBuildThisFileDirectory)include\contextmenu_sf.rgs" />
@@ -97,7 +98,6 @@
     <None Include="$(MSBuildThisFileDirectory)include\infotip_sf.rgs" />
     <None Include="$(MSBuildThisFileDirectory)include\propertysheetext.rgs" />
     <None Include="$(MSBuildThisFileDirectory)include\propertysheetext_sf.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)include\shell32missing.def" />
     <None Include="$(MSBuildThisFileDirectory)include\shellfolder.rgs" />
     <None Include="$(MSBuildThisFileDirectory)include\shellfoldervista.rgs" />
     <None Include="$(MSBuildThisFileDirectory)include\shellfolderwin98.rgs" />

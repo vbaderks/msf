@@ -18,7 +18,7 @@ public:
     IQueryInfoImpl & operator=(const IQueryInfoImpl &) = delete;
 
     // IQueryInfo
-    STDMETHOD(GetInfoFlags)(_Out_ DWORD* /* pdwFlags */) override
+    HRESULT __stdcall GetInfoFlags(_Out_ DWORD* /* pdwFlags */) noexcept override
     {
         // The Vista shell will call GetInfoFlags. The MSDN docs are incomplete about the use of this function.
         // Possible return values are:
@@ -28,7 +28,7 @@ public:
         ATLTRACENOTIMPL(L"IQueryInfoImpl::GetInfoFlags");
     }
 
-    STDMETHOD(GetInfoTip)(DWORD dwFlags, _Outptr_ WCHAR** ppwszTip) override
+    HRESULT __stdcall GetInfoTip(DWORD dwFlags, _Outptr_ WCHAR** ppwszTip) noexcept override
     {
         try
         {

@@ -65,7 +65,7 @@ protected:
             [=](const std::wstring& fileName) { return IsUnknownExtension(fileName); }) != filenames.end();
     }
 
-    bool IsUnknownExtension(const std::wstring fileName) const
+    bool IsUnknownExtension(const std::wstring& fileName) const
     {
         std::wstring extension(PathFindExtension(fileName.c_str()));
         std::transform(extension.begin(), extension.end(), extension.begin(), string_tolower_functional);

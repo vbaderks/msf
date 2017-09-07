@@ -22,9 +22,6 @@ template <typename T>
 class ShellFolderDataObjectImpl : public IDataObject
 {
 public:
-    typedef std::vector<std::unique_ptr<ClipboardFormatHandler>> CCfHandlers;
-    typedef std::vector<CFormatEtc>  CFormatEtcs;
-
     HRESULT __stdcall GetData(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, "ShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
@@ -151,7 +148,7 @@ public:
             if (dwDirection != DATADIR_GET && dwDirection != DATADIR_SET)
                 return E_INVALIDARG;
 
-            CFormatEtcs formatetcs;
+            std::vector<CFormatEtc> formatetcs;
             GetRegisteredFormats(dwDirection, formatetcs);
             GetPidlDataFormats(dwDirection, formatetcs);
 
@@ -222,7 +219,7 @@ private:
         return handler == m_cfhandlers.end() ? nullptr : (*handler).get();
     }
 
-    void GetRegisteredFormats(DWORD dwDirection, CFormatEtcs& formatetcs) const
+    void GetRegisteredFormats(DWORD dwDirection, std::vector<CFormatEtc>& formatetcs) const
     {
         for (auto& handler : m_cfhandlers)
         {
@@ -243,7 +240,7 @@ private:
         }
     }
 
-    void GetPidlDataFormats(DWORD dwDirection, CFormatEtcs& formatetcs)
+    void GetPidlDataFormats(DWORD dwDirection, std::vector<CFormatEtc>& formatetcs)
     {
         IEnumFORMATETCPtr renumformatetc = m_pidldata.EnumFormatEtc(dwDirection);
 
@@ -256,7 +253,7 @@ private:
 
     // Member variables.
     IDataObjectPtr m_pidldata;
-    CCfHandlers    m_cfhandlers;
+    std::vector<std::unique_ptr<ClipboardFormatHandler>> m_cfhandlers;
 };
 
 } // end MSF namespace

@@ -12,9 +12,9 @@
 class VVVFile
 {
 public:
-    explicit VVVFile(const std::wstring filename, const std::wstring& folder = std::wstring()) :
-        m_filename(filename.c_str()), // TODO
-        m_folder(folder.c_str()) // TODO
+    explicit VVVFile(const std::wstring filename, const std::wstring folder = std::wstring()) :
+        m_filename{ std::move(filename) },
+        m_folder{ std::move(folder) }
     {
     }
 

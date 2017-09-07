@@ -5,10 +5,9 @@
 //
 #pragma once
 
-
-#include "../include/shellfolderdataobjectimpl.h"
-#include "cffilecontentshandler.h"
 #include "cffiledescriptorhandler.h"
+#include "cffilecontentshandler.h"
+#include <msf.h>
 #include <memory>
 
 
@@ -26,13 +25,13 @@ public:
     static ATL::CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl,
         LPCITEMIDLIST* ppidl, MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
-        ATL::CComObject<CShellFolderDataObject>* pinstance;
-        HRESULT hr = ATL::CComObject<CShellFolderDataObject>::CreateInstance(&pinstance);
+        ATL::CComObject<CShellFolderDataObject>* instance;
+        HRESULT hr = ATL::CComObject<CShellFolderDataObject>::CreateInstance(&instance);
         if (FAILED(hr))
             MSF::RaiseException(hr);
 
-        ATL::CComPtr<IDataObject> rdataobject(pinstance);
-        pinstance->Initialize(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
+        ATL::CComPtr<IDataObject> rdataobject(instance);
+        instance->Initialize(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
         return rdataobject;
     }
 

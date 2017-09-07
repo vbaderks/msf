@@ -5,9 +5,8 @@
 //
 #pragma once
 
-
-#include "../include/cfhandler.h"
-#include "../include/cfshellidlist.h"
+#include "vvvitem.h"
+#include <msf.h>
 
 // Note: owner of the instance of this class must keep passed dataobject alive.
 //       This class doesn't do addref to prevent circular referencing.

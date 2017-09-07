@@ -46,7 +46,7 @@ public:
         return contextmenu;
     }
 
-    STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici) override
+    HRESULT __stdcall InvokeCommand(_In_ CMINVOKECOMMANDINFO* pici) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n", this);
 

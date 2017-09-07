@@ -60,9 +60,6 @@ class __declspec(novtable) ShellFolderImpl :
     public IExplorerPaneVisibility
 {
 public:
-
-    typedef std::vector<TItem> TItems;
-
     enum class ErrorContext
     {
         Unknown           = 0,
@@ -136,7 +133,7 @@ public:
     }
 
     // IPersistFolder
-    STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID) override
+    HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IPersistFolder::GetClassID (instance=%p)\n", this);
 
@@ -147,7 +144,7 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(Initialize)(__RPC__in LPCITEMIDLIST pidl) override
+    HRESULT __stdcall Initialize(__RPC__in LPCITEMIDLIST pidl) noexcept override
     {
         try
         {
@@ -166,7 +163,7 @@ public:
     }
 
     // IPersistFolder2
-    STDMETHOD(GetCurFolder)(__RPC__deref_out_opt LPITEMIDLIST* ppidl) override
+    HRESULT __stdcall GetCurFolder(__RPC__deref_out_opt LPITEMIDLIST* ppidl) noexcept override
     {
         try
         {
@@ -182,7 +179,7 @@ public:
     }
 
     // IPersistFolder3
-    STDMETHOD(InitializeEx)(__RPC__in_opt IBindCtx* pbc, __RPC__in LPCITEMIDLIST pidlRoot, __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* ppfti) override
+    HRESULT __stdcall InitializeEx(__RPC__in_opt IBindCtx* pbc, __RPC__in LPCITEMIDLIST pidlRoot, __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* ppfti) noexcept override
     {
         UNREFERENCED_PARAMETER(pbc);
         UNREFERENCED_PARAMETER(ppfti);
@@ -192,26 +189,26 @@ public:
         return Initialize(pidlRoot);
     }
 
-    STDMETHOD(GetFolderTargetInfo)(__RPC__out PERSIST_FOLDER_TARGET_INFO* /* ppfti */) override
+    HRESULT __stdcall GetFolderTargetInfo(__RPC__out PERSIST_FOLDER_TARGET_INFO* /* ppfti */) noexcept override
     {
         ATLTRACENOTIMPL(L"ShellFolderImpl::IPersistFolder3::GetFolderTargetInfo");
     }
 
     // IPersistIDList
-    STDMETHOD(SetIDList)(__RPC__in LPCITEMIDLIST pidl) override
+    HRESULT __stdcall SetIDList(__RPC__in LPCITEMIDLIST pidl) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IPersistIDList::SetIDList (instance=%p, pidl=%p)\n", this, pidl);
         return Initialize(pidl);
     }
 
-    STDMETHOD(GetIDList)(__RPC__deref_out_opt LPITEMIDLIST* ppidl) override
+    HRESULT __stdcall GetIDList(__RPC__deref_out_opt LPITEMIDLIST* ppidl) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IPersistIDList::GetIDList (instance=%p)\n", this);
         return GetCurFolder(ppidl);
     }
 
     // IShellDetails
-    STDMETHOD(ColumnClick)(UINT uiColumn) override
+    HRESULT __stdcall ColumnClick(UINT uiColumn) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n", this, uiColumn);
 
@@ -225,7 +222,7 @@ public:
     // IShellFolder
 
     // Purpose: The shell calls this function to get the IShellFolder interface of a subfolder.
-    STDMETHOD(BindToObject)(__RPC__in LPCITEMIDLIST pidlSubFolder, __RPC__in_opt LPBC, __RPC__in REFIID riid, __RPC__deref_out_opt void** ppRetVal) override
+    HRESULT __stdcall BindToObject(__RPC__in LPCITEMIDLIST pidlSubFolder, __RPC__in_opt LPBC, __RPC__in REFIID riid, __RPC__deref_out_opt void** ppRetVal) noexcept override
     {
         try
         {
@@ -239,7 +236,7 @@ public:
             static_cast<IUnknown*>(*ppRetVal)->Release();
 
             // Get all subfolder items.
-            TItems items;
+            std::vector<TItem> items;
             while (pidlSubFolder)
             {
                 items.push_back(TItem(pidlSubFolder));
@@ -258,14 +255,14 @@ public:
         }
     }
 
-    STDMETHOD(BindToStorage)(__RPC__in LPCITEMIDLIST, LPBC, __RPC__in REFIID, __RPC__deref_out_opt LPVOID* ppRetVal) override
+    HRESULT __stdcall BindToStorage(__RPC__in LPCITEMIDLIST, LPBC, __RPC__in REFIID, __RPC__deref_out_opt LPVOID* ppRetVal) noexcept override
     {
         *ppRetVal = nullptr;
         ATLTRACENOTIMPL(L"ShellFolderImpl::IShellFolder::BindToStorage");
     }
 
     // Purpose: This function is called to sort items in details view mode.
-    STDMETHOD(CompareIDs)(LPARAM lParam, __RPC__in LPCITEMIDLIST pidl1, __RPC__in LPCITEMIDLIST pidl2) override
+    HRESULT __stdcall CompareIDs(LPARAM lParam, __RPC__in LPCITEMIDLIST pidl1, __RPC__in LPCITEMIDLIST pidl2) noexcept override
     {
         try
         {
@@ -316,7 +313,7 @@ public:
 
     // Purpose: the shell calls this function to get interfaces to objects such as:
     //          IShellFolder, IContextMenu or IExtractIcon for the complete folder.
-    STDMETHOD(CreateViewObject)(__RPC__in_opt HWND hwndOwner, __RPC__in REFIID riid, __RPC__deref_out_opt void** ppRetVal) override
+    HRESULT __stdcall CreateViewObject(__RPC__in_opt HWND hwndOwner, __RPC__in REFIID riid, __RPC__deref_out_opt void** ppRetVal) noexcept override
     {
         try
         {
@@ -391,7 +388,7 @@ public:
 
     // Purpose: The shell will call this function to get an object that can be applied
     //          to a collection of items contained in the folder.
-    STDMETHOD(GetUIObjectOf)(__RPC__in_opt HWND hwnd, UINT cidl, __RPC__in_ecount_full_opt(cidl) LPCITEMIDLIST* ppidl, __RPC__in REFIID riid, __reserved UINT* /*reserved*/, __RPC__deref_out_opt void** ppv) override
+    HRESULT __stdcall GetUIObjectOf(__RPC__in_opt HWND hwnd, UINT cidl, __RPC__in_ecount_full_opt(cidl) LPCITEMIDLIST* ppidl, __RPC__in REFIID riid, __reserved UINT* /*reserved*/, __RPC__deref_out_opt void** ppv) noexcept override
     {
         try
         {
@@ -451,7 +448,7 @@ public:
 
     // Purpose: The Shell will call this function to get the name (string) of the item.
     //          (column 0 in details view mode).
-    STDMETHOD(GetDisplayNameOf)(__RPC__in_opt LPCITEMIDLIST pidl, SHGDNF shgdnf, __RPC__out LPSTRRET lpname) override
+    HRESULT __stdcall GetDisplayNameOf(__RPC__in_opt LPCITEMIDLIST pidl, SHGDNF shgdnf, __RPC__out LPSTRRET lpname) noexcept override
     {
         try
         {
@@ -469,7 +466,7 @@ public:
     }
 
     // Purpose: The shell uses this function to retrieve info about what can be done with an item.
-    STDMETHOD(GetAttributesOf)(UINT cidl, __RPC__in_ecount_full_opt(cidl) LPCITEMIDLIST* ppidl, __RPC__inout SFGAOF* prgfInOut) override
+    HRESULT __stdcall GetAttributesOf(UINT cidl, __RPC__in_ecount_full_opt(cidl) LPCITEMIDLIST* ppidl, __RPC__inout SFGAOF* prgfInOut) noexcept override
     {
         try
         {
@@ -500,7 +497,7 @@ public:
         }
     }
 
-    STDMETHOD(ParseDisplayName)(__RPC__in_opt HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, __reserved DWORD*, __RPC__deref_out_opt LPITEMIDLIST*, __RPC__inout_opt DWORD* pdwAttributes) override
+    HRESULT __stdcall ParseDisplayName(__RPC__in_opt HWND hwnd, LPBC pbc, LPOLESTR pwszDisplayName, __reserved DWORD*, __RPC__deref_out_opt LPITEMIDLIST*, __RPC__inout_opt DWORD* pdwAttributes) noexcept override
     {
         // mark parameters as not used in release build.
         UNREFERENCED_PARAMETER(hwnd);
@@ -516,7 +513,7 @@ public:
         return E_NOTIMPL;
     }
 
-    STDMETHOD(SetNameOf)(_In_opt_ HWND hwndOwner, _In_ LPCITEMIDLIST pidl, _In_ const OLECHAR* pszNewName, SHGDNF uFlags, _Outptr_opt_ LPITEMIDLIST* ppidlOut) override
+    HRESULT __stdcall SetNameOf(_In_opt_ HWND hwndOwner, _In_ LPCITEMIDLIST pidl, _In_ const OLECHAR* pszNewName, SHGDNF uFlags, _Outptr_opt_ LPITEMIDLIST* ppidlOut) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::SetNameOf (hwnd=%d, szName=%s)\n", hwndOwner, pszNewName);
 
@@ -547,7 +544,7 @@ public:
     }
 
     // IShellFolder2
-    STDMETHOD(EnumObjects)(__RPC__in_opt HWND hwnd, DWORD grfFlags, __RPC__deref_out_opt IEnumIDList** ppRetVal) override
+    HRESULT __stdcall EnumObjects(__RPC__in_opt HWND hwnd, DWORD grfFlags, __RPC__deref_out_opt IEnumIDList** ppRetVal) noexcept override
     {
         // TODO: move to IShellFolder1
 
@@ -567,17 +564,17 @@ public:
         }
     }
 
-    STDMETHOD(GetDefaultSearchGUID)(__RPC__out GUID* /*pguid*/) override
+    HRESULT __stdcall GetDefaultSearchGUID(__RPC__out GUID* /*pguid*/) noexcept override
     {
         ATLTRACENOTIMPL(L"ShellFolderImpl::GetDefaultSearchGUID");
     }
 
-    STDMETHOD(EnumSearches)(__RPC__deref_out_opt IEnumExtraSearch** /*ppenum */) override
+    HRESULT __stdcall EnumSearches(__RPC__deref_out_opt IEnumExtraSearch** /*ppenum */) noexcept override
     {
         ATLTRACENOTIMPL(L"ShellFolderImpl::EnumSearches");
     }
 
-    STDMETHOD(GetDefaultColumn)(DWORD /*dwReserved*/, __RPC__out ULONG* pSort, __RPC__out ULONG* pDisplay) override
+    HRESULT __stdcall GetDefaultColumn(DWORD /*dwReserved*/, __RPC__out ULONG* pSort, __RPC__out ULONG* pDisplay) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::GetDefaultColumn\n");
 
@@ -587,7 +584,7 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(GetDefaultColumnState)(UINT iColumn, __RPC__out SHCOLSTATEF* pcsFlags) override
+    HRESULT __stdcall GetDefaultColumnState(UINT iColumn, __RPC__out SHCOLSTATEF* pcsFlags) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::GetDefaultColumnState (iColumn=%d)\n", iColumn);
 
@@ -598,12 +595,12 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(GetDetailsEx)(__RPC__in_opt LPCITEMIDLIST /*pidl*/, __RPC__in const SHCOLUMNID* /*pscid*/, __RPC__out VARIANT* /*pv*/) override
+    HRESULT __stdcall GetDetailsEx(__RPC__in_opt LPCITEMIDLIST /*pidl*/, __RPC__in const SHCOLUMNID* /*pscid*/, __RPC__out VARIANT* /*pv*/) noexcept override
     {
         ATLTRACENOTIMPL(L"ShellFolderImpl::GetDetailsEx");
     }
 
-    STDMETHOD(MapColumnToSCID)(UINT /*iColumn*/, __RPC__out SHCOLUMNID* /*pscid*/) override
+    HRESULT __stdcall MapColumnToSCID(UINT /*iColumn*/, __RPC__out SHCOLUMNID* /*pscid*/) noexcept override
     {
         ATLTRACENOTIMPL(L"ShellFolderImpl::MapColumnToSCID");
     }
@@ -611,7 +608,7 @@ public:
     // Purpose: The Shell will call this function to retrieve column header names and
     //          the individual names of the items in the folder.
     // Note: Some windows versions use GetDisplayName to get column 0.
-    STDMETHOD(GetDetailsOf)(__RPC__in_opt LPCITEMIDLIST pidl, UINT iColumn, __RPC__out SHELLDETAILS* psd) override
+    HRESULT __stdcall GetDetailsOf(__RPC__in_opt LPCITEMIDLIST pidl, UINT iColumn, __RPC__out SHELLDETAILS* psd) noexcept override
     {
         try
         {
@@ -639,7 +636,7 @@ public:
     }
 
     // IObjectWithFolderEnumMode
-    STDMETHOD(SetMode)(FOLDER_ENUM_MODE feMode) override
+    HRESULT __stdcall SetMode(FOLDER_ENUM_MODE feMode) noexcept override
     {
         // Note: it seems that the shell always passes FEM_VIEWRESULT.
         UNREFERENCED_PARAMETER(feMode);
@@ -647,7 +644,7 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(GetMode)(__RPC__out FOLDER_ENUM_MODE *pfeMode) override
+    HRESULT __stdcall GetMode(__RPC__out FOLDER_ENUM_MODE *pfeMode) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IObjectWithFolderEnumMode::GetMode (pfeMode=%p)\n", pfeMode);
 
@@ -660,7 +657,7 @@ public:
     // IShellIcon
     // Purpose: There are 2 ways for the shell to get a icon for the 'view.'
     //          This functions call is preferred by the shell as it slightly faster.
-    STDMETHOD(GetIconOf)(__RPC__in LPCITEMIDLIST pidl, UINT flags, __RPC__out int* pIconIndex) override
+    HRESULT __stdcall GetIconOf(__RPC__in LPCITEMIDLIST pidl, UINT flags, __RPC__out int* pIconIndex) noexcept override
     {
         try
         {
@@ -677,7 +674,7 @@ public:
     }
 
     // IDropTarget
-    STDMETHOD(DragEnter)(_In_ IDataObject* pdataobject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
+    HRESULT __stdcall DragEnter(_In_ IDataObject* pdataobject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IDropTarget::DragEnter (grfKeyState=%d, dwEffect=%d)\n", grfKeyState, *pdwEffect);
 
@@ -702,7 +699,7 @@ public:
         }
     }
 
-    STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
+    HRESULT __stdcall DragOver(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IDropTarget::DragOver (grfKeyState=%d, dwEffect=%d)\n", grfKeyState, *pdwEffect);
 
@@ -724,14 +721,14 @@ public:
         }
     }
 
-    STDMETHOD(DragLeave)() override
+    HRESULT __stdcall DragLeave() noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IDropTarget::DragLeave\n");
         m_bCachedIsSupportedClipboardFormat = false;
         return S_OK;
     }
 
-    STDMETHOD(Drop)(_In_ IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) override
+    HRESULT __stdcall Drop(_In_ IDataObject *pDataObj, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
         UNREFERENCED_PARAMETER(grfKeyState);
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IDropTarget::Drop (grfKeyState=%d, dwEffect=%d)\n", grfKeyState, *pdwEffect);
@@ -749,7 +746,7 @@ public:
 
     // IExplorerPaneVisibility (introduced with Vista)
     // The shell will use this interface to request which 'panes' should be visible.
-    STDMETHOD(GetPaneState)(_In_ REFEXPLORERPANE ep, _Out_ EXPLORERPANESTATE *peps) override
+    HRESULT __stdcall GetPaneState(_In_ REFEXPLORERPANE ep, _Out_ EXPLORERPANESTATE *peps) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IExplorerPaneVisibility::GetPaneState (instance=%p, ep=%s)\n", this, GetExplorerPaneName(ep).GetString());
 
@@ -771,7 +768,7 @@ public:
         }
     }
 
-    void InitializeSubFolder(const TItems& /*items*/)
+    void InitializeSubFolder(const std::vector<TItem>& /*items*/)
     {
         ATLASSERT(!"Derived class needs to implement this function, if sub folders are used");
         RaiseException();
@@ -1122,7 +1119,7 @@ protected:
             }
             else
             {
-                TItems items;
+                std::vector<TItem> items;
                 RetrieveItems(cfshellidlist, items);
 
                 VerifyAttribute(cfshellidlist, SFGAO_HASPROPSHEET);
@@ -1162,7 +1159,7 @@ protected:
         }
         else
         {
-            TItems items;
+            std::vector<TItem> items;
             RetrieveItems(cfshellidlist, items);
 
             VerifyAttribute(cfshellidlist, SFGAO_CANDELETE);
@@ -1184,7 +1181,7 @@ protected:
     }
 
     // Purpose: override this function to enable item delete support.
-    long OnDelete(HWND /*hwnd*/, const TItems& /*items*/)
+    long OnDelete(HWND /*hwnd*/, const std::vector<TItem>& /*items*/)
     {
         ATLASSERT(!"If SFGAO_CANDELETE is true this function must be implemented!");
         return 0;
@@ -1247,7 +1244,7 @@ protected:
     }
 
     // Purpose: override this function to enable item property support.
-    long OnProperties(HWND /*hwnd*/, const TItems& /*items*/)
+    long OnProperties(HWND /*hwnd*/, const std::vector<TItem>& /*items*/)
     {
         return 0;
     }
@@ -1416,14 +1413,14 @@ protected:
     {
     }
 
-    void RetrieveItems(IDataObject* pdataobject, TItems& items) const
+    void RetrieveItems(IDataObject* pdataobject, std::vector<TItem>& items) const
     {
         CCfShellIdList cfshellidlist(pdataobject);
 
         RetrieveItems(cfshellidlist, items);
     }
 
-    void RetrieveItems(const CCfShellIdList& cfshellidlist, TItems& items) const
+    void RetrieveItems(const CCfShellIdList& cfshellidlist, std::vector<TItem>& items) const
     {
         for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
@@ -1479,7 +1476,7 @@ protected:
         ChangeNotifyPidl(SHCNE_CREATE, SHCNF_FLUSH, CPidl(m_pidlFolder, pidlItem));
     }
 
-    void ReportChangeNotify(const TItems& items, long wEventId, UINT uFlags = SHCNF_FLUSH) const
+    void ReportChangeNotify(const std::vector<TItem>& items, long wEventId, UINT uFlags = SHCNF_FLUSH) const
     {
         for (auto item : items)
         {
@@ -1509,7 +1506,7 @@ protected:
         }
     }
 
-    void ReportRenameChangeNotify(const CCfShellIdList& cfshellidlist, const TItems& itemsNew) const
+    void ReportRenameChangeNotify(const CCfShellIdList& cfshellidlist, const std::vector<TItem>& itemsNew) const
     {
         for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {

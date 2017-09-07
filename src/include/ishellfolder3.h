@@ -10,12 +10,12 @@
 // INTERFACE: IShellFolder3
 // IShellFolder3 is an undocumented interface introduced in Windows Vista. The definition below is based on info from Geoff Chappell.
 
-interface IFilterCondition;
-interface IQueryUnit;
-interface IItemFilter;
-typedef enum tagFILTERIDLISTTYPE FILTERIDLISTTYPE;
+struct IFilterCondition;
+struct IQueryUnit;
+struct IItemFilter;
+enum FILTERIDLISTTYPE;
 
-interface IShellFolder3 : IShellFolder2
+struct __declspec(novtable) IShellFolder3 : IShellFolder2
 {
     virtual HRESULT STDMETHODCALLTYPE CreateFilteredIDList(IFilterCondition *, FILTERIDLISTTYPE, IPropertyStore *, PITEMID_CHILD *) = 0;
     virtual HRESULT STDMETHODCALLTYPE GetFilteredIDListType(PCITEMID_CHILD, FILTERIDLISTTYPE *) = 0;

@@ -23,13 +23,13 @@ public:
     class PropSheetHeader : public PROPSHEETHEADER
     {
     public:
-        explicit PropSheetHeader(std::wstring caption, DWORD dwflags = 0)
+        explicit PropSheetHeader(std::wstring caption, DWORD dwflags = 0) :
+            m_caption{ caption }
         {
             ZeroMemory(static_cast<PROPSHEETHEADER*>(this), sizeof(PROPSHEETHEADER));
             dwSize = PROPSHEETHEADER_V1_SIZE;
             dwFlags = dwflags;
 
-            m_caption = caption;
             pszCaption = m_caption.c_str();
         }
 
@@ -44,14 +44,12 @@ public:
     };
 
     explicit PropertySheet(std::wstring strCaption, DWORD dwFlags = 0) :
-        m_propertySheetHeader(strCaption, dwFlags),
-        m_eventID(0)
+        m_propertySheetHeader(strCaption, dwFlags)
     {
     }
 
     explicit PropertySheet(UINT nIDCaption, DWORD dwFlags = 0) :
-        m_propertySheetHeader(LoadResourceString(nIDCaption), dwFlags),
-        m_eventID(0)
+        m_propertySheetHeader(LoadResourceString(nIDCaption), dwFlags)
     {
     }
 
@@ -99,7 +97,7 @@ private:
     // Member variables.
     PropSheetHeader             m_propertySheetHeader;
     std::vector<HPROPSHEETPAGE> m_hpages;
-    long                        m_eventID;
+    long                        m_eventID{ 0 };
 };
 
 } // end MSF namespace.

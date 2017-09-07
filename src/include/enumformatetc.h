@@ -50,7 +50,7 @@ class CEnumFORMATETC :
                          std::vector<FORMATETC>> // type of collection holding the data
 {
 public:
-    typedef std::vector<FORMATETC> CFormatEtcs;
+    using CFormatEtcs = std::vector<FORMATETC>;
 
     static ATL::CComPtr<CEnumFORMATETC> CreateInstance(std::unique_ptr<CFormatEtcs> qformatetcs)
     {

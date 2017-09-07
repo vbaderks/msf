@@ -5,9 +5,8 @@
 //
 #pragma once
 
-
-#include "../include/enumidlistimpl.h"
 #include "vvvfile.h"
+#include <msf.h>
 #include <memory>
 
 

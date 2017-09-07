@@ -6,9 +6,7 @@
 #pragma once
 
 
-#include "../include/macros.h"
-#include "../include/pidl.h"
-#include "../include/itembase.h"
+#include <msf.h>
 #include <vector>
 
 
@@ -100,7 +98,6 @@ private:
         wcscpy_s(pitemdata->wszName, _countof(pitemdata->wszName), ATL::CStringW(strName));
     }
 
-
     const SItemData& GetItemData() const noexcept
     {
         return *reinterpret_cast<const SItemData*>(GetData());
@@ -109,4 +106,4 @@ private:
     int CompareByName(const VVVItem& item) const;
 };
 
-typedef std::vector<VVVItem> CVVVItemList;
+using CVVVItemList = std::vector<VVVItem>;

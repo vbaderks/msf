@@ -5,10 +5,9 @@
 //
 #pragma once
 
-#include "../include/strutil.h"
-#include "../include/pidl.h"
 #include "vvvitem.h"
 #include "resource.h"
+#include <msf.h>
 #include <atlsnap.h>
 
 

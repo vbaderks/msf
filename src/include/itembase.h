@@ -15,11 +15,6 @@ namespace MSF
 class ItemBase
 {
 public:
-    explicit ItemBase(LPCITEMIDLIST pidl) noexcept :
-        m_pidl(pidl)
-    {
-    }
-
     USHORT GetDataSize() const noexcept
     {
         return m_pidl->mkid.cb - sizeof(short);
@@ -33,6 +28,12 @@ public:
     LPCITEMIDLIST GetItemIdList() const
     {
         return m_pidl;
+    }
+
+protected:
+    explicit ItemBase(LPCITEMIDLIST pidl) noexcept :
+        m_pidl{ pidl }
+    {
     }
 
 private:

@@ -11,8 +11,7 @@
 #include <emptyvc.h>
 
 
-namespace MSF
-{
+namespace MSF {
 
 template <typename T>
 class __declspec(novtable) DiskCleanupImpl : public IEmptyVolumeCache2
@@ -31,7 +30,7 @@ public:
     }
 
     // IEmptyVolumeCache
-    STDMETHOD(Initialize)(HKEY hkRegKey, LPCWSTR pcwszVolume, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, DWORD *pdwFlags) override
+    HRESULT __stdcall Initialize(HKEY hkRegKey, LPCWSTR pcwszVolume, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, DWORD *pdwFlags) noexcept override
     {
         LPWSTR pwszBtnText;
         auto result = InitializeEx(hkRegKey, pcwszVolume, nullptr, ppwszDisplayName, ppwszDescription, &pwszBtnText, pdwFlags);
@@ -41,7 +40,7 @@ public:
         // TODO: research if this function is still used or if we can just return E_FAIL / E_NOTIMPLEMENTED.
     }
 
-    STDMETHOD(GetSpaceUsed)(__RPC__out DWORDLONG *pdwlSpaceUsed, __RPC__in_opt IEmptyVolumeCacheCallBack *picb) override
+    HRESULT __stdcall GetSpaceUsed(__RPC__out DWORDLONG *pdwlSpaceUsed, __RPC__in_opt IEmptyVolumeCacheCallBack *picb) noexcept override
     {
         try
         {
@@ -55,7 +54,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(Purge)(DWORDLONG dwSpaceToFree, __RPC__in_opt IEmptyVolumeCacheCallBack *picb) override
+    HRESULT __stdcall Purge(DWORDLONG dwSpaceToFree, __RPC__in_opt IEmptyVolumeCacheCallBack *picb) noexcept override
     {
         try
         {
@@ -69,7 +68,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(ShowProperties)(__RPC__in HWND hwnd) override
+    HRESULT __stdcall ShowProperties(__RPC__in HWND hwnd) noexcept override
     {
         try
         {
@@ -83,7 +82,7 @@ public:
         MSF_COM_CATCH_HANDLER()
     }
 
-    STDMETHOD(Deactivate)(__RPC__out DWORD *pdwFlags) override
+    HRESULT __stdcall Deactivate(__RPC__out DWORD *pdwFlags) noexcept override
     {
         try
         {
@@ -103,7 +102,7 @@ public:
     }
 
     // IEmptyVolumeCache2
-    STDMETHOD(InitializeEx)(HKEY hkRegKey, LPCWSTR pcwszVolume, LPCWSTR pcwszKeyName, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, LPWSTR *ppwszBtnText, DWORD *pdwFlags) override
+    HRESULT __stdcall InitializeEx(HKEY hkRegKey, LPCWSTR pcwszVolume, LPCWSTR pcwszKeyName, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, LPWSTR *ppwszBtnText, DWORD *pdwFlags) noexcept override
     {
         try
         {
@@ -127,8 +126,8 @@ public:
         return false;
     }
 
-
 private:
     bool _bInitialized;
 };
+
 } // namespace MSF

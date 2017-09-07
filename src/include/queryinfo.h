@@ -23,7 +23,7 @@ public:
         if (FAILED(hr))
             RaiseException(hr);
 
-        p->m_infoTipText = infoTipText;
+        p->m_infoTipText = std::move(infoTipText);
         return p;
     }
 

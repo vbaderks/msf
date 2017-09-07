@@ -7,10 +7,7 @@
 
 #include "vvvitem.h"
 
-#include "../include/cfhandler.h"
-#include "../include/cfshellidlist.h"
-#include "../include/util.h"
-
+#include <msf.h>
 #include <memory>
 
 // Note: owner of the instance of this class must keep passed dataobject alive.
@@ -32,7 +29,7 @@ public:
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
 
-        if (!MSF::IsBitSet(formatetc.tymed, TYMED_HGLOBAL)) 
+        if (!MSF::IsBitSet(formatetc.tymed, TYMED_HGLOBAL))
             return DV_E_TYMED;
 
         if (static_cast<UINT>(formatetc.lindex) >= GetCfShellIdList()->GetItemCount())

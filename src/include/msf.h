@@ -20,6 +20,8 @@
 #include "droptargetimpl.h"
 #include "propertypageimpl.h"
 #include "shellfolderviewcbimpl.h"
+#include "enumidlistimpl.h"
+#include "shellfolderdataobjectimpl.h"
 
 #include "propertysheet.h"
 #include "strutil.h"
@@ -31,3 +33,5 @@
 #include "smallbitmaphandler.h"
 #include "updateregistry.h"
 #include "version.h"
+#include "itembase.h"
+#include "cfhandler.h"

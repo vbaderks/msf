@@ -32,7 +32,7 @@ public:
 
     void InitializeCore(const wchar_t* szFilename, DWORD /*dwMode*/) override
     {
-        VVVFile vvvfile(szFilename);
+        VVVFile vvvfile{ szFilename };
 
         m_label = vvvfile.GetLabel();
         m_fileCount = MSF::ToString(vvvfile.GetFileCount());
