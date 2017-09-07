@@ -11,7 +11,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE IEnumIDListImpl :
+class __declspec(novtable) IEnumIDListImpl :
     public IEnumIDList
 {
 public:
@@ -35,7 +35,6 @@ public:
             {
             }
 
-
             ~CItemIdListVector()
             {
                 if (m_ppidl)
@@ -47,19 +46,16 @@ public:
                 }
             }
 
-
             void push_back(LPITEMIDLIST pidl) noexcept
             {
                 m_ppidl[m_nCount] = pidl;
                 ++m_nCount;
             }
 
-
             ULONG size() const noexcept
             {
                 return m_nCount;
             }
-
 
             void release() noexcept
             {
@@ -72,7 +68,7 @@ public:
     };
 
     // IEnumIDList
-    STDMETHOD(Next)(ULONG celt, _Out_writes_to_(celt, *pceltFetched) LPITEMIDLIST* ppidl, _Out_opt_ ULONG* pceltFetched) override
+    HRESULT __stdcall Next(ULONG celt, _Out_writes_to_(celt, *pceltFetched) LPITEMIDLIST* ppidl, _Out_opt_ ULONG* pceltFetched) noexcept override
     {
         try
         {
@@ -105,19 +101,19 @@ public:
         }
     }
 
-    STDMETHOD(Skip)(ULONG /*celt*/) override
+    HRESULT __stdcall Skip(ULONG /*celt*/) noexcept override
     {
         // Note: function not used by explorer \ system folder view.
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Skip");
     }
 
-    STDMETHOD(Reset)() override
+    HRESULT __stdcall Reset() noexcept override
     {
         // Note: function not used by explorer \ system folder view.
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Reset");
     }
 
-    STDMETHOD(Clone)(__RPC__deref_out_opt IEnumIDList** /*ppenum*/) override
+    HRESULT __stdcall Clone(__RPC__deref_out_opt IEnumIDList** /*ppenum*/) override
     {
         // Note: function not used by explorer \ system folder view.
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Clone");

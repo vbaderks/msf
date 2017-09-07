@@ -13,7 +13,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE IShellViewImpl :
+class __declspec(novtable) IShellViewImpl :
     public IShellView2
 {
 public:

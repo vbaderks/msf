@@ -18,7 +18,7 @@ using std::vector;
 using namespace MSF;
 
 
-class ATL_NO_VTABLE __declspec(uuid("E53D1A20-D87F-42ad-A6CD-F2E155CAAADC")) ShellPropSheetExt :
+class __declspec(novtable) __declspec(uuid("E53D1A20-D87F-42ad-A6CD-F2E155CAAADC")) ShellPropSheetExt :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<ShellPropSheetExt, &__uuidof(ShellPropSheetExt)>,
     public ShellPropSheetExtImpl<ShellPropSheetExt>

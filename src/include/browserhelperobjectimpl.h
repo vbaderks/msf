@@ -8,17 +8,16 @@
 #include "msfbase.h"
 #include "olestring.h"
 
-namespace MSF
-{
+namespace MSF {
 
 /// <summary>Basic implementation functionality for a Browser Helper Object COM object (BHO).</summary>
 /// <remarks>
 /// Internet Explorer BHO objects must support the IObjectWithSite interface.
 /// </remarks>
-template <typename T>
-class ATL_NO_VTABLE CBrowserHelperObjectImpl :
-    public IObjectWithSiteImpl<T>,
-    public IDispEventImpl<1, T, &DIID_DWebBrowserEvents2, &LIBID_SHDocVw, 1, 1>
+template <typename TDerived>
+class __declspec(novtable) CBrowserHelperObjectImpl :
+    public IObjectWithSiteImpl<TDerived>,
+    public IDispEventImpl<1, TDerived, &DIID_DWebBrowserEvents2, &LIBID_SHDocVw, 1, 1>
 {
 public:
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, PCWSTR wszDescription, bool bNoExplorer) noexcept
@@ -26,7 +25,7 @@ public:
         COleString olestrCLSID;
         ATLVERIFY(SUCCEEDED(::StringFromCLSID(__uuidof(T), olestrCLSID.GetAddress())));
 
-        _ATL_REGMAP_ENTRY regmapEntries[] =
+        _ATL_REGMAP_ENTRY regmapEntries[]
         {
             {L"DESCRIPTION", wszDescription},
             {L"CLSID", olestrCLSID},
@@ -37,17 +36,7 @@ public:
         return ATL::_pAtlModule->UpdateRegistryFromResource(IDR_BROWSERHELPEROBJECT, bRegister, regmapEntries);
     }
 
-    CBrowserHelperObjectImpl() : m_bAdvised(false)
-    {
-    }
-
-    ~CBrowserHelperObjectImpl()
-    {
-        // If COM object is destructed, make sure ref to site is cleared.
-        CBrowserHelperObjectImpl<T>::SetSite(nullptr);
-    }
-
-    STDMETHOD(SetSite)(IUnknown* pUnkSite) override
+    HRESULT __stdcall SetSite(IUnknown* pUnkSite) noexcept override
     {
         // Unadvise from current site.
         if (m_bAdvised)
@@ -65,13 +54,20 @@ public:
     }
 
 protected:
+
+    ~CBrowserHelperObjectImpl()
+    {
+        // If COM object is destructed, make sure ref to site is cleared.
+        CBrowserHelperObjectImpl<TDerived>::SetSite(nullptr);
+    }
+
     bool IsAttachedSite(IUnknown* pUnkSite) noexcept
     {
         return m_spUnkSite && m_spUnkSite.IsEqualObject(pUnkSite);
     }
 
 private:
-    bool m_bAdvised;
+    bool m_bAdvised {false};
 };
 
 }

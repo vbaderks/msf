@@ -24,7 +24,7 @@ namespace MSF
 ///  - IInitializeWithStream
 /// </remarks>
 template <typename T>
-class ATL_NO_VTABLE InfoTipImpl :
+class __declspec(novtable) InfoTipImpl :
     public IInitializeWithFile,
     public IQueryInfoImpl
 {

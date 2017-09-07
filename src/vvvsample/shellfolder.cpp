@@ -22,7 +22,7 @@ using namespace MSF;
 // Defines for the item context menu.
 const UINT ID_DFM_CMD_OPEN = 0;
 
-class ATL_NO_VTABLE ShellFolder :
+class __declspec(novtable) ShellFolder :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<ShellFolder, &__uuidof(ShellFolder)>,
     public ShellFolderImpl<ShellFolder, VVVItem>,

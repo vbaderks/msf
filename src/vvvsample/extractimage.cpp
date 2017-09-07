@@ -12,7 +12,7 @@
 
 using namespace MSF;
 
-class ATL_NO_VTABLE __declspec(uuid("959ACDA2-A398-4204-8378-610979C01557")) ExtractImage :
+class __declspec(novtable) __declspec(uuid("959ACDA2-A398-4204-8378-610979C01557")) ExtractImage :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<ExtractImage, &__uuidof(ExtractImage)>,
     public ExtractImageImpl<ExtractImage>
@@ -26,7 +26,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister) noexcept
     {
         // TODO: update to new reg model.
         return ExtractImageImpl<ExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,
@@ -83,7 +83,7 @@ HBITMAP hbmp= CreateDIBSection( dc,
         int nBitsPerPixel, void **ppImageBits )
 {
     HDC hDC = GetDC( NULL );
- 
+
     BITMAPINFO BitmapInfo;
     ZeroMemory( &BitmapInfo, sizeof(BITMAPINFO) );
     BitmapInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -94,13 +94,13 @@ HBITMAP hbmp= CreateDIBSection( dc,
     BitmapInfo.bmiHeader.biCompression = BI_RGB;
     BitmapInfo.bmiHeader.biSizeImage =
         ( 4 * ((m_cxImage * nBitsPerPixel + 31) / 32) ) * m_cyImage;
- 
+
     HBITMAP hBitmap = CreateDIBSection( hDC,
         &BitmapInfo, DIB_RGB_COLORS,
         ppImageBits, NULL, 0 );
- 
+
     ReleaseDC( NULL, hDC );
- 
+
     return hBitmap;
 }
 

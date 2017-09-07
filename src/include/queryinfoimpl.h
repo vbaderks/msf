@@ -10,7 +10,7 @@
 namespace MSF
 {
 
-class ATL_NO_VTABLE IQueryInfoImpl :
+class __declspec(novtable) IQueryInfoImpl :
     public IQueryInfo
 {
 public:

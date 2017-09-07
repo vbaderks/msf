@@ -47,7 +47,7 @@ struct __declspec(uuid("893C63D1-45C8-4D17-BE19-223BE71BE365")) EP_PreviewPane; 
 struct __declspec(uuid("43ABF98B-89B8-472D-B9CE-E69B8229F019")) EP_DetailsPane;   // Pane showing metadata along the bottom of the Windows Explorer window.
 
 template <typename T, typename TItem>
-class ATL_NO_VTABLE ShellFolderImpl :
+class __declspec(novtable) ShellFolderImpl :
     public IPersistFolder3,
     public IPersistIDList,
     public IShellDetails,

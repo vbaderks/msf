@@ -22,7 +22,7 @@ namespace MSF
 ///  - IDropTarget
 /// </remarks>
 template <typename T>
-class ATL_NO_VTABLE DropTargetImpl :
+class __declspec(novtable) DropTargetImpl :
     public IPersistFile,
     public IDropTarget
 {

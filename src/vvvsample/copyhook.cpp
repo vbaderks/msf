@@ -11,11 +11,11 @@
 
 using namespace MSF;
 
-// This sample will watch folder delete requests. 
+// This sample will watch folder delete requests.
 // When the name includes the substring 'VVV' it will display an conformation dialogbox.
 // Note: explorer.exe only read at startup the CopyHook extensions from the registry.
 
-class ATL_NO_VTABLE __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CopyHook :
+class __declspec(novtable) __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CopyHook :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CopyHook, &__uuidof(CopyHook)>,
     public ICopyHookImpl<CopyHook>
@@ -34,8 +34,8 @@ public:
     }
 
     // ICopyHook overrides
-    STDMETHOD_(UINT, CopyCallback)(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ LPCTSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
-                                   _In_opt_ LPCTSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/) override
+    UINT __stdcall CopyCallback(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ LPCTSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
+                                   _In_opt_ LPCTSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/) noexcept final
     {
         if (wFunc == FO_DELETE && CString(pszSrcFile).Find(L"VVV") != -1)
         {

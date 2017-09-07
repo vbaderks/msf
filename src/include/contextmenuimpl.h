@@ -18,7 +18,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE ContextMenuImpl :
+class __declspec(novtable) ContextMenuImpl :
     public IShellExtInitImpl,
     public IContextMenu3
 {
@@ -216,7 +216,7 @@ public:
     }
 
     // IContextMenu
-    STDMETHOD(QueryContextMenu)( _In_ HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags) override
+    HRESULT __stdcall QueryContextMenu( _In_ HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
             this, indexMenu, idCmdFirst, idCmdLast, uFlags);
@@ -244,7 +244,7 @@ public:
         }
     }
 
-    STDMETHOD(GetCommandString)(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax) override
+    HRESULT __stdcall GetCommandString(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x", this, uFlags);
 
@@ -279,7 +279,7 @@ public:
         }
     }
 
-    STDMETHOD(InvokeCommand)(_In_ CMINVOKECOMMANDINFO* pici) override
+    HRESULT __stdcall InvokeCommand(_In_ CMINVOKECOMMANDINFO* pici) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"CContextMenu::IContextMenu::InvokeCommand, instance=%p\n", this);
 
@@ -299,7 +299,7 @@ public:
     }
 
     // IContextMenu2
-    STDMETHOD(HandleMenuMsg)(UINT uMsg, WPARAM wParam, LPARAM lParam) override
+    HRESULT __stdcall HandleMenuMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n");
         return HandleMenuMsg2(uMsg, wParam, lParam, nullptr);
@@ -312,7 +312,7 @@ public:
     //       WM_MENUCHAR but this is not true (seen on XP sp2).
     //       HandleMenuMsg2 is called also directly for WM_INITMENUPOPUP, etc when
     //       the shell detects that IContextMenu3 is supported.
-    STDMETHOD(HandleMenuMsg2)(UINT uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult) override
+    HRESULT __stdcall HandleMenuMsg2(UINT uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult) noexcept override
     {
         try
         {

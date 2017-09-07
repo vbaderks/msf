@@ -21,8 +21,8 @@ protected:
 };
 
 
-class ATL_NO_VTABLE ShellFolderContextMenu :
-    public CComObjectRootEx<CComSingleThreadModel>,
+class __declspec(novtable) ShellFolderContextMenu :
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ContextMenuImpl<ShellFolderContextMenu>
 {
 public:

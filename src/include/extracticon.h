@@ -14,7 +14,7 @@ namespace MSF
 {
 
 template <typename TItem>
-class ATL_NO_VTABLE ExtractIcon :
+class __declspec(novtable) ExtractIcon :
     public CComObjectRootEx<CComSingleThreadModel>,
     public IExtractIcon
 {
@@ -101,7 +101,7 @@ protected:
         m_pidl.CloneFrom(item.GetItemIdList());
     }
 
-    STDMETHOD(GetIconLocation)(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) override
+    HRESULT __stdcall GetIconLocation(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
 
@@ -119,7 +119,7 @@ protected:
         }
     }
 
-    STDMETHOD(Extract)(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize) override
+    HRESULT __stdcall Extract(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
 

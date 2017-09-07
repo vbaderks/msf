@@ -11,7 +11,7 @@
 
 namespace MSF
 {
-class ATL_NO_VTABLE CQueryInfo :
+class __declspec(novtable) CQueryInfo :
     public CComObjectRootEx<CComSingleThreadModel>,
     public IQueryInfoImpl
 {

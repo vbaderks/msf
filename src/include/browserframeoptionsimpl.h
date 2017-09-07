@@ -12,12 +12,12 @@
 namespace MSF
 {
 
-class ATL_NO_VTABLE IBrowserFrameOptionsImpl :
+class __declspec(novtable) IBrowserFrameOptionsImpl :
     public IBrowserFrameOptions
 {
 public:
     // IBrowserFrameOptions
-    STDMETHOD(GetFrameOptions)(_In_ BROWSERFRAMEOPTIONS dwMask, _Out_ BROWSERFRAMEOPTIONS* pdwOptions) override
+    HRESULT __stdcall GetFrameOptions(BROWSERFRAMEOPTIONS dwMask, _Out_ BROWSERFRAMEOPTIONS* pdwOptions) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0,
                   "IBrowserFrameOptionsImpl::GetFrameOptions (instance=%p, dwMask=%d, dwOptions=%d)\n",

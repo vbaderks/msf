@@ -18,7 +18,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE ShellFolderViewCBImpl :
+class __declspec(novtable) ShellFolderViewCBImpl :
     public IShellFolderViewCB,
     public IFolderViewSettings
 {

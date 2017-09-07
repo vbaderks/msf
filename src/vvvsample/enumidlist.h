@@ -11,7 +11,7 @@
 #include <memory>
 
 
-class ATL_NO_VTABLE EnumIDList :
+class __declspec(novtable) EnumIDList :
     public CComObjectRootEx<CComSingleThreadModel>,
     public MSF::IEnumIDListImpl<EnumIDList>
 {

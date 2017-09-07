@@ -15,7 +15,7 @@ using std::wstring;
 using namespace MSF;
 
 
-class ATL_NO_VTABLE __declspec(uuid("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71")) InfoTip :
+class __declspec(novtable) __declspec(uuid("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71")) InfoTip :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<InfoTip, &__uuidof(InfoTip)>,
     public InfoTipImpl<InfoTip>

@@ -15,7 +15,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE DiskCleanupImpl : public IEmptyVolumeCache2
+class __declspec(novtable) DiskCleanupImpl : public IEmptyVolumeCache2
 {
 public:
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>

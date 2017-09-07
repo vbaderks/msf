@@ -8,7 +8,7 @@
 #include <msf.h>
 
 
-class ATL_NO_VTABLE ShellFolderViewCB :
+class __declspec(novtable) ShellFolderViewCB :
     public CComObjectRootEx<CComSingleThreadModel>,
     public MSF::ShellFolderViewCBImpl<ShellFolderViewCB>
 {

@@ -15,7 +15,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE ShellPropSheetExtImpl :
+class __declspec(novtable) ShellPropSheetExtImpl :
     public IShellExtInitImpl,
     public IShellPropSheetExt
 {

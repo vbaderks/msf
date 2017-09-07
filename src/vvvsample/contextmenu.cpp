@@ -15,14 +15,14 @@ using std::wstring;
 using std::make_unique;
 using namespace MSF;
 
-class ATL_NO_VTABLE __declspec(uuid("B498A476-9EB6-46c3-8146-CE77FF7EA063")) ContextMenu :
+class __declspec(novtable) __declspec(uuid("B498A476-9EB6-46c3-8146-CE77FF7EA063")) ContextMenu :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<ContextMenu, &__uuidof(ContextMenu)>,
-    public MSF::ContextMenuImpl<ContextMenu>,
+    public ContextMenuImpl<ContextMenu>,
     public IObjectWithSiteImpl<ContextMenu>
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister) noexcept
     {
         return ContextMenuImpl<ContextMenu>::UpdateRegistry(bRegister, IDR_CONTEXTMENU,
             L"VVV Sample Context Menu ShellExtension", wszVVVFileRootExt);

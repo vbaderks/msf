@@ -11,7 +11,7 @@
 
 using namespace MSF;
 
-class ATL_NO_VTABLE __declspec(uuid("D7DCE46C-98DB-4446-B1C0-E787325B1FBC")) IconOverlay :
+class __declspec(novtable) __declspec(uuid("D7DCE46C-98DB-4446-B1C0-E787325B1FBC")) IconOverlay :
     public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<IconOverlay, &__uuidof(IconOverlay)>,
     public IconOverlayImpl<IconOverlay>
@@ -23,7 +23,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister) noexcept
     {
         return IconOverlayImpl<IconOverlay>::UpdateRegistry(
             bRegister, IDR_ICONOVERLAY, L"VVV Sample ICON Overlay ShellExtension");

@@ -25,7 +25,7 @@ public:
     typedef std::vector<std::unique_ptr<ClipboardFormatHandler>> CCfHandlers;
     typedef std::vector<CFormatEtc>  CFormatEtcs;
 
-    STDMETHOD(GetData)(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) override
+    HRESULT __stdcall GetData(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, "ShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
@@ -62,14 +62,14 @@ public:
         }
     }
 
-    STDMETHOD(GetDataHere)(_In_ FORMATETC* pformatetc, _Inout_ STGMEDIUM* pmedium) override
+    HRESULT __stdcall GetDataHere(_In_ FORMATETC* pformatetc, _Inout_ STGMEDIUM* pmedium) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ShellFolderDataObjectImpl::GetDataHere (instance=%p)\n", this);
 
         return m_pidldata->GetDataHere(pformatetc, pmedium);
     }
 
-    STDMETHOD(QueryGetData)(__RPC__in_opt FORMATETC* pformatetc) override
+    HRESULT __stdcall QueryGetData(__RPC__in_opt FORMATETC* pformatetc) noexcept override
     {
         // The docs define pformatetc as [in]. The SDK defines pformatetc as in_opt.
         if (!pformatetc)
@@ -101,15 +101,14 @@ public:
         }
     }
 
-
-    STDMETHOD(GetCanonicalFormatEtc)(__RPC__in_opt FORMATETC* pformatetc, __RPC__out FORMATETC* pformatetcOut) override
+    HRESULT __stdcall GetCanonicalFormatEtc(__RPC__in_opt FORMATETC* pformatetc, __RPC__out FORMATETC* pformatetcOut) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ShellFolderDataObjectImpl::GetCanonicalFormatEtc (instance=%p)\n", this);
 
         return m_pidldata->GetCanonicalFormatEtc(pformatetc, pformatetcOut);
     }
 
-    STDMETHOD(SetData)(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease) override
+    HRESULT __stdcall SetData(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ShellFolderDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
@@ -143,7 +142,7 @@ public:
         }
     }
 
-    STDMETHOD(EnumFormatEtc)(DWORD dwDirection, _In_ IEnumFORMATETC** ppenumFormatEtc) override
+    HRESULT __stdcall EnumFormatEtc(DWORD dwDirection, _In_ IEnumFORMATETC** ppenumFormatEtc) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ShellFolderDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 
@@ -166,21 +165,21 @@ public:
         }
     }
 
-    STDMETHOD(DAdvise)(__RPC__in FORMATETC* pformatetc, DWORD advf, __RPC__in_opt IAdviseSink* pAdvSink, __RPC__out DWORD* pdwConnection) override
+    HRESULT __stdcall DAdvise(__RPC__in FORMATETC* pformatetc, DWORD advf, __RPC__in_opt IAdviseSink* pAdvSink, __RPC__out DWORD* pdwConnection) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ShellFolderDataObjectImpl::DAdvise (instance=%p)\n", this);
 
         return m_pidldata->DAdvise(pformatetc, advf, pAdvSink, pdwConnection);
     }
 
-    STDMETHOD(DUnadvise)(DWORD dwConnection) override
+    HRESULT __stdcall DUnadvise(DWORD dwConnection) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ShellFolderDataObjectImpl::DUnadvise (instance=%p)\n", this);
 
         return m_pidldata->DUnadvise(dwConnection);
     }
 
-    STDMETHOD(EnumDAdvise)(__RPC__deref_out_opt IEnumSTATDATA** ppenumAdvise) override
+    HRESULT __stdcall EnumDAdvise(__RPC__deref_out_opt IEnumSTATDATA** ppenumAdvise) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ShellFolderDataObjectImpl::EnumDAdvise (instance=%p)\n", this);
 
@@ -217,7 +216,7 @@ private:
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
             [=](const std::unique_ptr<ClipboardFormatHandler>& clipFormatHandler)
-        { 
+        {
             return clipFormatHandler->GetClipFormat() == clipFormat;
         });
         return handler == m_cfhandlers.end() ? nullptr : (*handler).get();

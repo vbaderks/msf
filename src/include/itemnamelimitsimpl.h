@@ -31,7 +31,7 @@ public:
 
 template <typename T, typename TItem,
           typename TItemV = IItemNameLimitsImplDefault, typename TItemI = IItemNameLimitsImplDefault>
-class ATL_NO_VTABLE IItemNameLimitsImpl :
+class __declspec(novtable) IItemNameLimitsImpl :
     public IItemNameLimits
 {
 public:

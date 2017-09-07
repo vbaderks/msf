@@ -11,17 +11,17 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE IconOverlayImpl : public IShellIconOverlayIdentifier
+class __declspec(novtable) IconOverlayImpl : public IShellIconOverlayIdentifier
 {
 public:
     /// <summary>Registration function to register the COM object.</summary>
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId, PCWSTR szDescription) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId, PCWSTR szDescription) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID());
     }
 
     // IShellIconOverlayIdentifier
-    STDMETHOD(IsMemberOf)(PCWSTR pwszPath, DWORD dwAttrib) override
+    HRESULT __stdcall IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::IsMemberOf (instance=%p, filename=%s, mode=%d)\n", this, pwszPath, dwAttrib);
 
@@ -39,7 +39,7 @@ public:
         }
     }
 
-    STDMETHOD(GetOverlayInfo)(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags) override
+    HRESULT __stdcall GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetOverlayInfo (instance=%p, pwszIconFile=%s, cchMax=%d, pIndex=%p, pdwFlags=%p)\n", this, pwszIconFile, cchMax, pIndex, pdwFlags);
 
@@ -49,12 +49,12 @@ public:
         if (!GetModuleFileNameW(_AtlBaseModule.GetModuleInstance(), pwszIconFile, cchMax))
             return HRESULT_FROM_WIN32(GetLastError());
 
-        *pIndex = _iconIndex;
+        *pIndex = m_iconIndex;
         *pdwFlags = ISIOI_ICONFILE | ISIOI_ICONINDEX;
         return S_OK;
     }
 
-    STDMETHOD(GetPriority)(int* pIPriority) override
+    HRESULT __stdcall GetPriority(int* pIPriority) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetPriority (instance=%p)\n", this);
 
@@ -63,15 +63,15 @@ public:
 
         // In most cases the value zero (highest priority) is fine.
         // In rare cases multiple Icon overlay handler could be registered for one file type.
-        *pIPriority = _priority;
+        *pIPriority = m_priority;
         return S_OK;
     }
 
 protected:
 
     explicit IconOverlayImpl(int iconIndex = 0, int priority = 0) :
-        _iconIndex(iconIndex),
-        _priority(priority)
+        m_iconIndex(iconIndex),
+        m_priority(priority)
     {
         ATLASSERT(iconIndex >= 0);
         ATLASSERT(priority >= 0 && priority <= 100);
@@ -86,8 +86,8 @@ protected:
     }
 
 private:
-    int _iconIndex;
-    int _priority;
+    int m_iconIndex;
+    int m_priority;
 };
 
 } // namespace MSF

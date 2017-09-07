@@ -11,7 +11,7 @@ namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE ShellExtPropertyPageImpl : public CSnapInPropertyPageImpl<T>
+class __declspec(novtable) ShellExtPropertyPageImpl : public CSnapInPropertyPageImpl<T>
 {
 public:
     static UINT CALLBACK PropPageCallback(HWND hWnd, UINT uMsg, LPPROPSHEETPAGE ppsp)

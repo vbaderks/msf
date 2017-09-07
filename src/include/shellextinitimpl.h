@@ -17,7 +17,7 @@ class IShellExtInitImpl :  public IShellExtInit
 {
 public:
     // IShellExtInit
-    STDMETHOD(Initialize)(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) override
+    HRESULT __stdcall Initialize(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) noexcept override
     {
         UNREFERENCED_PARAMETER(pidlFolder);
         ATLTRACE2(atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, pDataObject);
@@ -54,7 +54,7 @@ protected:
         for (unsigned int i = 0; i < uFiles; ++i)
         {
             auto strFilename = cfhdrop.GetFile(i);
-            m_filenames.push_back(std::wstring(strFilename)); // TODO
+            m_filenames.push_back(std::wstring(strFilename));
         }
     }
 

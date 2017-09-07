@@ -190,7 +190,7 @@ class CContextMenuCB
 }
 
 
-class ATL_NO_VTABLE CDefView : public IShellViewImpl<CDefView>
+class __declspec(novtable) CDefView : public IShellViewImpl<CDefView>
 {
 public:
     DECLARE_NOT_AGGREGATABLE(CDefView)

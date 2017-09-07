@@ -8,14 +8,13 @@
 
 #include "msfbase.h"
 #include "updateregistry.h"
-#include <shlobj.h>
 
 
 namespace MSF
 {
 
 template <typename T>
-class ATL_NO_VTABLE ExtractImageImpl :
+class __declspec(novtable) ExtractImageImpl :
     public IPersistFile,
     public IExtractImage2
 {
@@ -54,7 +53,7 @@ public:
     }
 
     // IPersistFile
-    STDMETHOD(GetClassID)(__RPC__out CLSID* pClassID) override
+    HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::GetClassID\n");
 
@@ -65,27 +64,27 @@ public:
         return S_OK;
     }
 
-    STDMETHOD(IsDirty)() override
+    HRESULT __stdcall IsDirty() noexcept override
     {
         ATLTRACENOTIMPL(L"ExtractImageImpl::IsDirty");
     }
 
-    STDMETHOD(Save)(LPCOLESTR, BOOL) override
+    HRESULT __stdcall Save(LPCOLESTR, BOOL) noexcept override
     {
         ATLTRACENOTIMPL(L"ExtractImageImpl::Save");
     }
 
-    STDMETHOD(SaveCompleted)(LPCOLESTR) override
+    HRESULT __stdcall SaveCompleted(LPCOLESTR) noexcept override
     {
         ATLTRACENOTIMPL(L"ExtractImageImpl::SaveCompleted");
     }
 
-    STDMETHOD(GetCurFile)(LPOLESTR*) override
+    HRESULT __stdcall GetCurFile(LPOLESTR*) noexcept override
     {
         ATLTRACENOTIMPL(L"ExtractImageImpl::GetCurFile");
     }
 
-    STDMETHOD(Load)(LPCOLESTR filename, DWORD dwMode) override
+    HRESULT __stdcall Load(LPCOLESTR filename, DWORD dwMode) noexcept override
     {
         UNREFERENCED_PARAMETER(dwMode); // unused in release.
 
@@ -102,8 +101,8 @@ public:
     }
 
     // IExtractImage
-    STDMETHOD(GetLocation)(LPWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
-                           __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags) override
+    HRESULT __stdcall GetLocation(LPWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
+                           __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags) noexcept override
     {
         try
         {
@@ -129,7 +128,7 @@ public:
         }
     }
 
-    STDMETHOD(Extract)(__RPC__deref_out_opt HBITMAP* phBmpThumbnail) override
+    HRESULT __stdcall Extract(__RPC__deref_out_opt HBITMAP* phBmpThumbnail) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, "ExtractImageImpl::Extract (instance=%p)\n", this);
 
@@ -143,7 +142,7 @@ public:
     }
 
     // IExtractImage2
-    STDMETHOD(GetDateStamp)(__RPC__in FILETIME* pDateStamp) override
+    HRESULT __stdcall GetDateStamp(__RPC__in FILETIME* pDateStamp) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, pDateStamp);
 
@@ -153,14 +152,14 @@ public:
         WIN32_FILE_ATTRIBUTE_DATA fileattributedata;
         if (!GetFileAttributesEx(static_cast<T*>(this)->GetPathBuffer().c_str(), GetFileExInfoStandard, &fileattributedata))
             return E_FAIL;
-        
+
         *pDateStamp = fileattributedata.ftLastWriteTime;
         return S_OK;
     }
 
-    // Purpose: returns the identifier for the file that is used to 
+    // Purpose: returns the identifier for the file that is used to
     //          extract the image from. Can be used to optimize
-    //          cases were the image is extracted from a different file 
+    //          cases were the image is extracted from a different file
     //          then set by IPersistFile::Load.
     const std::wstring& GetPathBuffer() const
     {
