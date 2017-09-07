@@ -13,14 +13,30 @@
     <None Include="vvv.ico">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\include\infotip.rgs" />
-    <None Include="..\include\contextmenu.rgs" />
-    <None Include="..\include\propertysheetext.rgs" />
-    <None Include="..\include\shellfolder.rgs" />
-    <None Include="..\include\extractimage_sf.rgs" />
-    <None Include="..\include\copyhookfolder.rgs" />
-    <None Include="..\include\extension.rgs" />
-    <None Include="..\include\iconoverlay.rgs" />
+    <None Include="..\include\contextmenu.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\include\copyhookfolder.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\include\extension.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\include\extractimage_sf.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\include\iconoverlay.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\include\infotip.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\include\propertysheetext.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\include\shellfolder.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aboutmsfcommand.h">
@@ -124,6 +140,8 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon1.ico" />
+    <Image Include="icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
