@@ -16,7 +16,6 @@
 #include "../include/imagelistindex.h"
 
 using std::wstring;
-using namespace MSF;
 
 
 // Note: 'switch' is used in this example to show all the possible options.
@@ -36,10 +35,10 @@ std::wstring VVVItem::GetDisplayName(SHGDNF shellGetDisplayNameType) const
 
     case SHGDN_INFOLDER | SHGDN_FORPARSING:
     case SHGDN_FORPARSING: // note parent should append folder name before item name.
-        return ToString(GetID()); // return unique string (VVV items are unique by ID)
+        return MSF::ToString(GetID()); // return unique string (VVV items are unique by ID)
 
     default:
-        ATLTRACE2(atlTraceCOM, 0, L"VVVItem::GetDisplayName (shellGetDisplayNameType=%d)\n", shellGetDisplayNameType);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"VVVItem::GetDisplayName (shellGetDisplayNameType=%d)\n", shellGetDisplayNameType);
         break;
     }
 
@@ -66,7 +65,7 @@ SFGAOF VVVItem::GetAttributeOf(bool bSingleSelect, bool bReadOnly) const
 
     if (bSingleSelect)
     {
-        shellFileGetAttributesOfFlags |= SFGAO_HASPROPSHEET; 
+        shellFileGetAttributesOfFlags |= SFGAO_HASPROPSHEET;
     }
 
     return shellFileGetAttributesOfFlags;
@@ -81,11 +80,11 @@ int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/
         return CompareByName(item);
 
     case COLUMN_SIZE:
-        return UIntCmp(GetSize(), item.GetSize());
+        return MSF::UIntCmp(GetSize(), item.GetSize());
 
     default:
         ATLASSERT(!"Illegal nCompare option detected");
-        RaiseException();
+        MSF::RaiseException();
     }
 }
 
@@ -102,31 +101,31 @@ wstring VVVItem::GetItemDetailsOf(UINT columnIndex) const
             if (IsFolder())
                 return wstring();
 
-            return ToString(GetSize());
+            return MSF::ToString(GetSize());
         }
 
     default:
         ATLASSERT(false);
-        RaiseException();
+        MSF::RaiseException();
     }
 }
 
 
 std::wstring VVVItem::GetInfoTipText() const
 {
-    return LoadResourceString(IDS_SHELLEXT_NAME) + L": " + wstring(GetDisplayName()) + L"\n" +
-           LoadResourceString(IDS_SHELLEXT_SIZE) + L": " + wstring(ToString(GetSize()));
+    return MSF::LoadResourceString(IDS_SHELLEXT_NAME) + L": " + wstring(GetDisplayName()) + L"\n" +
+           MSF::LoadResourceString(IDS_SHELLEXT_SIZE) + L": " + wstring(MSF::ToString(GetSize()));
 }
 
 
 int VVVItem::GetIconOf(UINT flags) const
 {
     if (IsFolder())
-        return IsBitSet(flags, GIL_OPENICON) ?
-            STD_IMAGELIST_INDEX_FOLDER_OPEN :
-            STD_IMAGELIST_INDEX_FOLDER_PLAIN;
+        return MSF::IsBitSet(flags, GIL_OPENICON) ?
+        MSF::STD_IMAGELIST_INDEX_FOLDER_OPEN :
+        MSF::STD_IMAGELIST_INDEX_FOLDER_PLAIN;
 
-    return STD_IMAGELIST_INDEX_DOCUMENT_FILLED;
+    return MSF::STD_IMAGELIST_INDEX_DOCUMENT_FILLED;
 }
 
 
@@ -150,5 +149,5 @@ int VVVItem::CompareByName(const VVVItem& item) const
         return nResult; // different by name
 
     // VVV items can be equal by name, but are always different by ID.
-    return UIntCmp(GetID(), item.GetID());
+    return MSF::UIntCmp(GetID(), item.GetID());
 }

@@ -7,14 +7,11 @@
 #include "stdafx.h"
 
 #include "resource.h"
-#include <msf.h>
-
-using namespace MSF;
 
 class __declspec(novtable) __declspec(uuid("D7DCE46C-98DB-4446-B1C0-E787325B1FBC")) IconOverlay :
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<IconOverlay, &__uuidof(IconOverlay)>,
-    public IconOverlayImpl<IconOverlay>
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
+    public ATL::CComCoClass<IconOverlay, &__uuidof(IconOverlay)>,
+    public MSF::IconOverlayImpl<IconOverlay>
 {
 public:
     BEGIN_COM_MAP(IconOverlay)

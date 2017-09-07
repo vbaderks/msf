@@ -196,7 +196,7 @@ inline ATL::CString QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValu
 }
 
 
-inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::vector<ATL::CString>& rgStrings)
+inline void QueryMultiStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, std::vector<ATL::CString>& rgStrings)
 {
     rgStrings.clear();
 
@@ -211,7 +211,7 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
     for (size_t i = 0; i < buffer.size() && buffer[i];
          i += rgStrings.back().GetLength() + 1)
     {
-        rgStrings.push_back(CString(&buffer[i]));
+        rgStrings.push_back(ATL::CString(&buffer[i]));
     }
 }
 
@@ -221,14 +221,14 @@ inline void QueryMultiStringValue(CRegKey& regkey, LPCTSTR pszValueName, std::ve
 // using the 'run' menu.
 // Shell extensions can use these entries to detect installed software.
 //
-inline CString GetAppPath(const CString& strApp)
+inline ATL::CString GetAppPath(const ATL::CString& strApp)
 {
-    CRegKey key;
+    ATL::CRegKey key;
 
     if (key.Open(HKEY_LOCAL_MACHINE,
         L"Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + strApp,
         KEY_READ) != ERROR_SUCCESS)
-        return CString();
+        return ATL::CString();
 
     return QueryRegKeyStringValue(key, L"");
 }

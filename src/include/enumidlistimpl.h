@@ -17,13 +17,13 @@ class __declspec(novtable) IEnumIDListImpl :
 public:
     IEnumIDListImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n", this);
     }
 
 
     ~IEnumIDListImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n", this);
     }
 
 

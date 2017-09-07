@@ -9,18 +9,18 @@
 
 
 class __declspec(novtable) ShellFolderViewCB :
-    public CComObjectRootEx<CComSingleThreadModel>,
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public MSF::ShellFolderViewCBImpl<ShellFolderViewCB>
 {
 public:
-    static CComPtr<IShellFolderViewCB> CreateInstance(LPCITEMIDLIST pidlFolder)
+    static ATL::CComPtr<IShellFolderViewCB> CreateInstance(LPCITEMIDLIST pidlFolder)
     {
-        CComObject<ShellFolderViewCB>* pinstance;
-        HRESULT hr = CComObject<ShellFolderViewCB>::CreateInstance(&pinstance);
+        ATL::CComObject<ShellFolderViewCB>* pinstance;
+        HRESULT hr = ATL::CComObject<ShellFolderViewCB>::CreateInstance(&pinstance);
         if (FAILED(hr))
             MSF::RaiseException();
 
-        CComPtr<IShellFolderViewCB> shellfolderviewcb(pinstance);
+        ATL::CComPtr<IShellFolderViewCB> shellfolderviewcb(pinstance);
         pinstance->SetFolder(pidlFolder);
         return shellfolderviewcb;
     }

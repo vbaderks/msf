@@ -7,11 +7,8 @@
 #include "stdafx.h"
 
 #include "vvvfile.h"
-#include <msf.h>
 
 using std::wstring;
-using namespace MSF;
-
 
 const wchar_t* TSZ_APP_NAME_DIRECTORY = L"directory";
 const wchar_t* TSZ_FILE_COUNT         = L"filecount";
@@ -42,7 +39,7 @@ unsigned int VVVFile::GetFileCount() const
     //RaiseExceptionIfFailed(hr);
 
     unsigned int nCount = GetPrivateProfileInt(TSZ_APP_NAME_DIRECTORY, TSZ_FILE_COUNT);
-    RaiseExceptionIf(nCount == static_cast<UINT>(-1));
+    MSF::RaiseExceptionIf(nCount == static_cast<UINT>(-1));
 
     return nCount;
 }
@@ -69,11 +66,11 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
         {
             bool bFolder = GetPrivateProfileInt(strAppName.c_str(), TSZ_FOLDER) == 1;
 
-            if ((IsBitSet(grfFlags, SHCONTF_NONFOLDERS) && !bFolder) ||
-                (IsBitSet(grfFlags, SHCONTF_FOLDERS) && bFolder))
+            if ((MSF::IsBitSet(grfFlags, SHCONTF_NONFOLDERS) && !bFolder) ||
+                (MSF::IsBitSet(grfFlags, SHCONTF_FOLDERS) && bFolder))
             {
                 unsigned int nSize = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
-                RaiseExceptionIf(nSize == static_cast<UINT>(-1));
+                MSF::RaiseExceptionIf(nSize == static_cast<UINT>(-1));
                 auto strName = GetPrivateProfileString(strAppName.c_str(), TSZ_NAME);
 
                 return VVVItem::CreateItemIdList(nItemIterator, nSize, bFolder, strName.c_str());
@@ -107,18 +104,18 @@ void VVVFile::SetItem(const VVVItem& item) const
 
 LPITEMIDLIST VVVFile::AddItem(const std::wstring& strFile) const
 {
-    CString strName = PathFindFileName(strFile.c_str());
-    DWORD dwSize    = GetFileSize(strFile.c_str());
+    ATL::CString strName = PathFindFileName(strFile.c_str());
+    DWORD dwSize    = MSF::GetFileSize(strFile.c_str());
 
     return AddItem(dwSize, strName);
 }
 
 
-LPITEMIDLIST VVVFile::AddItem(unsigned int nSize, const CString& strName) const
+LPITEMIDLIST VVVFile::AddItem(unsigned int nSize, const ATL::CString& strName) const
 {
     unsigned int nId = FindFreeEntry();
 
-    CPidl pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, strName));
+    MSF::CPidl pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, strName));
 
     AddItem(VVVItem(pidlItem));
 
@@ -180,12 +177,12 @@ wstring VVVFile::GetAppNameDirectory() const
 
 wstring VVVFile::GetAppNameItem(unsigned int nID) const
 {
-    CString strAppName;
+    ATL::CString strAppName;
     strAppName.Format(TSZ_FILE_FORMAT, nID); // TODO
 
     if (!m_folder.empty())
     {
-        strAppName = m_folder.c_str() + CString(L"\\") + strAppName;
+        strAppName = m_folder.c_str() + ATL::CString(L"\\") + strAppName;
     }
 
     return strAppName.GetString();
@@ -208,11 +205,11 @@ unsigned int  VVVFile::GetPrivateProfileInt(const wchar_t* lpAppName, const wcha
 
 void VVVFile::WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName, const wchar_t* lpString) const
 {
-    RaiseLastErrorExceptionIf(!::WritePrivateProfileString(lpAppName, lpKeyName, lpString, m_filename.c_str()));
+    MSF::RaiseLastErrorExceptionIf(!::WritePrivateProfileString(lpAppName, lpKeyName, lpString, m_filename.c_str()));
 }
 
 
 void VVVFile::WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const
 {
-    WritePrivateProfileString(lpAppName, lpKeyName, ToString(nValue).c_str());
+    WritePrivateProfileString(lpAppName, lpKeyName, MSF::ToString(nValue).c_str());
 }

@@ -15,7 +15,7 @@ namespace MSF
 
 template <typename TItem>
 class __declspec(novtable) ExtractIcon :
-    public CComObjectRootEx<CComSingleThreadModel>,
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public IExtractIcon
 {
 public:
@@ -64,14 +64,14 @@ public:
         HICON m_hicon;
     };
 
-    static CComPtr<IExtractIcon> CreateInstance(const TItem& item)
+    static ATL::CComPtr<IExtractIcon> CreateInstance(const TItem& item)
     {
-        CComObject<ExtractIcon<TItem> >* pinstance;
-        HRESULT hr = CComObject<ExtractIcon<TItem> >::CreateInstance(&pinstance);
+        ATL::CComObject<ExtractIcon<TItem> >* pinstance;
+        HRESULT hr = ATL::CComObject<ExtractIcon<TItem> >::CreateInstance(&pinstance);
         if (FAILED(hr))
             RaiseException(hr);
 
-        CComPtr<IExtractIcon> extracticon(pinstance);
+        ATL::CComPtr<IExtractIcon> extracticon(pinstance);
 
         pinstance->Initialize(item);
 
@@ -103,7 +103,7 @@ protected:
 
     HRESULT __stdcall GetIconLocation(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
 
         try
         {
@@ -121,7 +121,7 @@ protected:
 
     HRESULT __stdcall Extract(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
 
         try
         {

@@ -26,7 +26,7 @@ public:
     void SetItem(const VVVItem& item) const;
 
     LPITEMIDLIST AddItem(const std::wstring& strFile) const;
-    LPITEMIDLIST AddItem(unsigned int nSize, const CString& strName) const;
+    LPITEMIDLIST AddItem(unsigned int nSize, const ATL::CString& strName) const;
 
 private:
 

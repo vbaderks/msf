@@ -8,14 +8,11 @@
 
 #include "shellfolderclsid.h"
 #include "resource.h"
-#include <msf.h>
-
-using namespace MSF;
 
 class __declspec(novtable) __declspec(uuid("959ACDA2-A398-4204-8378-610979C01557")) ExtractImage :
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<ExtractImage, &__uuidof(ExtractImage)>,
-    public ExtractImageImpl<ExtractImage>
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
+    public ATL::CComCoClass<ExtractImage, &__uuidof(ExtractImage)>,
+    public MSF::ExtractImageImpl<ExtractImage>
 {
 public:
     BEGIN_COM_MAP(ExtractImage)

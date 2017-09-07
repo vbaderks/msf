@@ -7,18 +7,16 @@
 #include "stdafx.h"
 
 #include "resource.h"
-#include <msf.h>
 
-using namespace MSF;
 
 // This sample will watch folder delete requests.
 // When the name includes the substring 'VVV' it will display an conformation dialogbox.
 // Note: explorer.exe only read at startup the CopyHook extensions from the registry.
 
 class __declspec(novtable) __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CopyHook :
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CopyHook, &__uuidof(CopyHook)>,
-    public ICopyHookImpl<CopyHook>
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
+    public ATL::CComCoClass<CopyHook, &__uuidof(CopyHook)>,
+    public MSF::ICopyHookImpl<CopyHook>
 {
 public:
     BEGIN_COM_MAP(CopyHook)
@@ -29,7 +27,7 @@ public:
 
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
     {
-        return ICopyHookImpl<CopyHook>::UpdateRegistry(bRegister, IDR_COPYHOOK,
+        return MSF::ICopyHookImpl<CopyHook>::UpdateRegistry(bRegister, IDR_COPYHOOK,
             L"VVV Sample CopyHook ShellExtension", L"VVV CopyHook");
     }
 
@@ -37,10 +35,10 @@ public:
     UINT __stdcall CopyCallback(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ LPCTSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
                                    _In_opt_ LPCTSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/) noexcept final
     {
-        if (wFunc == FO_DELETE && CString(pszSrcFile).Find(L"VVV") != -1)
+        if (wFunc == FO_DELETE && ATL::CString(pszSrcFile).Find(L"VVV") != -1)
         {
-            return IsolationAwareMessageBox(hwnd, LoadResourceString(IDS_COPYHOOK_QUESTION).c_str(),
-                LoadResourceString(IDS_COPYHOOK_CAPTION).c_str(), MB_YESNOCANCEL);
+            return IsolationAwareMessageBox(hwnd, MSF::LoadResourceString(IDS_COPYHOOK_QUESTION).c_str(),
+                MSF::LoadResourceString(IDS_COPYHOOK_CAPTION).c_str(), MB_YESNOCANCEL);
         }
 
         return IDYES;

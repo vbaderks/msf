@@ -19,7 +19,7 @@ public:
     // IBrowserFrameOptions
     HRESULT __stdcall GetFrameOptions(BROWSERFRAMEOPTIONS dwMask, _Out_ BROWSERFRAMEOPTIONS* pdwOptions) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0,
+        ATLTRACE2(ATL::atlTraceCOM, 0,
                   "IBrowserFrameOptionsImpl::GetFrameOptions (instance=%p, dwMask=%d, dwOptions=%d)\n",
                   this, dwMask, m_browserframeoptions);
 

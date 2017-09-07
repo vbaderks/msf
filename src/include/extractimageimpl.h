@@ -49,13 +49,13 @@ public:
     ExtractImageImpl() :
         m_hbitmap(nullptr)
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
     }
 
     // IPersistFile
     HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::GetClassID\n");
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::GetClassID\n");
 
         if (!pClassID)
             return E_POINTER;
@@ -88,7 +88,7 @@ public:
     {
         UNREFERENCED_PARAMETER(dwMode); // unused in release.
 
-        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, filename);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, filename);
         try
         {
             m_strFilename = filename;
@@ -106,7 +106,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, "ExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
+            ATLTRACE2(ATL::atlTraceCOM, 0, "ExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
 
             Dispose();
             m_hbitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
@@ -130,7 +130,7 @@ public:
 
     HRESULT __stdcall Extract(__RPC__deref_out_opt HBITMAP* phBmpThumbnail) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, "ExtractImageImpl::Extract (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, "ExtractImageImpl::Extract (instance=%p)\n", this);
 
         if (!m_hbitmap)
             return E_FAIL;
@@ -144,7 +144,7 @@ public:
     // IExtractImage2
     HRESULT __stdcall GetDateStamp(__RPC__in FILETIME* pDateStamp) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, pDateStamp);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, pDateStamp);
 
         if (!pDateStamp)
             return E_POINTER;
@@ -170,7 +170,7 @@ protected:
 
     ~ExtractImageImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ExtractImageImpl::~ExtractImageImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::~ExtractImageImpl (instance=%p)\n", this);
         Dispose();
     }
 

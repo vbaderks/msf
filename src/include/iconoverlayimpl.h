@@ -23,7 +23,7 @@ public:
     // IShellIconOverlayIdentifier
     HRESULT __stdcall IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::IsMemberOf (instance=%p, filename=%s, mode=%d)\n", this, pwszPath, dwAttrib);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::IsMemberOf (instance=%p, filename=%s, mode=%d)\n", this, pwszPath, dwAttrib);
 
         if (!pwszPath)
             return E_POINTER;
@@ -41,12 +41,12 @@ public:
 
     HRESULT __stdcall GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetOverlayInfo (instance=%p, pwszIconFile=%s, cchMax=%d, pIndex=%p, pdwFlags=%p)\n", this, pwszIconFile, cchMax, pIndex, pdwFlags);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::GetOverlayInfo (instance=%p, pwszIconFile=%s, cchMax=%d, pIndex=%p, pdwFlags=%p)\n", this, pwszIconFile, cchMax, pIndex, pdwFlags);
 
         if (!pwszIconFile || !pIndex || !pdwFlags)
             return E_POINTER;
 
-        if (!GetModuleFileNameW(_AtlBaseModule.GetModuleInstance(), pwszIconFile, cchMax))
+        if (!GetModuleFileNameW(ATL::_AtlBaseModule.GetModuleInstance(), pwszIconFile, cchMax))
             return HRESULT_FROM_WIN32(GetLastError());
 
         *pIndex = m_iconIndex;
@@ -56,7 +56,7 @@ public:
 
     HRESULT __stdcall GetPriority(int* pIPriority) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::GetPriority (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::GetPriority (instance=%p)\n", this);
 
         if (!pIPriority)
             return E_POINTER;
@@ -75,14 +75,14 @@ protected:
     {
         ATLASSERT(iconIndex >= 0);
         ATLASSERT(priority >= 0 && priority <= 100);
-        ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::IconOverlayImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::IconOverlayImpl (instance=%p)\n", this);
     }
 
     IconOverlayImpl(const IconOverlayImpl&) = delete;
 
     ~IconOverlayImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IconOverlayImpl::~IconOverlayImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::~IconOverlayImpl (instance=%p)\n", this);
     }
 
 private:

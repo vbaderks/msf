@@ -12,7 +12,7 @@
 #include <atlsnap.h>
 
 
-class CPropertyPageItem : public CSnapInPropertyPageImpl<CPropertyPageItem>
+class CPropertyPageItem : public ATL::CSnapInPropertyPageImpl<CPropertyPageItem>
 {
 public:
     static HPROPSHEETPAGE CreateInstance(VVVItem& item, long& wEventId, IShellFolder* pshellfolder)
@@ -48,7 +48,7 @@ public:
     {
         m_wEventId = 0;
 
-        CString strName;
+        ATL::CString strName;
         GetDlgItemText(IDC_EDIT_ITEM_NAME, strName);
         strName.Trim();
         std::wstring name(strName); // TODO
@@ -66,7 +66,7 @@ public:
 
         if (m_wEventId != 0)
         {
-            m_pidlNew.Attach(VVVItem::CreateItemIdList(m_item.GetID(),  
+            m_pidlNew.Attach(VVVItem::CreateItemIdList(m_item.GetID(),
                 nSize, m_item.IsFolder(), strName));
         }
 
@@ -95,5 +95,5 @@ private:
     const VVVItem &       m_item;
     MSF::CPidl            m_pidlNew;
     long &                m_wEventId;
-    CComPtr<IShellFolder> m_rshellfolder;
+    ATL::CComPtr<IShellFolder> m_rshellfolder;
 };

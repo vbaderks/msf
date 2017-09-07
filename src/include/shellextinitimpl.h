@@ -20,7 +20,7 @@ public:
     HRESULT __stdcall Initialize(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) noexcept override
     {
         UNREFERENCED_PARAMETER(pidlFolder);
-        ATLTRACE2(atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, pDataObject);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, pDataObject);
         ATLASSERT(pDataObject && "Invalid argument");
 
         try

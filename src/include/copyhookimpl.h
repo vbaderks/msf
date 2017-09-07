@@ -33,7 +33,7 @@ public:
         OleString olestrCLSID;
         StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
 
-        _ATL_REGMAP_ENTRY regmapEntries[] =
+        ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
         {
             { L"CLSID", olestrCLSID },
             { L"DESCRIPTION", szDescription },
@@ -47,13 +47,13 @@ public:
 protected:
     ICopyHookImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ICopyHookImpl::Constructor (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ICopyHookImpl::Constructor (instance=%p)\n", this);
     }
 
 
     ~ICopyHookImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ICopyHookImpl::~ICopyHookImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ICopyHookImpl::~ICopyHookImpl (instance=%p)\n", this);
     }
 
     // ICopyHookImpl only consists of 1 function. So there is little to provide.

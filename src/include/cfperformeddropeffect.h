@@ -28,7 +28,7 @@ public:
         HRESULT hr = SetImpl(pdataobject, dwEffect);
         if (FAILED(hr))
         {
-            ATLTRACE2(atlTraceCOM, 0, L"CCfPerformedDropEffect::SetOptional failed, hr=%x\n", hr);
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPerformedDropEffect::SetOptional failed, hr=%x\n", hr);
         }
     }
 

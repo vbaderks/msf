@@ -20,7 +20,7 @@ public:
         return 10; // note: limit is 10 for easy testing.
     }
 
-    static LPITEMIDLIST CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const CString& strName)
+    static LPITEMIDLIST CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
     {
         LPITEMIDLIST pidl = MSF::CPidl::CreateItemIdListWithTerminator(sizeof(SItemData));
 
@@ -38,7 +38,7 @@ public:
 #ifdef _DEBUG
         if (!bValid)
         {
-            ATLTRACE2(atlTraceCOM, 0, L"VVVItem::Constructor, PIDL not valid (dsize=%d, ssize=%d)\n", GetDataSize(), sizeof(SItemData));
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"VVVItem::Constructor, PIDL not valid (dsize=%d, ssize=%d)\n", GetDataSize(), sizeof(SItemData));
         }
 #endif
         MSF::RaiseExceptionIf(!bValid);
@@ -91,13 +91,13 @@ private:
     };
     #pragma pack()
 
-    static void InitializeItemData(SItemData* pitemdata, unsigned int nId, unsigned int nSize, bool bFolder, const CString& strName)
+    static void InitializeItemData(SItemData* pitemdata, unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
     {
         pitemdata->nTypeID = TYPE_ID;
         pitemdata->nID     = nId;
         pitemdata->bFolder = bFolder;
         pitemdata->nSize   = nSize;
-        wcscpy_s(pitemdata->wszName, _countof(pitemdata->wszName), CStringW(strName));
+        wcscpy_s(pitemdata->wszName, _countof(pitemdata->wszName), ATL::CStringW(strName));
     }
 
 

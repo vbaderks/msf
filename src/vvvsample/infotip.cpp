@@ -8,17 +8,13 @@
 
 #include "vvvfile.h"
 #include "resource.h"
-#include <msf.h>
-
 
 using std::wstring;
-using namespace MSF;
-
 
 class __declspec(novtable) __declspec(uuid("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71")) InfoTip :
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<InfoTip, &__uuidof(InfoTip)>,
-    public InfoTipImpl<InfoTip>
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
+    public ATL::CComCoClass<InfoTip, &__uuidof(InfoTip)>,
+    public MSF::InfoTipImpl<InfoTip>
 {
 public:
     BEGIN_COM_MAP(InfoTip)
@@ -46,8 +42,8 @@ public:
     //          The string is used for the tooltip and the text in the status bar.
     wstring GetInfoTip(DWORD /* dwFlags */) override
     {
-        return LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + m_label + L"\n" +
-               LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + m_fileCount;
+        return MSF::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + m_label + L"\n" +
+               MSF::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + m_fileCount;
     }
 
 private:

@@ -65,7 +65,7 @@ private:
 
     static HBITMAP LoadBitmap(UINT resourceID) noexcept
     {
-        HBITMAP hbitmap = ::LoadBitmap(_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceID));
+        HBITMAP hbitmap = ::LoadBitmap(ATL::_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceID));
         ATLASSERT(hbitmap && "Failed to load the bitmap, check resource id, etc");
         return hbitmap;
     }

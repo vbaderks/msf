@@ -36,7 +36,7 @@ public:
 
         m_dwEffect = *globallock.get();
 
-        ATLTRACE2(atlTraceCOM, 0, L"CCfPerformedDropEffectHandler::SetData (dwEffect=%p)\n", m_dwEffect);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPerformedDropEffectHandler::SetData (dwEffect=%p)\n", m_dwEffect);
 
         if (m_dwEffect == DROPEFFECT_MOVE)
         {
@@ -67,7 +67,7 @@ private:
     }
 
     // member variables
-    CComPtr<IPerformedDropEffectSink> m_rperformeddropeffectsink;
+    ATL::CComPtr<IPerformedDropEffectSink> m_rperformeddropeffectsink;
     IDataObject*                      m_pdataobject;
     DWORD                             m_dwEffect;
 };

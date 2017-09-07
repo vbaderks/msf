@@ -12,7 +12,7 @@
 
 
 class __declspec(novtable) EnumIDList :
-    public CComObjectRootEx<CComSingleThreadModel>,
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public MSF::IEnumIDListImpl<EnumIDList>
 {
 public:
@@ -22,14 +22,14 @@ public:
         COM_INTERFACE_ENTRY(IEnumIDList)
     END_COM_MAP()
 
-    static CComPtr<IEnumIDList> CreateInstance(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
+    static ATL::CComPtr<IEnumIDList> CreateInstance(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
     {
-        CComObject<EnumIDList>* pinstance;
-        HRESULT hr = CComObject<EnumIDList>::CreateInstance(&pinstance);
+        ATL::CComObject<EnumIDList>* pinstance;
+        HRESULT hr = ATL::CComObject<EnumIDList>::CreateInstance(&pinstance);
         if (FAILED(hr))
             MSF::RaiseException(hr);
 
-        CComPtr<IEnumIDList> renumidlist(pinstance);
+        ATL::CComPtr<IEnumIDList> renumidlist(pinstance);
         pinstance->Initialize(strFilename, strFolder, grfFlags);
         return renumidlist;
     }

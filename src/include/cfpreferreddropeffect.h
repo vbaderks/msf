@@ -30,7 +30,7 @@ public:
         if (SUCCEEDED(hr))
             return dwEffect;
 
-        ATLTRACE2(atlTraceCOM, 0, L"CCfPreferredDropEffect::GetOptional failed, hr=%x\n", hr);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPreferredDropEffect::GetOptional failed, hr=%x\n", hr);
         return dwEffectDefault;
     }
 

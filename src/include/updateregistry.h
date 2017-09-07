@@ -58,7 +58,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
 inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegister,
     PCWSTR szExtension, PCWSTR szProgId) noexcept
 {
-    _ATL_REGMAP_ENTRY regmapEntries[] = 
+    ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"EXTENSION", szExtension },
         { L"PROGID", szProgId },
@@ -97,9 +97,9 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     OleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
-    CStringW strFriendlyTypenameId = ToStringW(nFriendlyTypeNameId);
+    ATL::CStringW strFriendlyTypenameId = ToStringW(nFriendlyTypeNameId);
 
-    _ATL_REGMAP_ENTRY regmapEntries[] =
+    ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"DESCRIPTION", szShellExtDescription },
         { L"EXTENSION", szExtension },

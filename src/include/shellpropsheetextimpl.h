@@ -55,7 +55,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, L"ShellPropSheetExtImpl::AddPages (instance=%p, pfnAddPage=%p, lParam=&p)\n", this, pfnAddPage, lParam);
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellPropSheetExtImpl::AddPages (instance=%p, pfnAddPage=%p, lParam=&p)\n", this, pfnAddPage, lParam);
             CAddPage addpage(pfnAddPage, lParam);
 
             AddPagesCore(addpage, GetFilenames());
@@ -77,12 +77,12 @@ public:
 protected:
     ShellPropSheetExtImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ShellPropSheetExtImpl::ShellPropSheetExtImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellPropSheetExtImpl::ShellPropSheetExtImpl (instance=%p)\n", this);
     }
 
     ~ShellPropSheetExtImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ShellPropSheetExtImpl::~ShellPropSheetExtImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellPropSheetExtImpl::~ShellPropSheetExtImpl (instance=%p)\n", this);
     }
 
     virtual void AddPagesCore(const CAddPage& /*addpages*/, const std::vector<std::wstring>& /*filenames*/) = 0;

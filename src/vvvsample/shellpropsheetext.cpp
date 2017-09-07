@@ -15,13 +15,12 @@
 
 using std::wstring;
 using std::vector;
-using namespace MSF;
 
 
 class __declspec(novtable) __declspec(uuid("E53D1A20-D87F-42ad-A6CD-F2E155CAAADC")) ShellPropSheetExt :
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<ShellPropSheetExt, &__uuidof(ShellPropSheetExt)>,
-    public ShellPropSheetExtImpl<ShellPropSheetExt>
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
+    public ATL::CComCoClass<ShellPropSheetExt, &__uuidof(ShellPropSheetExt)>,
+    public MSF::ShellPropSheetExtImpl<ShellPropSheetExt>
 {
 public:
     BEGIN_COM_MAP(ShellPropSheetExt)

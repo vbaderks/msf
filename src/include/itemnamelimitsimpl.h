@@ -40,7 +40,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, L"IItemNameLimitsImpl::GetValidCharacters\n");
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"IItemNameLimitsImpl::GetValidCharacters\n");
 
             const wchar_t* pszValidChars = TItemV::GetValidChars();
             if (!pszValidChars)
@@ -77,7 +77,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, L"IItemNameLimitsImpl::GetMaxLength, name=%s\n", pszName);
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"IItemNameLimitsImpl::GetMaxLength, name=%s\n", pszName);
 
             // The TItem must implement the static function GetMaxItemNameLength.
             *piMaxNameLen = TItem::GetMaxNameLength(pszName);

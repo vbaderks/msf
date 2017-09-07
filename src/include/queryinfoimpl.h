@@ -22,7 +22,7 @@ public:
     {
         // The Vista shell will call GetInfoFlags. The MSDN docs are incomplete about the use of this function.
         // Possible return values are:
-        // - QIF_CACHED 
+        // - QIF_CACHED
         // - QIF_DONTEXPANDFOLDER
 
         ATLTRACENOTIMPL(L"IQueryInfoImpl::GetInfoFlags");
@@ -32,7 +32,7 @@ public:
     {
         try
         {
-            ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (dwFlags=%d)\n", dwFlags);
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (dwFlags=%d)\n", dwFlags);
             return SHStrDup(GetInfoTip(dwFlags).c_str(), ppwszTip);
         }
         catch (...)
@@ -45,12 +45,12 @@ protected:
 
     IQueryInfoImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n", this);
     }
 
     ~IQueryInfoImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n", this);
     }
 
     virtual std::wstring GetInfoTip(DWORD dwFlags) = 0;

@@ -12,14 +12,14 @@
 namespace MSF
 {
 class __declspec(novtable) CQueryInfo :
-    public CComObjectRootEx<CComSingleThreadModel>,
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public IQueryInfoImpl
 {
 public:
-    static CComPtr<IQueryInfo> CreateInstance(std::wstring infoTipText)
+    static ATL::CComPtr<IQueryInfo> CreateInstance(std::wstring infoTipText)
     {
-        CComObject<CQueryInfo>* p;
-        HRESULT hr = CComObject<CQueryInfo>::CreateInstance(&p);
+        ATL::CComObject<CQueryInfo>* p;
+        HRESULT hr = ATL::CComObject<CQueryInfo>::CreateInstance(&p);
         if (FAILED(hr))
             RaiseException(hr);
 

@@ -13,7 +13,7 @@
 
 
 class CShellFolderDataObject :
-    public CComObjectRootEx<CComSingleThreadModel>,
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public MSF::ShellFolderDataObjectImpl<CShellFolderDataObject>
 {
 public:
@@ -23,15 +23,15 @@ public:
         COM_INTERFACE_ENTRY(IDataObject)
     END_COM_MAP()
 
-    static CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl,
+    static ATL::CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl,
         LPCITEMIDLIST* ppidl, MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
-        CComObject<CShellFolderDataObject>* pinstance;
-        HRESULT hr = CComObject<CShellFolderDataObject>::CreateInstance(&pinstance);
+        ATL::CComObject<CShellFolderDataObject>* pinstance;
+        HRESULT hr = ATL::CComObject<CShellFolderDataObject>::CreateInstance(&pinstance);
         if (FAILED(hr))
             MSF::RaiseException(hr);
 
-        CComPtr<IDataObject> rdataobject(pinstance);
+        ATL::CComPtr<IDataObject> rdataobject(pinstance);
         pinstance->Initialize(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
         return rdataobject;
     }

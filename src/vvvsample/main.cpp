@@ -7,12 +7,10 @@
 #include "stdafx.h"
 
 #include "resource.h"
-#include <msf.h>
 
-using namespace MSF;
 
 // ATL COM DLLs require a single "module" instance.
-class Module : public CAtlDllModuleT<Module>
+class Module : public ATL::CAtlDllModuleT<Module>
 {
 };
 Module _Module;
@@ -25,11 +23,11 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
         return false;
 
     // Enable/Disable dynamic isolation aware code (Windows XP and up theme support)
-    IsolationAwareDllMain(dwReason);
+    MSF::IsolationAwareDllMain(dwReason);
 
 #ifdef DEBUG
     // Increase the default level to 4 to see all trace messages.
-    CTrace::SetLevel(4);
+    ATL::CTrace::SetLevel(4);
 #endif
 
     if (dwReason == DLL_PROCESS_ATTACH)
@@ -46,7 +44,7 @@ __control_entrypoint(DllExport)
 STDAPI DllCanUnloadNow()
 {
     auto hr = _Module.DllCanUnloadNow();
-    ATLTRACE2(atlTraceCOM, 0, L"SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload OK)\n", hr);
+    ATLTRACE2(ATL::atlTraceCOM, 0, L"SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload OK)\n", hr);
     return hr;
 }
 
@@ -65,7 +63,7 @@ STDAPI DllRegisterServer()
     if (FAILED(hr))
         return hr;
 
-    hr = UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, true, wszVVVExtension, wszVVVFileRootExt);
+    hr = MSF::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, true, wszVVVExtension, wszVVVFileRootExt);
     if (FAILED(hr))
         return hr;
 
@@ -81,7 +79,7 @@ STDAPI DllUnregisterServer()
 {
     _Module.DllUnregisterServer(); // note: will fail if already unregistered; not an issue.
 
-    UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, false, wszVVVExtension, wszVVVFileRootExt);
+    MSF::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, false, wszVVVExtension, wszVVVFileRootExt);
 
     // Notify the shell that .vvv file association has changed.
     SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);

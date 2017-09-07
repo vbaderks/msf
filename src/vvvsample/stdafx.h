@@ -49,6 +49,8 @@
 
 #define _ATL_ALL_USER_WARNINGS
 
+#define _ATL_NO_AUTOMATIC_NAMESPACE
+
 #include <msf.h>
 
 // Disable not useful warnings.

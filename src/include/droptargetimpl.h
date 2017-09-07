@@ -171,7 +171,7 @@ protected:
     }
 
 private:
-    CString _filename;
+    ATL::CString _filename;
     bool _isCachedSupportedClipboardFormat;
 };
 
