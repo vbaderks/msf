@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>sample</ProjectName>
+    <ProjectName>vvvsample</ProjectName>
     <ProjectGuid>{4F99D866-93BF-4731-9031-2D783763AB53}</ProjectGuid>
     <RootNamespace>sample</RootNamespace>
     <Keyword>AtlProj</Keyword>

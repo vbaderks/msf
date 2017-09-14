@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample", "vvvsample\sample_vc141.vcxproj", "{4F99D866-93BF-4731-9031-2D783763AB53}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample", "vvvsample\vvvsample.vcxproj", "{4F99D866-93BF-4731-9031-2D783763AB53}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "msf", "msf.vcxitems", "{C6AA1388-D5F6-48AE-8B1E-7207D9A71C8A}"
 EndProject
