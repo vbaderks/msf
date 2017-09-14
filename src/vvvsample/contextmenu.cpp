@@ -20,9 +20,9 @@ class __declspec(novtable) __declspec(uuid("B498A476-9EB6-46c3-8146-CE77FF7EA063
     public MSF::ContextMenuImpl<ContextMenu>
 {
 public:
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL registerInRegistry) noexcept
     {
-        return ContextMenuImpl<ContextMenu>::UpdateRegistry(bRegister, IDR_CONTEXTMENU,
+        return ContextMenuImpl<ContextMenu>::UpdateRegistry(registerInRegistry, IDR_CONTEXTMENU,
             L"VVV Sample Context Menu ShellExtension", wszVVVFileRootExt);
     }
 

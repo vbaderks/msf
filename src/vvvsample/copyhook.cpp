@@ -25,9 +25,9 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT WINAPI UpdateRegistry(BOOL registerInRegistry) noexcept
     {
-        return MSF::ICopyHookImpl<CopyHook>::UpdateRegistry(bRegister, IDR_COPYHOOK,
+        return MSF::ICopyHookImpl<CopyHook>::UpdateRegistry(registerInRegistry, IDR_COPYHOOK,
             L"VVV Sample CopyHook ShellExtension", L"VVV CopyHook");
     }
 

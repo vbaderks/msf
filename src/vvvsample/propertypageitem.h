@@ -11,30 +11,30 @@
 #include <atlsnap.h>
 
 
-class CPropertyPageItem : public ATL::CSnapInPropertyPageImpl<CPropertyPageItem>
+class PropertyPageItem : public ATL::CSnapInPropertyPageImpl<PropertyPageItem>
 {
 public:
-    static HPROPSHEETPAGE CreateInstance(VVVItem& item, long& wEventId, IShellFolder* pshellfolder)
+    static HPROPSHEETPAGE CreateInstance(VVVItem& item, long& wEventId, IShellFolder* shellFolder)
     {
-        auto ppage = new CPropertyPageItem(item, wEventId, pshellfolder);
+        auto ppage = new PropertyPageItem(item, wEventId, shellFolder);
         return ppage->Create();
     }
 
     enum { IDD = IDD_PROPERTY_PAGE_ITEM };
 
-    BEGIN_MSG_MAP(CPropertyPageItem)
+    BEGIN_MSG_MAP(PropertyPageItem)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
-        CHAIN_MSG_MAP(CSnapInPropertyPageImpl<CPropertyPageItem>)
+        CHAIN_MSG_MAP(CSnapInPropertyPageImpl<PropertyPageItem>)
     END_MSG_MAP()
 
-    CPropertyPageItem(VVVItem& item, long& wEventId, IShellFolder* pshellfolder) :
+    PropertyPageItem(VVVItem& item, long& wEventId, IShellFolder* shellFolder) :
         m_item(item),
         m_wEventId(wEventId),
-        m_rshellfolder(pshellfolder)
+        m_shellFolder(shellFolder)
     {
     }
 
-    CPropertyPageItem& operator=(const CPropertyPageItem&) = delete;
+    PropertyPageItem& operator=(const PropertyPageItem&) = delete;
 
     LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
     {
@@ -92,7 +92,7 @@ private:
 
     // Member variables
     const VVVItem &       m_item;
-    MSF::CPidl            m_pidlNew;
+    MSF::ItemIDList       m_pidlNew;
     long &                m_wEventId;
-    ATL::CComPtr<IShellFolder> m_rshellfolder;
+    ATL::CComPtr<IShellFolder> m_shellFolder;
 };

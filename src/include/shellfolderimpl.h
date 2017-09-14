@@ -124,12 +124,12 @@ public:
 
     static ATL::CComPtr<T> CreateInstance()
     {
-        ATL::CComObject<T>* pinstance;
-        RaiseExceptionIfFailed(ATL::CComObject<T>::CreateInstance(&pinstance));
+        ATL::CComObject<T>* instance;
+        RaiseExceptionIfFailed(ATL::CComObject<T>::CreateInstance(&instance));
 
-        ATL::CComPtr<T> rshellfolder(pinstance);
+        ATL::CComPtr<T> shellFolder(instance);
 
-        return rshellfolder;
+        return shellFolder;
     }
 
     // IPersistFolder
@@ -240,7 +240,7 @@ public:
             while (pidlSubFolder)
             {
                 items.push_back(TItem(pidlSubFolder));
-                pidlSubFolder = CPidl::GetNextItem(pidlSubFolder);
+                pidlSubFolder = ItemIDList::GetNextItem(pidlSubFolder);
             }
 
             ATL::CComPtr<T> rinstance = CreateInstance();
@@ -287,8 +287,8 @@ public:
                 if (nResult != 0)
                     break; // different items.
 
-                pidl1 = CPidl::GetNextItem(pidl1);
-                pidl2 = CPidl::GetNextItem(pidl2);
+                pidl1 = ItemIDList::GetNextItem(pidl1);
+                pidl2 = ItemIDList::GetNextItem(pidl2);
 
                 if (pidl1 == nullptr && pidl2 != nullptr)
                 {
@@ -525,10 +525,10 @@ public:
                 *ppidlOut = nullptr;
             }
 
-            CPidl pidlNewItem(static_cast<T*>(this)->OnSetNameOf(hwndOwner, TItem(pidl), pszNewName, uFlags));
+            ItemIDList pidlNewItem(static_cast<T*>(this)->OnSetNameOf(hwndOwner, TItem(pidl), pszNewName, uFlags));
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, 0,
-                CPidl(m_pidlFolder, pidl), CPidl(m_pidlFolder, pidlNewItem));
+                ItemIDList(m_pidlFolder, pidl), ItemIDList(m_pidlFolder, pidlNewItem));
 
             if (ppidlOut)
             {
@@ -1473,14 +1473,14 @@ protected:
 
     void ReportAddItem(LPCITEMIDLIST pidlItem) const
     {
-        ChangeNotifyPidl(SHCNE_CREATE, SHCNF_FLUSH, CPidl(m_pidlFolder, pidlItem));
+        ChangeNotifyPidl(SHCNE_CREATE, SHCNF_FLUSH, ItemIDList(m_pidlFolder, pidlItem));
     }
 
     void ReportChangeNotify(const std::vector<TItem>& items, long wEventId, UINT uFlags = SHCNF_FLUSH) const
     {
         for (auto item : items)
         {
-            ChangeNotifyPidl(wEventId, uFlags, CPidl(m_pidlFolder, item.GetItemIdList()));
+            ChangeNotifyPidl(wEventId, uFlags, ItemIDList(m_pidlFolder, item.GetItemIdList()));
         }
     }
 
@@ -1490,7 +1490,7 @@ protected:
         {
             LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
 
-            ChangeNotifyPidl(wEventId, uFlags, CPidl(m_pidlFolder, pidl));
+            ChangeNotifyPidl(wEventId, uFlags, ItemIDList(m_pidlFolder, pidl));
         }
     }
 
@@ -1502,7 +1502,7 @@ protected:
         {
             LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
 
-            ChangeNotifyPidl(SHCNE_ATTRIBUTES, SHCNF_FLUSH, CPidl(m_pidlFolder, pidl));
+            ChangeNotifyPidl(SHCNE_ATTRIBUTES, SHCNF_FLUSH, ItemIDList(m_pidlFolder, pidl));
         }
     }
 
@@ -1513,7 +1513,7 @@ protected:
             LPCITEMIDLIST pidlOld = cfshellidlist.GetItem(i);
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, SHCNF_FLUSH,
-                CPidl(m_pidlFolder, pidlOld), CPidl(m_pidlFolder, itemsNew[i].GetItemIdList()));
+                ItemIDList(m_pidlFolder, pidlOld), ItemIDList(m_pidlFolder, itemsNew[i].GetItemIdList()));
         }
     }
 
@@ -1579,7 +1579,7 @@ private:
         return ATL::CString(epId);
     }
 
-    CPidl                    m_pidlFolder;
+    ItemIDList                    m_pidlFolder;
     std::vector<CColumnInfo> m_columninfos;
     HWND                     m_hwndOwner;
     bool                     m_bCachedIsSupportedClipboardFormat;

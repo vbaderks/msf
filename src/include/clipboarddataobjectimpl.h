@@ -241,7 +241,7 @@ private:
 
         // Member variables.
         CFormatEtc m_formatetc;
-        CStgMedium m_stgmedium;
+        StorageMedium m_stgmedium;
     };
 
     ClipboardFormatHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const noexcept

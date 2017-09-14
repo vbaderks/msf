@@ -115,7 +115,7 @@ LPITEMIDLIST VVVFile::AddItem(unsigned int nSize, const ATL::CString& strName) c
 {
     unsigned int nId = FindFreeEntry();
 
-    MSF::CPidl pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, strName));
+    MSF::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, strName));
 
     AddItem(VVVItem(pidlItem));
 

@@ -55,7 +55,7 @@ public:
             size += it->GetSize();
         }
 
-        CStgMedium medium(GlobalAllocThrow(size));
+        StorageMedium medium(GlobalAllocThrow(size));
 
         CIDA* pcida = static_cast<CIDA*>(medium.GetHGlobal());
 

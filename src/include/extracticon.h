@@ -165,7 +165,7 @@ private:
     // Member variables.
     int   m_nIconIndex;
     UINT  m_uFlags;
-    CPidl m_pidl;
+    ItemIDList m_pidl;
 };
 
 } // namespace MSF

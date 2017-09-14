@@ -6,20 +6,20 @@
 #pragma once
 
 #include "msfbase.h"
-#include <objidl.h>
 #include "util.h"
 #include "globallock.h"
+#include <objidl.h>
 
 namespace MSF {
 
-// A CStgMedium class is owner of the stgmedium. 
+// A StorageMedium class is owner of the stgmedium.
 
 /// <summary>Smart extender class for Windows SDK STGMEDIUM struct.</summary>
 /// <remarks>
-/// The CStgMedium class extends STGMEDIUM with typical constructors and a 
+/// The StorageMedium class extends STGMEDIUM with typical constructors and a
 /// destructor that will clean up any dynamic allocated memory.
 /// </remarks>
-class CStgMedium : public STGMEDIUM
+class StorageMedium : public STGMEDIUM
 {
 public:
     static HGLOBAL GlobalClone(HGLOBAL hglobIn)
@@ -42,24 +42,24 @@ public:
         stgmedium.pUnkForRelease = nullptr;
     }
 
-    CStgMedium() noexcept
+    StorageMedium() noexcept
     {
         tymed = TYMED_NULL;
         pUnkForRelease = nullptr;
     }
 
-    explicit CStgMedium(HGLOBAL hg) noexcept
+    explicit StorageMedium(HGLOBAL hg) noexcept
     {
         SetHGlobal(*this, hg);
     }
 
     // Purpose: passed in STGMEDIUM will be owned after a bitwise copy.
-    explicit CStgMedium(const STGMEDIUM& stgmedium) noexcept
+    explicit StorageMedium(const STGMEDIUM& stgmedium) noexcept
     {
         *static_cast<STGMEDIUM*>(this) = stgmedium;
     }
 
-    ~CStgMedium()
+    ~StorageMedium()
     {
         if (tymed != TYMED_NULL)
         {
@@ -84,7 +84,7 @@ public:
         Detach();
     }
 
-    CStgMedium& operator = (STGMEDIUM& stgmedium)
+    StorageMedium& operator = (STGMEDIUM& stgmedium)
     {
         Detach();
 

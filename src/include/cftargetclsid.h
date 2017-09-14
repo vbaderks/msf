@@ -33,7 +33,7 @@ private:
     static HRESULT GetImpl(IDataObject* pdataobject, CLSID& clsid)
     {
         CFormatEtc formatetc(CFSTR_TARGETCLSID);
-        CStgMedium medium;
+        StorageMedium medium;
         HRESULT hr = pdataobject->GetData(&formatetc, &medium);
         if (FAILED(hr))
             return hr;

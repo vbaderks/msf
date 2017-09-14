@@ -15,10 +15,9 @@ public:
     VVVPropertySheet& operator=(const VVVPropertySheet&) = delete;
 
     VVVPropertySheet(VVVItem& item, IShellFolder* shellFolder) :
-        PropertySheet(item.GetDisplayName(), PSH_NOAPPLYNOW | PSH_PROPTITLE | PSH_NOCONTEXTHELP),
-        m_eventID(0)
+        PropertySheet(item.GetDisplayName(), PSH_NOAPPLYNOW | PSH_PROPTITLE | PSH_NOCONTEXTHELP)
     {
-        AddPage(CPropertyPageItem::CreateInstance(item, m_eventID, shellFolder));
+        AddPage(PropertyPageItem::CreateInstance(item, m_eventID, shellFolder));
     }
 
     int DoModal(HWND hwnd, long& wEventId)
@@ -33,5 +32,5 @@ public:
 private:
 
     // Members variables
-    long m_eventID;
+    long m_eventID{ 0 };
 };

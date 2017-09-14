@@ -10,9 +10,6 @@
 #include "propertypagevvv.h"
 #include "resource.h"
 
-#include "../include/shellpropsheetextimpl.h"
-
-
 using std::wstring;
 using std::vector;
 
@@ -30,9 +27,9 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT WINAPI UpdateRegistry(BOOL registerInRegistry) noexcept
     {
-        return ShellPropSheetExtImpl<ShellPropSheetExt>::UpdateRegistry(bRegister, IDR_PROPERTYSHEETEXT,
+        return ShellPropSheetExtImpl<ShellPropSheetExt>::UpdateRegistry(registerInRegistry, IDR_PROPERTYSHEETEXT,
             L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
     }
 

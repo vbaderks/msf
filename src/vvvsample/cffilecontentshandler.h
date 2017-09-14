@@ -48,7 +48,7 @@ public:
         HGLOBAL hg = MSF::GlobalAllocThrow(size);
         ZeroMemory(hg, size);
 
-        MSF::CStgMedium::SetHGlobal(medium, hg);
+        MSF::StorageMedium::SetHGlobal(medium, hg);
     }
 
 private:

@@ -15,7 +15,7 @@ namespace MSF
 /// <summary>Sets the Clipboard format effect into a data object.</summary>
 inline HRESULT SetCfEffect(LPCTSTR lpszFormat, _In_ IDataObject* pdataobject, DWORD dwEffect)
 {
-    CStgMedium stgmedium(GlobalAllocThrow(sizeof(DWORD)));
+    StorageMedium stgmedium(GlobalAllocThrow(sizeof(DWORD)));
 
     *static_cast<DWORD*>(stgmedium.GetHGlobal()) = dwEffect;
 
@@ -34,7 +34,7 @@ inline HRESULT SetCfEffect(LPCTSTR lpszFormat, _In_ IDataObject* pdataobject, DW
 inline HRESULT GetCfEffect(LPCTSTR lpszFormat, _In_ IDataObject* pdataobject, DWORD& dwEffect)
 {
     CFormatEtc formatetc(RegisterCf(lpszFormat));
-    CStgMedium medium;
+    StorageMedium medium;
     HRESULT hr = pdataobject->GetData(&formatetc, &medium);
     if (FAILED(hr))
         return hr;

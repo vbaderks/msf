@@ -22,6 +22,7 @@
 #include "shellfolderviewcbimpl.h"
 #include "enumidlistimpl.h"
 #include "shellfolderdataobjectimpl.h"
+#include "shellpropsheetextimpl.h"
 
 #include "propertysheet.h"
 #include "strutil.h"

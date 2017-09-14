@@ -57,7 +57,7 @@ public:
 
 private:
 
-    CStgMedium m_stgmedium;
+    StorageMedium m_stgmedium;
 };
 
 } // namespace MSF

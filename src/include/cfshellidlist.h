@@ -56,7 +56,7 @@ public:
 private:
 
     util::GlobalLock<CIDA> m_globalLock;
-    CStgMedium m_medium;
+    StorageMedium m_medium;
 };
 
 } // namespace MSF

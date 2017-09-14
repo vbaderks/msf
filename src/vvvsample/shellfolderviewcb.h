@@ -13,15 +13,15 @@ class __declspec(novtable) ShellFolderViewCB :
     public MSF::ShellFolderViewCBImpl<ShellFolderViewCB>
 {
 public:
-    static ATL::CComPtr<IShellFolderViewCB> CreateInstance(LPCITEMIDLIST pidlFolder)
+    static ATL::CComPtr<IShellFolderViewCB> CreateInstance(const ITEMIDLIST * folder)
     {
-        ATL::CComObject<ShellFolderViewCB>* pinstance;
-        HRESULT hr = ATL::CComObject<ShellFolderViewCB>::CreateInstance(&pinstance);
+        ATL::CComObject<ShellFolderViewCB>* instance;
+        HRESULT hr = ATL::CComObject<ShellFolderViewCB>::CreateInstance(&instance);
         if (FAILED(hr))
             MSF::RaiseException();
 
-        ATL::CComPtr<IShellFolderViewCB> shellfolderviewcb(pinstance);
-        pinstance->SetFolder(pidlFolder);
+        ATL::CComPtr<IShellFolderViewCB> shellfolderviewcb(instance);
+        instance->SetFolder(folder);
         return shellfolderviewcb;
     }
 

@@ -24,15 +24,15 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT WINAPI UpdateRegistry(BOOL registerInRegistry) noexcept
     {
-        return InfoTipImpl<InfoTip>::UpdateRegistry(bRegister, IDR_INFOTIP,
+        return InfoTipImpl<InfoTip>::UpdateRegistry(registerInRegistry, IDR_INFOTIP,
             L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);
     }
 
-    void InitializeCore(const wchar_t* szFilename, DWORD /*dwMode*/) override
+    void InitializeCore(const wchar_t* filename, DWORD /*dwMode*/) override
     {
-        VVVFile vvvfile{ szFilename };
+        VVVFile vvvfile{ filename };
 
         m_label = vvvfile.GetLabel();
         m_fileCount = MSF::ToString(vvvfile.GetFileCount());

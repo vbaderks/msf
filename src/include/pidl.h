@@ -11,7 +11,7 @@ namespace MSF
 {
 
 // Purpose: Management class for pidls. A CPidl class is owner of the wrapped ITEMIDLIST.
-class CPidl final
+class ItemIDList final
 {
 public:
     static LPITEMIDLIST Clone(_In_ LPCITEMIDLIST pidlSrc)
@@ -67,30 +67,30 @@ public:
         return pidlNext;
     }
 
-    CPidl() noexcept : m_pidl(nullptr)
+    ItemIDList() noexcept : m_pidl(nullptr)
     {
     }
 
-    explicit CPidl(LPITEMIDLIST pidl) noexcept : m_pidl(pidl)
+    explicit ItemIDList(ITEMIDLIST * itemIDList) noexcept : m_pidl(itemIDList)
     {
     }
 
-    CPidl(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2) :
+    ItemIDList(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2) :
         m_pidl(Combine(pidl1, pidl2))
     {
     }
 
-    CPidl(const CPidl& pidl1, LPCITEMIDLIST pidl2) :
+    ItemIDList(const ItemIDList& pidl1, LPCITEMIDLIST pidl2) :
         m_pidl(Combine(pidl1.m_pidl, pidl2))
     {
     }
 
-    explicit CPidl(const wchar_t* pszPath) :
+    explicit ItemIDList(const wchar_t* pszPath) :
         m_pidl(CreateFromPath(pszPath))
     {
     }
 
-    ~CPidl()
+    ~ItemIDList()
     {
         ILFree(m_pidl);
     }
@@ -146,7 +146,7 @@ public:
         return ILGetSize(m_pidl);
     }
 
-    // Purpose: Adres operator to be used for passing address to be used as an out-parameter.
+    // Purpose: Address operator to be used for passing address to be used as an out-parameter.
     LPITEMIDLIST* operator&() noexcept
     {
         Attach(nullptr);
@@ -154,7 +154,7 @@ public:
     }
 
 private:
-    LPITEMIDLIST m_pidl;
+    ITEMIDLIST* m_pidl;
 };
 
 } // namespace MSF

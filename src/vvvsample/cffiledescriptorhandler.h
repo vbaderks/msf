@@ -49,7 +49,7 @@ public:
                 _com_raise_error(E_FAIL);
         }
 
-        MSF::CStgMedium::SetHGlobal(medium, hg);
+        MSF::StorageMedium::SetHGlobal(medium, hg);
     }
 
 private:

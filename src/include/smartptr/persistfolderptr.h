@@ -41,7 +41,7 @@ public:
 
 	void Initialize(const wchar_t* szFilename)
 	{
-		CPidl pidl(szFilename);
+		ItemIDList pidl(szFilename);
 
 		Initialize(pidl);
 	}

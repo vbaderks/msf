@@ -81,7 +81,7 @@ public:
     //          that contains the items is required.
     ATL::CComPtr<IDataObject> CreateDataObject(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl)
     {
-        return CShellFolderDataObject::CreateInstance(pidlFolder, cidl, ppidl, this);
+        return ShellFolderDataObject::CreateInstance(pidlFolder, cidl, ppidl, this);
     }
 
     // Purpose: called by MSF/shell when it want the current list of
@@ -174,7 +174,7 @@ public:
     {
         MSF::RaiseExceptionIf(shgndf != SHGDN_NORMAL && shgndf != SHGDN_INFOLDER); // not supported 'name'.
 
-        MSF::CPidl pidl(VVVItem::CreateItemIdList(item.GetID(), item.GetSize(), item.IsFolder(), szNewName));
+        MSF::ItemIDList pidl(VVVItem::CreateItemIdList(item.GetID(), item.GetSize(), item.IsFolder(), szNewName));
 
         VVVFile(GetPathFolderFile(), m_strSubFolder).SetItem(VVVItem(pidl));
 
@@ -276,7 +276,7 @@ private:
     {
         VVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
 
-        MSF::CPidl pidlItem(vvvfile.AddItem(strFile));
+        MSF::ItemIDList pidlItem(vvvfile.AddItem(strFile));
 
         ReportAddItem(pidlItem);
     }

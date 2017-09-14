@@ -23,10 +23,10 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL registerInRegistry) noexcept
     {
         // TODO: update to new reg model.
-        return ExtractImageImpl<ExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, bRegister,
+        return ExtractImageImpl<ExtractImage>::UpdateRegistry(IDR_EXTRACTIMAGE, registerInRegistry,
             L"VVV Sample ExtractImage ShellExtension", __uuidof(ShellFolder), wszVVVExtension);
     }
 

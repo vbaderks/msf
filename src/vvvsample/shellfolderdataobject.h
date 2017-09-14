@@ -11,32 +11,32 @@
 #include <memory>
 
 
-class CShellFolderDataObject :
+class ShellFolderDataObject :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
-    public MSF::ShellFolderDataObjectImpl<CShellFolderDataObject>
+    public MSF::ShellFolderDataObjectImpl<ShellFolderDataObject>
 {
 public:
-    DECLARE_NOT_AGGREGATABLE(CShellFolderDataObject)
+    DECLARE_NOT_AGGREGATABLE(ShellFolderDataObject)
 
-    BEGIN_COM_MAP(CShellFolderDataObject)
+    BEGIN_COM_MAP(ShellFolderDataObject)
         COM_INTERFACE_ENTRY(IDataObject)
     END_COM_MAP()
 
     static ATL::CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl,
         LPCITEMIDLIST* ppidl, MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
-        ATL::CComObject<CShellFolderDataObject>* instance;
-        HRESULT hr = ATL::CComObject<CShellFolderDataObject>::CreateInstance(&instance);
+        ATL::CComObject<ShellFolderDataObject>* instance;
+        HRESULT hr = ATL::CComObject<ShellFolderDataObject>::CreateInstance(&instance);
         if (FAILED(hr))
             MSF::RaiseException(hr);
 
-        ATL::CComPtr<IDataObject> rdataobject(instance);
+        ATL::CComPtr<IDataObject> dataObject(instance);
         instance->Initialize(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
-        return rdataobject;
+        return dataObject;
     }
 
 protected:
-    ~CShellFolderDataObject() = default;
+    ~ShellFolderDataObject() = default;
 
 private:
     void Initialize(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,

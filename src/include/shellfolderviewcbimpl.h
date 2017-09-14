@@ -379,9 +379,9 @@ protected:
     }
 
     // Purpose: Controls which folder (file) is watched for change events.
-    void SetFolder(LPCITEMIDLIST pidlFolder)
+    void SetFolder(const ITEMIDLIST * folder)
     {
-        _pidlFolder.CloneFrom(pidlFolder);
+        m_folder.CloneFrom(folder);
     }
 
     // Default callback handlers: override in derived class if needed.
@@ -562,17 +562,17 @@ protected:
     //          the settings for SHChangeNotifyRegister.
     HRESULT OnGetNotify(LPITEMIDLIST* ppidl, long* plevents)
     {
-        if (!_pidlFolder || _notifyevents == 0)
+        if (!m_folder || _notifyevents == 0)
             return E_FAIL; // notify not requested by derived class.
 
-        *ppidl    = ILClone(_pidlFolder);
+        *ppidl    = ILClone(m_folder);
         *plevents = _notifyevents;
 
         return S_OK;
     }
 
     // Member variables.
-    CPidl _pidlFolder;
+    ItemIDList m_folder;
     long  _notifyevents;
 };
 

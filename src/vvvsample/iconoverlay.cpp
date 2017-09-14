@@ -20,10 +20,10 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL registerInRegistry) noexcept
     {
         return IconOverlayImpl<IconOverlay>::UpdateRegistry(
-            bRegister, IDR_ICONOVERLAY, L"VVV Sample ICON Overlay ShellExtension");
+            registerInRegistry, IDR_ICONOVERLAY, L"VVV Sample ICON Overlay ShellExtension");
     }
 
     static bool IsMemberOfImpl(PCWSTR path, DWORD /*dwAttrib*/)

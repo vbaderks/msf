@@ -51,7 +51,7 @@ public:
 
     void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const override
     {
-        CStgMedium medium(GlobalAllocThrow(sizeof(DWORD)));
+        StorageMedium medium(GlobalAllocThrow(sizeof(DWORD)));
         *static_cast<DWORD*>(medium.GetHGlobal()) = m_dwEffect;
         medium.Detach(stgmedium);
     }

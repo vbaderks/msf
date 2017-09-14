@@ -20,7 +20,7 @@ public:
 
     static LPITEMIDLIST CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
     {
-        LPITEMIDLIST pidl = MSF::CPidl::CreateItemIdListWithTerminator(sizeof(SItemData));
+        LPITEMIDLIST pidl = MSF::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
 
         InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
             nId, nSize, bFolder, strName);
