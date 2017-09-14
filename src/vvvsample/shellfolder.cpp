@@ -79,7 +79,7 @@ public:
 
     // Purpose: called by MSF/shell when a number of items are selected and a IDataObject
     //          that contains the items is required.
-    ATL::CComPtr<IDataObject> CreateDataObject(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl)
+    ATL::CComPtr<IDataObject> CreateDataObject(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl)
     {
         return ShellFolderDataObject::CreateInstance(pidlFolder, cidl, ppidl, this);
     }
@@ -170,15 +170,15 @@ public:
     }
 
     // Purpose: Called by the shell/MSF when an item must be renamed.
-    LPITEMIDLIST OnSetNameOf(HWND /*hwnd*/, const VVVItem& item, const wchar_t* szNewName, SHGDNF shgndf)
+    PUIDLIST_RELATIVE OnSetNameOf(HWND /*hwnd*/, const VVVItem& item, const wchar_t* szNewName, SHGDNF shgndf)
     {
         MSF::RaiseExceptionIf(shgndf != SHGDN_NORMAL && shgndf != SHGDN_INFOLDER); // not supported 'name'.
 
         MSF::ItemIDList pidl(VVVItem::CreateItemIdList(item.GetID(), item.GetSize(), item.IsFolder(), szNewName));
 
-        VVVFile(GetPathFolderFile(), m_strSubFolder).SetItem(VVVItem(pidl));
+        VVVFile(GetPathFolderFile(), m_strSubFolder).SetItem(VVVItem(pidl.GetRelative()));
 
-        return pidl.Detach();
+        return pidl.DetachRelative();
     }
 
     // Purpose: handles the 'properties request.
@@ -278,7 +278,7 @@ private:
 
         MSF::ItemIDList pidlItem(vvvfile.AddItem(strFile));
 
-        ReportAddItem(pidlItem);
+        ReportAddItem(pidlItem.GetRelative());
     }
 
     static bool IsReadOnly(const wstring& strFileName)

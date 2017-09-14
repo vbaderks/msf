@@ -133,7 +133,7 @@ public:
 
             case SFVM_GETNOTIFY:
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IShellFolderViewCB::MessageSFVCB (OnGetNotify)\n");
-                return static_cast<T*>(this)->OnGetNotify(reinterpret_cast<LPITEMIDLIST*>(wParam),
+                return static_cast<T*>(this)->OnGetNotify(reinterpret_cast<PIDLIST_ABSOLUTE*>(wParam),
                                                           reinterpret_cast<long*>(lParam));
 
             case SFVM_GETSORTDEFAULTS:
@@ -379,7 +379,7 @@ protected:
     }
 
     // Purpose: Controls which folder (file) is watched for change events.
-    void SetFolder(LPCITEMIDLIST folder)
+    void SetFolder(PCUIDLIST_RELATIVE folder)
     {
         m_folder.CloneFrom(folder);
     }
@@ -560,12 +560,12 @@ protected:
 
     // Purpose: called by the shells default viewfolder implementation to retrieve
     //          the settings for SHChangeNotifyRegister.
-    HRESULT OnGetNotify(LPITEMIDLIST* ppidl, long* plevents)
+    HRESULT OnGetNotify(PIDLIST_ABSOLUTE* ppidl, long* plevents)
     {
         if (!m_folder || _notifyevents == 0)
             return E_FAIL; // notify not requested by derived class.
 
-        *ppidl    = ILClone(m_folder);
+        *ppidl    = m_folder.CloneFull();
         *plevents = _notifyevents;
 
         return S_OK;

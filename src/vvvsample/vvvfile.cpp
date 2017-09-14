@@ -102,24 +102,24 @@ void VVVFile::SetItem(const VVVItem& item) const
 }
 
 
-LPITEMIDLIST VVVFile::AddItem(const std::wstring& strFile) const
+PUIDLIST_RELATIVE VVVFile::AddItem(const std::wstring& strFile) const
 {
-    ATL::CString strName = PathFindFileName(strFile.c_str());
+    ATL::CString strName(PathFindFileName(strFile.c_str()));
     DWORD dwSize    = MSF::GetFileSize(strFile.c_str());
 
     return AddItem(dwSize, strName);
 }
 
 
-LPITEMIDLIST VVVFile::AddItem(unsigned int nSize, const ATL::CString& strName) const
+PUIDLIST_RELATIVE VVVFile::AddItem(unsigned int nSize, const ATL::CString& name) const
 {
     unsigned int nId = FindFreeEntry();
 
-    MSF::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, strName));
+    MSF::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, name));
 
-    AddItem(VVVItem(pidlItem));
+    AddItem(VVVItem(pidlItem.GetRelative()));
 
-    return pidlItem.Detach();
+    return pidlItem.DetachRelative();
 }
 
 

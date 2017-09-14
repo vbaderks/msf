@@ -22,8 +22,8 @@ public:
         COM_INTERFACE_ENTRY(IDataObject)
     END_COM_MAP()
 
-    static ATL::CComPtr<IDataObject> CreateInstance(LPCITEMIDLIST pidlFolder, UINT cidl,
-        LPCITEMIDLIST* ppidl, MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
+    static ATL::CComPtr<IDataObject> CreateInstance(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl,
+        PCUITEMID_CHILD_ARRAY ppidl, MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         ATL::CComObject<ShellFolderDataObject>* instance;
         HRESULT hr = ATL::CComObject<ShellFolderDataObject>::CreateInstance(&instance);
@@ -39,7 +39,7 @@ protected:
     ~ShellFolderDataObject() = default;
 
 private:
-    void Initialize(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
+    void Initialize(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl,
                     MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);

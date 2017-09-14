@@ -14,18 +14,27 @@ namespace MSF
 class ItemIDList final
 {
 public:
-    static LPITEMIDLIST Clone(_In_ LPCITEMIDLIST pidlSrc)
+    static PIDLIST_RELATIVE Clone(_In_ PCUIDLIST_RELATIVE pidlSrc)
     {
         ATLASSERT(pidlSrc && "Why clone a NULL pointer?");
 
-        LPITEMIDLIST pidl = ILClone(pidlSrc);
+        PIDLIST_RELATIVE pidl = ILClone(pidlSrc);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
         return pidl;
     }
 
-    static LPITEMIDLIST Combine(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2)
+    static PIDLIST_ABSOLUTE CloneFull(_In_ PCUIDLIST_ABSOLUTE pidlSrc)
     {
-        LPITEMIDLIST pidl = ILCombine(pidl1, pidl2);
+        ATLASSERT(pidlSrc && "Why clone a NULL pointer?");
+
+        PIDLIST_ABSOLUTE pidl = ILCloneFull(pidlSrc);
+        RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
+        return pidl;
+    }
+
+    static PIDLIST_ABSOLUTE Combine(_In_opt_ PCIDLIST_ABSOLUTE pidl1, _In_opt_ PCUIDLIST_RELATIVE pidl2)
+    {
+        PIDLIST_ABSOLUTE pidl = ILCombine(pidl1, pidl2);
         RaiseExceptionIf(!pidl && !(pidl1 == nullptr && pidl == nullptr), E_OUTOFMEMORY);
         return pidl;
     }
@@ -37,18 +46,18 @@ public:
         return pidl;
     }
 
-    static LPITEMIDLIST CreateItemIdListWithTerminator(size_t sizeItem)
+    static PUIDLIST_RELATIVE CreateItemIdListWithTerminator(size_t sizeItem)
     {
         size_t size = sizeof(short) + sizeItem;
 
-        LPITEMIDLIST pidl = static_cast<LPITEMIDLIST>(CoTaskMemAlloc(size + (sizeof(short))));
+        PUIDLIST_RELATIVE pidl = static_cast<PUIDLIST_RELATIVE>(CoTaskMemAlloc(size + (sizeof(short))));
         if (!pidl)
             RaiseException(E_OUTOFMEMORY);
 
         LPSHITEMID pshitemid = &(pidl->mkid);
         pshitemid->cb = static_cast<USHORT>(size);
 
-        LPITEMIDLIST pidlTerminator = ILGetNext(pidl);
+        PUIDLIST_RELATIVE pidlTerminator = ILGetNext(pidl);
         LPSHITEMID pItemIdTerminator = &(pidlTerminator->mkid);
         pItemIdTerminator->cb = 0;
 
@@ -56,9 +65,9 @@ public:
     }
 
     // Purpose: Small helper, returns nullptr also for the tail element.
-    static LPCITEMIDLIST GetNextItem(LPCITEMIDLIST pidl)
+    static PUIDLIST_RELATIVE GetNextItem(PCUIDLIST_RELATIVE pidl)
     {
-        LPCITEMIDLIST pidlNext = ILGetNext(pidl);
+        PUIDLIST_RELATIVE pidlNext = ILGetNext(pidl);
         if (pidlNext && pidlNext->mkid.cb == 0)
         {
             pidlNext = nullptr;
@@ -71,17 +80,23 @@ public:
     {
     }
 
-    explicit ItemIDList(LPITEMIDLIST itemIDList) noexcept : m_pidl(itemIDList)
+    explicit ItemIDList(PUIDLIST_RELATIVE itemIDList) noexcept :
+        m_pidl(reinterpret_cast<LPITEMIDLIST>(itemIDList))
     {
     }
 
-    ItemIDList(LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2) :
+    ItemIDList(_In_opt_ PCIDLIST_ABSOLUTE pidl1, _In_opt_ PCUIDLIST_RELATIVE pidl2) :
         m_pidl(Combine(pidl1, pidl2))
     {
     }
 
-    ItemIDList(const ItemIDList& pidl1, LPCITEMIDLIST pidl2) :
-        m_pidl(Combine(pidl1.m_pidl, pidl2))
+    ItemIDList(const ItemIDList& pidl1, PCUIDLIST_RELATIVE pidl2) :
+        m_pidl(Combine(pidl1.GetAbsolute(), pidl2))
+    {
+    }
+
+    ItemIDList(const ItemIDList& pidl1, const ItemIDList& pidl2) :
+        m_pidl(Combine(pidl1.GetAbsolute(), pidl2.GetRelative()))
     {
     }
 
@@ -92,35 +107,54 @@ public:
 
     ~ItemIDList()
     {
-        ILFree(m_pidl);
+        CoTaskMemFree(m_pidl);
     }
 
-    void Attach(LPITEMIDLIST pidl) noexcept
+    void Attach(PUIDLIST_RELATIVE pidl) noexcept
     {
-        ILFree(m_pidl);
+        CoTaskMemFree(m_pidl);
         m_pidl = pidl;
     }
 
-    LPITEMIDLIST Detach() noexcept
+#ifdef STRICT_TYPED_ITEMIDS
+    void Attach(PIDLIST_ABSOLUTE pidl) noexcept
     {
-        LPITEMIDLIST pidl = m_pidl;
+        Attach(reinterpret_cast<PUIDLIST_RELATIVE>(pidl));
+    }
+#endif
+
+    PUIDLIST_RELATIVE DetachRelative() noexcept
+    {
+        PUIDLIST_RELATIVE pidl = reinterpret_cast<PUIDLIST_RELATIVE>(m_pidl);
         m_pidl = nullptr;
         return pidl;
     }
 
-    void CloneFrom(LPCITEMIDLIST pidl)
+    PIDLIST_ABSOLUTE DetachAbsolute() noexcept
+    {
+        PIDLIST_ABSOLUTE pidl = reinterpret_cast<PIDLIST_ABSOLUTE>(m_pidl);
+        m_pidl = nullptr;
+        return pidl;
+    }
+
+    void CloneFrom(PCUIDLIST_RELATIVE pidl)
     {
         Attach(Clone(pidl));
     }
 
-    LPITEMIDLIST Clone() const
+    PIDLIST_RELATIVE Clone() const
     {
-        return Clone(m_pidl);
+        return Clone(GetRelative());
+    }
+
+    PIDLIST_ABSOLUTE CloneFull() const
+    {
+        return CloneFull(GetAbsolute());
     }
 
     void AppendID(const SHITEMID* pmkid)
     {
-        LPITEMIDLIST pidl = ILAppendID(m_pidl, pmkid, TRUE);
+        PIDLIST_RELATIVE pidl = ILAppendID(GetRelative(), pmkid, true);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
 
         m_pidl = pidl;
@@ -143,13 +177,23 @@ public:
 
     UINT GetSize() const noexcept
     {
-        return ILGetSize(m_pidl);
+        return ILGetSize(GetRelative());
+    }
+
+    PIDLIST_RELATIVE GetRelative() const
+    {
+        return reinterpret_cast<PIDLIST_RELATIVE>(m_pidl);
+    }
+
+    PIDLIST_ABSOLUTE GetAbsolute() const
+    {
+        return reinterpret_cast<PIDLIST_ABSOLUTE>(m_pidl);
     }
 
     // Purpose: Address operator to be used for passing address to be used as an out-parameter.
     LPITEMIDLIST* operator&() noexcept
     {
-        Attach(nullptr);
+        Attach(reinterpret_cast<PUIDLIST_RELATIVE>(nullptr));
         return &m_pidl;
     }
 

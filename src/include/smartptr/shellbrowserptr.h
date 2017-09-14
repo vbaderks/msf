@@ -21,13 +21,11 @@ public:
     {
     }
 
-
     // Purpose: Constructs a smart-pointer from any other smart pointer.
     template<typename _OtherIID> IShellBrowserPtr(const _com_ptr_t<_OtherIID>& p) :
         ::IShellBrowserPtr(p)
     {
     }
-
 
     // Purpose: Constructs a smart-pointer from any IUnknown-based interface pointer.
     template<typename _InterfaceType> IShellBrowserPtr(_InterfaceType* p) :
@@ -35,8 +33,7 @@ public:
     {
     }
 
-
-    void BrowseObject(LPCITEMIDLIST pidl, UINT wFlags)
+    void BrowseObject(PCUIDLIST_RELATIVE pidl, UINT wFlags)
     {
         RaiseExceptionIfFailed(GetInterfacePtr()->BrowseObject(pidl, wFlags));
     }

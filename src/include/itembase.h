@@ -25,20 +25,20 @@ public:
         return m_pidl->mkid.abID;
     }
 
-    LPCITEMIDLIST GetItemIdList() const
+    PCUIDLIST_RELATIVE GetItemIdList() const
     {
         return m_pidl;
     }
 
 protected:
-    explicit ItemBase(LPCITEMIDLIST pidl) noexcept :
+    explicit ItemBase(PCUIDLIST_RELATIVE pidl) noexcept :
         m_pidl{ pidl }
     {
     }
 
 private:
 
-    LPCITEMIDLIST m_pidl;
+    PCUIDLIST_RELATIVE m_pidl;
 };
 
 } // end MSF namespace

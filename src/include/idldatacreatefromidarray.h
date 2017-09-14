@@ -10,7 +10,7 @@
 namespace MSF
 {
 
-inline ATL::CComPtr<IDataObject> CIDLData_CreateFromIDArray(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* pidlItems)
+inline ATL::CComPtr<IDataObject> CIDLData_CreateFromIDArray(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUIDLIST_RELATIVE_ARRAY pidlItems)
 {
     ATL::CComPtr<IDataObject> dataobject;
 

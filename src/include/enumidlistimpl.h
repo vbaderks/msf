@@ -68,14 +68,14 @@ public:
     };
 
     // IEnumIDList
-    HRESULT __stdcall Next(ULONG celt, _Out_writes_to_(celt, *pceltFetched) LPITEMIDLIST* ppidl, _Out_opt_ ULONG* pceltFetched) noexcept override
+    HRESULT __stdcall Next(ULONG celt, _Out_writes_to_(celt, *pceltFetched) PITEMID_CHILD* ppidl, _Out_opt_ ULONG* pceltFetched) noexcept override
     {
         try
         {
             if (!pceltFetched && celt != 1)
                 return E_INVALIDARG;
 
-            CItemIdListVector itemidlistvector(ppidl);
+            CItemIdListVector itemidlistvector(reinterpret_cast<LPITEMIDLIST*>(ppidl));
 
             for (ULONG i = 0; i < celt; ++i)
             {

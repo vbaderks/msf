@@ -24,32 +24,27 @@ public:
         m_globalLock.Attach(m_medium.hGlobal);
     }
 
-
     CCfShellIdList& operator=(const CCfShellIdList&) = delete;
-
 
     ~CCfShellIdList()
     {
         m_globalLock.Dispose();
     }
 
-
     bool IsEmpty() const noexcept
     {
         return GetItemCount() == 0;
     }
-
 
     size_t GetItemCount() const noexcept
     {
         return m_globalLock.get()->cidl;
     }
 
-
-    LPCITEMIDLIST GetItem(size_t nIdex) const noexcept
+    PCIDLIST_RELATIVE GetItem(size_t nIdex) const noexcept
     {
         const CIDA* pcida = m_globalLock.get();
-        return reinterpret_cast<LPCITEMIDLIST>
+        return reinterpret_cast<PCIDLIST_RELATIVE>
             (reinterpret_cast<const BYTE*>(pcida) + pcida->aoffset[nIdex + 1]);
     }
 

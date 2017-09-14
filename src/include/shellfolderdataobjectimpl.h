@@ -195,10 +195,10 @@ protected:
         ATLTRACE2(ATL::atlTraceCOM, 0, "ShellFolderDataObjectImpl::~ShellFolderDataObjectImpl (instance=%p)\n", this);
     }
 
-    void Init(LPCITEMIDLIST pidlFolder, UINT cidl, LPCITEMIDLIST* ppidl,
+    void Init(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl,
         IPerformedDropEffectSink* pperformeddropeffectsink = nullptr)
     {
-        m_pidldata = static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl));
+        m_pidldata = static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, reinterpret_cast<PCUIDLIST_RELATIVE_ARRAY>(ppidl)));
         RegisterClipboardFormatHandler(make_unique<CCfPerformedDropEffectHandler>(pperformeddropeffectsink, this));
     }
 

@@ -18,9 +18,9 @@ public:
         return 10; // note: limit is 10 for easy testing.
     }
 
-    static LPITEMIDLIST CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
+    static PUIDLIST_RELATIVE CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
     {
-        LPITEMIDLIST pidl = MSF::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
+        PUIDLIST_RELATIVE pidl = MSF::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
 
         InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
             nId, nSize, bFolder, strName);
@@ -28,7 +28,7 @@ public:
         return pidl;
     }
 
-    explicit VVVItem(LPCITEMIDLIST pidl) : ItemBase(pidl)
+    explicit VVVItem(PCUIDLIST_RELATIVE pidl) : ItemBase(pidl)
     {
         // Shell item IDs can be passed from external sources, validate
         // It is valid to pass a PIDL that is larger then the original (done by Search functionality in XP).

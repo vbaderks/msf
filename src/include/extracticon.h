@@ -107,7 +107,7 @@ protected:
 
         try
         {
-            m_nIconIndex = TItem(m_pidl).GetIconOf(uFlags);
+            m_nIconIndex = TItem(m_pidl.GetRelative()).GetIconOf(uFlags);
 
             *piIndex = 0; // must initialize index as it is a required out parameter.
             *pwFlags = GIL_NOTFILENAME;
