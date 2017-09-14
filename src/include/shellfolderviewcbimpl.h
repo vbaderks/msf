@@ -379,7 +379,7 @@ protected:
     }
 
     // Purpose: Controls which folder (file) is watched for change events.
-    void SetFolder(const ITEMIDLIST * folder)
+    void SetFolder(LPCITEMIDLIST folder)
     {
         m_folder.CloneFrom(folder);
     }
@@ -481,7 +481,7 @@ protected:
         return E_NOTIMPL;
     }
 
-    // Purpose: return S_OK and TRUE/FALSE to indicate to the defshellview which 
+    // Purpose: return S_OK and TRUE/FALSE to indicate to the defshellview which
     //          folder view modes should be enabled (only works on XP?)
     HRESULT OnGetViewData(FOLDERVIEWMODE /*folderviewmode*/, BOOL* /*pbSupported*/)
     {

@@ -13,7 +13,7 @@ class __declspec(novtable) ShellFolderViewCB :
     public MSF::ShellFolderViewCBImpl<ShellFolderViewCB>
 {
 public:
-    static ATL::CComPtr<IShellFolderViewCB> CreateInstance(const ITEMIDLIST * folder)
+    static ATL::CComPtr<IShellFolderViewCB> CreateInstance(LPCITEMIDLIST folder)
     {
         ATL::CComObject<ShellFolderViewCB>* instance;
         HRESULT hr = ATL::CComObject<ShellFolderViewCB>::CreateInstance(&instance);

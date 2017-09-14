@@ -71,7 +71,7 @@ public:
     {
     }
 
-    explicit ItemIDList(ITEMIDLIST * itemIDList) noexcept : m_pidl(itemIDList)
+    explicit ItemIDList(LPITEMIDLIST itemIDList) noexcept : m_pidl(itemIDList)
     {
     }
 
@@ -154,7 +154,7 @@ public:
     }
 
 private:
-    ITEMIDLIST* m_pidl;
+    LPITEMIDLIST m_pidl;
 };
 
 } // namespace MSF
