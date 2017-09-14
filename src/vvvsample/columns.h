@@ -5,5 +5,5 @@
 //
 #pragma once
 
-const int COLUMN_NAME = 0;
-const int COLUMN_SIZE = 1;
+constexpr int COLUMN_NAME = 0;
+constexpr int COLUMN_SIZE = 1;

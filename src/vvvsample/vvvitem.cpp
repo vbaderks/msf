@@ -10,11 +10,6 @@
 #include "columns.h"
 #include "resource.h"
 
-#include "../include/macros.h"
-#include "../include/strutil.h"
-#include "../include/util.h"
-#include "../include/imagelistindex.h"
-
 using std::wstring;
 
 
@@ -122,10 +117,10 @@ int VVVItem::GetIconOf(UINT flags) const
 {
     if (IsFolder())
         return MSF::IsBitSet(flags, GIL_OPENICON) ?
-        MSF::STD_IMAGELIST_INDEX_FOLDER_OPEN :
-        MSF::STD_IMAGELIST_INDEX_FOLDER_PLAIN;
+        static_cast<int>(MSF::StandardImagelistIndex::FolderOpen) :
+        static_cast<int>(MSF::StandardImagelistIndex::FolderPlain);
 
-    return MSF::STD_IMAGELIST_INDEX_DOCUMENT_FILLED;
+    return static_cast<int>(MSF::StandardImagelistIndex::DocumentFilled);
 }
 
 

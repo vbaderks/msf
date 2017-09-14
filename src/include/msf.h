@@ -36,3 +36,4 @@
 #include "version.h"
 #include "itembase.h"
 #include "cfhandler.h"
+#include "imagelistindex.h"

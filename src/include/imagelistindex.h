@@ -9,13 +9,13 @@
 namespace MSF
 {
 
-enum EStandardImagelistIndex
+enum class StandardImagelistIndex
 {
-	STD_IMAGELIST_INDEX_DOCUMENT_BLANK  = 0, // document (blank page) (not associated)
-	STD_IMAGELIST_INDEX_DOCUMENT_FILLED = 1, // document (with stuff on the page)
-	STD_IMAGELIST_INDEX_APPLICATION     = 2, // application (exe, com, bat)
-	STD_IMAGELIST_INDEX_FOLDER_PLAIN    = 3, // folder (plain)
-	STD_IMAGELIST_INDEX_FOLDER_OPEN     = 4  // folder (open)
+    DocumentBlank  = 0, // document (blank page) (not associated)
+    DocumentFilled = 1, // document (with stuff on the page)
+    Application     = 2, // application (exe, com, bat)
+    FolderPlain    = 3, // folder (plain)
+    FolderOpen     = 4  // folder (open)
 };
 
 } // end of MSF namespace
