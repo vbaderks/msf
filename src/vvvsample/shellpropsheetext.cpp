@@ -6,7 +6,6 @@
 
 #include "stdafx.h"
 
-#include "shellfolderclsid.h"
 #include "propertypagevvv.h"
 #include "resource.h"
 

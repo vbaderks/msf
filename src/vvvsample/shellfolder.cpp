@@ -5,6 +5,7 @@
 //
 #include "stdafx.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include "shellfolderclsid.h"
 #include "shellfolderviewcb.h"
 #include "shellfolderdataobject.h"
@@ -18,7 +19,7 @@ using std::wstring;
 using std::make_unique;
 
 // Defines for the item context menu.
-const UINT ID_DFM_CMD_OPEN = 0;
+constexpr UINT ID_DFM_CMD_OPEN = 0;
 
 class __declspec(novtable) ShellFolder :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
@@ -99,7 +100,7 @@ public:
 
     // Purpose: called by MSF to tell the shell which panes to show.
     // It is essential to override this function to control which explorer panes are visible as by default no panes are shown.
-    EXPLORERPANESTATE GetPaneState(_In_ REFEXPLORERPANE ep)
+    static EXPLORERPANESTATE GetPaneState(_In_ REFEXPLORERPANE ep)
     {
         if (ep == __uuidof(MSF::EP_Ribbon))
             return EPS_DEFAULT_ON;
@@ -109,7 +110,7 @@ public:
 
     // Purpose: called by the default context menu. Gives an option to merge
     //          extra commands into the menu.
-    HRESULT OnDfmMergeContextMenu(IDataObject* pdataobject, UINT /*uFlags*/, QCMINFO& qcminfo)
+    static HRESULT OnDfmMergeContextMenu(IDataObject* pdataobject, UINT /*uFlags*/, QCMINFO& qcminfo)
     {
         MSF::CCfShellIdList itemlist(pdataobject);
 
@@ -128,12 +129,12 @@ public:
     }
 
     // Purpose: Called to get the help string for added menu items.
-    std::wstring OnDfmGetHelpText(unsigned short nCmdId)
+    static wstring OnDfmGetHelpText(unsigned short nCmdId)
     {
         return MSF::LoadResourceString(IDS_SHELLFOLDER_DFM_HELP_BASE + nCmdId);
     }
 
-    HRESULT OnDfmInvokeAddedCommand(HWND hwnd, IDataObject* pdataobject, int nId)
+    HRESULT OnDfmInvokeAddedCommand(HWND hwnd, IDataObject* pdataobject, int nId) const
     {
         switch (nId)
         {
@@ -170,7 +171,7 @@ public:
     }
 
     // Purpose: Called by the shell/MSF when an item must be renamed.
-    PUIDLIST_RELATIVE OnSetNameOf(HWND /*hwnd*/, const VVVItem& item, const wchar_t* szNewName, SHGDNF shgndf)
+    PUIDLIST_RELATIVE OnSetNameOf(HWND /*hwnd*/, const VVVItem& item, const wchar_t* szNewName, SHGDNF shgndf) const
     {
         MSF::RaiseExceptionIf(shgndf != SHGDN_NORMAL && shgndf != SHGDN_INFOLDER); // not supported 'name'.
 
@@ -211,7 +212,7 @@ public:
     }
 
     // Purpose: called by the standard MSF drag handler during drag operations.
-    bool IsSupportedClipboardFormat(IDataObject* pdataobject)
+    static bool IsSupportedClipboardFormat(IDataObject* pdataobject)
     {
         return MSF::CfHDrop::IsFormat(pdataobject);
     }
@@ -221,7 +222,7 @@ public:
     {
         MSF::CfHDrop cfhdrop(pdataobject);
 
-        unsigned int nFiles = cfhdrop.GetFileCount();
+        const unsigned int nFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < nFiles; ++i)
         {
             AddItem(wstring(cfhdrop.GetFile(i))); // TOOD
@@ -231,7 +232,7 @@ public:
         return dwEffect;
     }
 
-    void OnError(HRESULT hr, HWND hwnd, ErrorContext /*errorContext*/)
+    static void OnError(HRESULT hr, HWND hwnd, ErrorContext /*errorContext*/)
     {
         auto message = MSF::LoadResourceString(IDS_SHELLFOLDER_CANNOT_PERFORM) + MSF::FormatLastError(static_cast<DWORD>(hr));
         IsolationAwareMessageBox(hwnd, message.c_str(),
@@ -251,7 +252,7 @@ private:
 
     // Purpose: Ask the user if he is really sure about the file delete action.
     //          Deleted files cannot be restored from the recycle bin.
-    bool UserConfirmsFileDelete(HWND hwnd, const CVVVItemList& items) const
+    static bool UserConfirmsFileDelete(HWND hwnd, const CVVVItemList& items)
     {
         ATL::CString strMessage;
         UINT nCaptionResId;
@@ -283,7 +284,7 @@ private:
 
     static bool IsReadOnly(const wstring& strFileName)
     {
-        auto attributes = GetFileAttributes(strFileName.c_str());
+        const auto attributes = GetFileAttributes(strFileName.c_str());
         return (attributes & FILE_ATTRIBUTE_READONLY) != 0;
     }
 

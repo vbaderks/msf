@@ -12,9 +12,7 @@
 #include "msfbase.h"
 #include <objbase.h>
 
-namespace MSF
-{
-namespace util
+namespace MSF::util
 {
 
 /// <summary>Scope based COM initialization class (based on RAII pattern).</summary>
@@ -32,5 +30,4 @@ public:
     }
 };
 
-}  // end namespace util.
-} // end namespace MSF.
+} // end namespace MSF::util.

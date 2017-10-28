@@ -71,10 +71,10 @@ int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/
 {
     switch (compareBy)
     {
-    case COLUMN_NAME:
+    case ColumnName:
         return CompareByName(item);
 
-    case COLUMN_SIZE:
+    case ColumnSize:
         return MSF::UIntCmp(GetSize(), item.GetSize());
 
     default:
@@ -88,10 +88,10 @@ wstring VVVItem::GetItemDetailsOf(UINT columnIndex) const
 {
     switch (columnIndex)
     {
-    case COLUMN_NAME:
+    case ColumnName:
         return GetDisplayName(SHGDN_NORMAL);
 
-    case COLUMN_SIZE:
+    case ColumnSize:
         {
             if (IsFolder())
                 return wstring();

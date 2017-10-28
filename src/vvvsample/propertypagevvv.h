@@ -45,7 +45,7 @@ public:
 
     LRESULT OnChangeEditName(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& bHandled)
     {
-        auto label = GetLabel();
+        const auto label = GetLabel();
         SetModified(label != m_label);
         bHandled = true;
         return 1;
