@@ -15,7 +15,7 @@
 #include <memory>
 #include <algorithm>
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -256,5 +256,5 @@ private:
     std::vector<std::unique_ptr<ClipboardFormatHandler>> m_cfhandlers;
 };
 
-} // end MSF namespace
+} // end msf namespace
 

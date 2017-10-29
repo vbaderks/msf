@@ -12,7 +12,7 @@
 
 class __declspec(novtable) EnumIDList :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
-    public MSF::IEnumIDListImpl<EnumIDList>
+    public msf::IEnumIDListImpl<EnumIDList>
 {
 public:
     DECLARE_NOT_AGGREGATABLE(EnumIDList)
@@ -26,7 +26,7 @@ public:
         ATL::CComObject<EnumIDList>* pinstance;
         HRESULT hr = ATL::CComObject<EnumIDList>::CreateInstance(&pinstance);
         if (FAILED(hr))
-            MSF::RaiseException(hr);
+            msf::RaiseException(hr);
 
         ATL::CComPtr<IEnumIDList> renumidlist(pinstance);
         pinstance->Initialize(strFilename, strFolder, grfFlags);

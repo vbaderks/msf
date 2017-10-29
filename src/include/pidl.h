@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF
+namespace msf
 {
 
 // Purpose: Management class for pidls. A CPidl class is owner of the wrapped ITEMIDLIST.
@@ -201,4 +201,4 @@ private:
     LPITEMIDLIST m_pidl;
 };
 
-} // namespace MSF
+} // namespace msf

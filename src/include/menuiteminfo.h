@@ -6,7 +6,7 @@
 #pragma once
 
 
-namespace MSF {
+namespace msf {
 
 class MenuItemInfo : public MENUITEMINFO
 {
@@ -87,4 +87,4 @@ private:
     std::wstring m_strCache;
 };
 
-} // end namespace MSF
+} // end namespace msf

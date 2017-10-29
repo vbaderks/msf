@@ -11,7 +11,7 @@
 #include <functional>
 #include <cctype>
 
-namespace MSF
+namespace msf
 {
 
 /// <summary>Converts the numeric input value to its equivalent string representation.</summary>
@@ -90,4 +90,4 @@ inline void trim(std::wstring &s)
 }
 
 
-} // end MSF namespace
+} // end msf namespace

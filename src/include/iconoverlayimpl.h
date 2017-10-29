@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -90,4 +90,4 @@ private:
     int m_priority;
 };
 
-} // namespace MSF
+} // namespace msf

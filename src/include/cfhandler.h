@@ -7,7 +7,7 @@
 
 #include "util.h"
 
-namespace MSF {
+namespace msf {
 
 /// <summary>Base class for the Clipboard format handlers.</summary>
 class ClipboardFormatHandler

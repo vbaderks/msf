@@ -7,7 +7,7 @@
 
 #include "strutil.h"
 
-namespace MSF {
+namespace msf {
 
 // Purpose: Simple class to create a property sheet.
 //          For more advanced functionality use WTL OR MFC.
@@ -100,4 +100,4 @@ private:
     long                        m_eventID{ 0 };
 };
 
-} // end MSF namespace.
+} // end msf namespace.

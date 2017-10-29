@@ -50,5 +50,5 @@
 #pragma comment(lib, "credui.lib")
 
 
-using namespace MSF;
+using namespace msf;
 using namespace std;

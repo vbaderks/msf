@@ -77,8 +77,8 @@ private:
     // strings then to maintain copies of the dialog resource.
     void InitializeStaticString()
     {
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_NAME, (MSF::LoadResourceString(IDS_SHELLEXT_NAME) + L":").c_str()));
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_SIZE, (MSF::LoadResourceString(IDS_SHELLEXT_SIZE) + L":").c_str()));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_NAME, (msf::LoadResourceString(IDS_SHELLEXT_NAME) + L":").c_str()));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_ITEM_SIZE, (msf::LoadResourceString(IDS_SHELLEXT_SIZE) + L":").c_str()));
     }
 
     void InitializeControls()
@@ -92,7 +92,7 @@ private:
 
     // Member variables
     const VVVItem &       m_item;
-    MSF::ItemIDList       m_pidlNew;
+    msf::ItemIDList       m_pidlNew;
     long &                m_wEventId;
     ATL::CComPtr<IShellFolder> m_shellFolder;
 };

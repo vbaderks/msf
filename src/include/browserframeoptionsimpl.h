@@ -9,7 +9,7 @@
 #include "msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class __declspec(novtable) IBrowserFrameOptionsImpl :
@@ -38,4 +38,4 @@ protected:
     BROWSERFRAMEOPTIONS m_browserframeoptions;
 };
 
-} // namespace MSF
+} // namespace msf

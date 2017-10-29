@@ -9,7 +9,7 @@
 #include "../msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IPersistFilePtr : public ::IPersistFilePtr
@@ -41,4 +41,4 @@ public:
     }
 };
 
-} // end MSF namespace
+} // end msf namespace

@@ -11,7 +11,7 @@
 #include "macros.h"
 
 
-namespace MSF
+namespace msf
 {
 
 inline void RaiseExceptionIfImplemented(HRESULT hr)
@@ -20,4 +20,4 @@ inline void RaiseExceptionIfImplemented(HRESULT hr)
 		RaiseException(hr);
 }
 
-} // end MSF namespace.
+} // end msf namespace.

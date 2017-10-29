@@ -9,7 +9,7 @@
 #include <msf.h>
 
 
-class EditWithNotepadCommand : public MSF::ContextMenuCommand
+class EditWithNotepadCommand : public msf::ContextMenuCommand
 {
 public:
     void operator()(const CMINVOKECOMMANDINFO* /* pici */, const std::vector<std::wstring>& filenames) override
@@ -20,6 +20,6 @@ public:
         // Windows to use the path to find notepad.
         auto command = L"notepad.exe \"" + filenames[0] + L"\"";
 
-        MSF::CreateProcess(nullptr, command);
+        msf::CreateProcess(nullptr, command);
     }
 };

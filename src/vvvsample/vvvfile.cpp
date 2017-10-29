@@ -39,7 +39,7 @@ unsigned int VVVFile::GetFileCount() const
     //RaiseExceptionIfFailed(hr);
 
     unsigned int nCount = GetPrivateProfileInt(TSZ_APP_NAME_DIRECTORY, TSZ_FILE_COUNT);
-    MSF::RaiseExceptionIf(nCount == static_cast<UINT>(-1));
+    msf::RaiseExceptionIf(nCount == static_cast<UINT>(-1));
 
     return nCount;
 }
@@ -66,11 +66,11 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
         {
             bool bFolder = GetPrivateProfileInt(strAppName.c_str(), TSZ_FOLDER) == 1;
 
-            if ((MSF::IsBitSet(grfFlags, SHCONTF_NONFOLDERS) && !bFolder) ||
-                (MSF::IsBitSet(grfFlags, SHCONTF_FOLDERS) && bFolder))
+            if ((msf::IsBitSet(grfFlags, SHCONTF_NONFOLDERS) && !bFolder) ||
+                (msf::IsBitSet(grfFlags, SHCONTF_FOLDERS) && bFolder))
             {
                 unsigned int nSize = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
-                MSF::RaiseExceptionIf(nSize == static_cast<UINT>(-1));
+                msf::RaiseExceptionIf(nSize == static_cast<UINT>(-1));
                 auto strName = GetPrivateProfileString(strAppName.c_str(), TSZ_NAME);
 
                 return VVVItem::CreateItemIdList(nItemIterator, nSize, bFolder, strName.c_str());
@@ -105,7 +105,7 @@ void VVVFile::SetItem(const VVVItem& item) const
 PUIDLIST_RELATIVE VVVFile::AddItem(const std::wstring& strFile) const
 {
     ATL::CString strName(PathFindFileName(strFile.c_str()));
-    DWORD dwSize    = MSF::GetFileSize(strFile.c_str());
+    DWORD dwSize    = msf::GetFileSize(strFile.c_str());
 
     return AddItem(dwSize, strName);
 }
@@ -115,7 +115,7 @@ PUIDLIST_RELATIVE VVVFile::AddItem(unsigned int nSize, const ATL::CString& name)
 {
     unsigned int nId = FindFreeEntry();
 
-    MSF::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, name));
+    msf::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, name));
 
     AddItem(VVVItem(pidlItem.GetRelative()));
 
@@ -205,11 +205,11 @@ unsigned int  VVVFile::GetPrivateProfileInt(const wchar_t* lpAppName, const wcha
 
 void VVVFile::WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName, const wchar_t* lpString) const
 {
-    MSF::RaiseLastErrorExceptionIf(!::WritePrivateProfileString(lpAppName, lpKeyName, lpString, m_filename.c_str()));
+    msf::RaiseLastErrorExceptionIf(!::WritePrivateProfileString(lpAppName, lpKeyName, lpString, m_filename.c_str()));
 }
 
 
 void VVVFile::WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const
 {
-    WritePrivateProfileString(lpAppName, lpKeyName, MSF::ToString(nValue).c_str());
+    WritePrivateProfileString(lpAppName, lpKeyName, msf::ToString(nValue).c_str());
 }

@@ -10,7 +10,7 @@
 #include "persistfolderptr.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IShellBrowserPtr : public ::IShellBrowserPtr
@@ -39,4 +39,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

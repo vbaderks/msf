@@ -11,7 +11,7 @@
 class __declspec(novtable) __declspec(uuid("D7DCE46C-98DB-4446-B1C0-E787325B1FBC")) IconOverlay :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ATL::CComCoClass<IconOverlay, &__uuidof(IconOverlay)>,
-    public MSF::IconOverlayImpl<IconOverlay>
+    public msf::IconOverlayImpl<IconOverlay>
 {
 public:
     BEGIN_COM_MAP(IconOverlay)

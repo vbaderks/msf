@@ -10,7 +10,7 @@
 #include "globallock.h"
 #include <objidl.h>
 
-namespace MSF {
+namespace msf {
 
 // A StorageMedium class is owner of the stgmedium.
 
@@ -123,4 +123,4 @@ public:
     }
 };
 
-} // end MSF namespace
+} // end msf namespace

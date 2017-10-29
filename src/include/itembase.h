@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF
+namespace msf
 {
 
 // Purpose: base class for items contained in a shellfolder.
@@ -41,4 +41,4 @@ private:
     PCUIDLIST_RELATIVE m_pidl;
 };
 
-} // end MSF namespace
+} // end msf namespace

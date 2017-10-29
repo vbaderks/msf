@@ -31,4 +31,4 @@
 #pragma warning(pop)
 
 using namespace std;
-using namespace MSF;
+using namespace msf;

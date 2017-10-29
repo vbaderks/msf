@@ -7,7 +7,7 @@
 
 #include "cfeffect.h"
 
-namespace MSF
+namespace msf
 {
 
 /// <summary>Collection of static helper functions to update settings in a data object.</summary>
@@ -37,4 +37,4 @@ private:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

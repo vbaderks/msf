@@ -7,7 +7,7 @@
 
 #include "cfeffect.h"
 
-namespace MSF
+namespace msf
 {
 
 class CCfPreferredDropEffect
@@ -40,4 +40,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

@@ -15,7 +15,7 @@
 #include <memory>
 #include <algorithm>
 
-namespace MSF {
+namespace msf {
 
 template<typename T>
 class ClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>

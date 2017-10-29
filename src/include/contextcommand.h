@@ -9,7 +9,7 @@
 #include "msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class ContextMenuCommand
@@ -19,4 +19,4 @@ public:
     virtual void operator()(const CMINVOKECOMMANDINFO* /* pici */, const std::vector<std::wstring>& /* filenames */) = 0;
 };
 
-} // end namespace MSF
+} // end namespace msf

@@ -9,7 +9,7 @@
 #include "../msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IShellPropSheetExtPtr :
@@ -54,4 +54,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

@@ -9,7 +9,7 @@
 #include "msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IEnumFORMATETCPtr : public ::IEnumFORMATETCPtr
@@ -36,4 +36,4 @@ public:
 };
 
 
-} // end MSF namespace
+} // end msf namespace

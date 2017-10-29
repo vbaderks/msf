@@ -11,7 +11,7 @@
 _COM_SMARTPTR_TYPEDEF(IBrowserFrameOptions, __uuidof(IBrowserFrameOptions));
 
 
-namespace MSF
+namespace msf
 {
 
 class IBrowserFrameOptionsPtr : public ::IBrowserFrameOptionsPtr
@@ -50,4 +50,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

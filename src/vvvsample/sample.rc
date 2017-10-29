@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "Sample Company"
-            VALUE "FileDescription", "MSF VVV Sample Shell extension"
+            VALUE "FileDescription", "msf VVV Sample Shell extension"
             VALUE "FileVersion", "1.0.0.0"
             VALUE "LegalCopyright", "(c) Sample Company.  All rights reserved."
             VALUE "InternalName", "sample.dll"
             VALUE "OriginalFilename", "sample.dll"
-            VALUE "ProductName", "MSF VVV Sample Shell extension"
+            VALUE "ProductName", "msf VVV Sample Shell extension"
             VALUE "ProductVersion", "1.0.0.0"
         END
     END
@@ -180,11 +180,11 @@ BEGIN
     IDS_CONTEXTMENU_VVV_SUBMENU_HELP "Special commands for VVV files"
     IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD "&Open with notepad"
     IDS_CONTEXTMENU_EDIT_WITH_NOTEPAD_HELP "Open the VVV file with notepad"
-    IDS_CONTEXTMENU_ABOUT_MSF "&About MSF"
+    IDS_CONTEXTMENU_ABOUT_MSF "&About msf"
     IDS_CONTEXTMENU_ABOUT_MSF_HELP 
-                            "Show the version number of the MSF framework"
+                            "Show the version number of the msf framework"
     IDS_CONTEXTMENU_CAPTION "VVV Sample"
-    IDS_CONTEXTMENU_ABOUT_MASK "Build with MSF version %2d.%d"
+    IDS_CONTEXTMENU_ABOUT_MASK "Build with msf version %2d.%d"
 END
 
 STRINGTABLE

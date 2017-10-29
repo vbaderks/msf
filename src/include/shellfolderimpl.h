@@ -27,7 +27,7 @@
     #error _WIN32_IE needs to be at least 0x501 for IShellFolder2 definition.
 #endif
 
-namespace MSF
+namespace msf
 {
 
 #ifndef WM_GETISHELLBROWSER
@@ -1372,7 +1372,7 @@ protected:
 
     void RegisterColumn(UINT nResourceID, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
     {
-        RegisterColumn(MSF::LoadResourceString(nResourceID).c_str(), fmt, csFlags);
+        RegisterColumn(LoadResourceString(nResourceID).c_str(), fmt, csFlags);
     }
 
     // Implement this function and return the attributes or SFGAO_UNDEFINED
@@ -1585,4 +1585,4 @@ private:
     bool m_bCachedIsSupportedClipboardFormat;
 };
 
-} // namespace MSF
+} // namespace msf

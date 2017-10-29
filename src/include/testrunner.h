@@ -15,7 +15,7 @@
 #pragma warning(pop)
 
 
-namespace MSF
+namespace msf
 {
 
 typedef void (*performtest_fn)();
@@ -139,4 +139,4 @@ private:
 #undef tcout
 
 
-} // end MSF namespace.
+} // end msf namespace.

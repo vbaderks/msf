@@ -9,7 +9,7 @@
 #include "contextmenuimpl.h"
 
 
-namespace MSF
+namespace msf
 {
 
 struct IShellFolderContextMenuSink : IUnknown
@@ -66,4 +66,4 @@ private:
     ATL::CComPtr<IShellFolderContextMenuSink> _rshellfoldercontextmenusink;
 };
 
-} // end namespace MSF
+} // end namespace msf

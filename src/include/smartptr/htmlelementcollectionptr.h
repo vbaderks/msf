@@ -12,7 +12,7 @@
 _COM_SMARTPTR_TYPEDEF(IHTMLElementCollection, __uuidof(IHTMLElementCollection));
 
 
-namespace MSF
+namespace msf
 {
 
 class IHTMLElementCollectionPtr : public ::IHTMLElementCollectionPtr

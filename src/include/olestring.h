@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF
+namespace msf
 {
 /// <purpose>Can hold a COM allocated string and will release it when it goes out of scope.</purpose>
 class OleString final

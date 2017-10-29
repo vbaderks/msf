@@ -8,7 +8,7 @@
 #include "msfbase.h"
 #include "olestring.h"
 
-namespace MSF {
+namespace msf {
 
 /// <summary>Basic implementation functionality for a Browser Helper Object COM object (BHO).</summary>
 /// <remarks>

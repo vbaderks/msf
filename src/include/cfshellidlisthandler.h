@@ -12,7 +12,7 @@
 #include "stgmedium.h"
 
 
-namespace MSF
+namespace msf
 {
 
 // Note: handler expect that pidls are alive as long as handler is used.
@@ -87,5 +87,5 @@ private:
     std::vector<CPidl>& m_pidls;
 };
 
-} // end of MSF namespace
+} // end of msf namespace
 

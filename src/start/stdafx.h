@@ -34,4 +34,4 @@
 #define _ATL_EX_CONVERSION_MACROS_ONLY // Only use the new Unicode <-> Ansi conversion macro's.
 
 using namespace std;
-using namespace MSF;
+using namespace msf;

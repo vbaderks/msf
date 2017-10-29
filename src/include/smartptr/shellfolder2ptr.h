@@ -13,7 +13,7 @@
 _COM_SMARTPTR_TYPEDEF(IShellFolder2, __uuidof(IShellFolder2));
 
 
-namespace MSF
+namespace msf
 {
 
 class IShellFolder2Ptr : public ::IShellFolder2Ptr
@@ -57,10 +57,10 @@ public:
 
     void Initialize(const wchar_t* szFilename)
     {
-        MSF::IPersistFolderPtr persistfolder(this);
+        msf::IPersistFolderPtr persistfolder(this);
 
         persistfolder.Initialize(szFilename);
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

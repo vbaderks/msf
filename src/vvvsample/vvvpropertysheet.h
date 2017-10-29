@@ -8,7 +8,7 @@
 #include "propertypageitem.h"
 #include <msf.h>
 
-class VVVPropertySheet : public MSF::PropertySheet
+class VVVPropertySheet : public msf::PropertySheet
 {
 public:
     VVVPropertySheet(const VVVPropertySheet&) = delete;

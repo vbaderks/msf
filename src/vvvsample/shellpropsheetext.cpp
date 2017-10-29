@@ -16,7 +16,7 @@ using std::vector;
 class __declspec(novtable) __declspec(uuid("E53D1A20-D87F-42ad-A6CD-F2E155CAAADC")) ShellPropSheetExt :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ATL::CComCoClass<ShellPropSheetExt, &__uuidof(ShellPropSheetExt)>,
-    public MSF::ShellPropSheetExtImpl<ShellPropSheetExt>
+    public msf::ShellPropSheetExtImpl<ShellPropSheetExt>
 {
 public:
     BEGIN_COM_MAP(ShellPropSheetExt)
@@ -32,7 +32,7 @@ public:
             L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
     }
 
-    // Purpose: called by MSF when it is time to add our pages to the property sheet.
+    // Purpose: called by msf when it is time to add our pages to the property sheet.
     void AddPagesCore(const CAddPage& addPage, const vector<wstring>& filenames) override
     {
         // Only add the page if only 1 file is selected and is of our own extension.

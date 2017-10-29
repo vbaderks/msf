@@ -9,7 +9,7 @@
 #include "stgmedium.h"
 #include "util.h"
 
-namespace MSF
+namespace msf
 {
 
 /// <summary>Sets the Clipboard format effect into a data object.</summary>
@@ -45,4 +45,4 @@ inline HRESULT GetCfEffect(LPCTSTR lpszFormat, _In_ IDataObject* pdataobject, DW
     return S_OK;
 }
 
-} // end of MSF namespace
+} // end of msf namespace

@@ -7,7 +7,7 @@
 
 #include "util.h"
 
-namespace MSF
+namespace msf
 {
 
 /// <summary>Smart extended class for Windows SDK FORMATETC struct.</summary>
@@ -98,4 +98,4 @@ private:
     }
 };
 
-} // namespace MSF
+} // namespace msf

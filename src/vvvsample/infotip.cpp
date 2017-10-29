@@ -14,7 +14,7 @@ using std::wstring;
 class __declspec(novtable) __declspec(uuid("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71")) InfoTip :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ATL::CComCoClass<InfoTip, &__uuidof(InfoTip)>,
-    public MSF::InfoTipImpl<InfoTip>
+    public msf::InfoTipImpl<InfoTip>
 {
 public:
     BEGIN_COM_MAP(InfoTip)
@@ -35,15 +35,15 @@ public:
         VVVFile vvvfile{ filename };
 
         m_label = vvvfile.GetLabel();
-        m_fileCount = MSF::ToString(vvvfile.GetFileCount());
+        m_fileCount = msf::ToString(vvvfile.GetFileCount());
     }
 
-    // Purpose: called by the shell/MSF when it needs the text for the infotip.
+    // Purpose: called by the shell/msf when it needs the text for the infotip.
     //          The string is used for the tooltip and the text in the status bar.
     wstring GetInfoTip(DWORD /* dwFlags */) override
     {
-        return MSF::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + m_label + L"\n" +
-               MSF::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + m_fileCount;
+        return msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + m_label + L"\n" +
+               msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + m_fileCount;
     }
 
 private:

@@ -10,7 +10,7 @@
 #include "olestring.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IItemNameLimitsImplDefault
@@ -92,4 +92,4 @@ public:
     }
  };
 
-} // namespace MSF
+} // namespace msf

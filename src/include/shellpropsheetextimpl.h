@@ -11,7 +11,7 @@
 
 #pragma comment(lib, "comctl32")
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -88,4 +88,4 @@ protected:
     virtual void AddPagesCore(const CAddPage& /*addpages*/, const std::vector<std::wstring>& /*filenames*/) = 0;
 };
 
-} // namespace MSF
+} // namespace msf

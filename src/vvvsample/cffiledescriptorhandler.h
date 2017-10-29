@@ -11,7 +11,7 @@
 // Note: owner of the instance of this class must keep passed dataobject alive.
 //       This class doesn't do addref to prevent circular referencing.
 
-class CCfFileDescriptorHandler : public MSF::ClipboardFormatHandler
+class CCfFileDescriptorHandler : public msf::ClipboardFormatHandler
 {
 public:
     explicit CCfFileDescriptorHandler(IDataObject* pdataobjectOuter) :
@@ -24,12 +24,12 @@ public:
 
     void GetData(const FORMATETC&, STGMEDIUM& medium) const override
     {
-        MSF::CCfShellIdList cfshellidlist(m_pdataobject);
+        msf::CCfShellIdList cfshellidlist(m_pdataobject);
 
         size_t size = sizeof(FILEGROUPDESCRIPTOR) +
             (cfshellidlist.GetItemCount() * sizeof(FILEDESCRIPTOR));
 
-        HGLOBAL hg = MSF::GlobalAllocThrow(size);
+        HGLOBAL hg = msf::GlobalAllocThrow(size);
 
         FILEGROUPDESCRIPTOR* pfgd = static_cast<FILEGROUPDESCRIPTOR*>(hg);
 
@@ -49,7 +49,7 @@ public:
                 _com_raise_error(E_FAIL);
         }
 
-        MSF::StorageMedium::SetHGlobal(medium, hg);
+        msf::StorageMedium::SetHGlobal(medium, hg);
     }
 
 private:

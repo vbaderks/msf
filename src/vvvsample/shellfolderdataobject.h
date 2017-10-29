@@ -13,7 +13,7 @@
 
 class ShellFolderDataObject :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
-    public MSF::ShellFolderDataObjectImpl<ShellFolderDataObject>
+    public msf::ShellFolderDataObjectImpl<ShellFolderDataObject>
 {
 public:
     DECLARE_NOT_AGGREGATABLE(ShellFolderDataObject)
@@ -23,12 +23,12 @@ public:
     END_COM_MAP()
 
     static ATL::CComPtr<IDataObject> CreateInstance(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl,
-        PCUITEMID_CHILD_ARRAY ppidl, MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
+        PCUITEMID_CHILD_ARRAY ppidl, msf::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         ATL::CComObject<ShellFolderDataObject>* instance;
         HRESULT hr = ATL::CComObject<ShellFolderDataObject>::CreateInstance(&instance);
         if (FAILED(hr))
-            MSF::RaiseException(hr);
+            msf::RaiseException(hr);
 
         ATL::CComPtr<IDataObject> dataObject(instance);
         instance->Initialize(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
@@ -40,7 +40,7 @@ protected:
 
 private:
     void Initialize(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl,
-                    MSF::IPerformedDropEffectSink* pperformeddropeffectsink)
+                    msf::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
 

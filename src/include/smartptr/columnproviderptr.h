@@ -12,7 +12,7 @@
 _COM_SMARTPTR_TYPEDEF(IColumnProvider, __uuidof(IColumnProvider));
 
 
-namespace MSF
+namespace msf
 {
 
 class CSHColumnInit : public SHCOLUMNINIT
@@ -134,4 +134,4 @@ private:
     };
 };
 
-} // end MSF namespace
+} // end msf namespace

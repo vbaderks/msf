@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF
+namespace msf
 {
 
 inline ATL::CComPtr<IDataObject> CIDLData_CreateFromIDArray(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUIDLIST_RELATIVE_ARRAY pidlItems)
@@ -20,4 +20,4 @@ inline ATL::CComPtr<IDataObject> CIDLData_CreateFromIDArray(PCIDLIST_ABSOLUTE pi
     return dataobject;
 }
 
-} // end namespace MSF
+} // end namespace msf

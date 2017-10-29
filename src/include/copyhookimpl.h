@@ -10,7 +10,7 @@
 #include "olestring.h"
 #include "updateregistry.h"
 
-namespace MSF
+namespace msf
 {
 
 // Note: ICopyHook is a #define. It stands for ICopyHookA or ICopyHookW.
@@ -60,4 +60,4 @@ protected:
     // As a derived class, just implement the CopyCallback function.
 };
 
-} // end namespace MSF
+} // end namespace msf

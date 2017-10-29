@@ -13,7 +13,7 @@
 _COM_SMARTPTR_TYPEDEF(IHTMLInputElement, __uuidof(IHTMLInputElement));
 
 
-namespace MSF
+namespace msf
 {
 
 class IHTMLInputElementPtr : public ::IHTMLInputElementPtr

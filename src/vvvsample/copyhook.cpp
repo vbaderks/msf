@@ -16,7 +16,7 @@
 class __declspec(novtable) __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CopyHook :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ATL::CComCoClass<CopyHook, &__uuidof(CopyHook)>,
-    public MSF::ICopyHookImpl<CopyHook>
+    public msf::ICopyHookImpl<CopyHook>
 {
 public:
     BEGIN_COM_MAP(CopyHook)
@@ -27,7 +27,7 @@ public:
 
     static HRESULT WINAPI UpdateRegistry(BOOL registerInRegistry) noexcept
     {
-        return MSF::ICopyHookImpl<CopyHook>::UpdateRegistry(registerInRegistry, IDR_COPYHOOK,
+        return msf::ICopyHookImpl<CopyHook>::UpdateRegistry(registerInRegistry, IDR_COPYHOOK,
             L"VVV Sample CopyHook ShellExtension", L"VVV CopyHook");
     }
 
@@ -37,8 +37,8 @@ public:
     {
         if (wFunc == FO_DELETE && ATL::CString(pszSrcFile).Find(L"VVV") != -1)
         {
-            return IsolationAwareMessageBox(hwnd, MSF::LoadResourceString(IDS_COPYHOOK_QUESTION).c_str(),
-                MSF::LoadResourceString(IDS_COPYHOOK_CAPTION).c_str(), MB_YESNOCANCEL);
+            return IsolationAwareMessageBox(hwnd, msf::LoadResourceString(IDS_COPYHOOK_QUESTION).c_str(),
+                msf::LoadResourceString(IDS_COPYHOOK_CAPTION).c_str(), MB_YESNOCANCEL);
         }
 
         return IDYES;

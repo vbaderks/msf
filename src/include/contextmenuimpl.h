@@ -14,7 +14,7 @@
 #include <memory>
 
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -475,4 +475,4 @@ private:
     unsigned int m_idCmdFirst;
 };
 
-} // end namespace MSF
+} // end namespace msf

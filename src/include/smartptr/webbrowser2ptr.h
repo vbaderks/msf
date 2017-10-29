@@ -9,7 +9,7 @@
 #include "../msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IWebBrowser2Ptr : public ::IWebBrowser2Ptr

@@ -9,7 +9,7 @@
 #include <stdexcept>
 
 
-namespace MSF
+namespace msf
 {
 
 [[noreturn]] inline void RaiseException(HRESULT hr = E_FAIL)
@@ -77,4 +77,4 @@ inline __declspec(noinline) HRESULT ExceptionToHResult() noexcept
 }
 
 
-} // end of MSF namespace
+} // end of msf namespace

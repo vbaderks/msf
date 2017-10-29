@@ -9,7 +9,7 @@
 #include "updateregistry.h"
 #include "queryinfoimpl.h"
 
-namespace MSF
+namespace msf
 {
 
 /// <summary>Basic implementation functionality for a InfoTip shell extension COM object.</summary>
@@ -75,4 +75,4 @@ private:
     bool m_initialized;
 };
 
-} // namespace MSF
+} // namespace msf

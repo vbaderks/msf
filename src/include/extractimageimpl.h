@@ -10,7 +10,7 @@
 #include "updateregistry.h"
 
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -188,4 +188,4 @@ protected:
     HBITMAP      m_hbitmap;
 };
 
-} // namespace MSF
+} // namespace msf

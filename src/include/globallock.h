@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF {
+namespace msf {
 namespace util {
 
 template <typename T>

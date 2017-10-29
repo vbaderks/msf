@@ -9,7 +9,7 @@
 
 // Note: very simple skeleton.
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -112,4 +112,4 @@ protected:
     }
 };
 
-} // namespace MSF
+} // namespace msf

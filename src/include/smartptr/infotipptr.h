@@ -11,7 +11,7 @@
 #include "persistfileptr.h"
 
 
-namespace MSF
+namespace msf
 {
 
 // An infotip has 2 main COM interfaces. Use IUnknown as the base interface to hold
@@ -27,7 +27,7 @@ public:
 
     void Load(PCWSTR wszFilename)
     {
-        MSF::IPersistFilePtr persistfile(this);
+        msf::IPersistFilePtr persistfile(this);
 
         persistfile.Load(wszFilename);
     }
@@ -35,7 +35,7 @@ public:
 
     CStringW GetInfoTip()
     {
-        MSF::IQueryInfoPtr queryinfo(this);
+        msf::IQueryInfoPtr queryinfo(this);
 
         return queryinfo.GetInfoTip();
     }
@@ -49,4 +49,4 @@ public:
     }
 };
 
-} // end MSF namespace
+} // end msf namespace

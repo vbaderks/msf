@@ -11,7 +11,7 @@
 #include "util.h"
 #include "smartptr/dataobjectptr.h"
 
-namespace MSF {
+namespace msf {
 
 /// <summary>Wraps a data object as a collection of ITEMIDLIST pointers.</summary>
 class CCfShellIdList
@@ -54,4 +54,4 @@ private:
     StorageMedium m_medium;
 };
 
-} // namespace MSF
+} // namespace msf

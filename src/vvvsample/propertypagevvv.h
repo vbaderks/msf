@@ -9,7 +9,7 @@
 #include "resource.h"
 #include <msf.h>
 
-class PropertyPageVVV : public MSF::ShellExtPropertyPageImpl<PropertyPageVVV>
+class PropertyPageVVV : public msf::ShellExtPropertyPageImpl<PropertyPageVVV>
 {
 public:
     static HPROPSHEETPAGE CreateInstance(std::wstring filename)
@@ -65,9 +65,9 @@ public:
         }
         catch (const _com_error& e)
         {
-            auto message = MSF::LoadResourceString(IDS_PROPERTYPAGE_UNABLE_TO_UPDATE) +
-                MSF::FormatLastError(static_cast<DWORD>(e.Error()));
-            IsolationAwareMessageBox(GetParent().m_hWnd, message.c_str(), MSF::LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
+            auto message = msf::LoadResourceString(IDS_PROPERTYPAGE_UNABLE_TO_UPDATE) +
+                msf::FormatLastError(static_cast<DWORD>(e.Error()));
+            IsolationAwareMessageBox(GetParent().m_hWnd, message.c_str(), msf::LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
         }
 
         return false;
@@ -78,8 +78,8 @@ private:
     // strings then to maintain copies of the dialog resource.
     void InitializeStaticString()
     {
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_LABEL, (MSF::LoadResourceString(IDS_SHELLEXT_LABEL) + L":").c_str()));
-        ATLVERIFY(SetDlgItemText(IDC_STATIC_FILECOUNT, (MSF::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L":").c_str()));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_LABEL, (msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L":").c_str()));
+        ATLVERIFY(SetDlgItemText(IDC_STATIC_FILECOUNT, (msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L":").c_str()));
     }
 
     void InitializeControls()
@@ -91,7 +91,7 @@ private:
     std::wstring GetLabel() const
     {
         auto label = GetDlgItemText(IDC_EDIT_LABEL);
-        MSF::trim(label);
+        msf::trim(label);
         return label;
     }
 

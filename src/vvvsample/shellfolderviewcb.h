@@ -10,7 +10,7 @@
 
 class __declspec(novtable) ShellFolderViewCB :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
-    public MSF::ShellFolderViewCBImpl<ShellFolderViewCB>
+    public msf::ShellFolderViewCBImpl<ShellFolderViewCB>
 {
 public:
     static ATL::CComPtr<IShellFolderViewCB> CreateInstance(PCUIDLIST_RELATIVE folder)
@@ -18,7 +18,7 @@ public:
         ATL::CComObject<ShellFolderViewCB>* instance;
         HRESULT hr = ATL::CComObject<ShellFolderViewCB>::CreateInstance(&instance);
         if (FAILED(hr))
-            MSF::RaiseException();
+            msf::RaiseException();
 
         ATL::CComPtr<IShellFolderViewCB> shellfolderviewcb(instance);
         instance->SetFolder(folder);

@@ -11,7 +11,7 @@
 #include "stgmedium.h"
 #include "util.h"
 
-namespace MSF
+namespace msf
 {
 
 class CCfPerformedDropEffectHandler : public ClipboardFormatHandler
@@ -72,4 +72,4 @@ private:
     DWORD                             m_dwEffect;
 };
 
-} // end of MSF namespace
+} // end of msf namespace

@@ -8,7 +8,7 @@
 #include "msfbase.h"
 #include <memory>
 
-namespace MSF
+namespace msf
 {
 
 inline ATL::CComPtr<IEnumFORMATETC> SHCreateStdEnumFmtEtc(UINT cfmt, const FORMATETC* pformatetc)
@@ -107,4 +107,4 @@ inline HRESULT CreateStdEnumFmtEtc(std::unique_ptr<std::vector<FORMATETC> > qfor
     }
 }
 
-} // end of MSF namespace
+} // end of msf namespace

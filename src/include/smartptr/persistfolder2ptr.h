@@ -13,7 +13,7 @@
 _COM_SMARTPTR_TYPEDEF(IPersistFolder2, __uuidof(IPersistFolder2));
 
 
-namespace MSF
+namespace msf
 {
 
 class IPersistFolder2Ptr : public ::IPersistFolder2Ptr

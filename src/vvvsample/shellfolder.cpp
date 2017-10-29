@@ -24,9 +24,9 @@ constexpr UINT ID_DFM_CMD_OPEN = 0;
 class __declspec(novtable) ShellFolder :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ATL::CComCoClass<ShellFolder, &__uuidof(ShellFolder)>,
-    public MSF::ShellFolderImpl<ShellFolder, VVVItem>,
-    public MSF::IBrowserFrameOptionsImpl,
-    public MSF::IItemNameLimitsImpl<ShellFolder, VVVItem>
+    public msf::ShellFolderImpl<ShellFolder, VVVItem>,
+    public msf::IBrowserFrameOptionsImpl,
+    public msf::IItemNameLimitsImpl<ShellFolder, VVVItem>
 {
 public:
     BEGIN_COM_MAP(ShellFolder)
@@ -55,7 +55,7 @@ public:
             L"VVV Sample ShellFolder ShellExtension ", wszVVVFileRootExt, IDS_SHELLFOLDER_TYPE);
     }
 
-    // Purpose: called by MSF when the shell folder needs to show a sub folder.
+    // Purpose: called by msf when the shell folder needs to show a sub folder.
     void InitializeSubFolder(const CVVVItemList& items)
     {
         m_strSubFolder.clear();
@@ -67,7 +67,7 @@ public:
                 m_strSubFolder += L"\\";
             }
 
-            m_strSubFolder += MSF::ToString(item.GetID());
+            m_strSubFolder += msf::ToString(item.GetID());
         }
     }
 
@@ -78,31 +78,31 @@ public:
         return ShellFolderViewCB::CreateInstance(GetRootFolder());
     }
 
-    // Purpose: called by MSF/shell when a number of items are selected and a IDataObject
+    // Purpose: called by msf/shell when a number of items are selected and a IDataObject
     //          that contains the items is required.
     ATL::CComPtr<IDataObject> CreateDataObject(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl)
     {
         return ShellFolderDataObject::CreateInstance(pidlFolder, cidl, ppidl, this);
     }
 
-    // Purpose: called by MSF/shell when it want the current list of
+    // Purpose: called by msf/shell when it want the current list of
     //          all items  The shell will walk all IDs and then release the enum.
     ATL::CComPtr<IEnumIDList> CreateEnumIDList(HWND /*hwnd*/, DWORD grfFlags) const
     {
         return EnumIDList::CreateInstance(GetPathFolderFile(), m_strSubFolder, grfFlags);
     }
 
-    // Purpose: called by MSF when there is no global settings for all items.
+    // Purpose: called by msf when there is no global settings for all items.
     SFGAOF GetAttributeOf(unsigned int cidl, const VVVItem& item, SFGAOF /*sfgofMask*/) const
     {
         return item.GetAttributeOf(cidl == 1, IsReadOnly(GetPathFolderFile()));
     }
 
-    // Purpose: called by MSF to tell the shell which panes to show.
+    // Purpose: called by msf to tell the shell which panes to show.
     // It is essential to override this function to control which explorer panes are visible as by default no panes are shown.
     static EXPLORERPANESTATE GetPaneState(_In_ REFEXPLORERPANE ep)
     {
-        if (ep == __uuidof(MSF::EP_Ribbon))
+        if (ep == __uuidof(msf::EP_Ribbon))
             return EPS_DEFAULT_ON;
 
         return EPS_DONTCARE;
@@ -112,12 +112,12 @@ public:
     //          extra commands into the menu.
     static HRESULT OnDfmMergeContextMenu(IDataObject* pdataobject, UINT /*uFlags*/, QCMINFO& qcminfo)
     {
-        MSF::CCfShellIdList itemlist(pdataobject);
+        msf::CCfShellIdList itemlist(pdataobject);
 
         if (itemlist.GetItemCount() == 1 && !VVVItem(itemlist.GetItem(0)).IsFolder())
         {
             // Add 'open' if only 1 item is selected.
-            MSF::CMenu menu(true);
+            msf::CMenu menu(true);
             menu.AddDefaultItem(ID_DFM_CMD_OPEN, L"&Open");
             MergeMenus(qcminfo, menu);
 
@@ -131,7 +131,7 @@ public:
     // Purpose: Called to get the help string for added menu items.
     static wstring OnDfmGetHelpText(unsigned short nCmdId)
     {
-        return MSF::LoadResourceString(IDS_SHELLFOLDER_DFM_HELP_BASE + nCmdId);
+        return msf::LoadResourceString(IDS_SHELLFOLDER_DFM_HELP_BASE + nCmdId);
     }
 
     HRESULT OnDfmInvokeAddedCommand(HWND hwnd, IDataObject* pdataobject, int nId) const
@@ -153,7 +153,7 @@ public:
     // Purpose: handle 'open' by showing the name of the selected item.
     void OnOpen(HWND hwnd, IDataObject* pdataobject) const
     {
-        MSF::CCfShellIdList cfshellidlist(pdataobject);
+        msf::CCfShellIdList cfshellidlist(pdataobject);
         ATLASSERT(cfshellidlist.GetItemCount() == 1);
 
         VVVItem item(cfshellidlist.GetItem(0));
@@ -170,12 +170,12 @@ public:
         }
     }
 
-    // Purpose: Called by the shell/MSF when an item must be renamed.
+    // Purpose: Called by the shell/msf when an item must be renamed.
     PUIDLIST_RELATIVE OnSetNameOf(HWND /*hwnd*/, const VVVItem& item, const wchar_t* szNewName, SHGDNF shgndf) const
     {
-        MSF::RaiseExceptionIf(shgndf != SHGDN_NORMAL && shgndf != SHGDN_INFOLDER); // not supported 'name'.
+        msf::RaiseExceptionIf(shgndf != SHGDN_NORMAL && shgndf != SHGDN_INFOLDER); // not supported 'name'.
 
-        MSF::ItemIDList pidl(VVVItem::CreateItemIdList(item.GetID(), item.GetSize(), item.IsFolder(), szNewName));
+        msf::ItemIDList pidl(VVVItem::CreateItemIdList(item.GetID(), item.GetSize(), item.IsFolder(), szNewName));
 
         VVVFile(GetPathFolderFile(), m_strSubFolder).SetItem(VVVItem(pidl.GetRelative()));
 
@@ -200,7 +200,7 @@ public:
         return wEventId;
     }
 
-    // Purpose: Called by MSF/shell when items must be deleted.
+    // Purpose: Called by msf/shell when items must be deleted.
     long OnDelete(HWND hwnd, CVVVItemList& items) const
     {
         if (!hwnd && !UserConfirmsFileDelete(hwnd, items))
@@ -211,16 +211,16 @@ public:
         return SHCNE_DELETE;
     }
 
-    // Purpose: called by the standard MSF drag handler during drag operations.
+    // Purpose: called by the standard msf drag handler during drag operations.
     static bool IsSupportedClipboardFormat(IDataObject* pdataobject)
     {
-        return MSF::CfHDrop::IsFormat(pdataobject);
+        return msf::CfHDrop::IsFormat(pdataobject);
     }
 
     // Purpose: called when items are pasted or dropped on the shellfolder.
     DWORD AddItemsFromDataObject(DWORD dwEffect, IDataObject* pdataobject)
     {
-        MSF::CfHDrop cfhdrop(pdataobject);
+        msf::CfHDrop cfhdrop(pdataobject);
 
         const unsigned int nFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < nFiles; ++i)
@@ -234,9 +234,9 @@ public:
 
     static void OnError(HRESULT hr, HWND hwnd, ErrorContext /*errorContext*/)
     {
-        auto message = MSF::LoadResourceString(IDS_SHELLFOLDER_CANNOT_PERFORM) + MSF::FormatLastError(static_cast<DWORD>(hr));
+        auto message = msf::LoadResourceString(IDS_SHELLFOLDER_CANNOT_PERFORM) + msf::FormatLastError(static_cast<DWORD>(hr));
         IsolationAwareMessageBox(hwnd, message.c_str(),
-            MSF::LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
+            msf::LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
     }
 
 protected:
@@ -265,19 +265,19 @@ private:
         else
         {
             strMessage.FormatMessage(IDS_SHELLFOLDER_MULTIPLE_DELETE,
-                MSF::ToString(static_cast<unsigned int>(items.size())).c_str());
+                msf::ToString(static_cast<unsigned int>(items.size())).c_str());
             nCaptionResId = IDS_SHELLFOLDER_FILES_DELETE_CAPTION;
         }
 
         return IsolationAwareMessageBox(hwnd, strMessage,
-            MSF::LoadString(nCaptionResId), MB_YESNO | MB_ICONQUESTION) == IDYES;
+            msf::LoadString(nCaptionResId), MB_YESNO | MB_ICONQUESTION) == IDYES;
     }
 
     void AddItem(const wstring& strFile) const
     {
         VVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
 
-        MSF::ItemIDList pidlItem(vvvfile.AddItem(strFile));
+        msf::ItemIDList pidlItem(vvvfile.AddItem(strFile));
 
         ReportAddItem(pidlItem.GetRelative());
     }

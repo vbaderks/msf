@@ -9,7 +9,7 @@
 #include "stgmedium.h"
 #include "formatetc.h"
 
-namespace MSF
+namespace msf
 {
 
 /// <summary>Support class to handle the CF_HDROP format.</summary>
@@ -60,4 +60,4 @@ private:
     StorageMedium m_stgmedium;
 };
 
-} // namespace MSF
+} // namespace msf

@@ -10,7 +10,7 @@
 
 #pragma comment(lib, "comctl32") // required to link DestroyPropertySheetPage.
 
-namespace MSF
+namespace msf
 {
 
 /// <purpose>Owns a collection of property sheet pages.</purpose>
@@ -42,4 +42,4 @@ private:
     std::vector<HPROPSHEETPAGE> _propsheetpages;
 };
 
-} // end MSF namespace
+} // end msf namespace

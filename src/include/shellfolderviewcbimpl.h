@@ -14,7 +14,7 @@
 struct SFVM_WEBVIEW_CONTENT_DATA;
 
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -576,4 +576,4 @@ protected:
     long  _notifyevents;
 };
 
-} // MSF namespace
+} // msf namespace

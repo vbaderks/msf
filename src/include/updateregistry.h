@@ -10,7 +10,7 @@
 #include "strutil.h"
 
 
-namespace MSF
+namespace msf
 {
 
 inline void StringFromCLSID(REFCLSID clsid, OleString& olestrCLSID)
@@ -111,4 +111,4 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
 }
 
-} // namespace MSF
+} // namespace msf

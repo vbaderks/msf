@@ -13,7 +13,7 @@
 #endif
 
 
-namespace MSF
+namespace msf
 {
 
 class IShellExtInitPtr :
@@ -40,4 +40,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

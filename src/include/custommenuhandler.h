@@ -9,7 +9,7 @@
 #include "menuiteminfo.h"
 
 
-namespace MSF
+namespace msf
 {
 
 // Purpose: handles owner draw menu items.
@@ -46,4 +46,4 @@ public:
     }
 };
 
-} // end namespace MSF
+} // end namespace msf

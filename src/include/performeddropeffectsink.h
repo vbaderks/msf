@@ -6,7 +6,7 @@
 #pragma once
 
 
-namespace MSF
+namespace msf
 {
 
 struct IPerformedDropEffectSink : IUnknown
@@ -17,4 +17,4 @@ protected:
     ~IPerformedDropEffectSink() = default;
 };
 
-} // end of MSF namespace
+} // end of msf namespace

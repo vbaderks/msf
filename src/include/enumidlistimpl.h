@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -120,4 +120,4 @@ public:
     }
 };
 
-} // namespace MSF
+} // namespace msf

@@ -10,7 +10,7 @@
 #include <vector>
 
 
-class VVVItem : public MSF::ItemBase
+class VVVItem : public msf::ItemBase
 {
 public:
     static int GetMaxNameLength(LPCWSTR /*pszName*/) noexcept
@@ -20,7 +20,7 @@ public:
 
     static PUIDLIST_RELATIVE CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
     {
-        PUIDLIST_RELATIVE pidl = MSF::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
+        PUIDLIST_RELATIVE pidl = msf::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
 
         InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
             nId, nSize, bFolder, strName);
@@ -39,7 +39,7 @@ public:
             ATLTRACE2(ATL::atlTraceCOM, 0, L"VVVItem::Constructor, PIDL not valid (dsize=%d, ssize=%d)\n", GetDataSize(), sizeof(SItemData));
         }
 #endif
-        MSF::RaiseExceptionIf(!bValid);
+        msf::RaiseExceptionIf(!bValid);
     }
 
     std::wstring GetDisplayName(SHGDNF shgdnf = SHGDN_NORMAL) const;

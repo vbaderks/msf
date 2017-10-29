@@ -11,7 +11,7 @@
 #include "strutil.h"
 
 
-namespace MSF
+namespace msf
 {
 
 // Simple hmenu wrapper class. For more advanced functionality use WTL or MFC.
@@ -81,4 +81,4 @@ private:
     HMENU m_hmenu;
 };
 
-} // end MSF namespace
+} // end msf namespace

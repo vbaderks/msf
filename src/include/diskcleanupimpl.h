@@ -11,7 +11,7 @@
 #include <emptyvc.h>
 
 
-namespace MSF {
+namespace msf {
 
 template <typename T>
 class __declspec(novtable) DiskCleanupImpl : public IEmptyVolumeCache2
@@ -130,4 +130,4 @@ private:
     bool _bInitialized;
 };
 
-} // namespace MSF
+} // namespace msf

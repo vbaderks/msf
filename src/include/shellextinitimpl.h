@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <cctype>
 
-namespace MSF
+namespace msf
 {
 
 class IShellExtInitImpl :  public IShellExtInit
@@ -89,4 +89,4 @@ private:
     std::vector<std::wstring> m_filenames;
 };
 
-} // end MSF namespace
+} // end msf namespace

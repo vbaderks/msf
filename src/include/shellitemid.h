@@ -9,7 +9,7 @@
 #include "msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 struct ShellItemIdMember
@@ -159,4 +159,4 @@ private:
 #endif
 };
 
-} // namespace MSF
+} // namespace msf

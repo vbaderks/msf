@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF
+namespace msf
 {
 
 class __declspec(novtable) IQueryInfoImpl :
@@ -56,4 +56,4 @@ protected:
     virtual std::wstring GetInfoTip(DWORD dwFlags) = 0;
 };
 
-} // namespace MSF
+} // namespace msf

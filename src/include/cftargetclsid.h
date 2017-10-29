@@ -9,7 +9,7 @@
 #include "cfeffect.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class CCfTargetCLSID
@@ -45,4 +45,4 @@ private:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

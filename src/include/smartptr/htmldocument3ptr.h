@@ -14,7 +14,7 @@
 _COM_SMARTPTR_TYPEDEF(IHTMLDocument3, __uuidof(IHTMLDocument3));
 
 
-namespace MSF
+namespace msf
 {
 
 class IHTMLDocument3Ptr : public ::IHTMLDocument3Ptr

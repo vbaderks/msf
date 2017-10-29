@@ -9,7 +9,7 @@
 #include "queryinfoimpl.h"
 
 
-namespace MSF
+namespace msf
 {
 class __declspec(novtable) CQueryInfo :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
@@ -44,4 +44,4 @@ private:
     std::wstring m_infoTipText;
 };
 
-} // namespace MSF
+} // namespace msf

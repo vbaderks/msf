@@ -9,7 +9,7 @@
 #include "updateregistry.h"
 
 
-namespace MSF
+namespace msf
 {
 
 /// <summary>Basic implementation functionality for a Drop Target Handler shell extension COM object.</summary>
@@ -175,4 +175,4 @@ private:
     bool _isCachedSupportedClipboardFormat;
 };
 
-} // namespace MSF
+} // namespace msf

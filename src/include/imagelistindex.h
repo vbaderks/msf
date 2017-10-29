@@ -6,7 +6,7 @@
 #pragma once
 
 
-namespace MSF
+namespace msf
 {
 
 enum class StandardImagelistIndex
@@ -18,4 +18,4 @@ enum class StandardImagelistIndex
     FolderOpen     = 4  // folder (open)
 };
 
-} // end of MSF namespace
+} // end of msf namespace

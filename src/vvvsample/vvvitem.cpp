@@ -30,7 +30,7 @@ std::wstring VVVItem::GetDisplayName(SHGDNF shellGetDisplayNameType) const
 
     case SHGDN_INFOLDER | SHGDN_FORPARSING:
     case SHGDN_FORPARSING: // note parent should append folder name before item name.
-        return MSF::ToString(GetID()); // return unique string (VVV items are unique by ID)
+        return msf::ToString(GetID()); // return unique string (VVV items are unique by ID)
 
     default:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"VVVItem::GetDisplayName (shellGetDisplayNameType=%d)\n", shellGetDisplayNameType);
@@ -75,11 +75,11 @@ int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/
         return CompareByName(item);
 
     case ColumnSize:
-        return MSF::UIntCmp(GetSize(), item.GetSize());
+        return msf::UIntCmp(GetSize(), item.GetSize());
 
     default:
         ATLASSERT(!"Illegal nCompare option detected");
-        MSF::RaiseException();
+        msf::RaiseException();
     }
 }
 
@@ -96,31 +96,31 @@ wstring VVVItem::GetItemDetailsOf(UINT columnIndex) const
             if (IsFolder())
                 return wstring();
 
-            return MSF::ToString(GetSize());
+            return msf::ToString(GetSize());
         }
 
     default:
         ATLASSERT(false);
-        MSF::RaiseException();
+        msf::RaiseException();
     }
 }
 
 
 std::wstring VVVItem::GetInfoTipText() const
 {
-    return MSF::LoadResourceString(IDS_SHELLEXT_NAME) + L": " + wstring(GetDisplayName()) + L"\n" +
-           MSF::LoadResourceString(IDS_SHELLEXT_SIZE) + L": " + wstring(MSF::ToString(GetSize()));
+    return msf::LoadResourceString(IDS_SHELLEXT_NAME) + L": " + wstring(GetDisplayName()) + L"\n" +
+           msf::LoadResourceString(IDS_SHELLEXT_SIZE) + L": " + wstring(msf::ToString(GetSize()));
 }
 
 
 int VVVItem::GetIconOf(UINT flags) const
 {
     if (IsFolder())
-        return MSF::IsBitSet(flags, GIL_OPENICON) ?
-        static_cast<int>(MSF::StandardImagelistIndex::FolderOpen) :
-        static_cast<int>(MSF::StandardImagelistIndex::FolderPlain);
+        return msf::IsBitSet(flags, GIL_OPENICON) ?
+        static_cast<int>(msf::StandardImagelistIndex::FolderOpen) :
+        static_cast<int>(msf::StandardImagelistIndex::FolderPlain);
 
-    return static_cast<int>(MSF::StandardImagelistIndex::DocumentFilled);
+    return static_cast<int>(msf::StandardImagelistIndex::DocumentFilled);
 }
 
 
@@ -144,5 +144,5 @@ int VVVItem::CompareByName(const VVVItem& item) const
         return nResult; // different by name
 
     // VVV items can be equal by name, but are always different by ID.
-    return MSF::UIntCmp(GetID(), item.GetID());
+    return msf::UIntCmp(GetID(), item.GetID());
 }

@@ -23,7 +23,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
         return false;
 
     // Enable/Disable dynamic isolation aware code (Windows XP and up theme support)
-    MSF::IsolationAwareDllMain(dwReason);
+    msf::IsolationAwareDllMain(dwReason);
 
 #ifdef DEBUG
     // Increase the default level to 4 to see all trace messages.
@@ -63,7 +63,7 @@ STDAPI DllRegisterServer()
     if (FAILED(hr))
         return hr;
 
-    hr = MSF::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, true, wszVVVExtension, wszVVVFileRootExt);
+    hr = msf::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, true, wszVVVExtension, wszVVVFileRootExt);
     if (FAILED(hr))
         return hr;
 
@@ -79,7 +79,7 @@ STDAPI DllUnregisterServer()
 {
     _Module.DllUnregisterServer(); // note: will fail if already unregistered; not an issue.
 
-    MSF::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, false, wszVVVExtension, wszVVVFileRootExt);
+    msf::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, false, wszVVVExtension, wszVVVFileRootExt);
 
     // Notify the shell that .vvv file association has changed.
     SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);

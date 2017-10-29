@@ -13,7 +13,7 @@
 _COM_SMARTPTR_TYPEDEF(IQueryInfo, __uuidof(IQueryInfo));
 
 
-namespace MSF
+namespace msf
 {
 
 class IQueryInfoPtr : public ::IQueryInfoPtr
@@ -61,4 +61,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

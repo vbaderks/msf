@@ -10,7 +10,7 @@
 #include "persistfolderptr.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IShellFolderPtr : public ::IShellFolderPtr
@@ -51,7 +51,7 @@ public:
 
     void Initialize(const wchar_t* szFilename)
     {
-        MSF::IPersistFolderPtr persistfolder(this);
+        msf::IPersistFolderPtr persistfolder(this);
 
         persistfolder.Initialize(szFilename);
     }
@@ -110,4 +110,4 @@ public:
 
 };
 
-} // end of MSF namespace
+} // end of msf namespace

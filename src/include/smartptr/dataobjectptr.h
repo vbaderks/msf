@@ -12,7 +12,7 @@
 #include "enumformatetcptr.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IDataObjectPtr : public ::IDataObjectPtr
@@ -94,4 +94,4 @@ public:
 	}
 };
 
-} // end MSF namespace
+} // end msf namespace

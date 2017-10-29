@@ -11,7 +11,7 @@
 #include <atlctl.h>
 
 
-namespace MSF
+namespace msf
 {
 
 class FileList :
@@ -111,4 +111,4 @@ private:
     std::vector<CString> m_filenames;
 };
 
-} // end MSF namespace
+} // end msf namespace

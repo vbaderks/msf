@@ -12,7 +12,7 @@
 #include <vector>
 
 
-namespace MSF
+namespace msf
 {
 
 inline ATL::CStringW GetModuleDirectoryW()

@@ -16,7 +16,7 @@
 #include "sfvmdefines.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class CCallback
@@ -396,4 +396,4 @@ private:
     ATL::CWindow                _window;
 };
 
-} // namespace MSF
+} // namespace msf

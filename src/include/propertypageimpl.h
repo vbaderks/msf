@@ -7,7 +7,7 @@
 
 #include "msfbase.h"
 
-namespace MSF
+namespace msf
 {
 
 template <typename T>
@@ -73,4 +73,4 @@ private:
     int _nRef;
 };
 
-} // namespace MSF
+} // namespace msf

@@ -11,7 +11,7 @@
 _COM_SMARTPTR_TYPEDEF(IHTMLDocument2, __uuidof(IHTMLDocument2));
 
 
-namespace MSF
+namespace msf
 {
 
 class IHTMLDocument2Ptr : public ::IHTMLDocument2Ptr

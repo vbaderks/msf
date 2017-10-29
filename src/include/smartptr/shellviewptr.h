@@ -9,7 +9,7 @@
 #include "../msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IShellViewPtr : public ::IShellViewPtr
@@ -43,4 +43,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

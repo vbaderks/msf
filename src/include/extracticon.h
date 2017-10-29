@@ -10,7 +10,7 @@
 #include "pidl.h"
 
 
-namespace MSF
+namespace msf
 {
 
 template <typename TItem>
@@ -168,4 +168,4 @@ private:
     ItemIDList m_pidl;
 };
 
-} // namespace MSF
+} // namespace msf

@@ -13,7 +13,7 @@
 _COM_SMARTPTR_TYPEDEF(IPersistFolder, __uuidof(IPersistFolder));
 
 
-namespace MSF
+namespace msf
 {
 
 class IPersistFolderPtr : public ::IPersistFolderPtr
@@ -47,4 +47,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

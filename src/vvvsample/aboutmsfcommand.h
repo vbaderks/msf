@@ -10,13 +10,13 @@
 #include <msf.h>
 
 
-class AboutMSFCommand : public MSF::ContextMenuCommand
+class AboutMSFCommand : public msf::ContextMenuCommand
 {
 public:
     void operator()(const CMINVOKECOMMANDINFO* pici, const std::vector<std::wstring>& /* filenames */) override
     {
         IsolationAwareMessageBox(pici->hwnd,
-                                 MSF::FormatResourceMessage(IDS_CONTEXTMENU_ABOUT_MASK, HIWORD(MSF_VER), LOWORD(MSF_VER)).c_str(),
-                                 MSF::LoadResourceString(IDS_CONTEXTMENU_CAPTION).c_str(), MB_OK);
+                                 msf::FormatResourceMessage(IDS_CONTEXTMENU_ABOUT_MASK, HIWORD(MSF_VER), LOWORD(MSF_VER)).c_str(),
+                                 msf::LoadResourceString(IDS_CONTEXTMENU_CAPTION).c_str(), MB_OK);
     }
 };

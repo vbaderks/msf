@@ -9,7 +9,7 @@
 
 _COM_SMARTPTR_TYPEDEF(IContextMenu, __uuidof(IContextMenu));
 
-namespace MSF
+namespace msf
 {
 
 class IContextMenuPtr :
@@ -55,4 +55,4 @@ public:
     }
 };
 
-} // end MSF namespace
+} // end msf namespace

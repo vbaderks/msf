@@ -9,7 +9,7 @@
 #include "cfeffect.h"
 
 
-namespace MSF
+namespace msf
 {
 
 
@@ -40,4 +40,4 @@ private:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace

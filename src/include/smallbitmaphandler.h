@@ -9,7 +9,7 @@
 #include "custommenuhandler.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class SmallBitmapHandler : public CustomMenuHandler
@@ -75,4 +75,4 @@ private:
     Bitmap m_bitmap;
 };
 
-} // end namespace MSF
+} // end namespace msf

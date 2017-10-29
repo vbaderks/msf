@@ -9,7 +9,7 @@
 #include "../msfbase.h"
 
 
-namespace MSF
+namespace msf
 {
 
 class IEnumIDListPtr : public ::IEnumIDListPtr
@@ -50,4 +50,4 @@ public:
     }
 };
 
-} // end of MSF namespace
+} // end of msf namespace
