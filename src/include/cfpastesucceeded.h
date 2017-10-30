@@ -22,7 +22,7 @@ public:
 
     static void SetOptional(_In_ IDataObject* pdataobject, DWORD dwEffect)
     {
-        HRESULT hr = SetImpl(pdataobject, dwEffect);
+        const HRESULT hr = SetImpl(pdataobject, dwEffect);
         if (FAILED(hr))
         {
             ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPasteSucceeded::SetOptional failed, hr=%x\n", hr);
@@ -33,7 +33,7 @@ private:
 
     static HRESULT SetImpl(_In_ IDataObject* pdataobject, DWORD dwEffect)
     {
-        return SetCfEffect(CFSTR_PASTESUCCEEDED, pdataobject, dwEffect);
+        return SetClipboardFormatEffect(CFSTR_PASTESUCCEEDED, pdataobject, dwEffect);
     }
 };
 

@@ -23,7 +23,7 @@ namespace msf
 //          to handle the ANSI and UNICODE model.
 
 template <typename T>
-class __declspec(novtable) ICopyHookImpl :
+class __declspec(novtable) CopyHookImpl :
     public ICopyHook
 {
 public:
@@ -45,13 +45,13 @@ public:
     }
 
 protected:
-    ICopyHookImpl()
+    CopyHookImpl()
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ICopyHookImpl::Constructor (instance=%p)\n", this);
     }
 
 
-    ~ICopyHookImpl()
+    ~CopyHookImpl()
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ICopyHookImpl::~ICopyHookImpl (instance=%p)\n", this);
     }

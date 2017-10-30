@@ -25,7 +25,7 @@ public:
 
     static void SetOptional(IDataObject* pdataobject, DWORD dwEffect)
     {
-        HRESULT hr = SetImpl(pdataobject, dwEffect);
+        const HRESULT hr = SetImpl(pdataobject, dwEffect);
         if (FAILED(hr))
         {
             ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPerformedDropEffect::SetOptional failed, hr=%x\n", hr);
@@ -36,7 +36,7 @@ private:
 
     static HRESULT SetImpl(IDataObject* pdataobject, DWORD dwEffect)
     {
-        return SetCfEffect(CFSTR_PERFORMEDDROPEFFECT, pdataobject, dwEffect);
+        return SetClipboardFormatEffect(CFSTR_PERFORMEDDROPEFFECT, pdataobject, dwEffect);
     }
 };
 

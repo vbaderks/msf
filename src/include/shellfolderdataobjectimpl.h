@@ -41,10 +41,10 @@ public:
             }
             else
             {
-                auto hr = m_pidldata->GetData(pformatetc, pstgmedium);
+                const auto hr = m_pidldata->GetData(pformatetc, pstgmedium);
                 if (FAILED(hr))
                 {
-                    ATLTRACE2(ATL::atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData (pidldata failes)\n");
+                    ATLTRACE2(ATL::atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData (pidldata failed)\n");
                 }
 
                 return hr;
@@ -148,11 +148,11 @@ public:
             if (dwDirection != DATADIR_GET && dwDirection != DATADIR_SET)
                 return E_INVALIDARG;
 
-            std::vector<CFormatEtc> formatetcs;
-            GetRegisteredFormats(dwDirection, formatetcs);
-            GetPidlDataFormats(dwDirection, formatetcs);
+            std::vector<FormatEtc> formatEtcs;
+            GetRegisteredFormats(dwDirection, formatEtcs);
+            GetPidlDataFormats(dwDirection, formatEtcs);
 
-            *ppenumFormatEtc = SHCreateStdEnumFmtEtc(static_cast<UINT>(formatetcs.size()), formatetcs.data()).Detach();
+            *ppenumFormatEtc = SHCreateStdEnumFmtEtc(static_cast<UINT>(formatEtcs.size()), formatEtcs.data()).Detach();
 
             return S_OK;
         }
@@ -219,7 +219,7 @@ private:
         return handler == m_cfhandlers.end() ? nullptr : (*handler).get();
     }
 
-    void GetRegisteredFormats(DWORD dwDirection, std::vector<CFormatEtc>& formatetcs) const
+    void GetRegisteredFormats(DWORD dwDirection, std::vector<FormatEtc>& formatetcs) const
     {
         for (auto& handler : m_cfhandlers)
         {
@@ -227,27 +227,27 @@ private:
             {
                 if (handler->CanGetData())
                 {
-                    formatetcs.push_back(CFormatEtc(handler->GetClipFormat()));
+                    formatetcs.push_back(FormatEtc(handler->GetClipFormat()));
                 }
             }
             else
             {
                 if (handler->CanSetData())
                 {
-                    formatetcs.push_back(CFormatEtc(handler->GetClipFormat()));
+                    formatetcs.push_back(FormatEtc(handler->GetClipFormat()));
                 }
             }
         }
     }
 
-    void GetPidlDataFormats(DWORD dwDirection, std::vector<CFormatEtc>& formatetcs)
+    void GetPidlDataFormats(DWORD dwDirection, std::vector<FormatEtc>& formatEtcs)
     {
-        IEnumFORMATETCPtr renumformatetc = m_pidldata.EnumFormatEtc(dwDirection);
+        IEnumFORMATETCPtr enumFormatEtc = m_pidldata.EnumFormatEtc(dwDirection);
 
-        CFormatEtc formatetc;
-        while (renumformatetc.Next(formatetc))
+        FormatEtc formatetc;
+        while (enumFormatEtc.Next(formatetc))
         {
-            formatetcs.push_back(formatetc);
+            formatEtcs.push_back(formatetc);
         }
     }
 

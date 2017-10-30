@@ -23,13 +23,13 @@ public:
     /// <summary>Returns true when the data object has the CF_HDROP format.</summary>
     static bool IsFormat(_In_ IDataObject* pdataobject)
     {
-        CFormatEtc formatetc(CF_HDROP);
+        FormatEtc formatetc(CF_HDROP);
         return SUCCEEDED(pdataobject->QueryGetData(&formatetc));
     }
 
     explicit CfHDrop(IDataObjectPtr dataobject)
     {
-        dataobject.GetData(CFormatEtc(CF_HDROP), m_stgmedium);
+        dataobject.GetData(FormatEtc(CF_HDROP), m_stgmedium);
     }
 
     bool IsEmpty() const noexcept

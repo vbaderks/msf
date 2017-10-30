@@ -248,13 +248,17 @@ inline HGLOBAL GlobalAllocThrow(SIZE_T dwBytes, UINT uFlags = GMEM_FIXED)
 }
 
 
-inline CLIPFORMAT RegisterCf(LPCTSTR lpszFormat)
+class Win32
 {
-    unsigned int n = RegisterClipboardFormat(lpszFormat);
-    RaiseExceptionIf(n == 0);
+public:
+    static CLIPFORMAT RegisterClipboardFormat(_In_ LPCTSTR lpszFormat)
+    {
+        const unsigned int n = ::RegisterClipboardFormat(lpszFormat);
+        RaiseExceptionIf(n == 0);
 
-    return static_cast<CLIPFORMAT>(n);
-}
+        return static_cast<CLIPFORMAT>(n);
+    }
+};
 
 
 inline ATL::CString GetClipboardFormatName(UINT format)

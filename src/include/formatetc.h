@@ -12,41 +12,41 @@ namespace msf
 
 /// <summary>Smart extended class for Windows SDK FORMATETC struct.</summary>
 /// <remarks>
-/// The CFormatEtc class extends FORMATETC with typicals constructors and a 
+/// The CFormatEtc class extends FORMATETC with typical constructors and a
 /// destructor that will clean up any dynamic allocated memory.
 /// </remarks>
-class CFormatEtc : public FORMATETC
+class FormatEtc : public FORMATETC
 {
 public:
-    explicit CFormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
+    explicit FormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
         DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept
     {
         CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
     }
 
 
-    explicit CFormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
+    explicit FormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
          DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept
     {
-        CommonConstruct(RegisterCf(lpszFormat), dwtymed, pdvtd, dwaspect, index);
+        CommonConstruct(Win32::RegisterClipboardFormat(lpszFormat), dwtymed, pdvtd, dwaspect, index);
     }
 
-    CFormatEtc()
+    FormatEtc()
     {
         ptd = nullptr;
     }
 
-    explicit CFormatEtc(const FORMATETC& formatetc)
+    explicit FormatEtc(const FORMATETC& formatetc)
     {
         Copy(*this, formatetc);
     }
 
-    ~CFormatEtc()
+    ~FormatEtc()
     {
         Dispose();
     }
 
-    CFormatEtc& operator=(const FORMATETC& formatetc)
+    FormatEtc& operator=(const FORMATETC& formatetc)
     {
         if (this == &formatetc)
             return *this;

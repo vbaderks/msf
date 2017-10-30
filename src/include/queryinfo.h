@@ -11,15 +11,16 @@
 
 namespace msf
 {
-class __declspec(novtable) CQueryInfo :
+
+class __declspec(novtable) QueryInfo :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public IQueryInfoImpl
 {
 public:
     static ATL::CComPtr<IQueryInfo> CreateInstance(std::wstring infoTipText)
     {
-        ATL::CComObject<CQueryInfo>* p;
-        HRESULT hr = ATL::CComObject<CQueryInfo>::CreateInstance(&p);
+        ATL::CComObject<QueryInfo>* p;
+        const HRESULT hr = ATL::CComObject<QueryInfo>::CreateInstance(&p);
         if (FAILED(hr))
             RaiseException(hr);
 
@@ -27,9 +28,9 @@ public:
         return p;
     }
 
-    DECLARE_NOT_AGGREGATABLE(CQueryInfo)
+    DECLARE_NOT_AGGREGATABLE(QueryInfo)
 
-    BEGIN_COM_MAP(CQueryInfo)
+    BEGIN_COM_MAP(QueryInfo)
         COM_INTERFACE_ENTRY(IQueryInfo)
     END_COM_MAP()
 

@@ -17,7 +17,7 @@ public:
     static DWORD Get(IDataObject* pdataobject)
     {
         DWORD dwEffect;
-        RaiseExceptionIfFailed(GetCfEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect));
+        RaiseExceptionIfFailed(GetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect));
 
         return dwEffect;
     }
@@ -26,7 +26,7 @@ public:
     {
         DWORD dwEffect;
 
-        HRESULT hr = GetCfEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect);
+        const HRESULT hr = GetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect);
         if (SUCCEEDED(hr))
             return dwEffect;
 
@@ -36,7 +36,7 @@ public:
 
     static void Set(IDataObject* pdataobject, DWORD dwEffect)
     {
-        RaiseExceptionIfFailed(SetCfEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect));
+        RaiseExceptionIfFailed(SetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect));
     }
 };
 

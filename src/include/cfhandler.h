@@ -21,15 +21,13 @@ public:
     }
 
     ClipboardFormatHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
-        m_clipformat(RegisterCf(lpszFormat)),
+        m_clipformat(Win32::RegisterClipboardFormat(lpszFormat)),
         m_bCanGetData(bCanGetData),
         m_bCanSetData(bCanSetData)
     {
     }
 
-    virtual ~ClipboardFormatHandler()
-    {
-    }
+    virtual ~ClipboardFormatHandler() = default;
 
     CLIPFORMAT GetClipFormat() const noexcept
     {

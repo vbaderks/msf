@@ -16,7 +16,7 @@
 class __declspec(novtable) __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CopyHook :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ATL::CComCoClass<CopyHook, &__uuidof(CopyHook)>,
-    public msf::ICopyHookImpl<CopyHook>
+    public msf::CopyHookImpl<CopyHook>
 {
 public:
     BEGIN_COM_MAP(CopyHook)
@@ -27,7 +27,7 @@ public:
 
     static HRESULT WINAPI UpdateRegistry(BOOL registerInRegistry) noexcept
     {
-        return msf::ICopyHookImpl<CopyHook>::UpdateRegistry(registerInRegistry, IDR_COPYHOOK,
+        return msf::CopyHookImpl<CopyHook>::UpdateRegistry(registerInRegistry, IDR_COPYHOOK,
             L"VVV Sample CopyHook ShellExtension", L"VVV CopyHook");
     }
 

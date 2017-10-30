@@ -19,8 +19,8 @@ class CCfShellIdList
 public:
     explicit CCfShellIdList(IDataObjectPtr dataObject)
     {
-        CFormatEtc formatetc(RegisterCf(CFSTR_SHELLIDLIST));
-        dataObject.GetData(formatetc, m_medium);
+        FormatEtc formatEtc(Win32::RegisterClipboardFormat(CFSTR_SHELLIDLIST));
+        dataObject.GetData(formatEtc, m_medium);
         m_globalLock.Attach(m_medium.hGlobal);
     }
 

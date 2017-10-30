@@ -18,80 +18,80 @@ namespace msf
 class IDataObjectPtr : public ::IDataObjectPtr
 {
 public:
-	IDataObjectPtr() : ::IDataObjectPtr()
-	{
-	}
+    IDataObjectPtr() : ::IDataObjectPtr()
+    {
+    }
 
 
-	explicit IDataObjectPtr(const CLSID& clsid, IUnknown* pOuter = nullptr, DWORD dwClsContext = CLSCTX_ALL) :
-		::IDataObjectPtr(clsid, pOuter, dwClsContext)
-	{
-	}
+    explicit IDataObjectPtr(const CLSID& clsid, IUnknown* pOuter = nullptr, DWORD dwClsContext = CLSCTX_ALL) :
+        ::IDataObjectPtr(clsid, pOuter, dwClsContext)
+    {
+    }
 
 
-	// Purpose: Constructs a smart-pointer from any IUnknown-based interface pointer.
-	template<typename _InterfaceType> IDataObjectPtr(_InterfaceType* p) :
-		::IDataObjectPtr(p)
-	{
-	}
+    // Purpose: Constructs a smart-pointer from any IUnknown-based interface pointer.
+    template<typename _InterfaceType> IDataObjectPtr(_InterfaceType* p) :
+        ::IDataObjectPtr(p)
+    {
+    }
 
 
-	// Purpose: Constructs a smart-pointer from any other smart pointer.
-	template<typename _OtherIID> IDataObjectPtr(const _com_ptr_t<_OtherIID>& p) :
-		::IDataObjectPtr(p)
-	{
-	}
+    // Purpose: Constructs a smart-pointer from any other smart pointer.
+    template<typename _OtherIID> IDataObjectPtr(const _com_ptr_t<_OtherIID>& p) :
+        ::IDataObjectPtr(p)
+    {
+    }
 
 
-	IDataObjectPtr(IDataObject* pInterface) :
-		::IDataObjectPtr(pInterface)
-	{
-	}
+    IDataObjectPtr(IDataObject* pInterface) :
+        ::IDataObjectPtr(pInterface)
+    {
+    }
 
 
-	bool IsSupportedFormat(CLIPFORMAT clipformat, DWORD dwDirection)
-	{
-		IEnumFORMATETCPtr renumformatetc = EnumFormatEtc(dwDirection);
+    bool IsSupportedFormat(CLIPFORMAT clipformat, DWORD dwDirection)
+    {
+        IEnumFORMATETCPtr renumformatetc = EnumFormatEtc(dwDirection);
 
-		CFormatEtc formatetc;
-		while (renumformatetc.Next(formatetc))
-		{
-			if (formatetc.cfFormat == clipformat)
-				return true;
+        FormatEtc formatetc;
+        while (renumformatetc.Next(formatetc))
+        {
+            if (formatetc.cfFormat == clipformat)
+                return true;
 
-			formatetc.Dispose();
-		}
+            formatetc.Dispose();
+        }
 
-		return false;
-	}
-
-
-	bool IsSupportedFormat(LPCTSTR lpszFormat, DWORD dwDirection)
-	{
-		return IsSupportedFormat(RegisterCf(lpszFormat), dwDirection);
-	}
+        return false;
+    }
 
 
-	IEnumFORMATETCPtr EnumFormatEtc(DWORD dwDirection)
-	{
-		IEnumFORMATETCPtr renumformatetc;
-
-		RaiseExceptionIfFailed(GetInterfacePtr()->EnumFormatEtc(dwDirection, &renumformatetc));
-
-		return renumformatetc;
-	}
+    bool IsSupportedFormat(LPCTSTR lpszFormat, DWORD dwDirection)
+    {
+        return IsSupportedFormat(Win32::RegisterClipboardFormat(lpszFormat), dwDirection);
+    }
 
 
-	void GetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium)
-	{
-		RaiseExceptionIfFailed(GetInterfacePtr()->GetData(&const_cast<FORMATETC&>(formatetc), &stgmedium));
-	}
+    IEnumFORMATETCPtr EnumFormatEtc(DWORD dwDirection)
+    {
+        IEnumFORMATETCPtr renumformatetc;
+
+        RaiseExceptionIfFailed(GetInterfacePtr()->EnumFormatEtc(dwDirection, &renumformatetc));
+
+        return renumformatetc;
+    }
 
 
-	void SetData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium, bool fRelease)
-	{
-		RaiseExceptionIfFailed(GetInterfacePtr()->SetData(&const_cast<FORMATETC&>(formatetc), &const_cast<STGMEDIUM&>(stgmedium), fRelease));
-	}
+    void GetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium)
+    {
+        RaiseExceptionIfFailed(GetInterfacePtr()->GetData(&const_cast<FORMATETC&>(formatetc), &stgmedium));
+    }
+
+
+    void SetData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium, bool fRelease)
+    {
+        RaiseExceptionIfFailed(GetInterfacePtr()->SetData(&const_cast<FORMATETC&>(formatetc), &const_cast<STGMEDIUM&>(stgmedium), fRelease));
+    }
 };
 
 } // end msf namespace

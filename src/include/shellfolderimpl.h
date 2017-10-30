@@ -850,7 +850,7 @@ protected:
         return contextmenu;
     }
 
-    // Purpose: Called by the shell when it needs to pack a IDlist into a dataobject.
+    // Purpose: Called by the shell when it needs to pack a IDlist into a data object.
     //          Override this function to provide your own DataObject.
     ATL::CComPtr<IDataObject> CreateDataObject(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl)
     {
@@ -863,7 +863,7 @@ protected:
     ATL::CComPtr<IQueryInfo> CreateQueryInfo(const TItem& item)
     {
         auto text = item.GetInfoTipText();
-        return text.empty() ? nullptr : CQueryInfo::CreateInstance(text);
+        return text.empty() ? nullptr : QueryInfo::CreateInstance(text);
     }
 
     ATL::CComPtr<IExtractIcon> CreateExtractIcon(const TItem& item)
