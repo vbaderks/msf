@@ -79,7 +79,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\shellpropsheetextimpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\shelluuids.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\shellviewimpl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)include\shlobjhidden.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\smallbitmaphandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\stgmedium.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\strutil.h" />

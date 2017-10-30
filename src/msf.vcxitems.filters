@@ -195,9 +195,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\shellviewimpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)include\shlobjhidden.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)include\smallbitmaphandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
