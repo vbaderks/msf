@@ -20,7 +20,7 @@ public:
         return m_pidl->mkid.cb - sizeof(short);
     }
 
-    const BYTE* GetData() const noexcept
+    const void* GetData() const noexcept
     {
         return m_pidl->mkid.abID;
     }

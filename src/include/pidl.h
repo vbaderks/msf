@@ -193,7 +193,8 @@ public:
     // Purpose: Address operator to be used for passing address to be used as an out-parameter.
     LPITEMIDLIST* operator&() noexcept
     {
-        Attach(reinterpret_cast<PUIDLIST_RELATIVE>(nullptr));
+        CoTaskMemFree(m_pidl);
+        m_pidl = nullptr;
         return &m_pidl;
     }
 
