@@ -5,12 +5,12 @@
     <OutDir>$(SolutionDir)..\bin\$(Configuration)\$(Platform)\</OutDir>
 
     <!-- C++ temp files can be redirected. -->
-    <IntDir>$(SolutionDir)..\intermediate\$(MSBuildProjectName)\\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)..\intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
 
     <PreprocessorDefinitions>WIN32;_WINDOWS;_ATL_EX_CONVERSION_MACROS_ONLY;_CSTRING_DISABLE_NARROW_WIDE_CONVERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 	
     <PlatformToolset>v141</PlatformToolset>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
 
