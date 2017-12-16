@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../include/shellfolderimpl.h"
 #include "../include/strutil.h"
 #include "../include/queryinfo.h"

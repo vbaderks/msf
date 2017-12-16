@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../include/copyhookimpl.h"
 #include "resource.h"
 

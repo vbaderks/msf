@@ -1,4 +1,4 @@
-//
+﻿//
 // (C) Copyright by Victor Derks
 //
 // See README.TXT for the details of the software licence.
@@ -72,7 +72,7 @@ public:
         m_propertySheetHeader.hwndParent = hwndParent;
         m_propertySheetHeader.SetPages(m_hpages);
 
-        auto result = static_cast<int>(::PropertySheet(&m_propertySheetHeader));
+        const auto result = static_cast<int>(::PropertySheet(&m_propertySheetHeader));
         m_hpages.clear();
         return result;
     }
@@ -80,7 +80,7 @@ public:
     long DoModalReturnChanges(HWND hwndParent)
     {
         m_eventID = 0;
-        int result = DoModal(hwndParent);
+        const auto result = DoModal(hwndParent);
         if (result <= 0)
             return 0;
 
@@ -93,11 +93,9 @@ public:
     }
 
 private:
-
-    // Member variables.
     PropSheetHeader             m_propertySheetHeader;
     std::vector<HPROPSHEETPAGE> m_hpages;
-    long                        m_eventID{ 0 };
+    long                        m_eventID{};
 };
 
 } // end msf namespace.

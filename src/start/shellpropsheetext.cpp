@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../include/shellpropsheetextimpl.h"
 #include "propertypage.h"
 #include "resource.h"

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // Note: don't use this UUID for derived projects but create a new one
 //       using the 'Create GUID' tool.

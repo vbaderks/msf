@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../include/infotipimpl.h"
 #include "../include/strutil.h"
 #include "shellfolderclsid.h"

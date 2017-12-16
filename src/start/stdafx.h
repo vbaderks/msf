@@ -1,4 +1,4 @@
-// Enabled improved type checking of the Win32 SDK header files.
+﻿// Enabled improved type checking of the Win32 SDK header files.
 #define STRICT
 
 // Allow use of features specific to Windows XP or later.

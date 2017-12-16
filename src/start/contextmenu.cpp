@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../include/contextmenuimpl.h"
 #include "../include/util.h"
 #include "shellfolderclsid.h"

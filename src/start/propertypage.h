@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../include/propertypageimpl.h"
 #include "../include/strutil.h"
 #include "../include/util.h"
