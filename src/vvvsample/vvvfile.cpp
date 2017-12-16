@@ -38,7 +38,7 @@ unsigned int VVVFile::GetFileCount() const
     //HRESULT hr = SHCreateStreamOnFile(_strFilename, STGM_READ, &rFileStream);
     //RaiseExceptionIfFailed(hr);
 
-    unsigned int nCount = GetPrivateProfileInt(TSZ_APP_NAME_DIRECTORY, TSZ_FILE_COUNT);
+    const auto nCount = GetPrivateProfileInt(TSZ_APP_NAME_DIRECTORY, TSZ_FILE_COUNT);
     msf::RaiseExceptionIf(nCount == static_cast<UINT>(-1));
 
     return nCount;
@@ -56,7 +56,7 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
     {
         auto strAppName = GetAppNameItem(nItemIterator);
 
-        unsigned int nActive = GetPrivateProfileInt(strAppName.c_str(), TSZ_ACTIVE, -1);
+        const auto nActive = GetPrivateProfileInt(strAppName.c_str(), TSZ_ACTIVE, -1);
         if (nActive == -1)
             return nullptr;
 
@@ -64,12 +64,12 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
 
         if (nActive == 1)
         {
-            bool bFolder = GetPrivateProfileInt(strAppName.c_str(), TSZ_FOLDER) == 1;
+            const auto bFolder = GetPrivateProfileInt(strAppName.c_str(), TSZ_FOLDER) == 1;
 
             if ((msf::IsBitSet(grfFlags, SHCONTF_NONFOLDERS) && !bFolder) ||
                 (msf::IsBitSet(grfFlags, SHCONTF_FOLDERS) && bFolder))
             {
-                unsigned int nSize = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
+                const auto nSize = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
                 msf::RaiseExceptionIf(nSize == static_cast<UINT>(-1));
                 auto strName = GetPrivateProfileString(strAppName.c_str(), TSZ_NAME);
 
@@ -104,8 +104,8 @@ void VVVFile::SetItem(const VVVItem& item) const
 
 PUIDLIST_RELATIVE VVVFile::AddItem(const std::wstring& strFile) const
 {
-    ATL::CString strName(PathFindFileName(strFile.c_str()));
-    DWORD dwSize    = msf::GetFileSize(strFile.c_str());
+    const ATL::CString strName(PathFindFileName(strFile.c_str()));
+    const auto dwSize = msf::GetFileSize(strFile.c_str());
 
     return AddItem(dwSize, strName);
 }
@@ -113,7 +113,7 @@ PUIDLIST_RELATIVE VVVFile::AddItem(const std::wstring& strFile) const
 
 PUIDLIST_RELATIVE VVVFile::AddItem(unsigned int nSize, const ATL::CString& name) const
 {
-    unsigned int nId = FindFreeEntry();
+    const auto nId = FindFreeEntry();
 
     msf::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, name));
 
@@ -144,7 +144,7 @@ unsigned int VVVFile::FindFreeEntry() const
     for (unsigned int n = 0;; ++n)
     {
         auto strAppName = GetAppNameItem(n);
-        unsigned int nActive = GetPrivateProfileInt(strAppName.c_str(), TSZ_ACTIVE);
+        const auto nActive = GetPrivateProfileInt(strAppName.c_str(), TSZ_ACTIVE);
 
         if (nActive != 1)
             return n;

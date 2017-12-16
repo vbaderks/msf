@@ -188,7 +188,7 @@ public:
     long OnProperties(HWND hwnd, CVVVItemList& items)
     {
         ATLASSERT(items.size() == 1);
-        VVVItem& item = items[0];
+        auto& item = items[0];
 
         long wEventId;
         if (VVVPropertySheet(item, this).DoModal(hwnd, wEventId) > 0 && wEventId != 0)
@@ -222,7 +222,7 @@ public:
     {
         msf::CfHDrop cfhdrop(pdataobject);
 
-        const unsigned int nFiles = cfhdrop.GetFileCount();
+        const auto nFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < nFiles; ++i)
         {
             AddItem(wstring(cfhdrop.GetFile(i))); // TOOD
