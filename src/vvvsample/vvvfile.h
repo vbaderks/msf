@@ -12,9 +12,9 @@
 class VVVFile
 {
 public:
-    explicit VVVFile(const std::wstring filename, const std::wstring folder = std::wstring()) :
-        m_filename{ std::move(filename) },
-        m_folder{ std::move(folder) }
+    explicit VVVFile(std::wstring filename, std::wstring folder = std::wstring()) :
+        m_filename{std::move(filename)},
+        m_folder{std::move(folder)}
     {
     }
 
@@ -22,11 +22,11 @@ public:
     void SetLabel(const std::wstring& label) const;
     unsigned int GetFileCount() const;
     LPITEMIDLIST GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) const;
-    void DeleteItems(const CVVVItemList& itemsToDelete) const;
+    void DeleteItems(const CVVVItemList& items) const;
     void SetItem(const VVVItem& item) const;
 
     PUIDLIST_RELATIVE AddItem(const std::wstring& strFile) const;
-    PUIDLIST_RELATIVE AddItem(unsigned int nSize, const ATL::CString& strName) const;
+    PUIDLIST_RELATIVE AddItem(unsigned int nSize, const ATL::CString& name) const;
 
 private:
 

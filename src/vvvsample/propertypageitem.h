@@ -34,7 +34,11 @@ public:
     {
     }
 
+    ~PropertyPageItem() = default;
+    PropertyPageItem(const PropertyPageItem&) = delete;
+    PropertyPageItem(PropertyPageItem&&) = delete;
     PropertyPageItem& operator=(const PropertyPageItem&) = delete;
+    PropertyPageItem& operator=(PropertyPageItem&&) = delete;
 
     LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
     {
@@ -50,14 +54,14 @@ public:
         ATL::CString strName;
         GetDlgItemText(IDC_EDIT_ITEM_NAME, strName);
         strName.Trim();
-        std::wstring name(strName); // TODO
+        const std::wstring name(strName); // TODO
 
         if (m_item.GetDisplayName() != name)
         {
             m_wEventId |= SHCNE_RENAMEITEM;
         }
 
-        unsigned int nSize = GetDlgItemInt(IDC_EDIT_ITEM_SIZE, nullptr, false);
+        const unsigned int nSize = GetDlgItemInt(IDC_EDIT_ITEM_SIZE, nullptr, false);
         if (m_item.GetSize() != nSize)
         {
             m_wEventId |= SHCNE_ATTRIBUTES;

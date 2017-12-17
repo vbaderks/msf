@@ -24,7 +24,7 @@ public:
     static ATL::CComPtr<IEnumIDList> CreateInstance(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
     {
         ATL::CComObject<EnumIDList>* pinstance;
-        HRESULT hr = ATL::CComObject<EnumIDList>::CreateInstance(&pinstance);
+        const HRESULT hr = ATL::CComObject<EnumIDList>::CreateInstance(&pinstance);
         if (FAILED(hr))
             msf::RaiseException(hr);
 

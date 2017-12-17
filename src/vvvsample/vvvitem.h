@@ -20,7 +20,7 @@ public:
 
     static PUIDLIST_RELATIVE CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
     {
-        PUIDLIST_RELATIVE pidl = msf::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
+        const PUIDLIST_RELATIVE pidl = msf::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
 
         InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
             nId, nSize, bFolder, strName);
@@ -32,7 +32,7 @@ public:
     {
         // Shell item IDs can be passed from external sources, validate
         // It is valid to pass a PIDL that is larger then the original (done by Search functionality in XP).
-        bool bValid = GetDataSize() >= sizeof(SItemData) && GetItemData().nTypeID == TYPE_ID;
+        const bool bValid = GetDataSize() >= sizeof(SItemData) && GetItemData().nTypeID == TYPE_ID;
 #ifdef _DEBUG
         if (!bValid)
         {
@@ -42,7 +42,7 @@ public:
         msf::RaiseExceptionIf(!bValid);
     }
 
-    std::wstring GetDisplayName(SHGDNF shgdnf = SHGDN_NORMAL) const;
+    std::wstring GetDisplayName(SHGDNF shellGetDisplayNameType = SHGDN_NORMAL) const;
 
     SFGAOF GetAttributeOf(bool bSingleSelect, bool bReadOnly) const;
 
@@ -66,8 +66,8 @@ public:
         return GetItemData().bFolder;
     }
 
-    int Compare(const VVVItem& directoryitem, int nCompareBy, bool bCanonicalOnly) const;
-    std::wstring GetItemDetailsOf(UINT iColumn) const;
+    int Compare(const VVVItem& directoryitem, int compareBy, bool bCanonicalOnly) const;
+    std::wstring GetItemDetailsOf(UINT columnIndex) const;
     std::wstring GetInfoTipText() const;
     int GetIconOf(UINT flags) const;
 

@@ -27,9 +27,9 @@ public:
     END_MSG_MAP()
 
     explicit PropertyPageVVV(std::wstring strFilename) :
-        m_filename(strFilename)
+        m_filename(std::move(strFilename))
     {
-        VVVFile vvvfile(strFilename);
+        VVVFile vvvfile(m_filename);
 
         // Retrieve the file data: the sample don't shows the page if this fails.
         m_label   = vvvfile.GetLabel();

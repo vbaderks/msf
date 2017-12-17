@@ -22,7 +22,11 @@ public:
     {
     }
 
+    ~CfFileContentsHandler() = default;
+    CfFileContentsHandler(const CfFileContentsHandler&) = delete;
+    CfFileContentsHandler(CfFileContentsHandler&&) = delete;
     CfFileContentsHandler& operator=(const CfFileContentsHandler&) = delete;
+    CfFileContentsHandler& operator=(CfFileContentsHandler&&) = delete;
 
     HRESULT Validate(const FORMATETC& formatetc) const noexcept override
     {
@@ -44,15 +48,14 @@ public:
 
         VVVItem vvvitem(GetCfShellIdList()->GetItem(static_cast<UINT>(formatetc.lindex)));
 
-        size_t size = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
-        HGLOBAL hg = msf::GlobalAllocThrow(size);
+        const size_t size = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
+        const HGLOBAL hg = msf::GlobalAllocThrow(size);
         ZeroMemory(hg, size);
 
         msf::StorageMedium::SetHGlobal(medium, hg);
     }
 
 private:
-
     msf::CCfShellIdList* GetCfShellIdList() const
     {
         if (!m_cfShellIdList)

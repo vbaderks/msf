@@ -20,19 +20,21 @@ public:
     {
     }
 
+    ~CCfFileDescriptorHandler() = default;
+    CCfFileDescriptorHandler(const CCfFileDescriptorHandler&) = delete;
+    CCfFileDescriptorHandler(CCfFileDescriptorHandler&&) = delete;
     CCfFileDescriptorHandler& operator=(const CCfFileDescriptorHandler&) = delete;
+    CCfFileDescriptorHandler& operator=(CCfFileDescriptorHandler&&) = delete;
 
     void GetData(const FORMATETC&, STGMEDIUM& medium) const override
     {
         msf::CCfShellIdList cfshellidlist(m_pdataobject);
 
-        size_t size = sizeof(FILEGROUPDESCRIPTOR) +
+        const size_t size = sizeof(FILEGROUPDESCRIPTOR) +
             (cfshellidlist.GetItemCount() * sizeof(FILEDESCRIPTOR));
 
-        HGLOBAL hg = msf::GlobalAllocThrow(size);
-
-        FILEGROUPDESCRIPTOR* pfgd = static_cast<FILEGROUPDESCRIPTOR*>(hg);
-
+        const HGLOBAL hg = msf::GlobalAllocThrow(size);
+        auto* pfgd = static_cast<FILEGROUPDESCRIPTOR*>(hg);
         pfgd->cItems = static_cast<UINT>(cfshellidlist.GetItemCount());
 
         for (unsigned int i = 0; i < pfgd->cItems; ++i)

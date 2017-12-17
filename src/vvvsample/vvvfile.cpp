@@ -56,7 +56,7 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
     {
         auto strAppName = GetAppNameItem(nItemIterator);
 
-        const auto nActive = GetPrivateProfileInt(strAppName.c_str(), TSZ_ACTIVE, -1);
+        const auto nActive = static_cast<int>(GetPrivateProfileInt(strAppName.c_str(), TSZ_ACTIVE, -1));
         if (nActive == -1)
             return nullptr;
 

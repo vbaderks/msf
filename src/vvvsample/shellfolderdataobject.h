@@ -26,7 +26,7 @@ public:
         PCUITEMID_CHILD_ARRAY ppidl, msf::IPerformedDropEffectSink* pperformeddropeffectsink)
     {
         ATL::CComObject<ShellFolderDataObject>* instance;
-        HRESULT hr = ATL::CComObject<ShellFolderDataObject>::CreateInstance(&instance);
+        const HRESULT hr = ATL::CComObject<ShellFolderDataObject>::CreateInstance(&instance);
         if (FAILED(hr))
             msf::RaiseException(hr);
 
@@ -35,7 +35,13 @@ public:
         return dataObject;
     }
 
+    ShellFolderDataObject(const ShellFolderDataObject&) = delete;
+    ShellFolderDataObject(ShellFolderDataObject&&) = delete;
+    ShellFolderDataObject& operator=(const ShellFolderDataObject&) = delete;
+    ShellFolderDataObject& operator=(ShellFolderDataObject&&) = delete;
+
 protected:
+    ShellFolderDataObject() = default;
     ~ShellFolderDataObject() = default;
 
 private:

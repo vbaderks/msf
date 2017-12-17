@@ -27,7 +27,7 @@ public:
 
     static HRESULT WINAPI UpdateRegistry(BOOL registerInRegistry) noexcept
     {
-        return msf::CopyHookImpl<CopyHook>::UpdateRegistry(registerInRegistry, IDR_COPYHOOK,
+        return CopyHookImpl<CopyHook>::UpdateRegistry(registerInRegistry, IDR_COPYHOOK,
             L"VVV Sample CopyHook ShellExtension", L"VVV CopyHook");
     }
 
