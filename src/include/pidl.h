@@ -18,7 +18,7 @@ public:
     {
         ATLASSERT(pidlSrc && "Why clone a NULL pointer?");
 
-        PIDLIST_RELATIVE pidl = ILClone(pidlSrc);
+        const PIDLIST_RELATIVE pidl = ILClone(pidlSrc);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
         return pidl;
     }
@@ -27,7 +27,7 @@ public:
     {
         ATLASSERT(pidlSrc && "Why clone a NULL pointer?");
 
-        PIDLIST_ABSOLUTE pidl = ILCloneFull(pidlSrc);
+        const PIDLIST_ABSOLUTE pidl = ILCloneFull(pidlSrc);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
         return pidl;
     }
@@ -41,24 +41,24 @@ public:
 
     static LPITEMIDLIST CreateFromPath(LPCTSTR pszPath)
     {
-        LPITEMIDLIST pidl = ILCreateFromPath(pszPath);
+        const LPITEMIDLIST pidl = ILCreateFromPath(pszPath);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
         return pidl;
     }
 
     static PUIDLIST_RELATIVE CreateItemIdListWithTerminator(size_t sizeItem)
     {
-        size_t size = sizeof(short) + sizeItem;
+        const size_t size = sizeof(short) + sizeItem;
 
-        PUIDLIST_RELATIVE pidl = static_cast<PUIDLIST_RELATIVE>(CoTaskMemAlloc(size + (sizeof(short))));
+        auto pidl = static_cast<PUIDLIST_RELATIVE>(CoTaskMemAlloc(size + sizeof(short)));
         if (!pidl)
             RaiseException(E_OUTOFMEMORY);
 
-        LPSHITEMID pshitemid = &(pidl->mkid);
+        const LPSHITEMID pshitemid = &(pidl->mkid);
         pshitemid->cb = static_cast<USHORT>(size);
 
         PUIDLIST_RELATIVE pidlTerminator = ILGetNext(pidl);
-        LPSHITEMID pItemIdTerminator = &(pidlTerminator->mkid);
+        const LPSHITEMID pItemIdTerminator = &(pidlTerminator->mkid);
         pItemIdTerminator->cb = 0;
 
         return pidl;
@@ -100,7 +100,7 @@ public:
     {
     }
 
-    explicit ItemIDList(const wchar_t* pszPath) :
+    explicit ItemIDList(LPCTSTR pszPath) :
         m_pidl(CreateFromPath(pszPath))
     {
     }
@@ -125,14 +125,14 @@ public:
 
     PUIDLIST_RELATIVE DetachRelative() noexcept
     {
-        PUIDLIST_RELATIVE pidl = reinterpret_cast<PUIDLIST_RELATIVE>(m_pidl);
+        const auto pidl = reinterpret_cast<PUIDLIST_RELATIVE>(m_pidl);
         m_pidl = nullptr;
         return pidl;
     }
 
     PIDLIST_ABSOLUTE DetachAbsolute() noexcept
     {
-        PIDLIST_ABSOLUTE pidl = reinterpret_cast<PIDLIST_ABSOLUTE>(m_pidl);
+        const auto pidl = reinterpret_cast<PIDLIST_ABSOLUTE>(m_pidl);
         m_pidl = nullptr;
         return pidl;
     }
@@ -154,7 +154,7 @@ public:
 
     void AppendID(const SHITEMID* pmkid)
     {
-        PIDLIST_RELATIVE pidl = ILAppendID(GetRelative(), pmkid, true);
+        const PIDLIST_RELATIVE pidl = ILAppendID(GetRelative(), pmkid, true);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
 
         m_pidl = pidl;

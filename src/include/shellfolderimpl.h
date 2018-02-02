@@ -81,7 +81,7 @@ public:
         OleString olestrCLSID;
         StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
 
-        ATL::CStringW strFriendlyTypeName = ToStringW(nFriendlyTypeNameId);
+        const ATL::CStringW strFriendlyTypeName = ToStringW(nFriendlyTypeNameId);
 
         ATL::_ATL_REGMAP_ENTRY regmapEntries[] = {
             { L"DESCRIPTION", szDescription },
@@ -105,7 +105,7 @@ public:
     // Purpose: small helper to support 'type' system.
     static void ChangeNotifyPidl(long wEventId, UINT uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = nullptr)
     {
-        ::SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
+        SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
     }
 
     static void StrToStrRet(const wchar_t* sz, STRRET* pstrret)
@@ -229,7 +229,7 @@ public:
             ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellFolder::BindToObject (instance=%p)\n", this);
 
             // Quick check if requested interface is supported at all (on ourself).
-            HRESULT hr = static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
+            const HRESULT hr = static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
             if (FAILED(hr))
                 return hr;
 
@@ -506,7 +506,7 @@ public:
         UNREFERENCED_PARAMETER(pdwAttributes);
 
         #ifdef _DEBUG
-            DWORD dwAttributes = pdwAttributes == nullptr ? 0 : *pdwAttributes;
+        const DWORD dwAttributes = pdwAttributes == nullptr ? 0 : *pdwAttributes;
             ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n", hwnd, pbc, pwszDisplayName, dwAttributes);
         #endif
 
@@ -845,7 +845,7 @@ protected:
 
         RaiseExceptionIfFailed(
             CDefFolderMenu_Create2(m_pidlFolder.GetAbsolute(), hwnd, cidl, ppidl, this,
-                                   ShellFolderImpl::OnDfmCommand, 0, nullptr, &contextmenu));
+                                   OnDfmCommand, 0, nullptr, &contextmenu));
 
         return contextmenu;
     }
@@ -1124,7 +1124,7 @@ protected:
 
                 VerifyAttribute(cfshellidlist, SFGAO_HASPROPSHEET);
 
-                long wEventId = static_cast<T*>(this)->OnProperties(hwnd, items);
+                const long wEventId = static_cast<T*>(this)->OnProperties(hwnd, items);
 
                 if (IsBitSet(wEventId, SHCNE_RENAMEITEM))
                 {
@@ -1164,7 +1164,7 @@ protected:
 
             VerifyAttribute(cfshellidlist, SFGAO_CANDELETE);
 
-            long wEventId = static_cast<T*>(this)->OnDelete(hwnd, items);
+            const long wEventId = static_cast<T*>(this)->OnDelete(hwnd, items);
 
             if (IsBitSet(wEventId, SHCNE_DELETE))
             {
@@ -1272,7 +1272,7 @@ protected:
     // Override this function if you want to use your own shellfolderview object.
     ATL::CComPtr<IShellView> CreateShellFolderView()
     {
-        ATL::CComPtr<IShellFolderViewCB> shellfolderviewcb =
+        const ATL::CComPtr<IShellFolderViewCB> shellfolderviewcb =
             static_cast<T*>(this)->CreateShellFolderViewCB();
 
         SFV_CREATE sfvcreate {sizeof(SFV_CREATE), this, nullptr, shellfolderviewcb};
@@ -1415,7 +1415,7 @@ protected:
 
     void RetrieveItems(IDataObject* pdataobject, std::vector<TItem>& items) const
     {
-        CCfShellIdList cfshellidlist(pdataobject);
+        const CCfShellIdList cfshellidlist(pdataobject);
 
         RetrieveItems(cfshellidlist, items);
     }
@@ -1432,7 +1432,7 @@ protected:
 
     void VerifyAttribute(IDataObject* pdataobject, SFGAOF sfgaofMask) const
     {
-        CCfShellIdList cfshellidlist(pdataobject);
+        const CCfShellIdList cfshellidlist(pdataobject);
 
         VerifyAttribute(cfshellidlist, sfgaofMask);
     }
@@ -1448,7 +1448,7 @@ protected:
 
     bool HasAttributesOf(const CCfShellIdList& cfshellidlist, SFGAOF sfgaofMask) const
     {
-        size_t nItemCount = cfshellidlist.GetItemCount();
+        const size_t nItemCount = cfshellidlist.GetItemCount();
 
         SFGAOF sfgaof = static_cast<const T*>(this)->GetAttributesOfGlobal(static_cast<UINT>(nItemCount), sfgaofMask);
         if (sfgaof == SFGAO_UNDEFINED)
@@ -1488,7 +1488,7 @@ protected:
     {
         for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
-            PCUIDLIST_RELATIVE pidl = cfshellidlist.GetItem(i);
+            const PCUIDLIST_RELATIVE pidl = cfshellidlist.GetItem(i);
 
             ChangeNotifyPidl(wEventId, uFlags, ItemIDList(m_pidlFolder.GetAbsolute(), pidl));
         }
@@ -1510,7 +1510,7 @@ protected:
     {
         for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
-            PCUIDLIST_RELATIVE pidlOld = cfshellidlist.GetItem(i);
+            const PCUIDLIST_RELATIVE pidlOld = cfshellidlist.GetItem(i);
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, SHCNF_FLUSH,
                 ItemIDList(m_pidlFolder, pidlOld), ItemIDList(m_pidlFolder, itemsNew[i].GetItemIdList()));
@@ -1525,7 +1525,7 @@ protected:
 
     IShellBrowserPtr GetShellBrowser() const
     {
-        auto pshellbrowser = reinterpret_cast<IShellBrowser*>(SendMessage(m_hwndOwner, WM_GETISHELLBROWSER, 0, 0));
+        const auto pshellbrowser = reinterpret_cast<IShellBrowser*>(SendMessage(m_hwndOwner, WM_GETISHELLBROWSER, 0, 0));
         RaiseExceptionIf(pshellbrowser == nullptr);
         return pshellbrowser;
     }

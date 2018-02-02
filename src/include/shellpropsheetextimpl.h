@@ -56,7 +56,7 @@ public:
         try
         {
             ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellPropSheetExtImpl::AddPages (instance=%p, pfnAddPage=%p, lParam=&p)\n", this, pfnAddPage, lParam);
-            CAddPage addpage(pfnAddPage, lParam);
+            const CAddPage addpage(pfnAddPage, lParam);
 
             AddPagesCore(addpage, GetFilenames());
             return S_OK;

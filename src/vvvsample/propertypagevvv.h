@@ -14,6 +14,7 @@ class PropertyPageVVV : public msf::ShellExtPropertyPageImpl<PropertyPageVVV>
 public:
     static HPROPSHEETPAGE CreateInstance(std::wstring filename)
     {
+        // ReSharper disable once CppNonReclaimedResourceAcquisition
         auto ppage = new PropertyPageVVV(std::move(filename));
         return ppage->Create();
     }

@@ -14,6 +14,8 @@ template <typename T>
 class __declspec(novtable) IconOverlayImpl : public IShellIconOverlayIdentifier
 {
 public:
+    IconOverlayImpl(const IconOverlayImpl&) = delete;
+
     /// <summary>Registration function to register the COM object.</summary>
     static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId, PCWSTR szDescription) noexcept
     {
@@ -77,8 +79,6 @@ protected:
         ATLASSERT(priority >= 0 && priority <= 100);
         ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::IconOverlayImpl (instance=%p)\n", this);
     }
-
-    IconOverlayImpl(const IconOverlayImpl&) = delete;
 
     ~IconOverlayImpl()
     {

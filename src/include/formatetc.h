@@ -90,7 +90,7 @@ private:
         if (!src.ptd)
             return nullptr;
 
-        DVTARGETDEVICE* ptd = static_cast<DVTARGETDEVICE*>(CoTaskMemAlloc(src.ptd->tdSize));
+        auto* ptd = static_cast<DVTARGETDEVICE*>(CoTaskMemAlloc(src.ptd->tdSize));
         if (!ptd)
             throw std::bad_alloc();
         memcpy(ptd, src.ptd, src.ptd->tdSize);

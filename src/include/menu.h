@@ -36,7 +36,7 @@ public:
 
     void AddItem(UINT id, const std::wstring& strText) const
     {
-        MenuItemInfo menuiteminfo(id, strText);
+        const MenuItemInfo menuiteminfo(id, strText);
 
         InsertMenuItem(menuiteminfo, GetMenuItemCount());
     }
@@ -72,7 +72,7 @@ private:
 
     static HMENU CreateMenu()
     {
-        HMENU hmenu = ::CreateMenu();
+        const HMENU hmenu = ::CreateMenu();
         RaiseLastErrorExceptionIf(!hmenu);
         return hmenu;
     }

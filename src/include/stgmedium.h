@@ -29,8 +29,8 @@ public:
 
         util::GlobalLock<void> globallock(hglobIn);
 
-        size_t cb = GlobalSize(hglobIn);
-        HGLOBAL hglobOut = GlobalAllocThrow(cb);
+        const size_t cb = GlobalSize(hglobIn);
+        const HGLOBAL hglobOut = GlobalAllocThrow(cb);
         CopyMemory(hglobOut, globallock.get(), cb);
         return hglobOut;
     }

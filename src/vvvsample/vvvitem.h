@@ -32,7 +32,7 @@ public:
     {
         // Shell item IDs can be passed from external sources, validate
         // It is valid to pass a PIDL that is larger then the original (done by Search functionality in XP).
-        const bool bValid = GetDataSize() >= sizeof(SItemData) && GetItemData().nTypeID == TYPE_ID;
+        const bool bValid = GetDataSize() >= sizeof(SItemData) && GetItemData().nTypeID == TypeID;
 #ifdef _DEBUG
         if (!bValid)
         {
@@ -66,7 +66,7 @@ public:
         return GetItemData().bFolder;
     }
 
-    int Compare(const VVVItem& directoryitem, int compareBy, bool bCanonicalOnly) const;
+    int Compare(const VVVItem& item, int compareBy, bool bCanonicalOnly) const;
     std::wstring GetItemDetailsOf(UINT columnIndex) const;
     std::wstring GetInfoTipText() const;
     int GetIconOf(UINT flags) const;
@@ -75,7 +75,7 @@ private:
 
     // By setting and checking for a TypeId (or cookie) we can ensure that the PIDL
     // was created by us. Using a version # will allows to handle older persisted PIDLs
-    const static unsigned int TYPE_ID = 0x5601; // 'V' + version #
+    constexpr static unsigned int TypeID = 0x5601; // 'V' + version #
 
     // By using a struct with a version # it becomes possible to detected old persisted PIDLs.
     #pragma pack(1) // By using an explicit pack the memory layout is better fixed then trusting the project settings.
@@ -91,7 +91,7 @@ private:
 
     static void InitializeItemData(SItemData* pitemdata, unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
     {
-        pitemdata->nTypeID = TYPE_ID;
+        pitemdata->nTypeID = TypeID;
         pitemdata->nID     = nId;
         pitemdata->bFolder = bFolder;
         pitemdata->nSize   = nSize;

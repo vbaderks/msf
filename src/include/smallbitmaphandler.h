@@ -21,9 +21,12 @@ public:
     class Bitmap
     {
     public:
-        explicit Bitmap(HBITMAP handle = nullptr) : m_handle(handle)
+        explicit Bitmap(HBITMAP handle = nullptr) : m_handle{handle}
         {
         }
+
+        Bitmap(const Bitmap& other) = delete;
+        Bitmap(Bitmap&& other) = delete;
 
         ~Bitmap()
         {
@@ -44,7 +47,7 @@ public:
     };
 
     SmallBitmapHandler(std::wstring text, UINT resourceID) :
-        m_text(text),
+        m_text(std::move(text)),
         m_bitmap(LoadBitmap(resourceID))
     {
     }
@@ -65,7 +68,7 @@ private:
 
     static HBITMAP LoadBitmap(UINT resourceID) noexcept
     {
-        HBITMAP hbitmap = ::LoadBitmap(ATL::_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceID));
+        const HBITMAP hbitmap = ::LoadBitmap(ATL::_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceID));
         ATLASSERT(hbitmap && "Failed to load the bitmap, check resource id, etc");
         return hbitmap;
     }

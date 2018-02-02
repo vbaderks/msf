@@ -97,7 +97,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     OleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
-    ATL::CStringW strFriendlyTypenameId = ToStringW(nFriendlyTypeNameId);
+    const ATL::CStringW strFriendlyTypenameId = ToStringW(nFriendlyTypeNameId);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {

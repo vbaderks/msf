@@ -28,37 +28,33 @@ public:
     public:
         static HMENU CreateSubMenu()
         {
-            auto hmenu = CreatePopupMenu();
+            const auto hmenu = CreatePopupMenu();
             RaiseLastErrorExceptionIf(!hmenu);
             return hmenu;
         }
 
-        Menu() :
-            m_hmenu{ nullptr },
-            m_indexMenu{ 0 },
-            m_pidCmd{ nullptr },
-            m_idCmdLast{ 0 },
-            m_pmenuhost{ nullptr }
-        {
-        }
+        Menu() = default;
+        ~Menu() = default;
 
         Menu(HMENU hmenu, UINT indexMenu, UINT& idCmd, UINT idCmdLast, ContextMenuImpl<T>* pmenuhost) :
-            m_hmenu{ hmenu },
-            m_indexMenu{ indexMenu },
-            m_pidCmd{ &idCmd },
-            m_idCmdLast{ idCmdLast },
-            m_pmenuhost{ pmenuhost }
+            m_hmenu{hmenu},
+            m_indexMenu{indexMenu},
+            m_pidCmd{&idCmd},
+            m_idCmdLast{idCmdLast},
+            m_pmenuhost{pmenuhost}
         {
         }
 
         Menu(const Menu& other) :
-            m_hmenu{ other.m_hmenu },
-            m_indexMenu{ other.m_indexMenu },
-            m_pidCmd{ other.m_pidCmd },
-            m_idCmdLast{ other.m_idCmdLast },
-            m_pmenuhost{ other.m_pmenuhost }
+            m_hmenu{other.m_hmenu},
+            m_indexMenu{other.m_indexMenu},
+            m_pidCmd{other.m_pidCmd},
+            m_idCmdLast{other.m_idCmdLast},
+            m_pmenuhost{other.m_pmenuhost}
         {
         }
+
+        Menu(Menu&& other) = default;
 
         Menu& operator=(const Menu& rhs)
         {
@@ -74,6 +70,8 @@ public:
             return *this;
         }
 
+        Menu& operator=(Menu&& other) = delete;
+
         operator HMENU() const
         {
             return m_hmenu;
@@ -83,7 +81,7 @@ public:
         Menu AddSubMenu(const std::wstring strText, const std::wstring strHelp)
         {
             auto hmenu = CreateSubMenu();
-            MenuItemInfo menuiteminfo(*m_pidCmd, std::move(strText), hmenu);
+            const MenuItemInfo menuiteminfo(*m_pidCmd, std::move(strText), hmenu);
             InsertMenuItem(menuiteminfo, std::move(strHelp), CContextCommandPtr(nullptr), CCustomMenuHandlerPtr(nullptr));
 
             return Menu(hmenu, 0, *m_pidCmd, m_idCmdLast, m_pmenuhost);
@@ -115,7 +113,7 @@ public:
         void AddItem(const std::wstring text, const std::wstring helpText,
                      std::unique_ptr<ContextMenuCommand> contextCommand)
         {
-            MenuItemInfo menuiteminfo(*m_pidCmd, std::move(text));
+            const MenuItemInfo menuiteminfo(*m_pidCmd, std::move(text));
             InsertMenuItem(menuiteminfo, std::move(helpText), std::move(contextCommand), std::unique_ptr<CustomMenuHandler>(nullptr));
         }
 
@@ -200,11 +198,11 @@ public:
         }
 
         // Member variables.
-        HMENU               m_hmenu;
-        UINT                m_indexMenu;
-        UINT*               m_pidCmd;
-        UINT                m_idCmdLast;
-        ContextMenuImpl<T>* m_pmenuhost;
+        HMENU m_hmenu{};
+        UINT m_indexMenu{};
+        UINT* m_pidCmd{};
+        UINT m_idCmdLast{};
+        ContextMenuImpl<T>* m_pmenuhost{};
     };
 
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
@@ -472,7 +470,7 @@ private:
 
     // Member variables
     std::vector<MenuItem> m_menuItems;
-    unsigned int m_idCmdFirst;
+    unsigned int m_idCmdFirst{};
 };
 
 } // end namespace msf

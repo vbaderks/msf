@@ -35,7 +35,7 @@ public:
     static ATL::CComPtr<IContextMenu> CreateInstance(IShellFolderContextMenuSink* pshellfoldercontextmenusink)
     {
         ATL::CComObject<ShellFolderContextMenu>* pinstance;
-        HRESULT hr = ATL::CComObject<ShellFolderContextMenu>::CreateInstance(&pinstance);
+        const HRESULT hr = ATL::CComObject<ShellFolderContextMenu>::CreateInstance(&pinstance);
         if (FAILED(hr))
             RaiseException(hr);
 

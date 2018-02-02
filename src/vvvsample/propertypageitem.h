@@ -16,6 +16,7 @@ class PropertyPageItem : public ATL::CSnapInPropertyPageImpl<PropertyPageItem>
 public:
     static HPROPSHEETPAGE CreateInstance(VVVItem& item, long& wEventId, IShellFolder* shellFolder)
     {
+        // ReSharper disable once CppNonReclaimedResourceAcquisition
         auto ppage = new PropertyPageItem(item, wEventId, shellFolder);
         return ppage->Create();
     }
@@ -52,7 +53,7 @@ public:
         m_wEventId = 0;
 
         ATL::CString strName;
-        GetDlgItemText(IDC_EDIT_ITEM_NAME, strName);
+        (void)GetDlgItemText(IDC_EDIT_ITEM_NAME, strName);
         strName.Trim();
         const std::wstring name(strName); // TODO
 

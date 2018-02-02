@@ -38,10 +38,10 @@ inline ATL::CStringW GetFolderPath(int nFolder)
 
 inline DWORD GetFileSize(const ATL::CString& strFile)
 {
-    auto hFile = CreateFile(strFile, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
+    const auto hFile = CreateFile(strFile, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
     RaiseExceptionIf(hFile == INVALID_HANDLE_VALUE);
 
-    DWORD dwSize = ::GetFileSize(hFile, nullptr);
+    const DWORD dwSize = ::GetFileSize(hFile, nullptr);
     CloseHandle(hFile);
     RaiseExceptionIf(dwSize == INVALID_FILE_SIZE && GetLastError() != NO_ERROR);
 
@@ -49,7 +49,7 @@ inline DWORD GetFileSize(const ATL::CString& strFile)
 }
 
 
-// Purpose: 'StrCmp' for numeric values. Usefull for IShellFolder::CompareIDs
+// Purpose: 'StrCmp' for numeric values. Useful for IShellFolder::CompareIDs
 inline int IntCmp(int n1, int n2) noexcept
 {
     if (n1 < n2)
@@ -77,7 +77,7 @@ inline int UIntCmp(unsigned int n1, unsigned int n2) noexcept
 inline std::wstring FormatLastError(DWORD dwLastError)
 {
     LPWSTR lpMsgBuf;
-    auto size = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
+    const auto size = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
         FORMAT_MESSAGE_FROM_SYSTEM |
         FORMAT_MESSAGE_IGNORE_INSERTS,
         nullptr,
@@ -242,7 +242,7 @@ inline ATL::CString GetAppPath(const ATL::CString& strApp)
 /// </remarks>
 inline HGLOBAL GlobalAllocThrow(SIZE_T dwBytes, UINT uFlags = GMEM_FIXED)
 {
-    auto hg = GlobalAlloc(uFlags, dwBytes);
+    const auto hg = GlobalAlloc(uFlags, dwBytes);
     RaiseExceptionIf(!hg, E_OUTOFMEMORY);
     return hg;
 }
@@ -316,10 +316,10 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName)
 {
     DWORD dwVersion = 0;
 
-    HINSTANCE hinstDll = LoadLibrary(lpszDllName);
+    const HINSTANCE hinstDll = LoadLibrary(lpszDllName);
     if (hinstDll)
     {
-        DLLGETVERSIONPROC pDllGetVersion =
+        const auto pDllGetVersion =
             reinterpret_cast<DLLGETVERSIONPROC>(GetProcAddress(hinstDll, "DllGetVersion"));
 
         // Because some DLLs might not implement this function, you
@@ -333,7 +333,7 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName)
             ZeroMemory(&dvi, sizeof dvi);
             dvi.cbSize = sizeof dvi;
 
-            HRESULT hr = (*pDllGetVersion)(&dvi);
+            const HRESULT hr = (*pDllGetVersion)(&dvi);
             if (SUCCEEDED(hr))
             {
                 dwVersion = MSF_PACKVERSION(dvi.dwMajorVersion, dvi.dwMinorVersion);
@@ -359,9 +359,9 @@ inline bool IsShell6OrHigher()
 }
 
 
-inline int GetSystemImageListIndex(const wchar_t* pszPath)
+inline int GetSystemImageListIndex(LPCTSTR pszPath)
 {
-    SHFILEINFO sfi = {nullptr};
+    SHFILEINFO sfi{};
     if (!SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof sfi,
                        SHGFI_USEFILEATTRIBUTES | SHGFI_ICON))
         return 0;

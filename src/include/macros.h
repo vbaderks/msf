@@ -70,7 +70,7 @@ inline __declspec(noinline) HRESULT ExceptionToHResult() noexcept
     {
         return E_INVALIDARG;
     }
-    catch (const std::exception &)
+    catch (...)
     {
         return E_FAIL;
     }

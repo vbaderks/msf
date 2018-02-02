@@ -53,8 +53,8 @@ protected:
         const auto uFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < uFiles; ++i)
         {
-            auto strFilename = cfhdrop.GetFile(i);
-            m_filenames.push_back(std::wstring(strFilename));
+            const auto filename = cfhdrop.GetFile(i);
+            m_filenames.emplace_back(filename);
         }
     }
 

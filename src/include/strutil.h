@@ -49,8 +49,8 @@ inline std::wstring FormatResourceMessage(UINT messageID, ...)
     va_list args;
     va_start(args, messageID);
 
-    LPWSTR lpMsgBuf = nullptr;
-    auto size = FormatMessage(
+    LPWSTR lpMsgBuf{};
+    const auto size = FormatMessageW(
         FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_HMODULE,
         reinterpret_cast<HMODULE>(&__ImageBase),
         messageID,

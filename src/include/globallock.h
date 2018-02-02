@@ -14,9 +14,7 @@ template <typename T>
 class GlobalLock
 {
 public:
-    GlobalLock() : m_p(nullptr), m_hMem(nullptr)
-    {
-    }
+    GlobalLock() = default;
 
     explicit GlobalLock(HGLOBAL hMem) : m_p(GlobalLockThrow(hMem)), m_hMem(hMem)
     {
@@ -26,6 +24,8 @@ public:
     {
         Dispose();
     }
+
+    GlobalLock& operator=(const GlobalLock&) = delete;
 
     void Attach(HGLOBAL hMem)
     {
@@ -41,7 +41,7 @@ public:
     {
         if (m_hMem)
         {
-            BOOL bResult = GlobalUnlock(m_hMem);
+            const BOOL bResult = GlobalUnlock(m_hMem);
             ATLASSERT(bResult || GetLastError() == NO_ERROR);
             UNREFERENCED_PARAMETER(bResult);
             m_hMem = nullptr;
@@ -66,11 +66,9 @@ private:
         return p;
     }
 
-    GlobalLock& operator=(const GlobalLock&) = delete;
-
     // Member variables
-    void* m_p;
-    HGLOBAL m_hMem;
+    void* m_p{};
+    HGLOBAL m_hMem{};
 };
 
 }
