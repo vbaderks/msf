@@ -15,20 +15,18 @@ namespace msf
 class IEnumFORMATETCPtr : public ::IEnumFORMATETCPtr
 {
 public:
-    IEnumFORMATETCPtr() : ::IEnumFORMATETCPtr()
+    IEnumFORMATETCPtr() noexcept : ::IEnumFORMATETCPtr()
     {
     }
-
 
     bool Next(FORMATETC& formatetc)
     {
         return Next(1, &formatetc, nullptr);
     }
 
-    
     bool Next(ULONG celt, FORMATETC* rgelt, ULONG* pceltFetched)
     {
-        HRESULT hr = GetInterfacePtr()->Next(celt, rgelt, pceltFetched);
+        const HRESULT hr = GetInterfacePtr()->Next(celt, rgelt, pceltFetched);
         RaiseExceptionIfFailed(hr);
 
         return hr == S_OK;

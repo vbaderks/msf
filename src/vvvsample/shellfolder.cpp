@@ -100,7 +100,7 @@ public:
 
     // Purpose: called by msf to tell the shell which panes to show.
     // It is essential to override this function to control which explorer panes are visible as by default no panes are shown.
-    static EXPLORERPANESTATE GetPaneState(_In_ REFEXPLORERPANE ep)
+    static EXPLORERPANESTATE GetPaneState(_In_ REFEXPLORERPANE ep) noexcept
     {
         if (ep == __uuidof(msf::EP_Ribbon))
             return EPS_DEFAULT_ON;
@@ -156,7 +156,7 @@ public:
         msf::CCfShellIdList cfshellidlist(pdataobject);
         ATLASSERT(cfshellidlist.GetItemCount() == 1);
 
-        VVVItem item(cfshellidlist.GetItem(0));
+        const VVVItem item(cfshellidlist.GetItem(0));
 
         if (item.IsFolder())
         {
@@ -201,7 +201,7 @@ public:
     }
 
     // Purpose: Called by msf/shell when items must be deleted.
-    long OnDelete(HWND hwnd, CVVVItemList& items) const
+    long OnDelete(HWND hwnd, const CVVVItemList& items) const
     {
         if (!hwnd && !UserConfirmsFileDelete(hwnd, items))
             return 0; // user wants to abort the file deletion process.
@@ -241,7 +241,7 @@ public:
 
 protected:
 
-    ShellFolder()
+    ShellFolder() noexcept
     {
         // Register the columns the folder supports in 'detailed' mode.
         RegisterColumn(IDS_SHELLEXT_NAME, LVCFMT_LEFT);
@@ -282,7 +282,7 @@ private:
         ReportAddItem(pidlItem.GetRelative());
     }
 
-    static bool IsReadOnly(const wstring& strFileName)
+    static bool IsReadOnly(const wstring& strFileName) noexcept
     {
         const auto attributes = GetFileAttributes(strFileName.c_str());
         return (attributes & FILE_ATTRIBUTE_READONLY) != 0;

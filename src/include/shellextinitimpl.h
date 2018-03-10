@@ -10,12 +10,17 @@
 #include <algorithm>
 #include <cctype>
 
-namespace msf
-{
+namespace msf {
 
-class IShellExtInitImpl :  public IShellExtInit
+class IShellExtInitImpl : public IShellExtInit
 {
 public:
+    IShellExtInitImpl() = default;
+    IShellExtInitImpl(const IShellExtInitImpl&) = delete;
+    IShellExtInitImpl(IShellExtInitImpl&&) = delete;
+    IShellExtInitImpl& operator=(const IShellExtInitImpl&) = delete;
+    IShellExtInitImpl& operator=(IShellExtInitImpl&&) = delete;
+
     // IShellExtInit
     HRESULT __stdcall Initialize(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) noexcept override
     {
@@ -35,7 +40,6 @@ public:
     }
 
 protected:
-
     ~IShellExtInitImpl() = default;
 
     void RegisterExtension(std::wstring extension)
@@ -72,14 +76,13 @@ protected:
         return std::find(m_extensions.begin(), m_extensions.end(), extension) == m_extensions.end();
     }
 
-    const std::vector<std::wstring>& GetFilenames() const
+    const std::vector<std::wstring>& GetFilenames() const noexcept
     {
         return m_filenames;
     }
 
 private:
-
-    static wchar_t string_tolower_functional(wchar_t c)
+    static wchar_t string_tolower_functional(wchar_t c) noexcept
     {
         return static_cast<wchar_t>(std::tolower(c));
     }

@@ -17,6 +17,11 @@ class __declspec(novtable) QueryInfo :
     public IQueryInfoImpl
 {
 public:
+    QueryInfo(const QueryInfo&) = delete;
+    QueryInfo(QueryInfo&&) = delete;
+    QueryInfo& operator=(const QueryInfo&) = delete;
+    QueryInfo& operator=(QueryInfo&&) = delete;
+
     static ATL::CComPtr<IQueryInfo> CreateInstance(std::wstring infoTipText)
     {
         ATL::CComObject<QueryInfo>* p;
@@ -35,10 +40,12 @@ public:
     END_COM_MAP()
 
 protected:
+    QueryInfo() = default;
+    ~QueryInfo() = default;
 
-    std::wstring GetInfoTip(DWORD /* dwFlags */) override
+    LPCWSTR GetInfoTip(DWORD /* dwFlags */) override
     {
-        return m_infoTipText;
+        return m_infoTipText.c_str();
     }
 
 private:

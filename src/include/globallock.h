@@ -25,7 +25,10 @@ public:
         Dispose();
     }
 
+    GlobalLock(const GlobalLock&) = delete;
+    GlobalLock(GlobalLock&&) = delete;
     GlobalLock& operator=(const GlobalLock&) = delete;
+    GlobalLock& operator=(GlobalLock&&) = delete;
 
     void Attach(HGLOBAL hMem)
     {
@@ -49,10 +52,13 @@ public:
         }
     }
 
+#pragma warning(push)
+#pragma warning(disable: 26473) // Don't cast between pointer types where the source type and the target type are the same
     T* get() const noexcept
     {
-        return reinterpret_cast<T*>(m_p);
+        return static_cast<T*>(m_p);
     }
+#pragma warning(pop)
 
 private:
 

@@ -13,21 +13,11 @@ namespace msf {
 class ClipboardFormatHandler
 {
 public:
-    ClipboardFormatHandler(CLIPFORMAT clipformat, bool bCanGetData, bool bCanSetData) :
-        m_clipformat(clipformat),
-        m_bCanGetData(bCanGetData),
-        m_bCanSetData(bCanSetData)
-    {
-    }
-
-    ClipboardFormatHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
-        m_clipformat(Win32::RegisterClipboardFormat(lpszFormat)),
-        m_bCanGetData(bCanGetData),
-        m_bCanSetData(bCanSetData)
-    {
-    }
-
+    ClipboardFormatHandler(const ClipboardFormatHandler&) = delete;
+    ClipboardFormatHandler(ClipboardFormatHandler&&) = delete;
     virtual ~ClipboardFormatHandler() = default;
+    ClipboardFormatHandler& operator=(const ClipboardFormatHandler&) = delete;
+    ClipboardFormatHandler& operator=(ClipboardFormatHandler&&) = delete;
 
     CLIPFORMAT GetClipFormat() const noexcept
     {
@@ -66,9 +56,24 @@ public:
     {
     }
 
-    bool IsValid(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) const
+    bool IsValid(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) const noexcept
     {
         return SUCCEEDED(Validate(formatetc)) && formatetc.tymed == stgmedium.tymed;
+    }
+
+protected:
+    ClipboardFormatHandler(CLIPFORMAT clipformat, bool bCanGetData, bool bCanSetData) noexcept :
+        m_clipformat(clipformat),
+        m_bCanGetData(bCanGetData),
+        m_bCanSetData(bCanSetData)
+    {
+    }
+
+    ClipboardFormatHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
+        m_clipformat(Win32::RegisterClipboardFormat(lpszFormat)),
+        m_bCanGetData(bCanGetData),
+        m_bCanSetData(bCanSetData)
+    {
     }
 
 private:

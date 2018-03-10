@@ -15,18 +15,14 @@ namespace msf
 class SmallBitmapHandler : public CustomMenuHandler
 {
 public:
-
     // Purpose: small helper class to free managed handle.
     // For more advanced features use bitmap class in WTL or MFC
-    class Bitmap
+    class Bitmap final
     {
     public:
-        explicit Bitmap(HBITMAP handle = nullptr) : m_handle{handle}
+        explicit Bitmap(HBITMAP handle = nullptr) noexcept : m_handle{handle}
         {
         }
-
-        Bitmap(const Bitmap& other) = delete;
-        Bitmap(Bitmap&& other) = delete;
 
         ~Bitmap()
         {
@@ -36,17 +32,21 @@ public:
             }
         }
 
-        HBITMAP GetHandle() const
+        Bitmap(const Bitmap&) = delete;
+        Bitmap(Bitmap&&) = delete;
+        Bitmap& operator=(const Bitmap&) = delete;
+        Bitmap& operator=(Bitmap&&) = delete;
+
+        HBITMAP GetHandle() const noexcept
         {
             return m_handle;
         }
 
     private:
-
         HBITMAP m_handle;
     };
 
-    SmallBitmapHandler(std::wstring text, UINT resourceID) :
+    SmallBitmapHandler(std::wstring text, UINT resourceID) noexcept :
         m_text(std::move(text)),
         m_bitmap(LoadBitmap(resourceID))
     {
@@ -65,12 +65,11 @@ public:
     }
 
 private:
-
     static HBITMAP LoadBitmap(UINT resourceID) noexcept
     {
-        const HBITMAP hbitmap = ::LoadBitmap(ATL::_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceID));
-        ATLASSERT(hbitmap && "Failed to load the bitmap, check resource id, etc");
-        return hbitmap;
+        HBITMAP__* const bitmap = ::LoadBitmap(ATL::_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceID));
+        ATLASSERT(bitmap && "Failed to load the bitmap, check resource id, etc");
+        return bitmap;
     }
 
     // Member variables.

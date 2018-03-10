@@ -30,7 +30,7 @@ public:
             L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);
     }
 
-    void InitializeCore(const wchar_t* filename, DWORD /*dwMode*/) override
+    void InitializeCore(const wchar_t* filename, DWORD /*dwMode*/) final
     {
         VVVFile vvvfile{ filename };
 
@@ -38,13 +38,16 @@ public:
         m_fileCount = msf::ToString(vvvfile.GetFileCount());
     }
 
-    // Purpose: called by the shell/msf when it needs the text for the infotip.
+    // Purpose: called by the shell/msf when it needs the text for the info tip.
     //          The string is used for the tooltip and the text in the status bar.
-    wstring GetInfoTip(DWORD /* dwFlags */) override
+    LPCWSTR GetInfoTip(DWORD /* dwFlags */) final
     {
-        return msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + m_label + L"\n" +
-               msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + m_fileCount;
+        return (msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + m_label + L"\n" +
+                msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + m_fileCount).c_str();
     }
+
+protected:
+    ~InfoTip() = default;
 
 private:
     wstring m_label;

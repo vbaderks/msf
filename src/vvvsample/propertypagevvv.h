@@ -14,18 +14,26 @@ class PropertyPageVVV : public msf::ShellExtPropertyPageImpl<PropertyPageVVV>
 public:
     static HPROPSHEETPAGE CreateInstance(std::wstring filename)
     {
-        // ReSharper disable once CppNonReclaimedResourceAcquisition
-        auto ppage = new PropertyPageVVV(std::move(filename));
-        return ppage->Create();
+        auto page = std::make_unique<PropertyPageVVV>(std::move(filename));
+        const auto result = page->Create();
+        if (result)
+        {
+            // Page will be deleted by ATL base class when the property sheet is done with it.
+            page.release();
+        }
+        return result;
     }
 
     enum { IDD = IDD_PROPERTY_PAGE_VVV };
 
+#pragma warning(push)
+#pragma warning(disable: 26433) // use override
     BEGIN_MSG_MAP(PropertyPageVVV)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
         COMMAND_HANDLER(IDC_EDIT_LABEL, EN_CHANGE, OnChangeEditName)
         CHAIN_MSG_MAP(ShellExtPropertyPageImpl<PropertyPageVVV>)
     END_MSG_MAP()
+#pragma warning(pop)
 
     explicit PropertyPageVVV(std::wstring strFilename) :
         m_filename(std::move(strFilename))
@@ -83,7 +91,7 @@ private:
         ATLVERIFY(SetDlgItemText(IDC_STATIC_FILECOUNT, (msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L":").c_str()));
     }
 
-    void InitializeControls()
+    void InitializeControls() noexcept
     {
         ATLVERIFY(SetDlgItemText(IDC_EDIT_LABEL, m_label.c_str()));
         ATLVERIFY(SetDlgItemInt(IDC_EDIT_FILECOUNT, m_fileCount));

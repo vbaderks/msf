@@ -41,7 +41,7 @@ std::wstring VVVItem::GetDisplayName(SHGDNF shellGetDisplayNameType) const
 }
 
 
-SFGAOF VVVItem::GetAttributeOf(bool bSingleSelect, bool bReadOnly) const
+SFGAOF VVVItem::GetAttributeOf(bool bSingleSelect, bool bReadOnly) const noexcept
 {
     if (IsFolder())
     {
@@ -113,7 +113,7 @@ std::wstring VVVItem::GetInfoTipText() const
 }
 
 
-int VVVItem::GetIconOf(UINT flags) const
+int VVVItem::GetIconOf(UINT flags) const noexcept
 {
     if (IsFolder())
         return msf::IsBitSet(flags, GIL_OPENICON) ?
@@ -125,7 +125,7 @@ int VVVItem::GetIconOf(UINT flags) const
 
 
 // Note: can only return 0 if same items are compared.
-int VVVItem::CompareByName(const VVVItem& item) const
+int VVVItem::CompareByName(const VVVItem& item) const noexcept
 {
     // Compare first by folder, to make sure folders are listed before files.
     if (IsFolder())

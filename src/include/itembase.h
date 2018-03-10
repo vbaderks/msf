@@ -25,7 +25,7 @@ public:
         return m_pidl->mkid.abID;
     }
 
-    PCUIDLIST_RELATIVE GetItemIdList() const
+    PCUIDLIST_RELATIVE GetItemIdList() const noexcept
     {
         return m_pidl;
     }

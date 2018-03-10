@@ -7,6 +7,7 @@
 
 
 #include "sfvmdefines.h"
+// ReSharper disable once CppUnusedIncludeDirective
 #include "shelluuids.h"
 #include "pidl.h"
 
@@ -23,8 +24,13 @@ class __declspec(novtable) ShellFolderViewCBImpl :
     public IFolderViewSettings
 {
 public:
+    ShellFolderViewCBImpl(const ShellFolderViewCBImpl&) = delete;
+    ShellFolderViewCBImpl(ShellFolderViewCBImpl&&) = delete;
+    ShellFolderViewCBImpl& operator=(const ShellFolderViewCBImpl&) = delete;
+    ShellFolderViewCBImpl& operator=(ShellFolderViewCBImpl&&) = delete;
+
     // IShellFolderViewCB
-    STDMETHOD(MessageSFVCB)(UINT uMsg, WPARAM wParam, LPARAM lParam) override
+    HRESULT __stdcall MessageSFVCB(UINT uMsg, WPARAM wParam, LPARAM lParam) override
     {
         try
         {
@@ -326,34 +332,34 @@ public:
     }
 
     // IFolderViewSettings
-    STDMETHOD(GetColumnPropertyList)(__RPC__in REFIID /*riid*/, __RPC__deref_out_opt void ** /*ppv*/) override
+    HRESULT __stdcall GetColumnPropertyList(__RPC__in REFIID /*riid*/, __RPC__deref_out_opt void ** /*ppv*/) override
     {
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetColumnPropertyList");
     }
 
-    STDMETHOD(GetGroupByProperty)(__RPC__out PROPERTYKEY * /*pkey*/, __RPC__out BOOL * /*pfGroupAscending*/) override
+    HRESULT __stdcall GetGroupByProperty(__RPC__out PROPERTYKEY * /*pkey*/, __RPC__out BOOL * /*pfGroupAscending*/) override
     {
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetGroupByProperty");
     }
 
-    STDMETHOD(GetViewMode)(__RPC__out FOLDERLOGICALVIEWMODE *plvm) override
+    HRESULT __stdcall GetViewMode(__RPC__out FOLDERLOGICALVIEWMODE *plvm) override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IFolderViewSettings::GetViewMode (instance=%p, plvm=%p)\n", this, plvm);
         *plvm = FLVM_DETAILS;
         return S_OK;
     }
 
-    STDMETHOD(GetIconSize)(__RPC__out UINT * /*puIconSize*/) override
+    HRESULT __stdcall GetIconSize(__RPC__out UINT * /*puIconSize*/) override
     {
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetIconSize");
     }
 
-    STDMETHOD(GetFolderFlags)(__RPC__out FOLDERFLAGS * /*pfolderMask*/, __RPC__out FOLDERFLAGS * /*pfolderFlags*/) override
+    HRESULT __stdcall GetFolderFlags(__RPC__out FOLDERFLAGS * /*pfolderMask*/, __RPC__out FOLDERFLAGS * /*pfolderFlags*/) override
     {
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetFolderFlags");
     }
 
-    STDMETHOD(GetSortColumns)(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, UINT cColumnsIn, __RPC__out UINT * pcColumnsOut) override
+    HRESULT __stdcall GetSortColumns(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, UINT cColumnsIn, __RPC__out UINT * pcColumnsOut) override
     {
         UNREFERENCED_PARAMETER(rgSortColumns);
         UNREFERENCED_PARAMETER(cColumnsIn);
@@ -361,13 +367,13 @@ public:
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetSortColumns");
     }
 
-    STDMETHOD(GetGroupSubsetCount)(__RPC__out UINT * /*pcVisibleRows*/) override
+    HRESULT __stdcall GetGroupSubsetCount(__RPC__out UINT * /*pcVisibleRows*/) override
     {
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetGroupSubsetCount");
     }
 
 protected:
-    explicit ShellFolderViewCBImpl(long notifyevents = 0) :
+    explicit ShellFolderViewCBImpl(long notifyevents = 0) noexcept :
         _notifyevents(notifyevents)
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::ShellFolderViewCBImpl (instance=%p)\n", this);
@@ -386,7 +392,7 @@ protected:
 
     // Default callback handlers: override in derived class if needed.
 
-    HRESULT OnMergeMenu(QCMINFO* /*pInfo*/)
+    HRESULT OnMergeMenu(QCMINFO* /*pInfo*/) noexcept
     {
         return E_NOTIMPL;
     }
@@ -396,12 +402,12 @@ protected:
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetHelpText(unsigned short /* idCmd */, unsigned short /* cchMax */, LPTSTR /* pszText */)
+    HRESULT OnGetHelpText(unsigned short /* idCmd */, unsigned short /* cchMax */, LPTSTR /* pszText */) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetToolTipText(unsigned short /* idCmd */, unsigned short /* cchMax */, LPTSTR /* pszText */)
+    HRESULT OnGetToolTipText(unsigned short /* idCmd */, unsigned short /* cchMax */, LPTSTR /* pszText */) noexcept
     {
         return E_NOTIMPL;
     }
@@ -421,139 +427,139 @@ protected:
         return E_NOTIMPL;
     }
 
-    HRESULT OnInitMenuPopup(unsigned short /* idCmd */, unsigned short /* nIndex */, HMENU /*hemu*/)
+    HRESULT OnInitMenuPopup(unsigned short /* idCmd */, unsigned short /* nIndex */, HMENU /*hemu*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnFSNotify(LPCITEMIDLIST /*pidl*/, DWORD /*lEvent*/)
+    HRESULT OnFSNotify(LPCITEMIDLIST /*pidl*/, DWORD /*lEvent*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnAddPropertyPages(SFVM_PROPPAGE_DATA* /*pData*/)
+    HRESULT OnAddPropertyPages(SFVM_PROPPAGE_DATA* /*pData*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnBackgroundEnumDone()
+    HRESULT OnBackgroundEnumDone() noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetSortDefaults(int* /*piDirection*/, int* /*piColumn*/)
+    HRESULT OnGetSortDefaults(int* /*piDirection*/, int* /*piColumn*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetDetailsOf(int /*iColumn*/, DETAILSINFO*)
+    HRESULT OnGetDetailsOf(int /*iColumn*/, DETAILSINFO*) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnDefItemCount(UINT* /*pcItems*/)
+    HRESULT OnDefItemCount(UINT* /*pcItems*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetZone(DWORD* /*pwdZone*/)
+    HRESULT OnGetZone(DWORD* /*pwdZone*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnSize()
+    HRESULT OnSize() noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnBackGroundEnum()
+    HRESULT OnBackGroundEnum() noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnDidDragDrop(DWORD /*dwEffect*/, IDataObject* /*pIdo*/)
+    HRESULT OnDidDragDrop(DWORD /*dwEffect*/, IDataObject* /*pIdo*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetAnimation(HINSTANCE* /*phinst*/, WCHAR* /*pwszName*/)
+    HRESULT OnGetAnimation(HINSTANCE* /*phinst*/, WCHAR* /*pwszName*/) noexcept
     {
         return E_NOTIMPL;
     }
 
     // Purpose: return S_OK and TRUE/FALSE to indicate to the defshellview which
     //          folder view modes should be enabled (only works on XP?)
-    HRESULT OnGetViewData(FOLDERVIEWMODE /*folderviewmode*/, BOOL* /*pbSupported*/)
+    HRESULT OnGetViewData(FOLDERVIEWMODE /*folderviewmode*/, BOOL* /*pbSupported*/) noexcept
     {
         return E_NOTIMPL;
     }
 
     // Purpose: save this hwnd to use the SHShellFolderView_Message function.
-    HRESULT OnWndMain(HWND /*hwndMain*/)
+    HRESULT OnWndMain(HWND /*hwndMain*/) noexcept
     {
         return S_OK;
     }
 
-    HRESULT OnDefViewMode(FOLDERVIEWMODE* /*pfolderviewmode*/)
+    HRESULT OnDefViewMode(FOLDERVIEWMODE* /*pfolderviewmode*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnUpdateStatusbar(BOOL /*fInitialize*/)
+    HRESULT OnUpdateStatusbar(BOOL /*fInitialize*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnUnmergeMenu(HMENU /*hmenuCurrent*/)
+    HRESULT OnUnmergeMenu(HMENU /*hmenuCurrent*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnThisIDList(LPITEMIDLIST /*pidl*/)
+    HRESULT OnThisIDList(LPITEMIDLIST /*pidl*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnSetInterfaceSiteFolderView(IUnknown* /*site*/)
+    HRESULT OnSetInterfaceSiteFolderView(IUnknown* /*site*/) noexcept
     {
         return S_OK;
     }
 
     // Purpose: called when the 'SHELLDLL_DefView' window is created.
     //          This window is the parent of the 'syslistview32'.
-    HRESULT OnWindowCreated(HWND /*hwnd*/)
+    HRESULT OnWindowCreated(HWND /*hwnd*/) noexcept
     {
         return S_OK;
     }
 
-    HRESULT OnColumnClick(UINT /*uiColumn*/)
+    HRESULT OnColumnClick(UINT /*uiColumn*/) noexcept
     {
         return S_FALSE;
     }
 
-    // Purpose: indicates in which statusbar pane to display internet zone info
-    HRESULT OnGetPane(int /*paneID*/, DWORD* /*pdwpane*/)
+    // Purpose: indicates in which status bar pane to display Internet zone info
+    HRESULT OnGetPane(int /*paneID*/, DWORD* /*pdwpane*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetHelpTopic(SFVM_HELPTOPIC_DATA* /*phtd*/)
+    HRESULT OnGetHelpTopic(SFVM_HELPTOPIC_DATA* /*phtd*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnQueryFSNotify(SHChangeNotifyEntry* /*shcne*/)
+    HRESULT OnQueryFSNotify(SHChangeNotifyEntry* /*shcne*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnFindItem(WPARAM /*wParam*/, LPITEMIDLIST /*ppidlToFind*/)
+    HRESULT OnFindItem(WPARAM /*wParam*/, LPITEMIDLIST /*ppidlToFind*/) noexcept
     {
         // Note: wParam seems to be int* pItemIndex.
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetWebViewContent(SFVM_WEBVIEW_CONTENT_DATA* /*pcontentdata*/)
+    HRESULT OnGetWebViewContent(SFVM_WEBVIEW_CONTENT_DATA* /*pcontentdata*/) noexcept
     {
         return E_NOTIMPL;
     }

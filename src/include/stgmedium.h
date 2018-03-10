@@ -19,7 +19,7 @@ namespace msf {
 /// The StorageMedium class extends STGMEDIUM with typical constructors and a
 /// destructor that will clean up any dynamic allocated memory.
 /// </remarks>
-class StorageMedium : public STGMEDIUM
+class StorageMedium final : public STGMEDIUM
 {
 public:
     static HGLOBAL GlobalClone(HGLOBAL hglobIn)
@@ -45,6 +45,7 @@ public:
     StorageMedium() noexcept
     {
         tymed = TYMED_NULL;
+        hGlobal = nullptr;
         pUnkForRelease = nullptr;
     }
 
@@ -67,6 +68,11 @@ public:
         }
     }
 
+    StorageMedium(const StorageMedium&) = delete;
+    StorageMedium(StorageMedium&&) = delete;
+    StorageMedium& operator=(const StorageMedium&) = delete;
+    StorageMedium& operator=(StorageMedium&&) = delete;
+
     HGLOBAL GetHGlobal() const noexcept
     {
         ATLASSERT(tymed == TYMED_HGLOBAL && "Can only get hglobal if correct type");
@@ -84,7 +90,7 @@ public:
         Detach();
     }
 
-    StorageMedium& operator = (STGMEDIUM& stgmedium)
+    StorageMedium& operator = (STGMEDIUM& stgmedium) noexcept
     {
         Detach();
 

@@ -15,6 +15,9 @@ class __declspec(novtable) IconOverlayImpl : public IShellIconOverlayIdentifier
 {
 public:
     IconOverlayImpl(const IconOverlayImpl&) = delete;
+    IconOverlayImpl(IconOverlayImpl&&) = delete;
+    IconOverlayImpl& operator=(const IconOverlayImpl&) = delete;
+    IconOverlayImpl& operator=(IconOverlayImpl&&) = delete;
 
     /// <summary>Registration function to register the COM object.</summary>
     static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId, PCWSTR szDescription) noexcept
@@ -70,8 +73,7 @@ public:
     }
 
 protected:
-
-    explicit IconOverlayImpl(int iconIndex = 0, int priority = 0) :
+    explicit IconOverlayImpl(int iconIndex = 0, int priority = 0) noexcept :
         m_iconIndex(iconIndex),
         m_priority(priority)
     {

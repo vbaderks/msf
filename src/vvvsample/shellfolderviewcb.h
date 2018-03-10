@@ -32,7 +32,7 @@ public:
         COM_INTERFACE_ENTRY(IFolderViewSettings)
     END_COM_MAP()
 
-    ShellFolderViewCB() :
+    ShellFolderViewCB() noexcept :
         ShellFolderViewCBImpl<ShellFolderViewCB>(SHCNE_RENAMEITEM |
                                                   SHCNE_RENAMEFOLDER |
                                                   SHCNE_DELETE |
@@ -43,7 +43,7 @@ public:
     {
     }
 
-    HRESULT OnGetButtonInfo(TBINFO* /*ptbinfo*/)
+    HRESULT OnGetButtonInfo(TBINFO* /*ptbinfo*/) noexcept
     {
         /*
         ptbinfo->cbuttons = 2;
@@ -53,7 +53,7 @@ public:
         return E_FAIL;
     }
 
-    HRESULT OnGetButtons(unsigned short /*idCmdFirst*/, unsigned short /*cbtnMax*/, TBBUTTON* /*ptbbutton*/)
+    HRESULT OnGetButtons(unsigned short /*idCmdFirst*/, unsigned short /*cbtnMax*/, TBBUTTON* /*ptbbutton*/) noexcept
     {
         /*
         ATLASSERT(cbtnMax == 2);
@@ -75,7 +75,7 @@ public:
         return E_FAIL;
     }
 
-    HRESULT OnInvokeCommand(unsigned int idCmd)
+    HRESULT OnInvokeCommand(unsigned int idCmd) noexcept
     {
         switch (idCmd)
         {

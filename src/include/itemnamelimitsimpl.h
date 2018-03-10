@@ -17,13 +17,13 @@ class IItemNameLimitsImplDefault
 {
 public:
     // Purpose: Override this function to control which chars are valid.
-    static const wchar_t* GetValidChars()
+    static const wchar_t* GetValidChars() noexcept
     {
         return nullptr;
     }
 
     // Purpose: Override this function to control which chars are invalid.
-    static const wchar_t* GetInvalidChars()
+    static const wchar_t* GetInvalidChars() noexcept
     {
         return nullptr;
     }
@@ -36,7 +36,7 @@ class __declspec(novtable) IItemNameLimitsImpl :
 {
 public:
     // IItemNameLimits
-    STDMETHOD(GetValidCharacters)(LPWSTR* ppwszValidChars, LPWSTR* ppwszInvalidChars) override
+    HRESULT __stdcall GetValidCharacters(LPWSTR* ppwszValidChars, LPWSTR* ppwszInvalidChars) override
     {
         try
         {
@@ -73,7 +73,7 @@ public:
     // Purpose: called by the shell to retrieve the max length.
     //          Length can depend on the current string. (UNC pathname has
     //          different length then local path, etc).
-    STDMETHOD(GetMaxLength)(__RPC__in_string LPCWSTR pszName, __RPC__out int* piMaxNameLen) override
+    HRESULT __stdcall GetMaxLength(__RPC__in_string LPCWSTR pszName, __RPC__out int* piMaxNameLen) override
     {
         try
         {
@@ -90,6 +90,9 @@ public:
             return ExceptionToHResult();
         }
     }
+
+protected:
+    ~IItemNameLimitsImpl() = default;
  };
 
 } // namespace msf

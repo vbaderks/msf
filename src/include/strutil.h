@@ -65,7 +65,7 @@ inline std::wstring FormatResourceMessage(UINT messageID, ...)
     return result;
 }
 
-inline int CompareString(_In_ LCID Locale, _In_ DWORD dwCmpFlags, LPCTSTR lpString1, LPCTSTR lpString2)
+inline int CompareString(_In_ LCID Locale, _In_ DWORD dwCmpFlags, LPCTSTR lpString1, LPCTSTR lpString2) noexcept
 {
     return ::CompareString(Locale, dwCmpFlags, lpString1, -1, lpString2, -1);
 }
@@ -73,13 +73,13 @@ inline int CompareString(_In_ LCID Locale, _In_ DWORD dwCmpFlags, LPCTSTR lpStri
 // trim from start (in place)
 inline void ltrim(std::wstring &s)
 {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) noexcept { return !std::isspace(ch); }));
 }
 
 // trim from end (in place)
 inline void rtrim(std::wstring &s)
 {
-    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) noexcept { return !std::isspace(ch); }).base(), s.end());
 }
 
 // trim from both ends (in place)

@@ -14,6 +14,12 @@ namespace msf
 
 struct IShellFolderContextMenuSink : IUnknown
 {
+    IShellFolderContextMenuSink() = default;
+    IShellFolderContextMenuSink(const IShellFolderContextMenuSink&) = delete;
+    IShellFolderContextMenuSink(IShellFolderContextMenuSink&&) = delete;
+    IShellFolderContextMenuSink& operator=(const IShellFolderContextMenuSink&) = delete;
+    IShellFolderContextMenuSink& operator=(IShellFolderContextMenuSink&&) = delete;
+
     virtual HRESULT OnPasteCmCmd() noexcept = 0;
 
 protected:
@@ -26,11 +32,11 @@ class __declspec(novtable) ShellFolderContextMenu :
     public ContextMenuImpl<ShellFolderContextMenu>
 {
 public:
-    DECLARE_NOT_AGGREGATABLE(ShellFolderContextMenu)
-
-    BEGIN_COM_MAP(ShellFolderContextMenu)
-        COM_INTERFACE_ENTRY(IContextMenu)
-    END_COM_MAP()
+    ShellFolderContextMenu() = default;
+    ShellFolderContextMenu(const ShellFolderContextMenu&) = delete;
+    ShellFolderContextMenu(ShellFolderContextMenu&&) = delete;
+    ShellFolderContextMenu& operator=(const ShellFolderContextMenu&) = delete;
+    ShellFolderContextMenu& operator=(ShellFolderContextMenu&&) = delete;
 
     static ATL::CComPtr<IContextMenu> CreateInstance(IShellFolderContextMenuSink* pshellfoldercontextmenusink)
     {
@@ -40,9 +46,7 @@ public:
             RaiseException(hr);
 
         ATL::CComPtr<IContextMenu> contextmenu(pinstance);
-
         pinstance->Init(pshellfoldercontextmenusink);
-
         return contextmenu;
     }
 
@@ -51,19 +55,27 @@ public:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n", this);
 
         if (strcmp(pici->lpVerb, "paste") == 0)
-            return _rshellfoldercontextmenusink->OnPasteCmCmd();
+            return m_rshellfoldercontextmenusink->OnPasteCmCmd();
 
         return S_OK;
     }
 
-private:
+    DECLARE_NOT_AGGREGATABLE(ShellFolderContextMenu)
 
-    void Init(IShellFolderContextMenuSink* pshellfoldercontextmenusink)
+    BEGIN_COM_MAP(ShellFolderContextMenu)
+        COM_INTERFACE_ENTRY(IContextMenu)
+    END_COM_MAP()
+
+protected:
+    ~ShellFolderContextMenu() = default;
+
+private:
+    void Init(IShellFolderContextMenuSink* pshellfoldercontextmenusink) noexcept
     {
-        _rshellfoldercontextmenusink = pshellfoldercontextmenusink;
+        m_rshellfoldercontextmenusink = pshellfoldercontextmenusink;
     }
 
-    ATL::CComPtr<IShellFolderContextMenuSink> _rshellfoldercontextmenusink;
+    ATL::CComPtr<IShellFolderContextMenuSink> m_rshellfoldercontextmenusink;
 };
 
 } // end namespace msf

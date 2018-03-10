@@ -20,6 +20,11 @@ class __declspec(novtable) ShellPropSheetExtImpl :
     public IShellPropSheetExt
 {
 public:
+    ShellPropSheetExtImpl(const ShellPropSheetExtImpl&) = delete;
+    ShellPropSheetExtImpl(ShellPropSheetExtImpl&&) = delete;
+    ShellPropSheetExtImpl& operator=(const ShellPropSheetExtImpl&) = delete;
+    ShellPropSheetExtImpl& operator=(ShellPropSheetExtImpl&&) = delete;
+
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szRootKey) noexcept
@@ -30,7 +35,7 @@ public:
     class CAddPage
     {
     public:
-        CAddPage(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) :
+        CAddPage(LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) noexcept :
             m_pfnAddPage(pfnAddPage),
             m_lParam(lParam)
         {
@@ -51,7 +56,7 @@ public:
     };
 
     // IShellPropSheetExt
-    STDMETHOD(AddPages)(_In_ LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) override
+    HRESULT __stdcall AddPages(_In_ LPFNSVADDPROPSHEETPAGE pfnAddPage, LPARAM lParam) override
     {
         try
         {
@@ -67,7 +72,7 @@ public:
         }
     }
 
-    STDMETHOD(ReplacePage)(EXPPS /*uPageID*/, _In_ LPFNSVADDPROPSHEETPAGE /*pfnReplaceWith*/, LPARAM /*lParam*/) override
+    HRESULT __stdcall ReplacePage(EXPPS /*uPageID*/, _In_ LPFNSVADDPROPSHEETPAGE /*pfnReplaceWith*/, LPARAM /*lParam*/) override
     {
         // The Shell doesn't call this function for file class Property Sheets.
         // Only for control panel objects.
@@ -75,7 +80,7 @@ public:
     }
 
 protected:
-    ShellPropSheetExtImpl()
+    ShellPropSheetExtImpl() noexcept
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellPropSheetExtImpl::ShellPropSheetExtImpl (instance=%p)\n", this);
     }

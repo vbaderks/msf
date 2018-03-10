@@ -8,6 +8,7 @@
 #include "msfbase.h"
 #include "updateregistry.h"
 #include "pidl.h"
+// ReSharper disable once CppUnusedIncludeDirective
 #include "shelluuids.h"
 #include "dfmdefines.h"
 #include "cfshellidlist.h"
@@ -74,6 +75,11 @@ public:
         OnInvokeAddedCmd  = 9
     };
 
+    ShellFolderImpl(const ShellFolderImpl&) = delete;
+    ShellFolderImpl(ShellFolderImpl&&) = delete;
+    ShellFolderImpl& operator=(const ShellFolderImpl&) = delete;
+    ShellFolderImpl& operator=(ShellFolderImpl&&) = delete;
+
     // Registration function to register the COM object + the root extension.
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szRootExt, UINT nFriendlyTypeNameId) noexcept
@@ -103,7 +109,7 @@ public:
     }
 
     // Purpose: small helper to support 'type' system.
-    static void ChangeNotifyPidl(long wEventId, UINT uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = nullptr)
+    static void ChangeNotifyPidl(long wEventId, UINT uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = nullptr) noexcept
     {
         SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
     }
@@ -115,7 +121,7 @@ public:
     }
 
     static void MergeMenus(QCMINFO& qcminfo, HMENU hmenu,
-        ULONG uFlags = MM_ADDSEPARATOR | MM_SUBMENUSHAVEIDS | MM_DONTREMOVESEPS)
+        ULONG uFlags = MM_ADDSEPARATOR | MM_SUBMENUSHAVEIDS | MM_DONTREMOVESEPS) noexcept
     {
         qcminfo.idCmdFirst =
             Shell_MergeMenus(qcminfo.hmenu, hmenu, qcminfo.indexMenu,
@@ -775,8 +781,7 @@ public:
     }
 
 protected:
-
-    explicit ShellFolderImpl(ULONG ulSort = 0, ULONG ulDisplay = 0) :
+    explicit ShellFolderImpl(ULONG ulSort = 0, ULONG ulDisplay = 0) noexcept :
         m_ulSort(ulSort),
         m_ulDisplay(ulDisplay),
         m_hwndOwner(nullptr),
@@ -831,7 +836,7 @@ protected:
         return std::wstring(SHGetPathFromIDList(m_pidlFolder.GetAbsolute())); // TODO: use SHGetPathFromIDListEx?
     }
 
-    PIDLIST_ABSOLUTE GetRootFolder() const
+    PIDLIST_ABSOLUTE GetRootFolder() const noexcept
     {
         return m_pidlFolder.GetAbsolute();
     }
@@ -1044,12 +1049,12 @@ protected:
     // Note: if the menu has no default menu item, the shell will make
     //       the first item the default when the user double clicks it or
     //       presses enter.
-    HRESULT OnDfmGetStaticID(int* /*pdefaultID*/)
+    HRESULT OnDfmGetStaticID(int* /*pdefaultID*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnDfmCreate()
+    HRESULT OnDfmCreate() noexcept
     {
         return E_NOTIMPL;
     }
@@ -1087,22 +1092,22 @@ protected:
         return std::wstring();
     }
 
-    HRESULT OnDfmMeasureItem()
+    HRESULT OnDfmMeasureItem() noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnDfmDrawItem()
+    HRESULT OnDfmDrawItem() noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetVerbW()
+    HRESULT OnGetVerbW() noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetVerbA()
+    HRESULT OnGetVerbA() noexcept
     {
         return E_NOTIMPL;
     }
@@ -1215,12 +1220,12 @@ protected:
         ShellFolderView_SetClipboard(GetHwndOwner(), DFM_CMD_MOVE);
     }
 
-    HRESULT OnDfmCmdPaste(HWND /*hwnd*/, IDataObject* /*pdataobject*/)
+    HRESULT OnDfmCmdPaste(HWND /*hwnd*/, IDataObject* /*pdataobject*/) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnDfmCmdCreateShortcut(HWND /*hwnd*/, IDataObject* /*pdataobject*/)
+    HRESULT OnDfmCmdCreateShortcut(HWND /*hwnd*/, IDataObject* /*pdataobject*/) noexcept
     {
         return E_NOTIMPL;
     }
@@ -1284,7 +1289,7 @@ protected:
     }
 
     // Override this function to handle drop functionality in a separate object.
-    ATL::CComPtr<IDropTarget> CreateDropTarget()
+    ATL::CComPtr<IDropTarget> CreateDropTarget() noexcept
     {
         ATL::CComPtr<IDropTarget> rdroptarget;
 
@@ -1308,7 +1313,7 @@ protected:
     }
 
     // Purpose: Standard 'ondragover' handler. Override if special drag handling is required.
-    DWORD OnDragOver(DWORD grfKeyState, POINTL /*pt*/, DWORD dwEffect)
+    DWORD OnDragOver(DWORD grfKeyState, POINTL /*pt*/, DWORD dwEffect) noexcept
     {
         if (IsBitSet(dwEffect, DROPEFFECT_MOVE) && IsBitSet(grfKeyState, MK_SHIFT))
             return DROPEFFECT_MOVE;
@@ -1346,7 +1351,7 @@ protected:
 
     // Purpose: override this function to control what the source should do after a move.
     //          See SDK 'Handling Shell Data Transfer Scenarios' for more info.
-    bool CanPerformOptimizedMove(IDataObject* /*pdataobject*/)
+    bool CanPerformOptimizedMove(IDataObject* /*pdataobject*/) noexcept
     {
         return false;
     }
@@ -1376,7 +1381,7 @@ protected:
     }
 
     // Implement this function and return the attributes or SFGAO_UNDEFINED
-    SFGAOF GetAttributesOfGlobal(UINT /*cidl*/, SFGAOF /*sfgofMask*/) const
+    SFGAOF GetAttributesOfGlobal(UINT /*cidl*/, SFGAOF /*sfgofMask*/) const noexcept
     {
         // As default implementation, return SFGAO_UNDEFINED to start the
         // loop to ask attributes for every item explicit.

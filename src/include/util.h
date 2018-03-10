@@ -124,7 +124,7 @@ inline void IsolationAwareDllMain(DWORD dwReason)
 class CStartupInfo : public STARTUPINFO
 {
 public:
-    CStartupInfo()
+    CStartupInfo() noexcept : STARTUPINFO()
     {
         static_assert(sizeof(CStartupInfo) == sizeof(STARTUPINFO), "Helper should not add size!");
 
@@ -135,10 +135,10 @@ public:
 
 
 // Small helper class that initializes and cleans PROCESS_INFORMATION (used by CreateProcess)
-class ProcessInformation : public PROCESS_INFORMATION
+class ProcessInformation final : public PROCESS_INFORMATION
 {
 public:
-    ProcessInformation()
+    ProcessInformation() noexcept : PROCESS_INFORMATION()
     {
         hProcess = INVALID_HANDLE_VALUE;
         hThread  = INVALID_HANDLE_VALUE;
@@ -149,6 +149,11 @@ public:
         ATLVERIFY(CloseHandle(hProcess));
         ATLVERIFY(CloseHandle(hThread));
     }
+
+    ProcessInformation(const ProcessInformation&) = delete;
+    ProcessInformation(ProcessInformation&&) = delete;
+    ProcessInformation& operator=(const ProcessInformation&) = delete;
+    ProcessInformation& operator=(ProcessInformation&&) = delete;
 };
 
 
@@ -209,9 +214,9 @@ inline void QueryMultiStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, st
         return;
 
     for (size_t i = 0; i < buffer.size() && buffer[i];
-         i += rgStrings.back().GetLength() + 1)
+         i += static_cast<size_t>(rgStrings.back().GetLength()) + 1)
     {
-        rgStrings.push_back(ATL::CString(&buffer[i]));
+        rgStrings.emplace_back(&buffer[i]);
     }
 }
 
@@ -303,7 +308,7 @@ inline IDataObjectPtr OleGetClipboard()
 }
 
 
-inline DWORD MSF_PACKVERSION(DWORD major, DWORD minor)
+constexpr DWORD MSF_PACKVERSION(DWORD major, DWORD minor)
 {
     return static_cast<DWORD>(MAKELONG(minor, major));
 }
@@ -312,11 +317,11 @@ inline DWORD MSF_PACKVERSION(DWORD major, DWORD minor)
 #pragma warning(push)
 #pragma warning(disable: 4191) // unsafe conversion from FARPROC (DLLGETVERSIONPROC is defined different then FARPROC)
 
-inline DWORD GetDllVersion(LPCTSTR lpszDllName)
+inline DWORD GetDllVersion(LPCTSTR lpszDllName) noexcept
 {
     DWORD dwVersion = 0;
 
-    const HINSTANCE hinstDll = LoadLibrary(lpszDllName);
+    HINSTANCE hinstDll = LoadLibrary(lpszDllName);
     if (hinstDll)
     {
         const auto pDllGetVersion =
@@ -353,13 +358,13 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName)
 /// <remarks>
 /// Windows XP is the first version to use the 6.0 shell version.
 /// </remarks>
-inline bool IsShell6OrHigher()
+inline bool IsShell6OrHigher() noexcept
 {
     return GetDllVersion(L"shell32.dll") >= MSF_PACKVERSION(6, 0);
 }
 
 
-inline int GetSystemImageListIndex(LPCTSTR pszPath)
+inline int GetSystemImageListIndex(LPCTSTR pszPath) noexcept
 {
     SHFILEINFO sfi{};
     if (!SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof sfi,

@@ -44,7 +44,7 @@ public:
 
     std::wstring GetDisplayName(SHGDNF shellGetDisplayNameType = SHGDN_NORMAL) const;
 
-    SFGAOF GetAttributeOf(bool bSingleSelect, bool bReadOnly) const;
+    SFGAOF GetAttributeOf(bool bSingleSelect, bool bReadOnly) const noexcept;
 
     unsigned int GetID() const noexcept
     {
@@ -69,7 +69,7 @@ public:
     int Compare(const VVVItem& item, int compareBy, bool bCanonicalOnly) const;
     std::wstring GetItemDetailsOf(UINT columnIndex) const;
     std::wstring GetInfoTipText() const;
-    int GetIconOf(UINT flags) const;
+    int GetIconOf(UINT flags) const noexcept;
 
 private:
 
@@ -100,10 +100,10 @@ private:
 
     const SItemData& GetItemData() const noexcept
     {
-        return *reinterpret_cast<const SItemData*>(GetData());
+        return *static_cast<const SItemData*>(GetData());
     }
 
-    int CompareByName(const VVVItem& item) const;
+    int CompareByName(const VVVItem& item) const noexcept;
 };
 
 using CVVVItemList = std::vector<VVVItem>;

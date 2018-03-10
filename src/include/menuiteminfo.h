@@ -11,12 +11,9 @@ namespace msf {
 class MenuItemInfo : public MENUITEMINFO
 {
 public:
-
-    MenuItemInfo() noexcept
+    MenuItemInfo() noexcept : MENUITEMINFO()
     {
         cbSize = sizeof(MENUITEMINFO);
-        fMask = 0;
-        fType = 0;
     }
 
     explicit MenuItemInfo(UINT id) noexcept : MenuItemInfo()
@@ -24,7 +21,7 @@ public:
         SetID(id);
     }
 
-    MenuItemInfo(UINT id, const std::wstring str) noexcept : MenuItemInfo(id)
+    MenuItemInfo(UINT id, std::wstring str) noexcept : MenuItemInfo(id)
     {
         SetString(std::move(str));
     }
@@ -40,7 +37,9 @@ public:
     }
 
     MenuItemInfo(const MenuItemInfo&) = delete;
+    MenuItemInfo(MenuItemInfo&&) = delete;
     MenuItemInfo& operator=(const MenuItemInfo&) = delete;
+    MenuItemInfo& operator=(MenuItemInfo&&) = delete;
 
     void SetID(UINT id) noexcept
     {
@@ -54,7 +53,11 @@ public:
         fType |= MFT_STRING;
 
         m_strCache = std::move(str);
+
+#pragma warning(push)
+#pragma warning(disable: 26465) // Don't cast away const
         dwTypeData = const_cast<wchar_t*>(m_strCache.c_str());
+#pragma warning(pop)
     }
 
     void SetSubMenu(HMENU hsubmenu) noexcept
@@ -82,9 +85,8 @@ public:
     }
 
 private:
-
     // Member variables.
-    std::wstring m_strCache;
+    mutable std::wstring m_strCache;
 };
 
 } // end namespace msf

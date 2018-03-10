@@ -28,7 +28,7 @@ public:
     }
 
     // Purpose: Constructs a smart-pointer from any IUnknown-based interface pointer.
-    template<typename _InterfaceType> IShellBrowserPtr(_InterfaceType* p) :
+    template<typename _InterfaceType> IShellBrowserPtr(_InterfaceType* p) noexcept :
         ::IShellBrowserPtr(p)
     {
     }

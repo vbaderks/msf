@@ -30,10 +30,12 @@ public:
 
 protected:
 
-    explicit IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) :
+    explicit IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) noexcept :
         m_browserframeoptions(browserframeoptions)
     {
     }
+
+    ~IBrowserFrameOptionsImpl() = default;
 
     BROWSERFRAMEOPTIONS m_browserframeoptions;
 };

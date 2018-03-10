@@ -31,16 +31,16 @@ public:
     }
 
 
-    HBITMAP CreateImage(const SIZE& size, DWORD dwRecClrDepth, DWORD /*dwFlags*/)
+    HBITMAP CreateImage(const SIZE& size, DWORD dwRecClrDepth, DWORD /*dwFlags*/) noexcept
     {
         // TODO: fix this function
-        HBITMAP hbitmap = CreateBitmap(size.cx, size.cy, 1, dwRecClrDepth, nullptr);
+        const HBITMAP hbitmap = CreateBitmap(size.cx, size.cy, 1, dwRecClrDepth, nullptr);
 
-        HDC hdc = CreateCompatibleDC(nullptr);
+        const HDC hdc = CreateCompatibleDC(nullptr);
 
         HGDIOBJ hgdiobjectOriginal = SelectObject(hdc, hbitmap);
 
-        HBRUSH hbrush = CreateSolidBrush(RGB(0, 0, 255));
+        const HBRUSH hbrush = CreateSolidBrush(RGB(0, 0, 255));
 
         RECT rect = {0, 0, size.cx, size.cx};
         FillRect(hdc, &rect, hbrush);

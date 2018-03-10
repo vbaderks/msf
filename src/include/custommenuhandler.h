@@ -16,28 +16,28 @@ namespace msf
 class CustomMenuHandler
 {
 public:
-    virtual ~CustomMenuHandler()
-    {
-    }
+    CustomMenuHandler() = default;
+    virtual ~CustomMenuHandler() = default;
 
+    CustomMenuHandler(const CustomMenuHandler&) = delete;
+    CustomMenuHandler(CustomMenuHandler&&) = delete;
+    CustomMenuHandler& operator=(const CustomMenuHandler&) = delete;
+    CustomMenuHandler& operator=(CustomMenuHandler&&) = delete;
 
     virtual void InitializeItemInfo(MenuItemInfo& menuiteminfo)
     {
         menuiteminfo.SetOwnerDraw();
     }
 
-
     // Purpose: called by OS to require the size of the menu item.
     virtual void Measure(MEASUREITEMSTRUCT& /*measureitem*/)
     {
     }
 
-
     // Purpose: called by the OS when the item must be draw.
     virtual void Draw(const DRAWITEMSTRUCT& /*drawitem*/)
     {
     }
-
 
     // Purpose: override this function to handle accelerator keys
     virtual bool OnMenuChar(HMENU /*hmenu*/, unsigned short /*nChar*/, LRESULT& /*lresult*/)

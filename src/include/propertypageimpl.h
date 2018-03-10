@@ -22,7 +22,7 @@ public:
         {
         case PSPCB_ADDREF:
             ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellExtPropertyPageImpl::Callback (instance=%p, uMsg=AddRef)\n", pT);
-            ++(pT->_nRef); // only 5.80 (IE5) and up sends 'addref'.
+            ++(pT->m_nRef); // only 5.80 (IE5) and up sends 'addref'.
             break;
 
         case PSPCB_CREATE:
@@ -30,8 +30,8 @@ public:
 
         case PSPCB_RELEASE:
             ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellExtPropertyPageImpl::Callback (instance=%p, uMsg=Release)\n", pT);
-            --(pT->_nRef);
-            if (pT->_nRef <= 0)
+            --(pT->m_nRef);
+            if (pT->m_nRef <= 0)
                 delete pT;
             break;
 
@@ -43,9 +43,8 @@ public:
         return 1;
     }
 
-    explicit ShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) :
-        ATL::CSnapInPropertyPageImpl<T>(lpszTitle),
-        _nRef(0)
+    explicit ShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) noexcept :
+        ATL::CSnapInPropertyPageImpl<T>(lpszTitle)
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellExtPropertyPageImpl::ShellExtPropertyPageImpl (instance=%p)\n", this);
         ATL::_pAtlModule->Lock(); // property page is not a COM object, but DLL must stay in memory.
@@ -57,6 +56,12 @@ public:
         ATL::_pAtlModule->Unlock();
     }
 
+    ShellExtPropertyPageImpl(const ShellExtPropertyPageImpl&) = delete;
+    ShellExtPropertyPageImpl(ShellExtPropertyPageImpl&&) = delete;
+    ShellExtPropertyPageImpl& operator=(const ShellExtPropertyPageImpl&) = delete;
+    ShellExtPropertyPageImpl& operator=(ShellExtPropertyPageImpl&&) = delete;
+
+
     std::wstring GetDlgItemText(int nID) const
     {
         // Use ATL's implementation of GetDlgItemText.
@@ -65,12 +70,15 @@ public:
         return str.GetString();
     }
 
+#pragma warning(push)
+#pragma warning(disable: 26433) // use override
     BEGIN_MSG_MAP(CShellExtPropertyPageImpl)
         CHAIN_MSG_MAP(ATL::CSnapInPropertyPageImpl<T>)
     END_MSG_MAP()
+#pragma warning(pop)
 
 private:
-    int _nRef;
+    int m_nRef{};
 };
 
 } // namespace msf

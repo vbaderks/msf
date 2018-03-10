@@ -22,6 +22,11 @@ template <typename T>
 class ShellFolderDataObjectImpl : public IDataObject
 {
 public:
+    ShellFolderDataObjectImpl(const ShellFolderDataObjectImpl&) = delete;
+    ShellFolderDataObjectImpl(ShellFolderDataObjectImpl&&) = delete;
+    ShellFolderDataObjectImpl& operator=(const ShellFolderDataObjectImpl&) = delete;
+    ShellFolderDataObjectImpl& operator=(ShellFolderDataObjectImpl&&) = delete;
+
     HRESULT __stdcall GetData(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, "ShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
@@ -29,7 +34,7 @@ public:
 
         try
         {
-            ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
+            const ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
@@ -184,7 +189,6 @@ public:
     }
 
 protected:
-
     ShellFolderDataObjectImpl() noexcept
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::ShellFolderDataObjectImpl (instance=%p)\n", this);
@@ -212,7 +216,7 @@ private:
     ClipboardFormatHandler* FindClipFormatHandler(CLIPFORMAT clipFormat) const noexcept
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
-            [=](const std::unique_ptr<ClipboardFormatHandler>& clipFormatHandler)
+            [=](const std::unique_ptr<ClipboardFormatHandler>& clipFormatHandler) noexcept
         {
             return clipFormatHandler->GetClipFormat() == clipFormat;
         });

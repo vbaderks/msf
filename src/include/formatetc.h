@@ -18,27 +18,26 @@ namespace msf
 class FormatEtc : public FORMATETC
 {
 public:
-    explicit FormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
-        DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept
-    {
-        CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
-    }
-
-
-    explicit FormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
-         DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept
-    {
-        CommonConstruct(Win32::RegisterClipboardFormat(lpszFormat), dwtymed, pdvtd, dwaspect, index);
-    }
-
-    FormatEtc()
+    FormatEtc() noexcept : FORMATETC()
     {
         ptd = nullptr;
     }
 
-    explicit FormatEtc(const FORMATETC& formatetc)
+    explicit FormatEtc(const FORMATETC& formatetc) : FORMATETC()
     {
         Copy(*this, formatetc);
+    }
+
+    explicit FormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
+        DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept : FORMATETC()
+    {
+        CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
+    }
+
+    explicit FormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
+         DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept : FORMATETC()
+    {
+        CommonConstruct(Win32::RegisterClipboardFormat(lpszFormat), dwtymed, pdvtd, dwaspect, index);
     }
 
     ~FormatEtc()
@@ -56,6 +55,11 @@ public:
         return *this;
     }
 
+    explicit FormatEtc(const FormatEtc&) = default;
+    explicit FormatEtc(FormatEtc&&) = default;
+    FormatEtc& operator=(const FormatEtc&) = delete;
+    FormatEtc& operator=(FormatEtc&&) = delete;
+
     void Dispose() noexcept
     {
         if (ptd)
@@ -66,7 +70,6 @@ public:
     }
 
 private:
-
     void CommonConstruct(CLIPFORMAT cfformat, DWORD dwtymed, DVTARGETDEVICE* pdvtd, DWORD dwaspect, LONG index) noexcept
     {
         cfFormat = cfformat;
@@ -76,14 +79,12 @@ private:
         lindex   = index;
     }
 
-
     static void Copy(FORMATETC& dest, const FORMATETC& src)
     {
         DVTARGETDEVICE* ptd = CopyTargetDevice(src);
         dest = src;
         dest.ptd = ptd;
     }
-
 
     static DVTARGETDEVICE* CopyTargetDevice(const FORMATETC& src)
     {

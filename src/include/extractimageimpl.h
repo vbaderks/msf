@@ -161,7 +161,7 @@ public:
     //          extract the image from. Can be used to optimize
     //          cases were the image is extracted from a different file
     //          then set by IPersistFile::Load.
-    const std::wstring& GetPathBuffer() const
+    const std::wstring& GetPathBuffer() const noexcept
     {
         return m_strFilename;
     }
@@ -174,7 +174,7 @@ protected:
         Dispose();
     }
 
-    void Dispose()
+    void Dispose() noexcept
     {
         if (m_hbitmap)
         {

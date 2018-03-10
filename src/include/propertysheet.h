@@ -18,13 +18,15 @@ class PropertySheet
 {
 public:
     PropertySheet(const PropertySheet&) = delete;
+    PropertySheet(PropertySheet&&) = delete;
     PropertySheet& operator=(const PropertySheet&) = delete;
+    PropertySheet& operator=(PropertySheet&&) = delete;
 
     class PropSheetHeader : public PROPSHEETHEADER
     {
     public:
         explicit PropSheetHeader(std::wstring caption, DWORD dwflags = 0) :
-            m_caption{ caption }
+            m_caption{std::move(caption)}
         {
             ZeroMemory(static_cast<PROPSHEETHEADER*>(this), sizeof(PROPSHEETHEADER));
             dwSize = PROPSHEETHEADER_V1_SIZE;
@@ -33,7 +35,7 @@ public:
             pszCaption = m_caption.c_str();
         }
 
-        void SetPages(std::vector<HPROPSHEETPAGE>& hpages)
+        void SetPages(std::vector<HPROPSHEETPAGE>& hpages) noexcept
         {
             phpage = hpages.data();
             nPages = static_cast<UINT>(hpages.size());
@@ -53,11 +55,11 @@ public:
     {
     }
 
-    ~PropertySheet()
+    virtual ~PropertySheet()
     {
         // Clean up pages that are added but never used.
         for (auto hpage : m_hpages)
-        { 
+        {
             ATLVERIFY(DestroyPropertySheetPage(hpage));
         }
     }
@@ -67,7 +69,7 @@ public:
         m_hpages.push_back(hpage);
     }
 
-    int DoModal(HWND hwndParent)
+    int DoModal(HWND hwndParent) noexcept
     {
         m_propertySheetHeader.hwndParent = hwndParent;
         m_propertySheetHeader.SetPages(m_hpages);
@@ -77,7 +79,7 @@ public:
         return result;
     }
 
-    long DoModalReturnChanges(HWND hwndParent)
+    long DoModalReturnChanges(HWND hwndParent) noexcept
     {
         m_eventID = 0;
         const auto result = DoModal(hwndParent);
@@ -87,7 +89,7 @@ public:
         return m_eventID;
     }
 
-    long& GetEventId()
+    long& GetEventId() noexcept
     {
         return m_eventID;
     }

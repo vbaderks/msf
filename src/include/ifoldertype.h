@@ -11,7 +11,7 @@
 // It is an undocumented interface. The current definition is based on the work of Geoff Chappell.
 
 #undef  INTERFACE
-#define INTERFACE IFolderType 
+#define INTERFACE IFolderType
 
 DECLARE_INTERFACE_IID_(IFolderType, IUnknown, "053B4A86-0DC9-40A3-B7ED-BC6A2E951F48")
 {

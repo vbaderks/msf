@@ -36,7 +36,7 @@ public:
         Menu() = default;
         ~Menu() = default;
 
-        Menu(HMENU hmenu, UINT indexMenu, UINT& idCmd, UINT idCmdLast, ContextMenuImpl<T>* pmenuhost) :
+        Menu(HMENU hmenu, UINT indexMenu, UINT& idCmd, UINT idCmdLast, ContextMenuImpl<T>* pmenuhost) noexcept :
             m_hmenu{hmenu},
             m_indexMenu{indexMenu},
             m_pidCmd{&idCmd},
@@ -205,6 +205,11 @@ public:
         ContextMenuImpl<T>* m_pmenuhost{};
     };
 
+    ContextMenuImpl(const ContextMenuImpl&) = delete;
+    ContextMenuImpl(ContextMenuImpl&&) = delete;
+    ContextMenuImpl& operator=(const ContextMenuImpl&) = delete;
+    ContextMenuImpl& operator=(ContextMenuImpl&&) = delete;
+
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
     static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szRootKey) noexcept
@@ -361,7 +366,7 @@ public:
 #ifdef _DEBUG
         if (customMenuHandler.get()) // TODO use boolean overload.
         {
-            ATL::CComQIPtr<IContextMenu2> rcontextmenu(this);
+            const ATL::CComQIPtr<IContextMenu2> rcontextmenu(this);
             ATLASSERT(rcontextmenu && "custom draw handler requires IContextMenu2");
         }
 #endif
@@ -371,7 +376,7 @@ public:
 
 protected:
 
-    ContextMenuImpl()
+    ContextMenuImpl() noexcept
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::Constructor (instance=%p)\n", this);
     }
@@ -387,12 +392,12 @@ protected:
     {
     }
 
-    HRESULT OnInitMenuPopup(HMENU /*hmenu*/, unsigned short /*nIndex*/)
+    HRESULT OnInitMenuPopup(HMENU /*hmenu*/, unsigned short /*nIndex*/) noexcept
     {
         return S_OK;
     }
 
-    HRESULT OnDrawItem(DRAWITEMSTRUCT* pdrawitem)
+    HRESULT OnDrawItem(const DRAWITEMSTRUCT* pdrawitem)
     {
         if (pdrawitem->CtlType != ODT_MENU)
             return E_INVALIDARG;
@@ -435,7 +440,7 @@ private:
         {
         }
 
-        const std::wstring& GetHelpString() const
+        const std::wstring& GetHelpString() const noexcept
         {
             return m_helpText;
         }

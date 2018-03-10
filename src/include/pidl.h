@@ -54,18 +54,18 @@ public:
         if (!pidl)
             RaiseException(E_OUTOFMEMORY);
 
-        const LPSHITEMID pshitemid = &(pidl->mkid);
+        LPSHITEMID pshitemid = &(pidl->mkid);
         pshitemid->cb = static_cast<USHORT>(size);
 
         PUIDLIST_RELATIVE pidlTerminator = ILGetNext(pidl);
-        const LPSHITEMID pItemIdTerminator = &(pidlTerminator->mkid);
+        LPSHITEMID pItemIdTerminator = &(pidlTerminator->mkid);
         pItemIdTerminator->cb = 0;
 
         return pidl;
     }
 
     // Purpose: Small helper, returns nullptr also for the tail element.
-    static PUIDLIST_RELATIVE GetNextItem(PCUIDLIST_RELATIVE pidl)
+    static PUIDLIST_RELATIVE GetNextItem(PCUIDLIST_RELATIVE pidl) noexcept
     {
         PUIDLIST_RELATIVE pidlNext = ILGetNext(pidl);
         if (pidlNext && pidlNext->mkid.cb == 0)
@@ -109,6 +109,11 @@ public:
     {
         CoTaskMemFree(m_pidl);
     }
+
+    ItemIDList(const ItemIDList&) = delete;
+    ItemIDList(ItemIDList&&) = delete;
+    ItemIDList& operator=(const ItemIDList&) = delete;
+    ItemIDList& operator=(ItemIDList&&) = delete;
 
     void Attach(PUIDLIST_RELATIVE pidl) noexcept
     {
@@ -154,7 +159,7 @@ public:
 
     void AppendID(const SHITEMID* pmkid)
     {
-        const PIDLIST_RELATIVE pidl = ILAppendID(GetRelative(), pmkid, true);
+        PIDLIST_RELATIVE pidl = ILAppendID(GetRelative(), pmkid, true);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
 
         m_pidl = pidl;
@@ -180,12 +185,12 @@ public:
         return ILGetSize(GetRelative());
     }
 
-    PIDLIST_RELATIVE GetRelative() const
+    PIDLIST_RELATIVE GetRelative() const noexcept
     {
         return reinterpret_cast<PIDLIST_RELATIVE>(m_pidl);
     }
 
-    PIDLIST_ABSOLUTE GetAbsolute() const
+    PIDLIST_ABSOLUTE GetAbsolute() const noexcept
     {
         return reinterpret_cast<PIDLIST_ABSOLUTE>(m_pidl);
     }

@@ -48,7 +48,7 @@ public:
         ATLASSERT(iFile < GetFileCount() && "Index out of bounds");
 
         wchar_t szFileName[MAX_PATH];
-        if (!::DragQueryFile(reinterpret_cast<HDROP>(m_stgmedium.hGlobal), iFile, szFileName,
+        if (!::DragQueryFile(static_cast<HDROP>(m_stgmedium.hGlobal), iFile, szFileName,
                              _countof(szFileName)))
             throw _com_error(HRESULT_FROM_WIN32(GetLastError()));
 

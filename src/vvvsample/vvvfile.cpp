@@ -197,7 +197,7 @@ wstring VVVFile::GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t
 }
 
 
-unsigned int  VVVFile::GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault) const
+unsigned int  VVVFile::GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault) const noexcept
 {
     return ::GetPrivateProfileInt(lpAppName, lpKeyName, nDefault, m_filename.c_str());
 }

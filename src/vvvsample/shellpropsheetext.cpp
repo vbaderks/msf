@@ -33,7 +33,7 @@ public:
     }
 
     // Purpose: called by msf when it is time to add our pages to the property sheet.
-    void AddPagesCore(const CAddPage& addPage, const vector<wstring>& filenames) override
+    void AddPagesCore(const CAddPage& addPage, const vector<wstring>& filenames) final
     {
         // Only add the page if only 1 file is selected and is of our own extension.
         if (filenames.size() != 1 || ContainsUnknownExtension(filenames))
@@ -43,11 +43,12 @@ public:
     }
 
 protected:
-
-    ShellPropSheetExt()
+    ShellPropSheetExt() noexcept
     {
         RegisterExtension(tszVVVExtension);
     }
+
+    ~ShellPropSheetExt() = default;
 };
 
 

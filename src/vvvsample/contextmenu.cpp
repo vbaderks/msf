@@ -59,8 +59,7 @@ public:
     }
 
 protected:
-
-    ContextMenu()
+    ContextMenu()  noexcept
     {
         RegisterExtension(tszVVVExtension);
     }

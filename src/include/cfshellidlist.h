@@ -14,22 +14,25 @@
 namespace msf {
 
 /// <summary>Wraps a data object as a collection of ITEMIDLIST pointers.</summary>
-class CCfShellIdList
+class CCfShellIdList final
 {
 public:
     explicit CCfShellIdList(IDataObjectPtr dataObject)
     {
-        FormatEtc formatEtc(Win32::RegisterClipboardFormat(CFSTR_SHELLIDLIST));
+        const FormatEtc formatEtc(Win32::RegisterClipboardFormat(CFSTR_SHELLIDLIST));
         dataObject.GetData(formatEtc, m_medium);
         m_globalLock.Attach(m_medium.hGlobal);
     }
-
-    CCfShellIdList& operator=(const CCfShellIdList&) = delete;
 
     ~CCfShellIdList()
     {
         m_globalLock.Dispose();
     }
+
+    CCfShellIdList(const CCfShellIdList& other) = delete;
+    CCfShellIdList(CCfShellIdList&& other) = delete;
+    CCfShellIdList& operator=(const CCfShellIdList&) = delete;
+    CCfShellIdList& operator=(CCfShellIdList&& other) = delete;
 
     bool IsEmpty() const noexcept
     {

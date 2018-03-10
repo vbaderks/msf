@@ -13,7 +13,7 @@
 namespace msf
 {
 
-inline void StringFromCLSID(REFCLSID clsid, OleString& olestrCLSID)
+inline void StringFromCLSID(REFCLSID clsid, OleString& olestrCLSID) noexcept
 {
     ATLVERIFY(SUCCEEDED(::StringFromCLSID(clsid, olestrCLSID.GetAddress())));
 }

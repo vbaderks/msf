@@ -23,20 +23,20 @@ inline ATL::CComPtr<IEnumFORMATETC> SHCreateStdEnumFmtEtc(UINT cfmt, const FORMA
 class CFORMATETCToFORMATETC
 {
 public:
-    static void init(FORMATETC*)
+    static void init(FORMATETC*) noexcept
     {
         // No init needed.
     }
 
 
-    static HRESULT copy(FORMATETC* pTo, const FORMATETC* pFrom)
+    static HRESULT copy(FORMATETC* pTo, const FORMATETC* pFrom) noexcept
     {
         *pTo = *pFrom;
         return S_OK;
     }
 
 
-    static void destroy(FORMATETC*)
+    static void destroy(FORMATETC*) noexcept
     {
     }
 };
@@ -52,6 +52,11 @@ class CEnumFORMATETC :
 public:
     using CFormatEtcs = std::vector<FORMATETC>;
 
+    CEnumFORMATETC(const CEnumFORMATETC&) = delete;
+    CEnumFORMATETC(CEnumFORMATETC&&) = delete;
+    CEnumFORMATETC& operator=(const CEnumFORMATETC&) = delete;
+    CEnumFORMATETC& operator=(CEnumFORMATETC&&) = delete;
+
     static ATL::CComPtr<CEnumFORMATETC> CreateInstance(std::unique_ptr<CFormatEtcs> qformatetcs)
     {
         ATL::CComObject<CEnumFORMATETC>* pEnum;
@@ -64,7 +69,6 @@ public:
     }
 
 protected:
-
     CEnumFORMATETC() noexcept
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"CEnumFORMATETC::CEnumFORMATETC (instance=%p)\n", this);
@@ -76,16 +80,15 @@ protected:
     }
 
 private:
-
     void Initialize(std::unique_ptr<CFormatEtcs> qformatetcs) noexcept
     {
-        _qformatetcs = std::move(qformatetcs);
+        m_qformatetcs = std::move(qformatetcs);
 
-        ATLVERIFY(SUCCEEDED(__super::Init(this, *_qformatetcs)));
+        ATLVERIFY(SUCCEEDED(__super::Init(this, *m_qformatetcs)));
     }
 
     // Member variables.
-    std::unique_ptr<CFormatEtcs> _qformatetcs;
+    std::unique_ptr<CFormatEtcs> m_qformatetcs;
 };
 
 

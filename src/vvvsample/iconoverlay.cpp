@@ -26,7 +26,7 @@ public:
             registerInRegistry, IDR_ICONOVERLAY, L"VVV Sample ICON Overlay ShellExtension");
     }
 
-    static bool IsMemberOfImpl(PCWSTR path, DWORD /*dwAttrib*/)
+    static bool IsMemberOfImpl(PCWSTR path, DWORD /*dwAttrib*/) noexcept
     {
         // Add an overlay for files that have the extension .vvvv in this sample.
         const auto extension = PathFindExtension(path);
@@ -34,7 +34,7 @@ public:
     }
 
 protected:
-    IconOverlay() : IconOverlayImpl<IconOverlay>(IDI_ICON_OVERLAY)
+    IconOverlay() noexcept : IconOverlayImpl<IconOverlay>(IDI_ICON_OVERLAY)
     {
     }
 };

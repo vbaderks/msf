@@ -15,7 +15,9 @@ class __declspec(novtable) IQueryInfoImpl :
 {
 public:
     IQueryInfoImpl(const IQueryInfoImpl &) = delete;
+    IQueryInfoImpl(IQueryInfoImpl&&) = delete;
     IQueryInfoImpl & operator=(const IQueryInfoImpl &) = delete;
+    IQueryInfoImpl& operator=(IQueryInfoImpl&&) = delete;
 
     // IQueryInfo
     HRESULT __stdcall GetInfoFlags(_Out_ DWORD* /* pdwFlags */) noexcept override
@@ -33,7 +35,7 @@ public:
         try
         {
             ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (dwFlags=%d)\n", dwFlags);
-            return SHStrDup(GetInfoTip(dwFlags).c_str(), ppwszTip);
+            return SHStrDup(GetInfoTip(dwFlags), ppwszTip);
         }
         catch (...)
         {
@@ -42,8 +44,7 @@ public:
     }
 
 protected:
-
-    IQueryInfoImpl()
+    IQueryInfoImpl() noexcept
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n", this);
     }
@@ -53,7 +54,7 @@ protected:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n", this);
     }
 
-    virtual std::wstring GetInfoTip(DWORD dwFlags) = 0;
+    virtual LPCWSTR GetInfoTip(DWORD dwFlags) = 0;
 };
 
 } // namespace msf

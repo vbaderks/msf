@@ -19,11 +19,10 @@ class __declspec(novtable) ExtractIcon :
     public IExtractIcon
 {
 public:
-
-    class Icon
+    class Icon final
     {
     public:
-        explicit Icon(HICON hicon = nullptr) :
+        explicit Icon(HICON hicon = nullptr) noexcept :
             m_hicon(hicon)
         {
         }
@@ -33,11 +32,16 @@ public:
             dispose();
         }
 
-        HICON operator=(HICON hicon) noexcept
+        Icon(const Icon&) = delete;
+        Icon(Icon&&) = delete;
+        Icon& operator=(const Icon&) = delete;
+        Icon& operator=(Icon&&) = delete;
+
+        Icon& operator=(HICON hicon) noexcept
         {
             dispose();
             m_hicon = hicon;
-            return m_hicon;
+            return *this;
         }
 
         void release() noexcept
@@ -51,7 +55,6 @@ public:
         }
 
     private:
-
         void dispose() noexcept
         {
             if (m_hicon)
@@ -64,23 +67,26 @@ public:
         HICON m_hicon;
     };
 
+    ExtractIcon(const ExtractIcon&) = delete;
+    ExtractIcon(ExtractIcon&&) = delete;
+    ExtractIcon& operator=(const ExtractIcon&) = delete;
+    ExtractIcon& operator=(ExtractIcon&&) = delete;
+
     static ATL::CComPtr<IExtractIcon> CreateInstance(const TItem& item)
     {
         ATL::CComObject<ExtractIcon<TItem> >* pinstance;
-        HRESULT hr = ATL::CComObject<ExtractIcon<TItem> >::CreateInstance(&pinstance);
+        const HRESULT hr = ATL::CComObject<ExtractIcon<TItem> >::CreateInstance(&pinstance);
         if (FAILED(hr))
             RaiseException(hr);
 
         ATL::CComPtr<IExtractIcon> extracticon(pinstance);
-
         pinstance->Initialize(item);
-
         return extracticon;
     }
 
     static HICON GetIcon(HIMAGELIST himl, int i, UINT flags = 0)
     {
-        HICON hicon = ImageList_GetIcon(himl, i, flags);
+        const HICON hicon = ImageList_GetIcon(himl, i, flags);
         RaiseExceptionIf(!hicon);
         return hicon;
     }
@@ -92,9 +98,11 @@ public:
     END_COM_MAP()
 
 protected:
-    ExtractIcon() : m_nIconIndex(-1), m_uFlags(0)
+    ExtractIcon() noexcept : m_nIconIndex(-1), m_uFlags(0)
     {
     }
+
+    ~ExtractIcon() = default;
 
     void Initialize(const TItem& item)
     {
@@ -161,7 +169,6 @@ protected:
     }
 
 private:
-
     // Member variables.
     int   m_nIconIndex;
     UINT  m_uFlags;

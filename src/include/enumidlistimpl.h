@@ -15,23 +15,11 @@ class __declspec(novtable) IEnumIDListImpl :
     public IEnumIDList
 {
 public:
-    IEnumIDListImpl()
-    {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n", this);
-    }
-
-
-    ~IEnumIDListImpl()
-    {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n", this);
-    }
-
-
     class CItemIdListVector
     {
         public:
-            explicit CItemIdListVector(LPITEMIDLIST* ppidl) :
-                m_nCount(0), m_ppidl(ppidl)
+            explicit CItemIdListVector(LPITEMIDLIST* ppidl) noexcept :
+                m_ppidl(ppidl)
             {
             }
 
@@ -45,6 +33,11 @@ public:
                     }
                 }
             }
+
+            CItemIdListVector(const CItemIdListVector&) = delete;
+            CItemIdListVector(CItemIdListVector&&) = delete;
+            CItemIdListVector& operator=(const CItemIdListVector&) = delete;
+            CItemIdListVector& operator=(CItemIdListVector&&) = delete;
 
             void push_back(LPITEMIDLIST pidl) noexcept
             {
@@ -63,9 +56,14 @@ public:
             }
 
         private:
-            ULONG         m_nCount;
+            ULONG m_nCount{};
             LPITEMIDLIST* m_ppidl;
     };
+
+    IEnumIDListImpl(const IEnumIDListImpl&) = delete;
+    IEnumIDListImpl(IEnumIDListImpl&&) = delete;
+    IEnumIDListImpl& operator=(const IEnumIDListImpl&) = delete;
+    IEnumIDListImpl& operator=(IEnumIDListImpl&&) = delete;
 
     // IEnumIDList
     HRESULT __stdcall Next(ULONG celt, _Out_writes_to_(celt, *pceltFetched) PITEMID_CHILD* ppidl, _Out_opt_ ULONG* pceltFetched) noexcept override
@@ -117,6 +115,17 @@ public:
     {
         // Note: function not used by explorer \ system folder view.
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Clone");
+    }
+
+protected:
+    IEnumIDListImpl() noexcept
+    {
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n", this);
+    }
+
+    ~IEnumIDListImpl()
+    {
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n", this);
     }
 };
 

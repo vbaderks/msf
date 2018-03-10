@@ -18,7 +18,7 @@ namespace msf
 /// Standard ATL template classes can be used for the generic COM implementation (addref, release, etc).
 /// The actual InfoTip class need to setup the COM interface map.
 /// The following interfaces should be enabled:
-///  - IQueryInfo 
+///  - IQueryInfo
 /// One of the following for initialization (Vista and up):
 ///  - IInitializeWithFile
 ///  - IInitializeWithStream
@@ -38,7 +38,7 @@ public:
     }
 
     // IInitializeWithFile
-    STDMETHOD(Initialize)(LPCWSTR pszFilePath, DWORD dwMode) override
+    HRESULT __stdcall Initialize(LPCWSTR pszFilePath, DWORD dwMode) override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, filename=%s)\n", this, dwMode, pszFilePath);
 

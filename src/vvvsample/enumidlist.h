@@ -40,7 +40,7 @@ public:
 
 protected:
 
-    EnumIDList() : m_grfFlags(0), m_nItemIterator(0)
+    EnumIDList() noexcept : m_grfFlags(0), m_nItemIterator(0)
     {
     }
 

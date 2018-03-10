@@ -43,6 +43,9 @@ public:
 
         return IDYES;
     }
+
+protected:
+    ~CopyHook() = default;
 };
 
 

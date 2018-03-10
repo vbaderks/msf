@@ -12,7 +12,7 @@
 class VVVFile
 {
 public:
-    explicit VVVFile(std::wstring filename, std::wstring folder = std::wstring()) :
+    explicit VVVFile(std::wstring filename, std::wstring folder = std::wstring()) noexcept :
         m_filename{std::move(filename)},
         m_folder{std::move(folder)}
     {
@@ -40,7 +40,7 @@ private:
     std::wstring GetAppNameItem(unsigned int nID) const;
 
     std::wstring GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName) const;
-    unsigned int GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault = -1) const;
+    unsigned int GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault = -1) const noexcept;
 
     void WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName, const wchar_t* lpString) const;
     void WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const;

@@ -16,17 +16,26 @@ class PropertyPageItem : public ATL::CSnapInPropertyPageImpl<PropertyPageItem>
 public:
     static HPROPSHEETPAGE CreateInstance(VVVItem& item, long& wEventId, IShellFolder* shellFolder)
     {
-        // ReSharper disable once CppNonReclaimedResourceAcquisition
-        auto ppage = new PropertyPageItem(item, wEventId, shellFolder);
-        return ppage->Create();
+        auto page = std::make_unique<PropertyPageItem>(item, wEventId, shellFolder);
+        const auto result = page->Create();
+        if (result)
+        {
+            // Page will be deleted by ATL base class when the property sheet is done with it.
+            page.release();
+        }
+        return result;
     }
 
     enum { IDD = IDD_PROPERTY_PAGE_ITEM };
 
+
+#pragma warning(push)
+#pragma warning(disable: 26433) // use override
     BEGIN_MSG_MAP(PropertyPageItem)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
         CHAIN_MSG_MAP(CSnapInPropertyPageImpl<PropertyPageItem>)
     END_MSG_MAP()
+#pragma warning(pop)
 
     PropertyPageItem(VVVItem& item, long& wEventId, IShellFolder* shellFolder) :
         m_item(item),
