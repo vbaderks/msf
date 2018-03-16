@@ -28,9 +28,9 @@ The list below are shell extension types not used anymore in Windows.
 Documentation
 =============
 A couple of articles discussing how to create shell extensions are available on codeproject.
-* http://www.codeproject.com/shell/msf.asp
-* http://www.codeproject.com/shell/msf2.asp
-* http://www.codeproject.com/shell/msf3.asp
+* https://www.codeproject.com/Articles/8063/The-Mini-Shell-Extension-Framework-Part-I
+* https://www.codeproject.com/Articles/9421/The-Mini-Shell-extension-Framework-Part-II
+* https://www.codeproject.com/Articles/11674/The-Mini-Shell-Extension-Framework-Part-III
 
 Operating Systems and Compilers
 ===============================
