@@ -19,31 +19,7 @@ ipch/
 
 # Build results
 [Bb]in/
-[Oo]bj/
+Intermediate/
 
-[Ww]in32/  # Ignore all file in this binary build directory
-Checked_141/
-Debug/
-Debug_140/
-Debug_141/
-Release_140/
-x64/    # Ignore all file in this binary build directory
 src/.vs
 .vscode/
-*.obj
-*.lib
-*.pdb
-*.pch
-*.tlog
-*.dll
-*.ilk
-*.log
-*.res
-*.idb
-*.lastbuildstate
-*.nativecodeanalysis.xml
-*.pchast
-*.exp
-*.exe
-*.sdf
-*.opensdf
