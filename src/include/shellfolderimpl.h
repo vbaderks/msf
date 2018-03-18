@@ -859,7 +859,7 @@ protected:
     //          Override this function to provide your own DataObject.
     ATL::CComPtr<IDataObject> CreateDataObject(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl)
     {
-        return CIDLData_CreateFromIDArray(pidlFolder, cidl, ppidl);
+        return CIDLData_CreateFromIDArray(pidlFolder, cidl, reinterpret_cast<PCUIDLIST_RELATIVE_ARRAY>(ppidl));
     }
 
     // Purpose: Called by the shell/MSF when it needs an object that support an IQueryInfo
