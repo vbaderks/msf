@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample", "vvvsample\vvvsample.vcxproj", "{4F99D866-93BF-4731-9031-2D783763AB53}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vvvsample", "vvvsample\vvvsample.vcxproj", "{4F99D866-93BF-4731-9031-2D783763AB53}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "msf", "msf.vcxitems", "{C6AA1388-D5F6-48AE-8B1E-7207D9A71C8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A931BB65-8220-49A1-9576-FF587FA23042}"
+	ProjectSection(SolutionItems) = preProject
+		filters.pvsconfig = filters.pvsconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

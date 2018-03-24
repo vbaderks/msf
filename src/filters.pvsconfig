@@ -1,0 +1,8 @@
+﻿# PVS-Studio rules configuration file. 
+# See http://www.viva64.com/en/d/0021/ for full documentation.
+
+# Disable explicit conversion from void * to type * pointer (too many false warnings)
+//-V::206
+
+# Disable calling FormatMessageW (false warning)
+//-V::111
