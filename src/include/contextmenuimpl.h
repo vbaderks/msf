@@ -82,7 +82,8 @@ public:
         {
             auto hmenu = CreateSubMenu();
             const MenuItemInfo menuiteminfo(*m_pidCmd, std::move(strText), hmenu);
-            InsertMenuItem(menuiteminfo, std::move(strHelp), CContextCommandPtr(nullptr), CCustomMenuHandlerPtr(nullptr));
+            InsertMenuItem(menuiteminfo, std::move(strHelp),
+                           std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(std::unique_ptr<CustomMenuHandler>(nullptr)));
 
             return Menu(hmenu, 0, *m_pidCmd, m_idCmdLast, m_pmenuhost);
         }
@@ -171,7 +172,7 @@ public:
 
             menuiteminfo.SetSubMenu(hSubmenu);
 
-            InsertMenuItem(menuiteminfo, strHelp, CContextCommandPtr(nullptr), CCustomMenuHandlerPtr(nullptr));
+            InsertMenuItem(menuiteminfo, strHelp, std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(std::unique_ptr<CustomMenuHandler>(nullptr)));
         }
 
         void InsertMenuItem(const MenuItemInfo& menuiteminfo,
