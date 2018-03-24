@@ -5,6 +5,7 @@
 //
 #pragma once
 
+#include "msfbase.h"
 #include "stgmedium.h"
 #include "globallock.h"
 #include "formatetc.h"
@@ -41,7 +42,7 @@ public:
 
     size_t GetItemCount() const noexcept
     {
-        return m_globalLock.get()->cidl;
+        return static_cast<size_t>(m_globalLock.get()->cidl);
     }
 
     PCIDLIST_RELATIVE GetItem(size_t nIdex) const noexcept
@@ -52,7 +53,6 @@ public:
     }
 
 private:
-
     util::GlobalLock<CIDA> m_globalLock;
     StorageMedium m_medium;
 };

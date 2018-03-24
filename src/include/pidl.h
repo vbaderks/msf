@@ -34,8 +34,8 @@ public:
 
     static PIDLIST_ABSOLUTE Combine(_In_opt_ PCIDLIST_ABSOLUTE pidl1, _In_opt_ PCUIDLIST_RELATIVE pidl2)
     {
-        PIDLIST_ABSOLUTE pidl = ILCombine(pidl1, pidl2);
-        RaiseExceptionIf(!pidl && !(pidl1 == nullptr && pidl == nullptr), E_OUTOFMEMORY);
+        PIDLIST_ABSOLUTE pidl = ILCombine(pidl1, pidl2); // -V595
+        RaiseExceptionIf(!pidl && !(pidl1 == nullptr && pidl2 == nullptr), E_OUTOFMEMORY);
         return pidl;
     }
 

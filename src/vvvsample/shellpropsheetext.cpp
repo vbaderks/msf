@@ -32,6 +32,11 @@ public:
             L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);
     }
 
+    ShellPropSheetExt(const ShellPropSheetExt&) = delete;
+    ShellPropSheetExt(ShellPropSheetExt&&) = delete;
+    ShellPropSheetExt& operator=(const ShellPropSheetExt&) = delete;
+    ShellPropSheetExt& operator=(ShellPropSheetExt&&) = delete;
+
     // Purpose: called by msf when it is time to add our pages to the property sheet.
     void AddPagesCore(const CAddPage& addPage, const vector<wstring>& filenames) final
     {

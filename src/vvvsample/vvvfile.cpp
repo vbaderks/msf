@@ -7,8 +7,10 @@
 #include "stdafx.h"
 
 #include "vvvfile.h"
+#include <filesystem>
 
 using std::wstring;
+namespace fs = std::experimental::filesystem;
 
 const wchar_t* TSZ_APP_NAME_DIRECTORY = L"directory";
 const wchar_t* TSZ_FILE_COUNT         = L"filecount";
@@ -105,9 +107,8 @@ void VVVFile::SetItem(const VVVItem& item) const
 PUIDLIST_RELATIVE VVVFile::AddItem(const std::wstring& strFile) const
 {
     const ATL::CString strName(PathFindFileName(strFile.c_str()));
-    const auto dwSize = msf::GetFileSize(strFile.c_str());
 
-    return AddItem(dwSize, strName);
+    return AddItem(static_cast<unsigned int>(fs::file_size(strFile)), strName);
 }
 
 

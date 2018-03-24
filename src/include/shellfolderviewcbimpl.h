@@ -111,7 +111,7 @@ public:
 
             case SFVM_UPDATESTATUSBAR:
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IShellFolderViewCB::MessageSFVCB (OnUpdateStatusbar)\n");
-                return static_cast<T*>(this)->OnUpdateStatusbar(static_cast<BOOL>(wParam));
+                return static_cast<T*>(this)->OnUpdateStatusbar(wParam ? TRUE : FALSE);
 
             case SFVM_BACKGROUNDENUM:
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IShellFolderViewCB::MessageSFVCB (OnBackgroundEnum)\n");

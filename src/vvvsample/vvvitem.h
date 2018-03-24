@@ -20,7 +20,7 @@ public:
 
     static PUIDLIST_RELATIVE CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
     {
-        const PUIDLIST_RELATIVE pidl = msf::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
+        PUIDLIST_RELATIVE pidl = msf::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
 
         InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
             nId, nSize, bFolder, strName);

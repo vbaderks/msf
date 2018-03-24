@@ -8,7 +8,7 @@
 
 #include "msfbase.h"
 #include "updateregistry.h"
-
+#include <strsafe.h>
 
 namespace msf
 {
@@ -27,7 +27,6 @@ public:
             szDescription, T::GetObjectCLSID(), clsidShellFolder, szExtension);
     }
 
-
     // Registration function to register the COM object + the root extension.
     static HRESULT WINAPI UpdateRegistryForRootExt(UINT nResId, BOOL bRegister,
         PCWSTR szDescription, PCWSTR szRootExt) noexcept
@@ -35,7 +34,6 @@ public:
         return UpdateRegistryForRootExt(nResId, bRegister,
             szDescription, T::GetObjectCLSID(), szRootExt);
     }
-
 
     // All-in-one registration function for 1 extension, call 'ForExt' to register
     // additional functions.
@@ -46,8 +44,7 @@ public:
             szDescription, T::GetObjectCLSID(), szRootExt, szExtension);
     }
 
-    ExtractImageImpl() :
-        m_hbitmap(nullptr)
+    ExtractImageImpl()
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
     }
@@ -102,7 +99,7 @@ public:
 
     // IExtractImage
     HRESULT __stdcall GetLocation(LPWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
-                           __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags) noexcept override
+                                  __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags) noexcept override
     {
         try
         {
@@ -111,7 +108,7 @@ public:
             Dispose();
             m_hbitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
 
-            ATLVERIFY(lstrcpynW(pszPathBuffer, static_cast<T*>(this)->GetPathBuffer().c_str(), static_cast<int>(cch)));
+            RaiseExceptionIfFailed(StringCchCopy(pszPathBuffer, cch, static_cast<T*>(this)->GetPathBuffer().c_str()));
             *pdwFlags |= IEIFLAG_CACHE;
 
             //  Note: The SDK docs are unclear if it passing a NULL pointer is allowed.
@@ -167,7 +164,6 @@ public:
     }
 
 protected:
-
     ~ExtractImageImpl()
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::~ExtractImageImpl (instance=%p)\n", this);
@@ -185,7 +181,7 @@ protected:
 
     // member variables.
     std::wstring m_strFilename;
-    HBITMAP      m_hbitmap;
+    HBITMAP      m_hbitmap{};
 };
 
 } // namespace msf

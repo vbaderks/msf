@@ -25,6 +25,9 @@
 // Allow use of features specific to Windows 7 or later.
 #define _WIN32_WINNT 0x0601
 
+// Prevent that the windows SDK header files define the macro's min and max.
+#define NOMINMAX
+
 // Enable Windows XP Side by Side functionality to use the new visual styles.
 // Note: MessageBox is not redefined by winuser.inl (by design): need to call explicit IsolationAwareMessageBox
 #define ISOLATION_AWARE_ENABLED 1

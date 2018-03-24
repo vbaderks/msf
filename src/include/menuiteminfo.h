@@ -5,6 +5,8 @@
 //
 #pragma once
 
+#include "msfbase.h"
+#include <string>
 
 namespace msf {
 

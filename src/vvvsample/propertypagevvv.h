@@ -19,7 +19,7 @@ public:
         if (result)
         {
             // Page will be deleted by ATL base class when the property sheet is done with it.
-            page.release();
+            page.release(); // -V530
         }
         return result;
     }

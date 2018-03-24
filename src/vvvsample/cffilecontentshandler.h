@@ -48,7 +48,7 @@ public:
 
         const VVVItem vvvitem(GetCfShellIdList()->GetItem(static_cast<UINT>(formatetc.lindex)));
 
-        const size_t size = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
+        const size_t size = std::min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
         const HGLOBAL hg = msf::GlobalAllocThrow(size);
         ZeroMemory(hg, size);
 

@@ -7,6 +7,7 @@
 
 #include "vvvitem.h"
 #include <msf.h>
+#include <strsafe.h>
 
 // Note: owner of the instance of this class must keep passed dataobject alive.
 //       This class doesn't do addref to prevent circular referencing.
@@ -30,13 +31,13 @@ public:
     {
         msf::CCfShellIdList cfshellidlist(m_pdataobject);
 
-        const size_t size = sizeof(FILEGROUPDESCRIPTOR) +
-            (cfshellidlist.GetItemCount() * sizeof(FILEDESCRIPTOR));
+        // Note: FILEGROUPDESCRIPTOR provides the count and 1 FILEDESCRIPTOR.
+        const size_t size = sizeof(FILEGROUPDESCRIPTOR) + ((cfshellidlist.GetItemCount() - 1) * sizeof(FILEDESCRIPTOR)); // -V119
 
         const HGLOBAL hg = msf::GlobalAllocThrow(size);
         auto* pfgd = static_cast<FILEGROUPDESCRIPTOR*>(hg);
-        pfgd->cItems = static_cast<UINT>(cfshellidlist.GetItemCount());
 
+        pfgd->cItems = static_cast<UINT>(cfshellidlist.GetItemCount());
         for (unsigned int i = 0; i < pfgd->cItems; ++i)
         {
             FILEDESCRIPTOR& fd = pfgd->fgd[i];
@@ -46,15 +47,13 @@ public:
 
             const VVVItem vvvitem(cfshellidlist.GetItem(i));
 
-            fd.nFileSizeLow = min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
-            if (lstrcpyn(fd.cFileName, vvvitem.GetDisplayName().c_str(), MAX_PATH))
-                _com_raise_error(E_FAIL);
+            fd.nFileSizeLow = std::min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
+            msf::RaiseExceptionIfFailed(StringCchCopy(fd.cFileName, MAX_PATH, vvvitem.GetDisplayName().c_str()));
         }
 
         msf::StorageMedium::SetHGlobal(medium, hg);
     }
 
 private:
-
     IDataObject* m_pdataobject;
 };

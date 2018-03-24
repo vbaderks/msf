@@ -36,18 +36,6 @@ inline ATL::CStringW GetFolderPath(int nFolder)
     return ATL::CStringW(ATL::CT2W(tszFolderPath));
 }
 
-inline DWORD GetFileSize(const ATL::CString& strFile)
-{
-    const auto hFile = CreateFile(strFile, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
-    RaiseExceptionIf(hFile == INVALID_HANDLE_VALUE);
-
-    const DWORD dwSize = ::GetFileSize(hFile, nullptr);
-    CloseHandle(hFile);
-    RaiseExceptionIf(dwSize == INVALID_FILE_SIZE && GetLastError() != NO_ERROR);
-
-    return dwSize;
-}
-
 
 // Purpose: 'StrCmp' for numeric values. Useful for IShellFolder::CompareIDs
 inline int IntCmp(int n1, int n2) noexcept
