@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		filters.pvsconfig = filters.pvsconfig
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DiskCleanupSample", "DiskCleanupSample\DiskCleanupSample.vcxproj", "{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Checked|Win32 = Checked|Win32
@@ -34,6 +36,18 @@ Global
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Release|Win32.Build.0 = Release|Win32
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Release|x64.ActiveCfg = Release|x64
 		{4F99D866-93BF-4731-9031-2D783763AB53}.Release|x64.Build.0 = Release|x64
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Checked|Win32.ActiveCfg = Release|Win32
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Checked|Win32.Build.0 = Release|Win32
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Checked|x64.ActiveCfg = Release|x64
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Checked|x64.Build.0 = Release|x64
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Debug|Win32.Build.0 = Debug|Win32
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Debug|x64.ActiveCfg = Debug|x64
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Debug|x64.Build.0 = Debug|x64
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Release|Win32.ActiveCfg = Release|Win32
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Release|Win32.Build.0 = Release|Win32
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Release|x64.ActiveCfg = Release|x64
+		{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
