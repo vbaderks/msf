@@ -38,7 +38,7 @@ public:
     // IPersistFile
     HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::GetClassID (instance=%p, pClassID=%p)\n", this, pClassID);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::GetClassID (instance=%p, pClassID=%p)\n", this, pClassID);
 
         if (!pClassID)
             return E_POINTER;
@@ -71,10 +71,10 @@ public:
     {
         UNREFERENCED_PARAMETER(dwMode); // unused in release.
 
-        ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
         try
         {
-            _filename = wszFilename;
+            m_filename = wszFilename;
             return S_OK;
         }
         catch (...)
@@ -86,7 +86,7 @@ public:
     // IDropTarget
     HRESULT __stdcall DragEnter(_In_ IDataObject* dataObject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragEnter (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragEnter (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
 
         try
         {
@@ -94,12 +94,12 @@ public:
             if (dataObject == nullptr || !static_cast<T*>(this)->IsSupportedClipboardFormat(dataObject))
             {
                 *pdwEffect = DROPEFFECT_NONE;
-                _isCachedSupportedClipboardFormat = false;
+                m_isCachedSupportedClipboardFormat = false;
             }
             else
             {
                 *pdwEffect = static_cast<T*>(this)->OnDragOver(grfKeyState, pt, *pdwEffect);
-                _isCachedSupportedClipboardFormat = true;
+                m_isCachedSupportedClipboardFormat = true;
             }
 
             return S_OK;
@@ -112,11 +112,11 @@ public:
 
     HRESULT __stdcall DragOver(DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragOver (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragOver (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
 
         try
         {
-            if (_isCachedSupportedClipboardFormat)
+            if (m_isCachedSupportedClipboardFormat)
             {
                 // Derived class needs to implement: DWORD OnDragOver(DWORD grfKeyState, POINTL pt, DWORD dwEffect)
                 *pdwEffect = static_cast<T*>(this)->OnDragOver(grfKeyState, pt, *pdwEffect);
@@ -135,15 +135,15 @@ public:
 
     HRESULT __stdcall DragLeave() noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragLeave (instance=%p)\n", this);
-        _isCachedSupportedClipboardFormat = false;
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::DragLeave (instance=%p)\n", this);
+        m_isCachedSupportedClipboardFormat = false;
         return S_OK;
     }
 
     HRESULT __stdcall Drop(_In_ IDataObject* dataObject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
     {
         UNREFERENCED_PARAMETER(grfKeyState);
-        ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::Drop (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::Drop (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
 
         try
         {
@@ -158,21 +158,19 @@ public:
     }
 
 protected:
-
-    DropTargetImpl() :
-        _isCachedSupportedClipboardFormat(false)
+    DropTargetImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::DropTargetImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::DropTargetImpl (instance=%p)\n", this);
     }
 
     ~DropTargetImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"DropTargetImpl::~DropTargetImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::~DropTargetImpl (instance=%p)\n", this);
     }
 
 private:
-    ATL::CString _filename;
-    bool _isCachedSupportedClipboardFormat;
+    ATL::CString m_filename;
+    bool m_isCachedSupportedClipboardFormat{};
 };
 
 } // namespace msf

@@ -170,6 +170,7 @@ public:
         return m_pidl;
     }
 
+    // ReSharper disable once CppNonExplicitConversionOperator
     operator LPCITEMIDLIST() const noexcept
     {
         return get();

@@ -374,7 +374,7 @@ public:
 
 protected:
     explicit ShellFolderViewCBImpl(long notifyevents = 0) noexcept :
-        _notifyevents(notifyevents)
+        m_notifyevents(notifyevents)
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::ShellFolderViewCBImpl (instance=%p)\n", this);
     }
@@ -566,20 +566,20 @@ protected:
 
     // Purpose: called by the shells default viewfolder implementation to retrieve
     //          the settings for SHChangeNotifyRegister.
-    HRESULT OnGetNotify(PIDLIST_ABSOLUTE* ppidl, long* plevents)
+    HRESULT OnGetNotify(PIDLIST_ABSOLUTE* ppidl, long* plevents) const
     {
-        if (!m_folder || _notifyevents == 0)
+        if (!m_folder || m_notifyevents == 0)
             return E_FAIL; // notify not requested by derived class.
 
         *ppidl    = m_folder.CloneFull();
-        *plevents = _notifyevents;
+        *plevents = m_notifyevents;
 
         return S_OK;
     }
 
     // Member variables.
     ItemIDList m_folder;
-    long  _notifyevents;
+    long  m_notifyevents;
 };
 
 } // msf namespace

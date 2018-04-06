@@ -72,6 +72,7 @@ public:
 
         Menu& operator=(Menu&& other) = delete;
 
+        // ReSharper disable once CppNonExplicitConversionOperator
         operator HMENU() const
         {
             return m_hmenu;
@@ -259,13 +260,9 @@ public:
                     ATLTRACE2(ATL::atlTraceCOM, 0, L" (unicode help text)\n");
                     return StringCchCopy(reinterpret_cast<wchar_t*>(pszName), cchMax, helpText.c_str());
                 }
-                else
-                {
-                    ATLTRACE2(ATL::atlTraceCOM, 0, L" (ansi help text)\n");
-                    return StringCchCopyA(pszName, cchMax, ATL::CT2CA(helpText.c_str()));
-                }
 
-                return S_OK;
+                ATLTRACE2(ATL::atlTraceCOM, 0, L" (ansi help text)\n");
+                return StringCchCopyA(pszName, cchMax, ATL::CT2CA(helpText.c_str()));
             }
 
             ATLTRACE2(ATL::atlTraceCOM, 0, L"\n");

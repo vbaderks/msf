@@ -309,7 +309,7 @@ inline DWORD GetDllVersion(LPCTSTR lpszDllName) noexcept
 {
     DWORD dwVersion = 0;
 
-    HINSTANCE hinstDll = LoadLibrary(lpszDllName);
+    const HINSTANCE hinstDll = LoadLibrary(lpszDllName);
     if (hinstDll)
     {
         const auto pDllGetVersion =

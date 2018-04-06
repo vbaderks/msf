@@ -26,21 +26,21 @@ public:
 
     DiskCleanupImpl() : _bInitialized(false)
     {
-        ATLTRACE2(atlTraceCOM, 0, L"DiskCleanupImpl::DiskCleanupImpl (instance=%p)\n", this);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DiskCleanupImpl::DiskCleanupImpl (instance=%p)\n", this);
     }
 
     // IEmptyVolumeCache
-    HRESULT __stdcall Initialize(HKEY hkRegKey, LPCWSTR pcwszVolume, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, DWORD *pdwFlags) noexcept override
+    HRESULT __stdcall Initialize(HKEY hkRegKey, LPCWSTR pcwszVolume, LPWSTR* ppwszDisplayName, LPWSTR* ppwszDescription, DWORD* pdwFlags) noexcept override
     {
         LPWSTR pwszBtnText;
-        auto result = InitializeEx(hkRegKey, pcwszVolume, nullptr, ppwszDisplayName, ppwszDescription, &pwszBtnText, pdwFlags);
+        const auto result = InitializeEx(hkRegKey, pcwszVolume, nullptr, ppwszDisplayName, ppwszDescription, &pwszBtnText, pdwFlags);
         // Release BtnText;
         return result;
 
         // TODO: research if this function is still used or if we can just return E_FAIL / E_NOTIMPLEMENTED.
     }
 
-    HRESULT __stdcall GetSpaceUsed(__RPC__out DWORDLONG *pdwlSpaceUsed, __RPC__in_opt IEmptyVolumeCacheCallBack *picb) noexcept override
+    HRESULT __stdcall GetSpaceUsed(__RPC__out DWORDLONG* pdwlSpaceUsed, __RPC__in_opt IEmptyVolumeCacheCallBack* picb) noexcept override
     {
         try
         {
@@ -48,13 +48,15 @@ public:
                 return E_FAIL;
 
             // Note: function must be implemented by the derived class.
-            return static_cast<T*>(this)->GetSpaceUsedCore(pdwlSpaceUsed, picb)
-                ? S_OK : S_FALSE;
+            return static_cast<T*>(this)->GetSpaceUsedCore(pdwlSpaceUsed, picb) ? S_OK : S_FALSE;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
-    HRESULT __stdcall Purge(DWORDLONG dwSpaceToFree, __RPC__in_opt IEmptyVolumeCacheCallBack *picb) noexcept override
+    HRESULT __stdcall Purge(DWORDLONG dwSpaceToFree, __RPC__in_opt IEmptyVolumeCacheCallBack* picb) noexcept override
     {
         try
         {
@@ -65,7 +67,10 @@ public:
             static_cast<T*>(this)->PurgeCore(dwSpaceToFree, picb);
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     HRESULT __stdcall ShowProperties(__RPC__in HWND hwnd) noexcept override
@@ -79,10 +84,13 @@ public:
             static_cast<T*>(this)->ShowPropertiesCore(hwnd);
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
-    HRESULT __stdcall Deactivate(__RPC__out DWORD *pdwFlags) noexcept override
+    HRESULT __stdcall Deactivate(__RPC__out DWORD* pdwFlags) noexcept override
     {
         try
         {
@@ -98,11 +106,14 @@ public:
             }
             return S_OK;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     // IEmptyVolumeCache2
-    HRESULT __stdcall InitializeEx(HKEY hkRegKey, LPCWSTR pcwszVolume, LPCWSTR pcwszKeyName, LPWSTR *ppwszDisplayName, LPWSTR *ppwszDescription, LPWSTR *ppwszBtnText, DWORD *pdwFlags) noexcept override
+    HRESULT __stdcall InitializeEx(HKEY hkRegKey, LPCWSTR pcwszVolume, LPCWSTR pcwszKeyName, LPWSTR* ppwszDisplayName, LPWSTR* ppwszDescription, LPWSTR* ppwszBtnText, DWORD* pdwFlags) noexcept override
     {
         try
         {
@@ -113,7 +124,10 @@ public:
             return static_cast<T*>(this)->InitializeCore(hkRegKey, pcwszVolume, pcwszKeyName, ppwszDisplayName, ppwszDescription, ppwszBtnText, pdwFlags)
                 ? S_OK : S_FALSE;
         }
-        MSF_COM_CATCH_HANDLER()
+        catch (...)
+        {
+            return ExceptionToHResult();
+        }
     }
 
     void ShowPropertiesCore(HWND /*hwnd*/)

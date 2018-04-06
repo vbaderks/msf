@@ -1194,7 +1194,7 @@ protected:
 
     // Purpose: called by MSF/shell when items (selected earlier with GetUIObjectOf)
     //          must be copied to the clipboard.
-    void OnCopy(HWND, IDataObject* pdataobject)
+    void OnCopy(HWND, IDataObject* pdataobject) const
     {
         VerifyAttribute(pdataobject, SFGAO_CANCOPY);
 
@@ -1205,7 +1205,7 @@ protected:
 
     // Purpose: called by MSF/shell when the user has selected 'cut'.
     //          (with ctrl-x or menu). Items were are selected with GetUIObjectOf.
-    void OnCut(HWND, IDataObject* pdataobject)
+    void OnCut(HWND, IDataObject* pdataobject) const
     {
         VerifyAttribute(pdataobject, SFGAO_CANMOVE);
 
@@ -1262,7 +1262,7 @@ protected:
         StrToStrRet(m_columninfos[iColumn].m_strName, &psd->str);
     }
 
-    void GetItemDetailsOf(UINT iColumn, PCUITEMID_CHILD pidl, SHELLDETAILS* psd)
+    void GetItemDetailsOf(UINT iColumn, PCUITEMID_CHILD pidl, SHELLDETAILS* psd) const
     {
         TItem item(pidl);
 

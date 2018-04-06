@@ -6,7 +6,6 @@
 #pragma once
 
 #include <shlobj.h>
-#include "shelluuids.h"
 #include "olestring.h"
 #include "updateregistry.h"
 
