@@ -12,30 +12,7 @@
 #include <vector>
 
 
-namespace msf
-{
-
-inline ATL::CStringW GetModuleDirectoryW()
-{
-    wchar_t wz[MAX_PATH];
-    ATLVERIFY(::GetModuleFileNameW(GetModuleHandle(nullptr), wz, MAX_PATH));
-
-    PathRemoveFileSpecW(wz);
-
-    return wz + ATL::CStringW(L"\\");
-}
-
-
-// Note: use ANSI version and convert self. Win 9x only has ANSI version.
-inline ATL::CStringW GetFolderPath(int nFolder)
-{
-    wchar_t tszFolderPath[MAX_PATH];
-
-    tszFolderPath[0] = 0;
-    ATLVERIFY(SHGetSpecialFolderPath(nullptr, tszFolderPath, nFolder, false));
-    return ATL::CStringW(ATL::CT2W(tszFolderPath));
-}
-
+namespace msf {
 
 // Purpose: 'StrCmp' for numeric values. Useful for IShellFolder::CompareIDs
 inline int IntCmp(int n1, int n2) noexcept
@@ -109,9 +86,8 @@ inline void IsolationAwareDllMain(DWORD dwReason)
 
 
 // Small helper class that initializes WIN32-STARTUPINFO use by Win32 CreateProcess function.
-class CStartupInfo : public STARTUPINFO
+struct CStartupInfo final : STARTUPINFO
 {
-public:
     CStartupInfo() noexcept : STARTUPINFO()
     {
         static_assert(sizeof(CStartupInfo) == sizeof(STARTUPINFO), "Helper should not add size!");
@@ -123,9 +99,8 @@ public:
 
 
 // Small helper class that initializes and cleans PROCESS_INFORMATION (used by CreateProcess)
-class ProcessInformation final : public PROCESS_INFORMATION
+struct ProcessInformation final : PROCESS_INFORMATION
 {
-public:
     ProcessInformation() noexcept : PROCESS_INFORMATION()
     {
         hProcess = INVALID_HANDLE_VALUE;
@@ -148,7 +123,7 @@ public:
 // Purpose: 'short' version of Win32 function CreateProcess.
 //          Useful for shell extensions that just need a quick way to start apps.
 ATLPREFAST_SUPPRESS(6335) // suppress sa noise: leaking process handle
-inline void CreateProcess(LPCWSTR szApplicationName, std::wstring& cmdLine, LPCWSTR lpCurrentDirectory = nullptr)
+inline void CreateProcess(PCWSTR szApplicationName, const std::wstring& cmdLine, PCWSTR lpCurrentDirectory = nullptr)
 {
     CStartupInfo startupinfo;
     ProcessInformation process_information;
@@ -293,62 +268,6 @@ inline IDataObjectPtr OleGetClipboard()
     RaiseExceptionIfFailed(::OleGetClipboard(&dataobject));
 
     return dataobject;
-}
-
-
-constexpr DWORD MSF_PACKVERSION(DWORD major, DWORD minor)
-{
-    return static_cast<DWORD>(MAKELONG(minor, major));
-}
-
-
-#pragma warning(push)
-#pragma warning(disable: 4191) // unsafe conversion from FARPROC (DLLGETVERSIONPROC is defined different then FARPROC)
-
-inline DWORD GetDllVersion(LPCTSTR lpszDllName) noexcept
-{
-    DWORD dwVersion = 0;
-
-    const HINSTANCE hinstDll = LoadLibrary(lpszDllName);
-    if (hinstDll)
-    {
-        const auto pDllGetVersion =
-            reinterpret_cast<DLLGETVERSIONPROC>(GetProcAddress(hinstDll, "DllGetVersion"));
-
-        // Because some DLLs might not implement this function, you
-        // must test for it explicitly. Depending on the particular
-        // DLL, the lack of a DllGetVersion function can be a useful
-        // indicator of the version.
-        if (pDllGetVersion)
-        {
-            DLLVERSIONINFO dvi;
-
-            ZeroMemory(&dvi, sizeof dvi);
-            dvi.cbSize = sizeof dvi;
-
-            const HRESULT hr = (*pDllGetVersion)(&dvi);
-            if (SUCCEEDED(hr))
-            {
-                dwVersion = MSF_PACKVERSION(dvi.dwMajorVersion, dvi.dwMinorVersion);
-            }
-        }
-
-        FreeLibrary(hinstDll);
-    }
-
-    return dwVersion;
-}
-
-#pragma warning(pop)
-
-
-/// <summary>Determines if running on Shell 6.0 or higher.</summary>
-/// <remarks>
-/// Windows XP is the first version to use the 6.0 shell version.
-/// </remarks>
-inline bool IsShell6OrHigher() noexcept
-{
-    return GetDllVersion(L"shell32.dll") >= MSF_PACKVERSION(6, 0);
 }
 
 
