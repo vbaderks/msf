@@ -6,42 +6,19 @@
 #pragma once
 
 #include "msfbase.h"
-#include <locale>
 #include <algorithm>
-#include <functional>
 #include <cctype>
+#include <functional>
+#include <locale>
 
-namespace msf
-{
-
-/// <summary>Converts the numeric input value to its equivalent string representation.</summary>
-inline std::wstring ToString(unsigned int uiValue)
-{
-    ATL::CString str;
-    str.Format(L"%u", uiValue);
-    return str.GetString(); // TODO
-}
-
-/// <summary>Converts the numeric input value to its equivalent string representation.</summary>
-inline ATL::CStringW ToStringW(unsigned int uiValue)
-{
-    ATL::CStringW str;
-    str.Format(L"%u", uiValue);
-    return str;
-}
+namespace msf {
 
 /// <summary>Load a resource string.</summary>
-inline ATL::CString LoadString(UINT nID)
+inline std::wstring LoadResourceString(UINT nID)
 {
     ATL::CString str;
     ATLVERIFY(str.LoadString(nID));
-    return str;
-}
-
-inline std::wstring LoadResourceString(UINT nID)
-{
-    auto s = LoadString(nID);
-    return s.GetString();
+    return str.GetString();
 }
 
 inline std::wstring FormatResourceMessage(UINT messageID, ...)
@@ -75,23 +52,22 @@ inline int CompareString(_In_ LCID Locale, _In_ DWORD dwCmpFlags, LPCTSTR lpStri
 }
 
 // trim from start (in place)
-inline void ltrim(std::wstring &s)
+inline void ltrim(std::wstring& s)
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) noexcept { return !std::isspace(ch); }));
 }
 
 // trim from end (in place)
-inline void rtrim(std::wstring &s)
+inline void rtrim(std::wstring& s)
 {
     s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) noexcept { return !std::isspace(ch); }).base(), s.end());
 }
 
 // trim from both ends (in place)
-inline void trim(std::wstring &s)
+inline void trim(std::wstring& s)
 {
     ltrim(s);
     rtrim(s);
 }
-
 
 } // end msf namespace

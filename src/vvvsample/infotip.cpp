@@ -40,7 +40,7 @@ public:
         VVVFile vvvfile{ filename };
 
         m_label = vvvfile.GetLabel();
-        m_fileCount = msf::ToString(vvvfile.GetFileCount());
+        m_fileCount = std::to_wstring(vvvfile.GetFileCount());
     }
 
     // Purpose: called by the shell/msf when it needs the text for the info tip.

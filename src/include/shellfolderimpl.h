@@ -87,13 +87,13 @@ public:
         OleString olestrCLSID;
         StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
 
-        const ATL::CStringW strFriendlyTypeName = ToStringW(nFriendlyTypeNameId);
+        const auto strFriendlyTypeName = std::to_wstring(nFriendlyTypeNameId);
 
         ATL::_ATL_REGMAP_ENTRY regmapEntries[] = {
             { L"DESCRIPTION", szDescription },
             { L"CLSID", olestrCLSID },
             { L"ROOTTYPE", szRootExt },
-            { L"FRIENDLYTYPENAME", strFriendlyTypeName },
+            { L"FRIENDLYTYPENAME", strFriendlyTypeName.c_str() },
             { nullptr, nullptr } };
 
         return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);

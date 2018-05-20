@@ -33,7 +33,7 @@ public:
     }
 
     // ReSharper disable once CppNonExplicitConversionOperator
-    operator LPOLESTR() const noexcept
+    operator LPCOLESTR() const noexcept
     {
         return m_string;
     }

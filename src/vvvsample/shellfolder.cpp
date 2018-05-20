@@ -67,7 +67,7 @@ public:
                 m_strSubFolder += L"\\";
             }
 
-            m_strSubFolder += msf::ToString(item.GetID());
+            m_strSubFolder += std::to_wstring(item.GetID());
         }
     }
 
@@ -249,7 +249,6 @@ protected:
     }
 
 private:
-
     // Purpose: Ask the user if he is really sure about the file delete action.
     //          Deleted files cannot be restored from the recycle bin.
     static bool UserConfirmsFileDelete(HWND hwnd, const std::vector<VVVItem>& items)
@@ -264,8 +263,7 @@ private:
         }
         else
         {
-            strMessage.FormatMessage(IDS_SHELLFOLDER_MULTIPLE_DELETE,
-                msf::ToString(static_cast<unsigned int>(items.size())).c_str());
+            strMessage.FormatMessage(IDS_SHELLFOLDER_MULTIPLE_DELETE, std::to_wstring(items.size()).c_str());
             nCaptionResId = IDS_SHELLFOLDER_FILES_DELETE_CAPTION;
         }
 

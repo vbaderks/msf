@@ -30,7 +30,7 @@ std::wstring VVVItem::GetDisplayName(SHGDNF shellGetDisplayNameType) const
 
     case SHGDN_INFOLDER | SHGDN_FORPARSING:
     case SHGDN_FORPARSING: // note parent should append folder name before item name.
-        return msf::ToString(GetID()); // return unique string (VVV items are unique by ID)
+        return std::to_wstring(GetID()); // return unique string (VVV items are unique by ID)
 
     default:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"VVVItem::GetDisplayName (shellGetDisplayNameType=%d)\n", shellGetDisplayNameType);
@@ -96,7 +96,7 @@ wstring VVVItem::GetItemDetailsOf(UINT columnIndex) const
             if (IsFolder())
                 return wstring();
 
-            return msf::ToString(GetSize());
+            return std::to_wstring(GetSize());
         }
 
     default:
@@ -109,7 +109,7 @@ wstring VVVItem::GetItemDetailsOf(UINT columnIndex) const
 std::wstring VVVItem::GetInfoTipText() const
 {
     return msf::LoadResourceString(IDS_SHELLEXT_NAME) + L": " + wstring(GetDisplayName()) + L"\n" +
-           msf::LoadResourceString(IDS_SHELLEXT_SIZE) + L": " + wstring(msf::ToString(GetSize()));
+           msf::LoadResourceString(IDS_SHELLEXT_SIZE) + L": " + std::to_wstring(GetSize());
 }
 
 

@@ -97,14 +97,14 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     OleString olestrCLSID;
     StringFromCLSID(clsid, olestrCLSID);
 
-    const ATL::CStringW strFriendlyTypenameId = ToStringW(nFriendlyTypeNameId);
+    const auto strFriendlyTypenameId = std::to_wstring(nFriendlyTypeNameId);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"DESCRIPTION", szShellExtDescription },
         { L"EXTENSION", szExtension },
         { L"CLSID", olestrCLSID },
-        { L"FRIENDLYTYPENAME", strFriendlyTypenameId },
+        { L"FRIENDLYTYPENAME", strFriendlyTypenameId.c_str() },
         { nullptr, nullptr }
     };
 

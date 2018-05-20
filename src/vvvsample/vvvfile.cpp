@@ -210,5 +210,5 @@ void VVVFile::WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t*
 
 void VVVFile::WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const
 {
-    WritePrivateProfileString(lpAppName, lpKeyName, msf::ToString(nValue).c_str());
+    WritePrivateProfileString(lpAppName, lpKeyName, std::to_wstring(nValue).c_str());
 }
