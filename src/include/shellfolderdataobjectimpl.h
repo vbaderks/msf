@@ -30,7 +30,7 @@ public:
     HRESULT __stdcall GetData(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, "ShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
-            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
+            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str());
 
         try
         {
@@ -81,7 +81,7 @@ public:
         }
 
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
-            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
+            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str());
 
         try
         {
@@ -113,7 +113,7 @@ public:
     HRESULT __stdcall SetData(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
-            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
+            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str(), pformatetc->tymed, fRelease);
 
         try
         {

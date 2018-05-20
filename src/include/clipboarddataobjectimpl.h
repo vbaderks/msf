@@ -26,7 +26,6 @@ class ClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>
     using ExternalDataVector = std::vector<std::unique_ptr<CExternalData>>;
 
 public:
-
     ClipboardDataObjectImpl() noexcept
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::ClipboardDataObjectImpl (instance=%p)\n", this);
@@ -63,7 +62,7 @@ public:
     HRESULT __stdcall QueryGetData(FORMATETC* pformatetc) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
-            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
+            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str());
 
         try
         {
@@ -96,7 +95,7 @@ public:
     HRESULT __stdcall GetData(FORMATETC *pformatetc, STGMEDIUM *pstgmedium) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData cfformat=%d (%s)\n",
-            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString());
+                  pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str());
 
         try
         {
@@ -132,7 +131,7 @@ public:
     HRESULT __stdcall SetData(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
-            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).GetString(), pformatetc->tymed, fRelease);
+                  pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str(), pformatetc->tymed, fRelease);
 
         try
         {
@@ -192,7 +191,6 @@ protected:
     }
 
 private:
-
     class CExternalData
     {
     public:
@@ -238,8 +236,6 @@ private:
         }
 
     private:
-
-        // Member variables.
         CFormatEtc m_formatetc;
         StorageMedium m_stgmedium;
     };
@@ -302,7 +298,6 @@ private:
         }
     }
 
-    // Member variables.
     CfHandlerVector m_cfhandlers;
     CExternalDatas m_externaldatas;
 };

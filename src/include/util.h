@@ -229,7 +229,7 @@ public:
 };
 
 
-inline ATL::CString GetClipboardFormatName(UINT format)
+inline std::wstring GetClipboardFormatName(UINT format)
 {
     switch (format)
     {
