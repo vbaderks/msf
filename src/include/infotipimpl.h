@@ -59,7 +59,7 @@ public:
     }
 
 protected:
-    InfoTipImpl() : m_initialized(false)
+    InfoTipImpl()
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
     }
@@ -72,7 +72,7 @@ protected:
     virtual void InitializeCore(LPCWSTR pszFilePath, DWORD dwMode) = 0;
 
 private:
-    bool m_initialized;
+    bool m_initialized{};
 };
 
 } // namespace msf

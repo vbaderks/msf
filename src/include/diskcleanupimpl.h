@@ -24,11 +24,6 @@ public:
         return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), szRootKey);
     }
 
-    DiskCleanupImpl() : _bInitialized(false)
-    {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"DiskCleanupImpl::DiskCleanupImpl (instance=%p)\n", this);
-    }
-
     // IEmptyVolumeCache
     HRESULT __stdcall Initialize(HKEY hkRegKey, LPCWSTR pcwszVolume, LPWSTR* ppwszDisplayName, LPWSTR* ppwszDescription, DWORD* pdwFlags) noexcept override
     {
@@ -44,7 +39,7 @@ public:
     {
         try
         {
-            if (!_bInitialized)
+            if (!m_bInitialized)
                 return E_FAIL;
 
             // Note: function must be implemented by the derived class.
@@ -60,7 +55,7 @@ public:
     {
         try
         {
-            if (!_bInitialized)
+            if (!m_bInitialized)
                 return E_FAIL;
 
             // Note: function must be implemented by the derived class.
@@ -77,7 +72,7 @@ public:
     {
         try
         {
-            if (!_bInitialized)
+            if (!m_bInitialized)
                 return E_FAIL;
 
             // Note: function must be implemented by the derived class.
@@ -96,7 +91,7 @@ public:
         {
             *pdwFlags = 0;
 
-            if (!_bInitialized)
+            if (!m_bInitialized)
                 return E_FAIL;
 
             // Note: this function can be implemented by the derived class.
@@ -117,7 +112,7 @@ public:
     {
         try
         {
-            if (_bInitialized)
+            if (m_bInitialized)
                 return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
 
             // Note: function must be implemented by the derived class.
@@ -140,8 +135,19 @@ public:
         return false;
     }
 
+protected:
+    DiskCleanupImpl()
+    {
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DiskCleanupImpl::DiskCleanupImpl (instance=%p)\n", this);
+    }
+
+    ~DiskCleanupImpl()
+    {
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DiskCleanupImpl::~DiskCleanupImpl (instance=%p)\n", this);
+    }
+
 private:
-    bool _bInitialized;
+    bool m_bInitialized{};
 };
 
 } // namespace msf
