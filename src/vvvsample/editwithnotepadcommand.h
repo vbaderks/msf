@@ -18,7 +18,7 @@ public:
 
         // Use the command line parameters to pass the exe filename. This causes
         // Windows to use the path to find notepad.
-        auto command = L"notepad.exe \"" + filenames[0] + L"\"";
+        const auto command = L"notepad.exe \"" + filenames[0] + L"\"";
 
         msf::CreateProcess(nullptr, command);
     }
