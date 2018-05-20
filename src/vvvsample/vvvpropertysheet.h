@@ -23,7 +23,7 @@ public:
     VVVPropertySheet& operator=(const VVVPropertySheet&) = delete;
     VVVPropertySheet& operator=(VVVPropertySheet&& other) = delete;
 
-    int DoModal(HWND hwnd, long& wEventId)
+    int DoModal(HWND hwnd, long& wEventId) noexcept
     {
         m_eventID = 0;
         const auto result = msf::PropertySheet::DoModal(hwnd);

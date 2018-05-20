@@ -74,12 +74,18 @@ public:
 
     void GetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium)
     {
+#pragma warning(push)
+#pragma warning(disable : 26493) // invalid warning about C-Style cast [visual studio 15.7.1]
         RaiseExceptionIfFailed(GetInterfacePtr()->GetData(&const_cast<FORMATETC&>(formatetc), &stgmedium));
+#pragma warning(pop)
     }
 
     void SetData(const FORMATETC& formatetc, const STGMEDIUM& stgmedium, bool fRelease)
     {
+#pragma warning(push)
+#pragma warning(disable : 26493) // invalid warning about C-Style cast [visual studio 15.7.1]
         RaiseExceptionIfFailed(GetInterfacePtr()->SetData(&const_cast<FORMATETC&>(formatetc), &const_cast<STGMEDIUM&>(stgmedium), fRelease));
+#pragma warning(pop)
     }
 };
 

@@ -43,6 +43,12 @@ public:
         return 1;
     }
 
+    ShellExtPropertyPageImpl(const ShellExtPropertyPageImpl&) = delete;
+    ShellExtPropertyPageImpl(ShellExtPropertyPageImpl&&) = delete;
+    ShellExtPropertyPageImpl& operator=(const ShellExtPropertyPageImpl&) = delete;
+    ShellExtPropertyPageImpl& operator=(ShellExtPropertyPageImpl&&) = delete;
+
+protected:
     explicit ShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) noexcept :
         ATL::CSnapInPropertyPageImpl<T>(lpszTitle)
     {
@@ -56,12 +62,6 @@ public:
         ATL::_pAtlModule->Unlock();
     }
 
-    ShellExtPropertyPageImpl(const ShellExtPropertyPageImpl&) = delete;
-    ShellExtPropertyPageImpl(ShellExtPropertyPageImpl&&) = delete;
-    ShellExtPropertyPageImpl& operator=(const ShellExtPropertyPageImpl&) = delete;
-    ShellExtPropertyPageImpl& operator=(ShellExtPropertyPageImpl&&) = delete;
-
-
     std::wstring GetDlgItemText(int nID) const
     {
         // Use ATL's implementation of GetDlgItemText.
@@ -72,7 +72,9 @@ public:
 
 #pragma warning(push)
 #pragma warning(disable: 26433) // use override
-    BEGIN_MSG_MAP(CShellExtPropertyPageImpl)
+#pragma warning(disable: 26496) // assigned only once, mark it as const
+#pragma warning(disable: 26436) // needs protected non-virtual destructor
+    BEGIN_MSG_MAP(ShellExtPropertyPageImpl)
         CHAIN_MSG_MAP(ATL::CSnapInPropertyPageImpl<T>)
     END_MSG_MAP()
 #pragma warning(pop)

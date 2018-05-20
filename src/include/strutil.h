@@ -47,7 +47,11 @@ inline std::wstring LoadResourceString(UINT nID)
 inline std::wstring FormatResourceMessage(UINT messageID, ...)
 {
     va_list args;
+
+#pragma warning(push)
+#pragma warning(disable : 26492) // Don't use const_cast to cast away const (type.3).
     va_start(args, messageID);
+#pragma warning(pop)
 
     LPWSTR lpMsgBuf{};
     const auto size = FormatMessageW(
