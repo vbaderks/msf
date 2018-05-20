@@ -34,7 +34,7 @@ public:
     DiskCleanup& operator=(const DiskCleanup&) = delete;
     DiskCleanup& operator=(DiskCleanup&&) = delete;
 
-    bool InitializeCore(HKEY /*hkRegKey*/, LPCWSTR /*pcwszVolume*/, LPCWSTR /*pcwszKeyName*/, LPWSTR* /*ppwszDisplayName*/, LPWSTR* /*ppwszDescription*/, LPWSTR* /*ppwszBtnText*/, DWORD* /*pdwFlags*/)
+    bool InitializeCore(HKEY /*hkRegKey*/, PCWSTR /*pcwszVolume*/, PCWSTR /*pcwszKeyName*/, PWSTR* /*ppwszDisplayName*/, PWSTR* /*ppwszDescription*/, PWSTR* /*ppwszBtnText*/, DWORD* /*pdwFlags*/)
     {
         return false;
     }

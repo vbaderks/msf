@@ -41,7 +41,7 @@ inline int UIntCmp(unsigned int n1, unsigned int n2) noexcept
 
 inline std::wstring FormatLastError(DWORD dwLastError)
 {
-    LPWSTR lpMsgBuf;
+    PWSTR lpMsgBuf;
     const auto size = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
         FORMAT_MESSAGE_FROM_SYSTEM |
         FORMAT_MESSAGE_IGNORE_INSERTS,

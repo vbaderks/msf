@@ -25,9 +25,9 @@ public:
     }
 
     // IEmptyVolumeCache
-    HRESULT __stdcall Initialize(HKEY hkRegKey, LPCWSTR pcwszVolume, LPWSTR* ppwszDisplayName, LPWSTR* ppwszDescription, DWORD* pdwFlags) noexcept override
+    HRESULT __stdcall Initialize(HKEY hkRegKey, PCWSTR pcwszVolume, PWSTR* ppwszDisplayName, PWSTR* ppwszDescription, DWORD* pdwFlags) noexcept override
     {
-        LPWSTR pwszBtnText;
+        PWSTR pwszBtnText;
         const auto result = InitializeEx(hkRegKey, pcwszVolume, nullptr, ppwszDisplayName, ppwszDescription, &pwszBtnText, pdwFlags);
         // Release BtnText;
         return result;
@@ -108,7 +108,7 @@ public:
     }
 
     // IEmptyVolumeCache2
-    HRESULT __stdcall InitializeEx(HKEY hkRegKey, LPCWSTR pcwszVolume, LPCWSTR pcwszKeyName, LPWSTR* ppwszDisplayName, LPWSTR* ppwszDescription, LPWSTR* ppwszBtnText, DWORD* pdwFlags) noexcept override
+    HRESULT __stdcall InitializeEx(HKEY hkRegKey, PCWSTR pcwszVolume, PCWSTR pcwszKeyName, PWSTR* ppwszDisplayName, PWSTR* ppwszDescription, PWSTR* ppwszBtnText, DWORD* pdwFlags) noexcept override
     {
         try
         {

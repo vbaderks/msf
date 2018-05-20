@@ -36,7 +36,7 @@ class __declspec(novtable) IItemNameLimitsImpl :
 {
 public:
     // IItemNameLimits
-    HRESULT __stdcall GetValidCharacters(LPWSTR* ppwszValidChars, LPWSTR* ppwszInvalidChars) override
+    HRESULT __stdcall GetValidCharacters(PWSTR* ppwszValidChars, PWSTR* ppwszInvalidChars) override
     {
         try
         {
@@ -73,7 +73,7 @@ public:
     // Purpose: called by the shell to retrieve the max length.
     //          Length can depend on the current string. (UNC pathname has
     //          different length then local path, etc).
-    HRESULT __stdcall GetMaxLength(__RPC__in_string LPCWSTR pszName, __RPC__out int* piMaxNameLen) override
+    HRESULT __stdcall GetMaxLength(__RPC__in_string PCWSTR pszName, __RPC__out int* piMaxNameLen) override
     {
         try
         {

@@ -38,7 +38,7 @@ public:
     }
 
     // IInitializeWithFile
-    HRESULT __stdcall Initialize(LPCWSTR pszFilePath, DWORD dwMode) override
+    HRESULT __stdcall Initialize(PCWSTR pszFilePath, DWORD dwMode) override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, filename=%s)\n", this, dwMode, pszFilePath);
 
@@ -69,7 +69,7 @@ protected:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
     }
 
-    virtual void InitializeCore(LPCWSTR pszFilePath, DWORD dwMode) = 0;
+    virtual void InitializeCore(PCWSTR pszFilePath, DWORD dwMode) = 0;
 
 private:
     bool m_initialized{};

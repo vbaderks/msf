@@ -54,7 +54,7 @@ protected:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n", this);
     }
 
-    virtual LPCWSTR GetInfoTip(DWORD dwFlags) = 0;
+    virtual PCWSTR GetInfoTip(DWORD dwFlags) = 0;
 };
 
 } // namespace msf

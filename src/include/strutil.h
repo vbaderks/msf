@@ -30,13 +30,13 @@ inline std::wstring FormatResourceMessage(UINT messageID, ...)
     va_start(args, messageID);
 #pragma warning(pop)
 
-    LPWSTR lpMsgBuf{};
+    PWSTR lpMsgBuf{};
     const auto size = FormatMessageW(
         FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_HMODULE,
         reinterpret_cast<HMODULE>(&__ImageBase),
         messageID,
         0,
-        reinterpret_cast<LPWSTR>(&lpMsgBuf),
+        reinterpret_cast<PWSTR>(&lpMsgBuf),
         0, &args);
     if (!size)
         RaiseLastErrorException();

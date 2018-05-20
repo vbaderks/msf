@@ -29,7 +29,7 @@ public:
     static bool IsMemberOfImpl(PCWSTR path, DWORD /*dwAttrib*/) noexcept
     {
         // Add an overlay for files that have the extension .vvvv in this sample.
-        LPCWSTR const extension = PathFindExtension(path);
+        PCWSTR const extension = PathFindExtension(path);
         return wcscmp(extension, L".vvvv") == 0;
     }
 

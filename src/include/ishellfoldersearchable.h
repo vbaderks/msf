@@ -17,7 +17,7 @@ DECLARE_INTERFACE_IID_(IShellFolderSearchable, IUnknown, "4E1AE66C-204B-11d2-8DB
     //  The returned Shell folder's enumerator will have any
     //   search hits for the given search string.
     //  punkOnAsyncSearch will be QI'd for IShellFolderSearchableCallback
-    STDMETHOD(FindString)(LPCWSTR pwszTarget, __inout_opt DWORD *pdwFlags,
+    STDMETHOD(FindString)(PCWSTR pwszTarget, __inout_opt DWORD *pdwFlags,
                           __in_opt IUnknown *punkOnAsyncSearch, __out LPITEMIDLIST *ppidlOut) = 0;
 
     // CancelAsyncSearch -

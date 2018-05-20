@@ -98,7 +98,7 @@ public:
     }
 
     // IExtractImage
-    HRESULT __stdcall GetLocation(LPWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
+    HRESULT __stdcall GetLocation(PWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
                                   __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags) noexcept override
     {
         try

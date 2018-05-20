@@ -43,7 +43,7 @@ protected:
     QueryInfo() = default;
     ~QueryInfo() = default;
 
-    LPCWSTR GetInfoTip(DWORD /* dwFlags */) override
+    PCWSTR GetInfoTip(DWORD /* dwFlags */) override
     {
         return m_infoTipText.c_str();
     }

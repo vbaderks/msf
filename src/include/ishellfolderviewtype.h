@@ -19,7 +19,7 @@ DECLARE_INTERFACE_IID_(IShellFolderViewType, IUnknown, "49422C1E-1C03-11d2-8DAB-
     // GetDefaultViewName:
     //   Returns the name of the default view.  The names of the other views
     //   can be retrieved by calling GetDisplayNameOf.
-    STDMETHOD(GetDefaultViewName)(DWORD  uFlags, __out LPWSTR *ppwszName) PURE;
+    STDMETHOD(GetDefaultViewName)(DWORD  uFlags, __out PWSTR *ppwszName) PURE;
     STDMETHOD(GetViewTypeProperties)(PCUITEMID_CHILD pidl, __out DWORD *pdwFlags) = 0;
 
     // TranslateViewPidl:

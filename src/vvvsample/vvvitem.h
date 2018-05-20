@@ -12,7 +12,7 @@
 class VVVItem : public msf::ItemBase
 {
 public:
-    static int GetMaxNameLength(LPCWSTR /*pszName*/) noexcept
+    static int GetMaxNameLength(PCWSTR /*pszName*/) noexcept
     {
         return 10; // note: limit is 10 for easy testing.
     }
