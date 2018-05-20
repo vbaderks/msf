@@ -22,14 +22,13 @@ public:
     void SetLabel(const std::wstring& label) const;
     unsigned int GetFileCount() const;
     LPITEMIDLIST GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) const;
-    void DeleteItems(const CVVVItemList& items) const;
+    void DeleteItems(const std::vector<VVVItem>& items) const;
     void SetItem(const VVVItem& item) const;
 
     PUIDLIST_RELATIVE AddItem(const std::wstring& strFile) const;
-    PUIDLIST_RELATIVE AddItem(unsigned int nSize, const ATL::CString& name) const;
+    PUIDLIST_RELATIVE AddItem(unsigned int nSize, const std::wstring& name) const;
 
 private:
-
     void AddItem(const VVVItem& item) const;
     void DeleteItem(const VVVItem& item) const;
 

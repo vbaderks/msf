@@ -169,7 +169,7 @@ protected:
     }
 
 private:
-    ATL::CString m_filename;
+    std::wstring m_filename;
     bool m_isCachedSupportedClipboardFormat{};
 };
 

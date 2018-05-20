@@ -1259,7 +1259,7 @@ protected:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::GetColumnDetailsOf (iColumn=%d, cxChar=%d)\n", iColumn, psd->cxChar);
 
         psd->fmt = m_columninfos[iColumn].m_fmt;
-        StrToStrRet(m_columninfos[iColumn].m_strName, &psd->str);
+        StrToStrRet(m_columninfos[iColumn].m_strName.c_str(), &psd->str);
     }
 
     void GetItemDetailsOf(UINT iColumn, PCUITEMID_CHILD pidl, SHELLDETAILS* psd) const
@@ -1280,7 +1280,7 @@ protected:
         const ATL::CComPtr<IShellFolderViewCB> shellfolderviewcb =
             static_cast<T*>(this)->CreateShellFolderViewCB();
 
-        SFV_CREATE sfvcreate {sizeof(SFV_CREATE), this, nullptr, shellfolderviewcb};
+        SFV_CREATE sfvcreate{sizeof(SFV_CREATE), this, nullptr, shellfolderviewcb};
 
         ATL::CComPtr<IShellView> rshellview;
         RaiseExceptionIfFailed(SHCreateShellFolderView(&sfvcreate, &rshellview));
@@ -1344,27 +1344,27 @@ protected:
     }
 
     // Purpose: override this function to control which clipboards formats are supported.
-    bool IsSupportedClipboardFormat(IDataObject* /*pdataobject*/)
+    bool IsSupportedClipboardFormat(IDataObject* /*pdataobject*/) const
     {
         return false;
     }
 
     // Purpose: override this function to control what the source should do after a move.
     //          See SDK 'Handling Shell Data Transfer Scenarios' for more info.
-    bool CanPerformOptimizedMove(IDataObject* /*pdataobject*/) noexcept
+    bool CanPerformOptimizedMove(IDataObject* /*pdataobject*/) const noexcept
     {
         return false;
     }
 
-    class CColumnInfo
+    class CColumnInfo final
     {
     public:
-        CColumnInfo(const ATL::CString& strName, int fmt, SHCOLSTATEF csFlags) :
-            m_strName(strName), m_fmt(fmt), m_csFlags(csFlags)
+        CColumnInfo(const std::wstring name, int fmt, SHCOLSTATEF csFlags) :
+            m_strName(std::move(name)), m_fmt(fmt), m_csFlags(csFlags)
         {
         }
 
-        ATL::CString m_strName;
+        std::wstring m_strName;
         int         m_fmt;
         SHCOLSTATEF m_csFlags;
     };
@@ -1476,7 +1476,7 @@ protected:
         return IsBitSet(sfgaof, sfgaofMask);
     }
 
-    void ReportAddItem(PUIDLIST_RELATIVE pidlItem) const
+    void ReportAddItem(PCUIDLIST_RELATIVE pidlItem) const
     {
         ChangeNotifyPidl(SHCNE_CREATE, SHCNF_FLUSH, ItemIDList(m_pidlFolder, pidlItem));
     }

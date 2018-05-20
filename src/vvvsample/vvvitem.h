@@ -7,7 +7,6 @@
 
 
 #include <msf.h>
-#include <vector>
 
 
 class VVVItem : public msf::ItemBase
@@ -18,9 +17,9 @@ public:
         return 10; // note: limit is 10 for easy testing.
     }
 
-    static PUIDLIST_RELATIVE CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
+    static PUIDLIST_RELATIVE CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const std::wstring& strName)
     {
-        PUIDLIST_RELATIVE pidl = msf::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
+        const PUIDLIST_RELATIVE pidl = msf::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
 
         InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
             nId, nSize, bFolder, strName);
@@ -89,13 +88,13 @@ private:
     };
     #pragma pack()
 
-    static void InitializeItemData(SItemData* pitemdata, unsigned int nId, unsigned int nSize, bool bFolder, const ATL::CString& strName)
+    static void InitializeItemData(SItemData* pitemdata, unsigned int nId, unsigned int nSize, bool bFolder, const std::wstring& name)
     {
         pitemdata->nTypeID = TypeID;
         pitemdata->nID     = nId;
         pitemdata->bFolder = bFolder;
         pitemdata->nSize   = nSize;
-        wcscpy_s(pitemdata->wszName, _countof(pitemdata->wszName), ATL::CStringW(strName));
+        wcscpy_s(pitemdata->wszName, _countof(pitemdata->wszName), name.c_str());
     }
 
     const SItemData& GetItemData() const noexcept
@@ -105,5 +104,3 @@ private:
 
     int CompareByName(const VVVItem& item) const noexcept;
 };
-
-using CVVVItemList = std::vector<VVVItem>;

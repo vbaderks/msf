@@ -56,7 +56,7 @@ public:
     }
 
     // Purpose: called by msf when the shell folder needs to show a sub folder.
-    void InitializeSubFolder(const CVVVItemList& items)
+    void InitializeSubFolder(const std::vector<VVVItem>& items)
     {
         m_strSubFolder.clear();
 
@@ -185,7 +185,7 @@ public:
     // Purpose: handles the 'properties request.
     //          The property sheet/page allows the user to change
     //          the name and size of an item.
-    long OnProperties(HWND hwnd, CVVVItemList& items)
+    long OnProperties(HWND hwnd, std::vector<VVVItem>& items)
     {
         ATLASSERT(items.size() == 1);
         auto& item = items[0];
@@ -201,7 +201,7 @@ public:
     }
 
     // Purpose: Called by msf/shell when items must be deleted.
-    long OnDelete(HWND hwnd, const CVVVItemList& items) const
+    long OnDelete(HWND hwnd, const std::vector<VVVItem>& items) const
     {
         if (!hwnd && !UserConfirmsFileDelete(hwnd, items))
             return 0; // user wants to abort the file deletion process.
@@ -252,7 +252,7 @@ private:
 
     // Purpose: Ask the user if he is really sure about the file delete action.
     //          Deleted files cannot be restored from the recycle bin.
-    static bool UserConfirmsFileDelete(HWND hwnd, const CVVVItemList& items)
+    static bool UserConfirmsFileDelete(HWND hwnd, const std::vector<VVVItem>& items)
     {
         ATL::CString strMessage;
         UINT nCaptionResId;
@@ -270,7 +270,7 @@ private:
         }
 
         return IsolationAwareMessageBox(hwnd, strMessage,
-            msf::LoadString(nCaptionResId), MB_YESNO | MB_ICONQUESTION) == IDYES;
+            msf::LoadResourceString(nCaptionResId).c_str(), MB_YESNO | MB_ICONQUESTION) == IDYES;
     }
 
     void AddItem(const wstring& strFile) const

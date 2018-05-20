@@ -60,11 +60,7 @@ public:
     BOOL OnApply()
     {
         m_wEventId = 0;
-
-        ATL::CString strName;
-        (void)GetDlgItemText(IDC_EDIT_ITEM_NAME, strName);
-        strName.Trim();
-        const std::wstring name(strName); // TODO
+        const std::wstring name{GetEditItemName()};
 
         if (m_item.GetDisplayName() != name)
         {
@@ -80,7 +76,7 @@ public:
         if (m_wEventId != 0)
         {
             m_pidlNew.Attach(VVVItem::CreateItemIdList(m_item.GetID(),
-                nSize, m_item.IsFolder(), strName));
+                                                       nSize, m_item.IsFolder(), name));
         }
 
         return true;
@@ -102,6 +98,14 @@ private:
 
         // Note: SHLimitInputEdit is only supported on Windows XP.
         //ATLVERIFY(SUCCEEDED(SHLimitInputEdit(GetDlgItem(IDC_EDITm_item_NAME), m_rshellfolder)));
+    }
+
+    std::wstring GetEditItemName() const
+    {
+        ATL::CString strName;
+        (void)GetDlgItemText(IDC_EDIT_ITEM_NAME, strName);
+        strName.Trim();
+        return strName.GetString();
     }
 
     // Member variables

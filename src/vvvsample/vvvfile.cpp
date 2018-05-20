@@ -73,16 +73,16 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
             {
                 const auto nSize = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
                 msf::RaiseExceptionIf(nSize == static_cast<UINT>(-1));
-                auto strName = GetPrivateProfileString(strAppName.c_str(), TSZ_NAME);
+                const auto strName = GetPrivateProfileString(strAppName.c_str(), TSZ_NAME);
 
-                return VVVItem::CreateItemIdList(nItemIterator, nSize, bFolder, strName.c_str());
+                return VVVItem::CreateItemIdList(nItemIterator, nSize, bFolder, strName);
             }
         }
     }
 }
 
 
-void VVVFile::DeleteItems(const CVVVItemList& items) const
+void VVVFile::DeleteItems(const std::vector<VVVItem>& items) const
 {
     for (auto item : items)
     {
@@ -106,18 +106,16 @@ void VVVFile::SetItem(const VVVItem& item) const
 
 PUIDLIST_RELATIVE VVVFile::AddItem(const std::wstring& strFile) const
 {
-    const ATL::CString strName(PathFindFileName(strFile.c_str()));
-
+    const std::wstring strName(PathFindFileName(strFile.c_str()));
     return AddItem(static_cast<unsigned int>(fs::file_size(strFile)), strName);
 }
 
 
-PUIDLIST_RELATIVE VVVFile::AddItem(unsigned int nSize, const ATL::CString& name) const
+PUIDLIST_RELATIVE VVVFile::AddItem(unsigned int nSize, const std::wstring& name) const
 {
     const auto nId = FindFreeEntry();
 
     msf::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, name));
-
     AddItem(VVVItem(pidlItem.GetRelative()));
 
     return pidlItem.DetachRelative();
@@ -179,7 +177,7 @@ wstring VVVFile::GetAppNameDirectory() const
 wstring VVVFile::GetAppNameItem(unsigned int nID) const
 {
     ATL::CString strAppName;
-    strAppName.Format(TSZ_FILE_FORMAT, nID); // TODO
+    strAppName.Format(TSZ_FILE_FORMAT, nID);
 
     if (!m_folder.empty())
     {

@@ -87,7 +87,7 @@ private:
 
         for (auto fileName : m_filenames)
         {
-            ATLVERIFY(lstrcpy(pszBuf, fileName.GetString()));
+            ATLVERIFY(lstrcpy(pszBuf, fileName.c_str()));
             pszBuf += fileName.GetLength() + 1;
         }
 
@@ -100,7 +100,7 @@ private:
     {
         UINT nchars = 0;
 
-        for (auto fileName : m_filenames)
+        for (const auto& fileName : m_filenames)
         {
             nchars += fileName.GetLength() + 1;
         }
@@ -108,7 +108,7 @@ private:
         return sizeof(DROPFILES) + (sizeof(wchar_t) * (nchars + 1));
     }
 
-    std::vector<CString> m_filenames;
+    std::vector<std::wstring> m_filenames;
 };
 
 } // end msf namespace
