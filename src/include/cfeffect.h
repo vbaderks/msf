@@ -13,7 +13,7 @@ namespace msf
 {
 
 /// <summary>Sets the Clipboard format effect into a data object.</summary>
-inline HRESULT SetClipboardFormatEffect(LPCTSTR lpszFormat, _In_ IDataObject* pdataobject, DWORD dwEffect)
+inline HRESULT SetClipboardFormatEffect(PCWSTR lpszFormat, _In_ IDataObject* pdataobject, DWORD dwEffect)
 {
     StorageMedium stgmedium(GlobalAllocThrow(sizeof(DWORD)));
 
@@ -31,7 +31,7 @@ inline HRESULT SetClipboardFormatEffect(LPCTSTR lpszFormat, _In_ IDataObject* pd
 }
 
 /// <summary>Gets the clipboard format effect from a data object.</summary>
-inline HRESULT GetClipboardFormatEffect(LPCTSTR lpszFormat, _In_ IDataObject* pdataobject, DWORD& dwEffect)
+inline HRESULT GetClipboardFormatEffect(PCWSTR lpszFormat, _In_ IDataObject* pdataobject, DWORD& dwEffect)
 {
     FormatEtc formatetc(Win32::RegisterClipboardFormat(lpszFormat));
     StorageMedium medium;

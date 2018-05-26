@@ -46,11 +46,11 @@ public:
 
             case SFVM_GETHELPTEXT:
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IShellFolderViewCB::MessageSFVCB (OnGetHelpText, idCmd = %d)\n", LOWORD(wParam));
-                return static_cast<T*>(this)->OnGetHelpText(LOWORD(wParam), HIWORD(wParam), reinterpret_cast<LPTSTR>(lParam));
+                return static_cast<T*>(this)->OnGetHelpText(LOWORD(wParam), HIWORD(wParam), reinterpret_cast<PWSTR>(lParam));
 
             case SFVM_GETTOOLTIPTEXT:
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IShellFolderViewCB::MessageSFVCB (OnGetToolTipText)\n");
-                return static_cast<T*>(this)->OnGetToolTipText(LOWORD(wParam), HIWORD(wParam), reinterpret_cast<LPTSTR>(lParam));
+                return static_cast<T*>(this)->OnGetToolTipText(LOWORD(wParam), HIWORD(wParam), reinterpret_cast<PWSTR>(lParam));
 
             case SFVM_GETBUTTONINFO:
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IShellFolderViewCB::MessageSFVCB (OnGetButtonInfo)\n");
@@ -402,12 +402,12 @@ protected:
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetHelpText(unsigned short /* idCmd */, unsigned short /* cchMax */, LPTSTR /* pszText */) noexcept
+    HRESULT OnGetHelpText(unsigned short /* idCmd */, unsigned short /* cchMax */, PWSTR /* pszText */) noexcept
     {
         return E_NOTIMPL;
     }
 
-    HRESULT OnGetToolTipText(unsigned short /* idCmd */, unsigned short /* cchMax */, LPTSTR /* pszText */) noexcept
+    HRESULT OnGetToolTipText(unsigned short /* idCmd */, unsigned short /* cchMax */, PWSTR /* pszText */) noexcept
     {
         return E_NOTIMPL;
     }

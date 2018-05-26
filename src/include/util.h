@@ -48,7 +48,7 @@ inline std::wstring FormatLastError(DWORD dwLastError)
                                     nullptr,
                                     dwLastError,
                                     MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-                                    reinterpret_cast<LPTSTR>(&lpMsgBuf),
+                                    reinterpret_cast<PWSTR>(&lpMsgBuf),
                                     0,
                                     nullptr);
     if (!size)
@@ -144,7 +144,7 @@ ATLPREFAST_UNSUPPRESS()
 
 // Purpose: helper function to retrieve string from registry. Function will return string and
 //          and true if string could be obtained.
-inline bool QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, ATL::CString& strValue) noexcept
+inline bool QueryRegKeyStringValue(ATL::CRegKey& regkey, PCWSTR pszValueName, ATL::CString& strValue) noexcept
 {
     unsigned long ulLength = 0;
     if (regkey.QueryStringValue(pszValueName, nullptr, &ulLength) != ERROR_MORE_DATA)
@@ -159,7 +159,7 @@ inline bool QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, A
 
 
 // Purpose: Helper for use cases to read optional registry keys.
-inline ATL::CString QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, const ATL::CString& strDefault = ATL::CString()) noexcept
+inline ATL::CString QueryRegKeyStringValue(ATL::CRegKey& regkey, PCWSTR pszValueName, const ATL::CString& strDefault = ATL::CString()) noexcept
 {
     ATL::CString strValue;
     if (QueryRegKeyStringValue(regkey, pszValueName, strValue))
@@ -171,7 +171,7 @@ inline ATL::CString QueryRegKeyStringValue(ATL::CRegKey& regkey, LPCTSTR pszValu
 }
 
 
-inline void QueryMultiStringValue(ATL::CRegKey& regkey, LPCTSTR pszValueName, std::vector<ATL::CString>& rgStrings)
+inline void QueryMultiStringValue(ATL::CRegKey& regkey, PCWSTR pszValueName, std::vector<ATL::CString>& rgStrings)
 {
     rgStrings.clear();
 
@@ -226,7 +226,7 @@ inline HGLOBAL GlobalAllocThrow(SIZE_T dwBytes, UINT uFlags = GMEM_FIXED)
 class Win32
 {
 public:
-    static CLIPFORMAT RegisterClipboardFormat(_In_ LPCTSTR lpszFormat)
+    static CLIPFORMAT RegisterClipboardFormat(_In_ PCWSTR lpszFormat)
     {
         const unsigned int n = ::RegisterClipboardFormat(lpszFormat);
         RaiseExceptionIf(n == 0);
@@ -295,7 +295,7 @@ inline IDataObjectPtr OleGetClipboard()
 }
 
 
-inline int GetSystemImageListIndex(LPCTSTR pszPath) noexcept
+inline int GetSystemImageListIndex(PCWSTR pszPath) noexcept
 {
     SHFILEINFO sfi{};
     if (!SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof sfi,

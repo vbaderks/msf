@@ -34,7 +34,7 @@ public:
         CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
     }
 
-    explicit FormatEtc(LPCTSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
+    explicit FormatEtc(PCWSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
          DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept : FORMATETC()
     {
         CommonConstruct(Win32::RegisterClipboardFormat(lpszFormat), dwtymed, pdvtd, dwaspect, index);

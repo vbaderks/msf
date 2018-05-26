@@ -49,7 +49,7 @@ public:
     ShellExtPropertyPageImpl& operator=(ShellExtPropertyPageImpl&&) = delete;
 
 protected:
-    explicit ShellExtPropertyPageImpl(LPCTSTR lpszTitle = nullptr) noexcept :
+    explicit ShellExtPropertyPageImpl(PCWSTR lpszTitle = nullptr) noexcept :
         ATL::CSnapInPropertyPageImpl<T>(lpszTitle)
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellExtPropertyPageImpl::ShellExtPropertyPageImpl (instance=%p)\n", this);

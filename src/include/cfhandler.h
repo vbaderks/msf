@@ -69,7 +69,7 @@ protected:
     {
     }
 
-    ClipboardFormatHandler(LPCTSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
+    ClipboardFormatHandler(PCWSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
         m_clipformat(Win32::RegisterClipboardFormat(lpszFormat)),
         m_bCanGetData(bCanGetData),
         m_bCanSetData(bCanSetData)

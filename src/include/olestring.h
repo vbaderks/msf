@@ -20,7 +20,7 @@ public:
     OleString& operator=(const OleString&) = delete;
     OleString& operator=(OleString&&) = delete;
 
-    static wchar_t* Dup(LPCTSTR pszSrc)
+    static wchar_t* Dup(PCWSTR pszSrc)
     {
         wchar_t* pwz;
         RaiseExceptionIfFailed(SHStrDup(pszSrc, &pwz));

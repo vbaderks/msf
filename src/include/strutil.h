@@ -46,7 +46,7 @@ inline std::wstring FormatResourceMessage(UINT messageID, ...)
     return result;
 }
 
-inline int CompareString(_In_ LCID Locale, _In_ DWORD dwCmpFlags, LPCTSTR lpString1, LPCTSTR lpString2) noexcept
+inline int CompareString(_In_ LCID Locale, _In_ DWORD dwCmpFlags, PCWSTR lpString1, PCWSTR lpString2) noexcept
 {
     return ::CompareString(Locale, dwCmpFlags, lpString1, -1, lpString2, -1);
 }

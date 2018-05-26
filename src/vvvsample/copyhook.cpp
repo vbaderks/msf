@@ -37,8 +37,8 @@ public:
     CopyHook& operator=(CopyHook&&) = delete;
 
     // ICopyHook overrides
-    UINT __stdcall CopyCallback(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ LPCTSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
-                                _In_opt_ LPCTSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/) noexcept final
+    UINT __stdcall CopyCallback(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ PCWSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
+                                _In_opt_ PCWSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/) noexcept final
     {
         if (wFunc == FO_DELETE && ATL::CString(pszSrcFile).Find(L"VVV") != -1)
         {

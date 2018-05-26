@@ -39,7 +39,7 @@ public:
         return pidl;
     }
 
-    static LPITEMIDLIST CreateFromPath(LPCTSTR pszPath)
+    static LPITEMIDLIST CreateFromPath(PCWSTR pszPath)
     {
         const LPITEMIDLIST pidl = ILCreateFromPath(pszPath);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
@@ -100,7 +100,7 @@ public:
     {
     }
 
-    explicit ItemIDList(LPCTSTR pszPath) :
+    explicit ItemIDList(PCWSTR pszPath) :
         m_pidl(CreateFromPath(pszPath))
     {
     }

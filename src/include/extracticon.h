@@ -109,7 +109,7 @@ protected:
         m_pidl.CloneFrom(item.GetItemIdList());
     }
 
-    HRESULT __stdcall GetIconLocation(UINT uFlags, LPTSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) noexcept override
+    HRESULT __stdcall GetIconLocation(UINT uFlags, PWSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
 
@@ -127,7 +127,7 @@ protected:
         }
     }
 
-    HRESULT __stdcall Extract(LPCTSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize) noexcept override
+    HRESULT __stdcall Extract(PCWSTR /*pszFile*/, UINT /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, UINT nIconSize) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
 
