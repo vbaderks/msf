@@ -11,8 +11,8 @@
 #include <shellapi.h>
 #include <vector>
 
-
-namespace msf {
+namespace msf
+{
 
 // Purpose: 'StrCmp' for numeric values. Useful for IShellFolder::CompareIDs
 inline int IntCmp(int n1, int n2) noexcept
@@ -43,14 +43,14 @@ inline std::wstring FormatLastError(DWORD dwLastError)
 {
     PWSTR lpMsgBuf;
     const auto size = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
-        FORMAT_MESSAGE_FROM_SYSTEM |
-        FORMAT_MESSAGE_IGNORE_INSERTS,
-        nullptr,
-        dwLastError,
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-        reinterpret_cast<LPTSTR>(&lpMsgBuf),
-        0,
-        nullptr);
+                                        FORMAT_MESSAGE_FROM_SYSTEM |
+                                        FORMAT_MESSAGE_IGNORE_INSERTS,
+                                    nullptr,
+                                    dwLastError,
+                                    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+                                    reinterpret_cast<LPTSTR>(&lpMsgBuf),
+                                    0,
+                                    nullptr);
     if (!size)
         throw _com_error(HRESULT_FROM_WIN32(GetLastError()));
 
@@ -86,14 +86,12 @@ inline void IsolationAwareDllMain(DWORD dwReason)
 
 
 // Small helper class that initializes WIN32-STARTUPINFO use by Win32 CreateProcess function.
-struct CStartupInfo final : STARTUPINFO
+struct StartupInfo final : STARTUPINFO
 {
-    CStartupInfo() noexcept : STARTUPINFO()
+    StartupInfo() noexcept
+        : STARTUPINFO({sizeof(STARTUPINFO)})
     {
-        static_assert(sizeof(CStartupInfo) == sizeof(STARTUPINFO), "Helper should not add size!");
-
-        ZeroMemory(static_cast<STARTUPINFO*>(this), sizeof(STARTUPINFO));
-        cb = sizeof(STARTUPINFO);
+        static_assert(sizeof(StartupInfo) == sizeof(STARTUPINFO));
     }
 };
 
@@ -101,22 +99,31 @@ struct CStartupInfo final : STARTUPINFO
 // Small helper class that initializes and cleans PROCESS_INFORMATION (used by CreateProcess)
 struct ProcessInformation final : PROCESS_INFORMATION
 {
-    ProcessInformation() noexcept : PROCESS_INFORMATION()
+    ProcessInformation() noexcept
+        : PROCESS_INFORMATION({INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE})
     {
-        hProcess = INVALID_HANDLE_VALUE;
-        hThread  = INVALID_HANDLE_VALUE;
     }
 
     ~ProcessInformation()
     {
-        ATLVERIFY(CloseHandle(hProcess));
-        ATLVERIFY(CloseHandle(hThread));
+        CloseHandleIfNeeded(hProcess);
+        CloseHandleIfNeeded(hThread);
     }
 
     ProcessInformation(const ProcessInformation&) = delete;
     ProcessInformation(ProcessInformation&&) = delete;
     ProcessInformation& operator=(const ProcessInformation&) = delete;
     ProcessInformation& operator=(ProcessInformation&&) = delete;
+
+private:
+    static void CloseHandleIfNeeded(_In_ HANDLE hObject) noexcept
+    {
+        // Note: if CreateProcess fails it will set both handles to nullptr and not to INVALID_HANDLE_VALUE.
+        if (hObject == INVALID_HANDLE_VALUE || hObject == nullptr)
+            return;
+
+        ATLVERIFY(CloseHandle(hObject));
+    }
 };
 
 
@@ -125,12 +132,12 @@ struct ProcessInformation final : PROCESS_INFORMATION
 ATLPREFAST_SUPPRESS(6335) // suppress sa noise: leaking process handle
 inline void CreateProcess(PCWSTR szApplicationName, const std::wstring& cmdLine, PCWSTR lpCurrentDirectory = nullptr)
 {
-    CStartupInfo startupinfo;
-    ProcessInformation process_information;
+    StartupInfo startupInfo;
+    ProcessInformation processInformation;
     std::vector<wchar_t> cmdLineWritable(cmdLine.begin(), cmdLine.end());
 
     RaiseLastErrorExceptionIf(!::CreateProcess(szApplicationName, cmdLineWritable.data(),
-        nullptr, nullptr, false, 0, nullptr, lpCurrentDirectory, &startupinfo, &process_information));
+                                               nullptr, nullptr, false, 0, nullptr, lpCurrentDirectory, &startupInfo, &processInformation));
 }
 ATLPREFAST_UNSUPPRESS()
 
@@ -194,8 +201,8 @@ inline ATL::CString GetAppPath(const ATL::CString& strApp)
     ATL::CRegKey key;
 
     if (key.Open(HKEY_LOCAL_MACHINE,
-        L"Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + strApp,
-        KEY_READ) != ERROR_SUCCESS)
+                 L"Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + strApp,
+                 KEY_READ) != ERROR_SUCCESS)
         return ATL::CString();
 
     return QueryRegKeyStringValue(key, L"");
@@ -233,30 +240,47 @@ inline std::wstring GetClipboardFormatName(UINT format)
 {
     switch (format)
     {
-    case 0:               return L"Undefined";
-    case CF_TEXT:         return L"Text";
-    case CF_BITMAP:       return L"Bitmap";
-    case CF_METAFILEPICT: return L"Metafilepct";
-    case CF_SYLK:         return L"Sylk";
-    case CF_DIF:          return L"Dif";
-    case CF_TIFF:         return L"Tiff";
-    case CF_OEMTEXT:      return L"Oemtext";
-    case CF_DIB:          return L"Dib";
-    case CF_PALETTE:      return L"Palette";
-    case CF_PENDATA:      return L"Pendata";
-    case CF_RIFF:         return L"Riff";
-    case CF_WAVE:         return L"Wave";
-    case CF_UNICODETEXT:  return L"Unicodetext";
-    case CF_ENHMETAFILE:  return L"Enhmetafile";
-    case CF_HDROP:        return L"Hdrop";
-    case CF_LOCALE:       return L"Locale";
+    case 0:
+        return L"Undefined";
+    case CF_TEXT:
+        return L"Text";
+    case CF_BITMAP:
+        return L"Bitmap";
+    case CF_METAFILEPICT:
+        return L"Metafilepct";
+    case CF_SYLK:
+        return L"Sylk";
+    case CF_DIF:
+        return L"Dif";
+    case CF_TIFF:
+        return L"Tiff";
+    case CF_OEMTEXT:
+        return L"Oemtext";
+    case CF_DIB:
+        return L"Dib";
+    case CF_PALETTE:
+        return L"Palette";
+    case CF_PENDATA:
+        return L"Pendata";
+    case CF_RIFF:
+        return L"Riff";
+    case CF_WAVE:
+        return L"Wave";
+    case CF_UNICODETEXT:
+        return L"Unicodetext";
+    case CF_ENHMETAFILE:
+        return L"Enhmetafile";
+    case CF_HDROP:
+        return L"Hdrop";
+    case CF_LOCALE:
+        return L"Locale";
     default:
-        {
-            wchar_t szName[255];
+    {
+        wchar_t szName[255];
 
-            ATLVERIFY(::GetClipboardFormatName(format, szName, _countof(szName)));
-            return szName;
-        }
+        ATLVERIFY(::GetClipboardFormatName(format, szName, _countof(szName)));
+        return szName;
+    }
     }
 }
 
