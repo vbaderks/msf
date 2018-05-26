@@ -15,3 +15,10 @@ AllowShortIfStatementsOnASingleLine: false
 AlwaysBreakTemplateDeclarations: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 SpaceAfterTemplateKeyword: false
+Cpp11BracedListStyle: true
+
+BraceWrapping:
+  AfterNamespace: false
+
+FixNamespaceComments: true
+MaxEmptyLinesToKeep: 2  
