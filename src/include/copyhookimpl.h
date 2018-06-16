@@ -43,6 +43,11 @@ public:
         return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
     }
 
+    CopyHookImpl(const CopyHookImpl&) = delete;
+    CopyHookImpl(CopyHookImpl&&) = delete;
+    CopyHookImpl& operator=(const CopyHookImpl&) = delete;
+    CopyHookImpl& operator=(CopyHookImpl&&) = delete;
+
 protected:
     CopyHookImpl()
     {

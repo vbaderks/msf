@@ -163,6 +163,11 @@ public:
         return m_strFilename;
     }
 
+    ExtractImageImpl(const ExtractImageImpl&) = delete;
+    ExtractImageImpl(ExtractImageImpl&&) = delete;
+    ExtractImageImpl& operator=(const ExtractImageImpl&) = delete;
+    ExtractImageImpl& operator=(ExtractImageImpl&&) = delete;
+
 protected:
     ~ExtractImageImpl()
     {

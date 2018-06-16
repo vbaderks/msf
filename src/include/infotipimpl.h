@@ -58,6 +58,11 @@ public:
         }
     }
 
+    InfoTipImpl(const InfoTipImpl&) = delete;
+    InfoTipImpl(InfoTipImpl&&) = delete;
+    InfoTipImpl& operator=(const InfoTipImpl&) = delete;
+    InfoTipImpl& operator=(InfoTipImpl&&) = delete;
+
 protected:
     InfoTipImpl()
     {
