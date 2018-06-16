@@ -28,8 +28,12 @@ public:
         return S_OK;
     }
 
-protected:
+    IBrowserFrameOptionsImpl(const IBrowserFrameOptionsImpl&) = delete;
+    IBrowserFrameOptionsImpl(IBrowserFrameOptionsImpl&&) = delete;
+    IBrowserFrameOptionsImpl& operator=(const IBrowserFrameOptionsImpl&) = delete;
+    IBrowserFrameOptionsImpl& operator=(IBrowserFrameOptionsImpl&&) = delete;
 
+protected:
     explicit IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) noexcept :
         m_browserframeoptions(browserframeoptions)
     {

@@ -15,6 +15,11 @@ struct __declspec(uuid("176C11B1-4302-4164-8430-D5A9F0EEACDB")) IFrameLayoutDefi
     virtual HRESULT STDMETHODCALLTYPE GetLayoutDefinition (PCIDLIST_ABSOLUTE, HWND, IFrameLayoutDefinition **) = 0;
     virtual HRESULT STDMETHODCALLTYPE GetPossibleRedirectTarget (REFCLSID, INT *, PIDLIST_ABSOLUTE *) = 0;
 
+    IFrameLayoutDefinition(const IFrameLayoutDefinition&) = delete;
+    IFrameLayoutDefinition(IFrameLayoutDefinition&&) = delete;
+    IFrameLayoutDefinition& operator=(const IFrameLayoutDefinition&) = delete;
+    IFrameLayoutDefinition& operator=(IFrameLayoutDefinition&&) = delete;
+
 protected:
     ~IFrameLayoutDefinition() = default;
 };

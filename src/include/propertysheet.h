@@ -26,12 +26,9 @@ public:
     {
     public:
         explicit PropSheetHeader(std::wstring caption, DWORD dwflags = 0) :
+            PROPSHEETHEADER{sizeof(PROPSHEETHEADER), dwflags},
             m_caption{std::move(caption)}
         {
-            ZeroMemory(static_cast<PROPSHEETHEADER*>(this), sizeof(PROPSHEETHEADER));
-            dwSize = PROPSHEETHEADER_V1_SIZE;
-            dwFlags = dwflags;
-
             pszCaption = m_caption.c_str();
         }
 
@@ -46,7 +43,7 @@ public:
     };
 
     explicit PropertySheet(std::wstring strCaption, DWORD dwFlags = 0) :
-        m_propertySheetHeader(strCaption, dwFlags)
+        m_propertySheetHeader(std::move(strCaption), dwFlags)
     {
     }
 

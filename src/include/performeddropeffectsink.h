@@ -5,7 +5,6 @@
 //
 #pragma once
 
-
 namespace msf
 {
 
@@ -13,7 +12,13 @@ struct IPerformedDropEffectSink : IUnknown
 {
     virtual void OnDeleteAfterPaste(IDataObject* pdataobject) = 0;
 
+    IPerformedDropEffectSink(const IPerformedDropEffectSink&) = delete;
+    IPerformedDropEffectSink(IPerformedDropEffectSink&&) = delete;
+    IPerformedDropEffectSink& operator=(const IPerformedDropEffectSink&) = delete;
+    IPerformedDropEffectSink& operator=(IPerformedDropEffectSink&&) = delete;
+
 protected:
+    IPerformedDropEffectSink() = default;
     ~IPerformedDropEffectSink() = default;
 };
 

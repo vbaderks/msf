@@ -25,7 +25,11 @@ public:
     {
     }
 
+    ~CCfPerformedDropEffectHandler() = default;
+    CCfPerformedDropEffectHandler(const CCfPerformedDropEffectHandler&) = delete;
+    CCfPerformedDropEffectHandler(CCfPerformedDropEffectHandler&&) = delete;
     CCfPerformedDropEffectHandler& operator=(const CCfPerformedDropEffectHandler&) = delete;
+    CCfPerformedDropEffectHandler& operator=(CCfPerformedDropEffectHandler&&) = delete;
 
     void SetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium, bool bRelease) override
     {

@@ -35,6 +35,11 @@ public:
             szDescription, T::GetObjectCLSID(), szRootKey);
     }
 
+    DropTargetImpl(const DropTargetImpl&) = delete;
+    DropTargetImpl(DropTargetImpl&&) = delete;
+    DropTargetImpl& operator=(const DropTargetImpl&) = delete;
+    DropTargetImpl& operator=(DropTargetImpl&&) = delete;
+
     // IPersistFile
     HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
     {

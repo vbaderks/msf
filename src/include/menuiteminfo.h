@@ -38,6 +38,7 @@ public:
         SetSubMenu(hsubmenu);
     }
 
+    ~MenuItemInfo() = default;
     MenuItemInfo(const MenuItemInfo&) = delete;
     MenuItemInfo(MenuItemInfo&&) = delete;
     MenuItemInfo& operator=(const MenuItemInfo&) = delete;

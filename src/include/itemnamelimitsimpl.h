@@ -35,6 +35,13 @@ class __declspec(novtable) IItemNameLimitsImpl :
     public IItemNameLimits
 {
 public:
+    IItemNameLimitsImpl() = default;
+
+    IItemNameLimitsImpl(const IItemNameLimitsImpl&) = delete;
+    IItemNameLimitsImpl(IItemNameLimitsImpl&&) = delete;
+    IItemNameLimitsImpl& operator=(const IItemNameLimitsImpl&) = delete;
+    IItemNameLimitsImpl& operator=(IItemNameLimitsImpl&&) = delete;
+
     // IItemNameLimits
     HRESULT __stdcall GetValidCharacters(PWSTR* ppwszValidChars, PWSTR* ppwszInvalidChars) override
     {
