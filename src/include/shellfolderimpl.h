@@ -1359,7 +1359,7 @@ protected:
     class CColumnInfo final
     {
     public:
-        CColumnInfo(const std::wstring name, int fmt, SHCOLSTATEF csFlags) :
+        CColumnInfo(std::wstring name, int fmt, SHCOLSTATEF csFlags) :
             m_strName(std::move(name)), m_fmt(fmt), m_csFlags(csFlags)
         {
         }
