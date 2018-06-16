@@ -13,9 +13,9 @@
 namespace msf
 {
 
-inline void StringFromCLSID(REFCLSID clsid, OleString& olestrCLSID) noexcept
+inline void StringFromCLSID(REFCLSID classId, OleString& oleString) noexcept
 {
-    ATLVERIFY(SUCCEEDED(::StringFromCLSID(clsid, olestrCLSID.GetAddress())));
+    ATLVERIFY(SUCCEEDED(::StringFromCLSID(classId, oleString.GetAddress())));
 }
 
 

@@ -43,19 +43,19 @@ public:
     }
 
     StorageMedium() noexcept
+        : STGMEDIUM()
     {
-        tymed = TYMED_NULL;
-        hGlobal = nullptr;
-        pUnkForRelease = nullptr;
     }
 
     explicit StorageMedium(HGLOBAL hg) noexcept
+        : STGMEDIUM()
     {
         SetHGlobal(*this, hg);
     }
 
     // Purpose: passed in STGMEDIUM will be owned after a bitwise copy.
     explicit StorageMedium(const STGMEDIUM& stgmedium) noexcept
+        : STGMEDIUM()
     {
         *static_cast<STGMEDIUM*>(this) = stgmedium;
     }

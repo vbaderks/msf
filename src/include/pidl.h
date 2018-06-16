@@ -34,7 +34,7 @@ public:
 
     static PIDLIST_ABSOLUTE Combine(_In_opt_ PCIDLIST_ABSOLUTE pidl1, _In_opt_ PCUIDLIST_RELATIVE pidl2)
     {
-        PIDLIST_ABSOLUTE pidl = ILCombine(pidl1, pidl2); // -V595
+        PIDLIST_ABSOLUTE const pidl = ILCombine(pidl1, pidl2); // -V595
         RaiseExceptionIf(!pidl && !(pidl1 == nullptr && pidl2 == nullptr), E_OUTOFMEMORY);
         return pidl;
     }
@@ -50,15 +50,15 @@ public:
     {
         const size_t size = sizeof(short) + sizeItem;
 
-        auto pidl = static_cast<PUIDLIST_RELATIVE>(CoTaskMemAlloc(size + sizeof(short)));
+        auto const pidl = static_cast<PUIDLIST_RELATIVE>(CoTaskMemAlloc(size + sizeof(short)));
         if (!pidl)
             RaiseException(E_OUTOFMEMORY);
 
-        LPSHITEMID pshitemid = &(pidl->mkid);
+        LPSHITEMID const pshitemid = &(pidl->mkid);
         pshitemid->cb = static_cast<USHORT>(size);
 
-        PUIDLIST_RELATIVE pidlTerminator = ILGetNext(pidl);
-        LPSHITEMID pItemIdTerminator = &(pidlTerminator->mkid);
+        PUIDLIST_RELATIVE const pidlTerminator = ILGetNext(pidl);
+        LPSHITEMID const pItemIdTerminator = &(pidlTerminator->mkid);
         pItemIdTerminator->cb = 0;
 
         return pidl;
@@ -159,7 +159,7 @@ public:
 
     void AppendID(const SHITEMID* pmkid)
     {
-        PIDLIST_RELATIVE pidl = ILAppendID(GetRelative(), pmkid, true);
+        PIDLIST_RELATIVE const pidl = ILAppendID(GetRelative(), pmkid, true);
         RaiseExceptionIf(!pidl, E_OUTOFMEMORY);
 
         m_pidl = pidl;
