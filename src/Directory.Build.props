@@ -14,6 +14,9 @@
     <CharacterSet>Unicode</CharacterSet>
 
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)default.ruleset</CodeAnalysisRuleSet>
+
+    <!-- Assist VC package manager which config to use (checked is debug+static checking) -->
+    <VcpkgConfiguration Condition="'$(Configuration)' == 'Checked'">Debug</VcpkgConfiguration>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
@@ -25,7 +28,7 @@
       <!-- Use all cores to speed up the compilation (MS recommended best practice). -->
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
 
-      <!-- Explicit define that all projects are compiled according the latest C++ standard -->
+      <!-- Explicit define that all projects are compiled according the C++14 standard -->
       <LanguageStandard>stdcpp14</LanguageStandard>
 
       <!-- Explicit disable non conforming MSVC compiler options that are not compatible with the C++ standard -->
