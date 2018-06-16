@@ -48,7 +48,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister) noexcept
     {
         return ShellFolderImpl<ShellFolder, VVVItem>::UpdateRegistry(
             bRegister, IDR_SHELLFOLDER,

@@ -20,7 +20,7 @@ class __declspec(novtable) ExtractImageImpl :
 {
 public:
     // Registration function to register the extension.
-    static HRESULT WINAPI UpdateRegistry(UINT nResId, BOOL bRegister,
+    static HRESULT __stdcall UpdateRegistry(UINT nResId, BOOL bRegister,
         PCWSTR szDescription, const CLSID& clsidShellFolder, PCWSTR szExtension) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,
@@ -28,7 +28,7 @@ public:
     }
 
     // Registration function to register the COM object + the root extension.
-    static HRESULT WINAPI UpdateRegistryForRootExt(UINT nResId, BOOL bRegister,
+    static HRESULT __stdcall UpdateRegistryForRootExt(UINT nResId, BOOL bRegister,
         PCWSTR szDescription, PCWSTR szRootExt) noexcept
     {
         return UpdateRegistryForRootExt(nResId, bRegister,
@@ -37,7 +37,7 @@ public:
 
     // All-in-one registration function for 1 extension, call 'ForExt' to register
     // additional functions.
-    static HRESULT WINAPI UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,
+    static HRESULT __stdcall UpdateRegistry(UINT nResIdRoot, UINT nResIdExt, BOOL bRegister,
         PCWSTR szDescription, PCWSTR szRootExt, PCWSTR szExtension) noexcept
     {
         return T::UpdateRegistry(nResIdRoot, nResIdExt, bRegister,

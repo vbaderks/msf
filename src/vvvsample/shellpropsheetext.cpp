@@ -26,7 +26,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL registerInRegistry) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL registerInRegistry) noexcept
     {
         return ShellPropSheetExtImpl<ShellPropSheetExt>::UpdateRegistry(registerInRegistry, IDR_PROPERTYSHEETEXT,
             L"VVV Sample Property Sheet ShellExtension", wszVVVFileRootExt);

@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 
-#include "resource.h"
+////#include "resource.h"
 #include <diskcleanupimpl.h>
 
 class __declspec(novtable) __declspec(uuid("C48ED8C8-1D34-4DAC-AB52-5D1DC53002B6")) DiskCleanup :
@@ -22,7 +22,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT WINAPI UpdateRegistry(BOOL /*bRegister*/) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL /*bRegister*/) noexcept
     {
         return S_OK;
         ////return DiskCleanupImpl<CDiskCleanup>::UpdateRegistry(bRegister, IDR_INFOTIP, // tODO FIX

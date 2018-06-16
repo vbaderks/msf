@@ -17,7 +17,7 @@ Module _Module;
 
 
 // Purpose: DLL Entry Point
-extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
+extern "C" BOOL __stdcall DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
     if (!_Module.DllMain(dwReason, lpReserved))
         return false;

@@ -209,7 +209,7 @@ public:
     ContextMenuImpl& operator=(ContextMenuImpl&&) = delete;
 
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szRootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,

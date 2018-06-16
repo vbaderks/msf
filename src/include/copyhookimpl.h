@@ -26,7 +26,7 @@ class __declspec(novtable) CopyHookImpl :
     public ICopyHook
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szCopyHookName) noexcept
     {
         OleString olestrCLSID;

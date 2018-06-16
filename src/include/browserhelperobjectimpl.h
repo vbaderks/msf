@@ -20,7 +20,7 @@ class __declspec(novtable) CBrowserHelperObjectImpl :
     public IDispEventImpl<1, TDerived, &DIID_DWebBrowserEvents2, &LIBID_SHDocVw, 1, 1>
 {
 public:
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, PCWSTR wszDescription, bool bNoExplorer) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, PCWSTR wszDescription, bool bNoExplorer) noexcept
     {
         COleString olestrCLSID;
         ATLVERIFY(SUCCEEDED(::StringFromCLSID(__uuidof(T), olestrCLSID.GetAddress())));

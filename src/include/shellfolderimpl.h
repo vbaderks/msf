@@ -81,7 +81,7 @@ public:
     ShellFolderImpl& operator=(ShellFolderImpl&&) = delete;
 
     // Registration function to register the COM object + the root extension.
-    static HRESULT WINAPI UpdateRegistry(BOOL bRegister, UINT nResId,
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szRootExt, UINT nFriendlyTypeNameId) noexcept
     {
         OleString olestrCLSID;
