@@ -91,7 +91,7 @@ struct StartupInfo final : STARTUPINFO
     StartupInfo() noexcept
         : STARTUPINFO({sizeof(STARTUPINFO)})
     {
-        static_assert(sizeof(StartupInfo) == sizeof(STARTUPINFO));
+        static_assert(sizeof(StartupInfo) == sizeof(STARTUPINFO), "Helper class shouldn't add size");
     }
 };
 
@@ -102,6 +102,7 @@ struct ProcessInformation final : PROCESS_INFORMATION
     ProcessInformation() noexcept
         : PROCESS_INFORMATION({INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE})
     {
+        static_assert(sizeof(ProcessInformation) == sizeof(PROCESS_INFORMATION), "Helper class shouldn't add size");
     }
 
     ~ProcessInformation()
