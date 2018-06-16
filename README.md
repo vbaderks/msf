@@ -1,17 +1,20 @@
+# Mini Shell extension Framework (MSF)
+
+## Build Status
+
 [![Build status](https://ci.appveyor.com/api/projects/status/9o2gbepqfcw1g141/branch/master?svg=true)](https://ci.appveyor.com/project/vbaderks/msf/branch/master)
 
-Introduction
-============
-The Mini Shell extension Framework (MSF) is a collection of C++ template classes that can be 
+## Introduction
+
+The Mini Shell extension Framework (MSF) is a collection of C++14 template classes that can be
 used under the LGPL licence to create shell extensions for the Microsoft Window Explorer.
-Shell Extensions are COM objects. MSF relies on the Microsoft Active Template Library (ATL) to
-provide support for implementing COM objects. 
+Microsoft Windows Shell Extensions are in essence COM objects. MSF relies on the Microsoft Active Template Library (ATL) to
+provide support for implementing COM objects.
 
-Shell Extensions
-==========================
+## Shell Extensions Overview
 
-Supported
----------
+### Supported
+
 * Info Tip Handler (IPersistFile, IQueryInfo) 
 * Property Sheet Handler (IShellExtInitImpl, IShellPropSheetExt) 
 * Shortcut Menu Handler (IContextMenu, IContextMenu2, IContextMenu3) 
@@ -19,45 +22,49 @@ Supported
 * Icon Overlay Handler (IShellIconOverlayIdentifier)
 * Namespace Extension (IShellView, IShellFolder, IShellFolder2)
 
-Legacy Shell Extensions
------------------------
-The list below are shell extension types not used anymore in Windows.
+### Legacy
+
+The list below are shell extension types not used anymore in recent Windows verions.
 
 * Column Provider (IColumnProvider). Not used anymore by Windows Vista or newer.
 
-Documentation
-=============
-A couple of articles discussing how to create shell extensions are available on codeproject.
-* https://www.codeproject.com/Articles/8063/The-Mini-Shell-Extension-Framework-Part-I
-* https://www.codeproject.com/Articles/9421/The-Mini-Shell-extension-Framework-Part-II
-* https://www.codeproject.com/Articles/11674/The-Mini-Shell-Extension-Framework-Part-III
+## Documentation
 
-Operating Systems and Compilers
-===============================
+A couple of articles discussing how to create shell extensions are available on codeproject:
+
+* <https://www.codeproject.com/Articles/8063/The-Mini-Shell-Extension-Framework-Part-I>
+
+* <https://www.codeproject.com/Articles/9421/The-Mini-Shell-extension-Framework-Part-II>
+
+* <https://www.codeproject.com/Articles/11674/The-Mini-Shell-Extension-Framework-Part-III>
+
+## Operating Systems and Compilers
+
 To reduce maintenance effort MSF has 3 support levels:
- - Supported. This is the compiler \ OS used to validate MSF.
-   In practice this will be latest available RTM versions of the OS and compiler.
-   The thought behind it is that most people that create shell extensions are
-   using the latest available compiler and target the latest version of Windows.
 
- - On-demand. These versions are not longer developed or tested, but support is
+* Supported. This is the compiler \ OS used to validate MSF.
+  In practice this will be latest available RTM versions of the OS and compiler.
+  The thought behind it is that most people that create shell extensions are
+  using the latest available compiler and target the latest version of Windows.
+
+* On-demand. These versions are not longer developed or tested, but support is
    not removed from the code base.
 
- - Legacy support. These versions are 
+* Legacy support. These versions are 
    not longer actively maintained and support is removed to keep the code clean.
    The source code in the repository is tagged to make it easy to retrieve 
    old versions that have support for these compilers \ Windows versions.
 
-Supported Operating Systems
----------------------------
+### Supported Operating Systems
+
 * Windows 10
 
-On-demand Operating Systems
----------------------------
+### On-demand Operating Systems
+
 * Windows 7
 
-Legacy Operating Systems
-------------------------
+### Legacy Operating Systems
+
 * Windows 8.1
 * Windows 8.0
 * Windows Vista
@@ -66,13 +73,13 @@ Legacy Operating Systems
 * Windows ME
 * Windows 98
 
-Supported Compilers
--------------------
+### Supported Compilers
+
 * Visual Studio 2017 (ATL 14.0)
 
-Legacy Compilers
-----------------
- Support has been removed from latest code, requires older release.
+### Legacy Compilers
+
+Support has been removed from latest release. Recommendation is to upgrade the compiler, but older release are available in the history of the repository.
 
 * Visual Studio 2015 Update 3 (ATL 14.0)
 * Visual Studio 2013 Update 5 (ATL 12.0)
