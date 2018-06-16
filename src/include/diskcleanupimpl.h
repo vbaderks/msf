@@ -135,6 +135,11 @@ public:
         return false;
     }
 
+    DiskCleanupImpl(const DiskCleanupImpl&) = delete;
+    DiskCleanupImpl(DiskCleanupImpl&&) = delete;
+    DiskCleanupImpl& operator=(const DiskCleanupImpl&) = delete;
+    DiskCleanupImpl& operator=(DiskCleanupImpl&&) = delete;
+
 protected:
     DiskCleanupImpl()
     {
