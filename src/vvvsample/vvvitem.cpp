@@ -139,7 +139,7 @@ int VVVItem::CompareByName(const VVVItem& item) const noexcept
             return 1;
     }
 
-    const auto nResult = StrCmpW(GetItemData().wszName, GetItemData().wszName);
+    const auto nResult = StrCmpW(GetItemData().wszName, item.GetItemData().wszName);
     if (nResult != 0)
         return nResult; // different by name
 
