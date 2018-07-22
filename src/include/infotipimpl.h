@@ -47,7 +47,7 @@ public:
             if (m_initialized)
                 return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
 
-            // Note: InitializeImpl must be implemented by the derived class.
+            // Note: InitializeCore must be implemented by the derived class.
             InitializeCore(pszFilePath, dwMode);
             m_initialized = true;
             return S_OK;

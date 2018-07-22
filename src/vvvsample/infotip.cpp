@@ -35,20 +35,20 @@ public:
     InfoTip& operator=(const InfoTip&) = delete;
     InfoTip& operator=(InfoTip&&) = delete;
 
-    void InitializeCore(const wchar_t* filename, DWORD /*dwMode*/) final
+    void InitializeCore(PCWSTR filename, DWORD /*dwMode*/) final
     {
         VVVFile vvvfile{ filename };
 
-        m_label = vvvfile.GetLabel();
-        m_fileCount = std::to_wstring(vvvfile.GetFileCount());
+        m_inftoTip =
+            msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + vvvfile.GetLabel() + L"\n" +
+            msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + std::to_wstring(vvvfile.GetFileCount());
     }
 
     // Purpose: called by the shell/msf when it needs the text for the info tip.
     //          The string is used for the tooltip and the text in the status bar.
     PCWSTR GetInfoTip(DWORD /* dwFlags */) final
     {
-        return (msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + m_label + L"\n" +
-                msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + m_fileCount).c_str();
+        return m_inftoTip.c_str();
     }
 
 protected:
@@ -56,8 +56,7 @@ protected:
     ~InfoTip() = default;
 
 private:
-    wstring m_label;
-    wstring m_fileCount;
+    wstring m_inftoTip;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(InfoTip), InfoTip)
