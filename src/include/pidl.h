@@ -81,7 +81,7 @@ public:
     }
 
     explicit ItemIDList(PUIDLIST_RELATIVE itemIDList) noexcept :
-        m_pidl(reinterpret_cast<LPITEMIDLIST>(itemIDList))
+        m_pidl(static_cast<LPITEMIDLIST>(itemIDList))
     {
     }
 
@@ -124,20 +124,20 @@ public:
 #ifdef STRICT_TYPED_ITEMIDS
     void Attach(PIDLIST_ABSOLUTE pidl) noexcept
     {
-        Attach(reinterpret_cast<PUIDLIST_RELATIVE>(pidl));
+        Attach(static_cast<PUIDLIST_RELATIVE>(pidl));
     }
 #endif
 
     PUIDLIST_RELATIVE DetachRelative() noexcept
     {
-        const auto pidl = reinterpret_cast<PUIDLIST_RELATIVE>(m_pidl);
+        const auto pidl = static_cast<PUIDLIST_RELATIVE>(m_pidl);
         m_pidl = nullptr;
         return pidl;
     }
 
     PIDLIST_ABSOLUTE DetachAbsolute() noexcept
     {
-        const auto pidl = reinterpret_cast<PIDLIST_ABSOLUTE>(m_pidl);
+        const auto pidl = static_cast<PIDLIST_ABSOLUTE>(m_pidl);
         m_pidl = nullptr;
         return pidl;
     }
@@ -188,12 +188,12 @@ public:
 
     PIDLIST_RELATIVE GetRelative() const noexcept
     {
-        return reinterpret_cast<PIDLIST_RELATIVE>(m_pidl);
+        return static_cast<PIDLIST_RELATIVE>(m_pidl);
     }
 
     PIDLIST_ABSOLUTE GetAbsolute() const noexcept
     {
-        return reinterpret_cast<PIDLIST_ABSOLUTE>(m_pidl);
+        return static_cast<PIDLIST_ABSOLUTE>(m_pidl);
     }
 
     // Purpose: Address operator to be used for passing address to be used as an out-parameter.

@@ -534,11 +534,11 @@ public:
             ItemIDList pidlNewItem(static_cast<T*>(this)->OnSetNameOf(hwndOwner, TItem(pidl), pszNewName, uFlags));
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, 0,
-                ItemIDList(m_pidlFolder, reinterpret_cast<PCUIDLIST_RELATIVE>(pidl)), ItemIDList(m_pidlFolder, pidlNewItem));
+                ItemIDList(m_pidlFolder, static_cast<PCUIDLIST_RELATIVE>(pidl)), ItemIDList(m_pidlFolder, pidlNewItem));
 
             if (ppidlOut)
             {
-                *ppidlOut = reinterpret_cast<PITEMID_CHILD>(pidlNewItem.DetachRelative());
+                *ppidlOut = static_cast<PITEMID_CHILD>(pidlNewItem.DetachRelative());
             }
 
             return S_OK;
