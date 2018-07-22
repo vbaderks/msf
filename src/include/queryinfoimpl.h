@@ -34,7 +34,7 @@ public:
     {
         try
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (dwFlags=%d)\n", dwFlags);
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (instance=%p, (dwFlags=%d)\n", this, dwFlags);
             return SHStrDup(GetInfoTip(dwFlags), ppwszTip);
         }
         catch (...)
