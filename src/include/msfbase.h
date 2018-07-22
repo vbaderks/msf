@@ -19,6 +19,7 @@
 #pragma warning(disable: 4191) // 'type cast' : unsafe conversion from 'FARPROC' to 'PFN' (VS2017)
 #pragma warning(disable: 4201) // nonstandard extension used : nameless struct / union (VS2017)
 #pragma warning(disable: 4668) // is not defined a preprocessor macro, replacing it with 0. (VS2017)
+#pragma warning(disable: 4755) // Conversion rules for arithmetic operations in the comparison  mean that one branch cannot be executed in an inlined function. (VS2017)
 #pragma warning(disable: 4768) // __declspec attributes before linkage specification are ignored (VS2017)
 #pragma warning(disable: 4946) // reinterpret_cast used between related classes  (VS2017)
 #pragma warning(disable: 4986) // exception specification does not match previous declaration (VS2017)
