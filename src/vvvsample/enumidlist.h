@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for the details of the software licence.
+// See README.TXT for the details of the software license.
 //
 #pragma once
 
@@ -39,13 +39,11 @@ public:
     }
 
 protected:
-
     EnumIDList() noexcept : m_grfFlags(0), m_nItemIterator(0)
     {
     }
 
 private:
-
     void Initialize(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
     {
         m_file = std::make_unique<VVVFile>(strFilename, strFolder);

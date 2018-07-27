@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for the details of the software licence.
+// See README.TXT for the details of the software license.
 //
 
 #include "stdafx.h"
@@ -10,7 +10,7 @@
 
 
 // This sample will watch folder delete requests.
-// When the name includes the substring 'VVV' it will display an conformation dialogbox.
+// When the name includes the substring 'VVV' it will display an conformation dialog box.
 // Note: explorer.exe only read at startup the CopyHook extensions from the registry.
 
 class __declspec(novtable) __declspec(uuid("B7096869-8E27-4f13-A9B9-3164F6D30BAB")) CopyHook :

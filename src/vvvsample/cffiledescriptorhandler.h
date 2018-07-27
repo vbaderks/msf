@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for the details of the software licence.
+// See README.TXT for the details of the software license.
 //
 #pragma once
 
@@ -9,8 +9,8 @@
 #include <msf.h>
 #include <strsafe.h>
 
-// Note: owner of the instance of this class must keep passed dataobject alive.
-//       This class doesn't do addref to prevent circular referencing.
+// Note: owner of the instance of this class must keep passed data object alive.
+//       This class doesn't do increases the reference count to prevent circular referencing.
 
 class CCfFileDescriptorHandler : public msf::ClipboardFormatHandler
 {

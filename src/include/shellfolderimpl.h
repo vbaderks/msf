@@ -227,14 +227,14 @@ public:
 
     // IShellFolder
 
-    // Purpose: The shell calls this function to get the IShellFolder interface of a subfolder.
+    // Purpose: The shell calls this function to get the IShellFolder interface of a sub folder.
     HRESULT __stdcall BindToObject(__RPC__in PCUIDLIST_RELATIVE pidlSubFolder, __RPC__in_opt LPBC, __RPC__in REFIID riid, __RPC__deref_out_opt void** ppRetVal) noexcept override
     {
         try
         {
             ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellFolder::BindToObject (instance=%p)\n", this);
 
-            // Quick check if requested interface is supported at all (on ourself).
+            // Quick check if requested interface is supported at all (on our self).
             const HRESULT hr = static_cast<T*>(this)->QueryInterface(riid, ppRetVal);
             if (FAILED(hr))
                 return hr;
@@ -351,29 +351,29 @@ public:
             else if (riid == __uuidof(ITopViewAwareItem))
             {
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=ITopViewAwareItem)\n", this);
-                *ppRetVal = nullptr; // ITopViewAwareItem is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // ITopViewAwareItem is an undocumented interface, purpose not clear.
             }
             else if (riid == __uuidof(IFrameLayoutDefinition))
             {
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IFrameLayoutDefinition)\n", this);
-                *ppRetVal = nullptr; // IFrameLayoutDefinition is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // IFrameLayoutDefinition is an undocumented interface, purpose not clear.
             }
             else if (riid == __uuidof(IConnectionFactory))
             {
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IConnectionFactory)\n", this);
-                *ppRetVal = nullptr; // IConnectionFactory is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // IConnectionFactory is an undocumented interface, purpose not clear.
             }
             else if (riid == __uuidof(IShellUndocumented93))
             {
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumented93)\n", this);
                 // stack trace analysis: Called when CDefView class initializes the CDefCollection.
-                *ppRetVal = nullptr; // IShellUndocumented93 is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // IShellUndocumented93 is an undocumented interface, purpose not clear.
             }
             else if (riid == __uuidof(IShellUndocumentedCA))
             {
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumentedCA)\n", this);
                 // stack trace analysis: called from CShellItem::BindToHandler to hook an kind of interrupt source.
-                *ppRetVal = nullptr; // IShellUndocumentedCA is an undocumented inteface, purpose not clear.
+                *ppRetVal = nullptr; // IShellUndocumentedCA is an undocumented interface, purpose not clear.
             }
             else
             {
@@ -1242,8 +1242,8 @@ protected:
         OnDeleteFromDataObject(nullptr, pdataobject);
     }
 
-    // Purpose: override this function to enable paste and drop into the shellfolder.
-    DWORD AddItemsFromDataObject(DWORD /*dwEffect*/, IDataObject* /*pdataobject*/)
+    // Purpose: override this function to enable paste and drop into the shell folder.
+    DWORD AddItemsFromDataObject(DWORD /*dwEffect*/, IDataObject* /* dataObject*/)
     {
         return DROPEFFECT_NONE;
     }
@@ -1344,14 +1344,14 @@ protected:
     }
 
     // Purpose: override this function to control which clipboards formats are supported.
-    bool IsSupportedClipboardFormat(IDataObject* /*pdataobject*/) const
+    bool IsSupportedClipboardFormat(IDataObject* /* dataObject*/) const
     {
         return false;
     }
 
     // Purpose: override this function to control what the source should do after a move.
     //          See SDK 'Handling Shell Data Transfer Scenarios' for more info.
-    bool CanPerformOptimizedMove(IDataObject* /*pdataobject*/) const noexcept
+    bool CanPerformOptimizedMove(IDataObject* /* dataObject*/) const noexcept
     {
         return false;
     }

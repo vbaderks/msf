@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for the details of the software licence.
+// See README.TXT for the details of the software license.
 //
 #include "stdafx.h"
 
@@ -225,7 +225,7 @@ public:
         const auto nFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < nFiles; ++i)
         {
-            AddItem(wstring(cfhdrop.GetFile(i))); // TOOD
+            AddItem(wstring(cfhdrop.GetFile(i)));
         }
 
         // The VVV sample cannot use optimized move. Just return dwEffect as passed.

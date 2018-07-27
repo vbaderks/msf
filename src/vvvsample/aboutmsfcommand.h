@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for the details of the software licence.
+// See README.TXT for the details of the software license.
 //
 #pragma once
 
@@ -13,7 +13,7 @@
 class AboutMSFCommand : public msf::ContextMenuCommand
 {
 public:
-    void operator()(const CMINVOKECOMMANDINFO* pici, const std::vector<std::wstring>& /* filenames */) override
+    void operator()(const CMINVOKECOMMANDINFO* pici, const std::vector<std::wstring>& /* fileNames */) override
     {
         IsolationAwareMessageBox(pici->hwnd,
                                  msf::FormatResourceMessage(IDS_CONTEXTMENU_ABOUT_MASK, HIWORD(MSF_VER), LOWORD(MSF_VER)).c_str(),

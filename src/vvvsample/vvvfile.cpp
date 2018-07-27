@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for detailed details of the software licence.
+// See README.TXT for detailed details of the software license.
 //
 
 #include "stdafx.h"
@@ -36,10 +36,6 @@ void VVVFile::SetLabel(const std::wstring& label) const
 
 unsigned int VVVFile::GetFileCount() const
 {
-    //CComPtr<IStream> rFileStream;
-    //HRESULT hr = SHCreateStreamOnFile(_strFilename, STGM_READ, &rFileStream);
-    //RaiseExceptionIfFailed(hr);
-
     const auto nCount = GetPrivateProfileInt(TSZ_APP_NAME_DIRECTORY, TSZ_FILE_COUNT);
     msf::RaiseExceptionIf(nCount == static_cast<UINT>(-1));
 
