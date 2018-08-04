@@ -103,7 +103,7 @@ private:
     std::wstring GetEditItemName() const
     {
         ATL::CString strName;
-        (void)GetDlgItemText(IDC_EDIT_ITEM_NAME, strName);
+        static_cast<void>(GetDlgItemText(IDC_EDIT_ITEM_NAME, strName));
         strName.Trim();
         return strName.GetString();
     }

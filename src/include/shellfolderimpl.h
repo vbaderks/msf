@@ -1356,6 +1356,8 @@ protected:
         return false;
     }
 
+#pragma warning(push)
+#pragma warning(disable: 26495) // m_csFlags' is uninitialized (False warning in VS 2017 15.8.0)
     class CColumnInfo final
     {
     public:
@@ -1368,6 +1370,7 @@ protected:
         int         m_fmt;
         SHCOLSTATEF m_csFlags;
     };
+#pragma warning(pop)
 
     void RegisterColumn(const wchar_t* szName, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
     {
