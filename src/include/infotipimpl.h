@@ -64,7 +64,7 @@ public:
     InfoTipImpl& operator=(InfoTipImpl&&) = delete;
 
 protected:
-    InfoTipImpl()
+    InfoTipImpl() noexcept
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
     }

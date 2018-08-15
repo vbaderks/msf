@@ -44,11 +44,6 @@ public:
             szDescription, T::GetObjectCLSID(), szRootExt, szExtension);
     }
 
-    ExtractImageImpl()
-    {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
-    }
-
     // IPersistFile
     HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
     {
@@ -169,6 +164,11 @@ public:
     ExtractImageImpl& operator=(ExtractImageImpl&&) = delete;
 
 protected:
+    ExtractImageImpl() noexcept
+    {
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
+    }
+
     ~ExtractImageImpl()
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::~ExtractImageImpl (instance=%p)\n", this);

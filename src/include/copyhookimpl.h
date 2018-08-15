@@ -49,7 +49,7 @@ public:
     CopyHookImpl& operator=(CopyHookImpl&&) = delete;
 
 protected:
-    CopyHookImpl()
+    CopyHookImpl() noexcept
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ICopyHookImpl::Constructor (instance=%p)\n", this);
     }
