@@ -28,27 +28,27 @@ public:
     CfFileContentsHandler& operator=(const CfFileContentsHandler&) = delete;
     CfFileContentsHandler& operator=(CfFileContentsHandler&&) = delete;
 
-    HRESULT Validate(const FORMATETC& formatetc) const noexcept override
+    HRESULT Validate(const FORMATETC& formatEtc) const noexcept override
     {
-        if (formatetc.dwAspect != DVASPECT_CONTENT)
+        if (formatEtc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
 
-        if (!msf::IsBitSet(formatetc.tymed, TYMED_HGLOBAL))
+        if (!msf::IsBitSet(formatEtc.tymed, TYMED_HGLOBAL))
             return DV_E_TYMED;
 
-        if (static_cast<UINT>(formatetc.lindex) >= GetCfShellIdList()->GetItemCount())
+        if (static_cast<UINT>(formatEtc.lindex) >= GetCfShellIdList()->GetItemCount())
             return DV_E_LINDEX;
 
         return S_OK;
     }
 
-    void GetData(const FORMATETC& formatetc, STGMEDIUM& medium) const override
+    void GetData(const FORMATETC& formatEtc, STGMEDIUM& medium) const override
     {
-        ATLASSERT(SUCCEEDED(Validate(formatetc)));
+        ATLASSERT(SUCCEEDED(Validate(formatEtc)));
 
-        const VVVItem vvvitem(GetCfShellIdList()->GetItem(static_cast<UINT>(formatetc.lindex)));
+        const VVVItem vvvItem(GetCfShellIdList()->GetItem(static_cast<UINT>(formatEtc.lindex)));
 
-        const size_t size = std::min(vvvitem.GetSize(), MAX_VVV_ITEM_SIZE);
+        const size_t size = std::min(vvvItem.GetSize(), MAX_VVV_ITEM_SIZE);
         const HGLOBAL hg = msf::GlobalAllocThrow(size);
         ZeroMemory(hg, size);
 

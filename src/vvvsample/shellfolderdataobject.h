@@ -23,7 +23,7 @@ public:
     END_COM_MAP()
 
     static ATL::CComPtr<IDataObject> CreateInstance(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl,
-        PCUITEMID_CHILD_ARRAY ppidl, msf::IPerformedDropEffectSink* pperformeddropeffectsink)
+        PCUITEMID_CHILD_ARRAY ppidl, msf::IPerformedDropEffectSink* performedDropEffectSink)
     {
         ATL::CComObject<ShellFolderDataObject>* instance;
         const HRESULT hr = ATL::CComObject<ShellFolderDataObject>::CreateInstance(&instance);
@@ -31,7 +31,7 @@ public:
             msf::RaiseException(hr);
 
         ATL::CComPtr<IDataObject> dataObject(instance);
-        instance->Initialize(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
+        instance->Initialize(pidlFolder, cidl, ppidl, performedDropEffectSink);
         return dataObject;
     }
 
@@ -46,9 +46,9 @@ protected:
 
 private:
     void Initialize(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl,
-                    msf::IPerformedDropEffectSink* pperformeddropeffectsink)
+                    msf::IPerformedDropEffectSink* performedDropEffectSink)
     {
-        Init(pidlFolder, cidl, ppidl, pperformeddropeffectsink);
+        Init(pidlFolder, cidl, ppidl, performedDropEffectSink);
 
         RegisterClipboardFormatHandler(std::make_unique<CCfFileDescriptorHandler>(this));
         RegisterClipboardFormatHandler(std::make_unique<CfFileContentsHandler>(this));

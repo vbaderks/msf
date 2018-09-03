@@ -23,14 +23,14 @@ public:
 
     static ATL::CComPtr<IEnumIDList> CreateInstance(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
     {
-        ATL::CComObject<EnumIDList>* pinstance;
-        const HRESULT hr = ATL::CComObject<EnumIDList>::CreateInstance(&pinstance);
+        ATL::CComObject<EnumIDList>* instance;
+        const HRESULT hr = ATL::CComObject<EnumIDList>::CreateInstance(&instance);
         if (FAILED(hr))
             msf::RaiseException(hr);
 
-        ATL::CComPtr<IEnumIDList> renumidlist(pinstance);
-        pinstance->Initialize(strFilename, strFolder, grfFlags);
-        return renumidlist;
+        ATL::CComPtr<IEnumIDList> enumIdList(instance);
+        instance->Initialize(strFilename, strFolder, grfFlags);
+        return enumIdList;
     }
 
     LPITEMIDLIST GetNextItem()

@@ -203,7 +203,7 @@ protected:
         IPerformedDropEffectSink* pperformeddropeffectsink = nullptr)
     {
         m_pidldata = static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, reinterpret_cast<PCUIDLIST_RELATIVE_ARRAY>(ppidl)));
-        RegisterClipboardFormatHandler(std::make_unique<CCfPerformedDropEffectHandler>(pperformeddropeffectsink, this));
+        RegisterClipboardFormatHandler(std::make_unique<ClipboardPerformedDropEffectHandler>(pperformeddropeffectsink, this));
     }
 
     void RegisterClipboardFormatHandler(std::unique_ptr<ClipboardFormatHandler> qcfhandler)

@@ -37,18 +37,18 @@ public:
 
     void InitializeCore(PCWSTR filename, DWORD /*dwMode*/) final
     {
-        VVVFile vvvfile{ filename };
+        VVVFile vvvFile{ filename };
 
-        m_inftoTip =
-            msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + vvvfile.GetLabel() + L"\n" +
-            msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + std::to_wstring(vvvfile.GetFileCount());
+        m_infoTip =
+            msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + vvvFile.GetLabel() + L"\n" +
+            msf::LoadResourceString(IDS_SHELLEXT_FILECOUNT) + L": " + std::to_wstring(vvvFile.GetFileCount());
     }
 
     // Purpose: called by the shell/msf when it needs the text for the info tip.
     //          The string is used for the tooltip and the text in the status bar.
     PCWSTR GetInfoTip(DWORD /* dwFlags */) final
     {
-        return m_inftoTip.c_str();
+        return m_infoTip.c_str();
     }
 
 protected:
@@ -56,7 +56,7 @@ protected:
     ~InfoTip() = default;
 
 private:
-    wstring m_inftoTip;
+    wstring m_infoTip;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(InfoTip), InfoTip)

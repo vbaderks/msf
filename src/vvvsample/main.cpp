@@ -50,9 +50,9 @@ STDAPI DllCanUnloadNow()
 
 // Purpose: Returns a class factory to create an object of the requested type
 _Check_return_
-STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID* ppv)
+STDAPI DllGetClassObject(_In_ REFCLSID classId, _In_ REFIID interfaceId, _Outptr_ LPVOID* ppv)
 {
-    return _Module.DllGetClassObject(rclsid, riid, ppv);
+    return _Module.DllGetClassObject(classId, interfaceId, ppv);
 }
 
 // Purpose: Adds entries to the system registry

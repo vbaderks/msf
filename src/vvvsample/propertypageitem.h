@@ -39,7 +39,7 @@ public:
 
     PropertyPageItem(VVVItem& item, long& wEventId, IShellFolder* shellFolder) :
         m_item(item),
-        m_wEventId(wEventId),
+        m_eventId(wEventId),
         m_shellFolder(shellFolder)
     {
     }
@@ -59,21 +59,21 @@ public:
 
     BOOL OnApply()
     {
-        m_wEventId = 0;
+        m_eventId = 0;
         const std::wstring name{GetEditItemName()};
 
         if (m_item.GetDisplayName() != name)
         {
-            m_wEventId |= SHCNE_RENAMEITEM;
+            m_eventId |= SHCNE_RENAMEITEM;
         }
 
         const unsigned int nSize = GetDlgItemInt(IDC_EDIT_ITEM_SIZE, nullptr, false);
         if (m_item.GetSize() != nSize)
         {
-            m_wEventId |= SHCNE_ATTRIBUTES;
+            m_eventId |= SHCNE_ATTRIBUTES;
         }
 
-        if (m_wEventId != 0)
+        if (m_eventId != 0)
         {
             m_pidlNew.Attach(VVVItem::CreateItemIdList(m_item.GetID(),
                                                        nSize, m_item.IsFolder(), name));
@@ -96,8 +96,7 @@ private:
         ATLVERIFY(SetDlgItemText(IDC_EDIT_ITEM_NAME, m_item.GetName().c_str()));
         ATLVERIFY(SetDlgItemInt(IDC_EDIT_ITEM_SIZE, m_item.GetSize()));
 
-        // Note: SHLimitInputEdit is only supported on Windows XP.
-        //ATLVERIFY(SUCCEEDED(SHLimitInputEdit(GetDlgItem(IDC_EDITm_item_NAME), m_rshellfolder)));
+        ATLVERIFY(SUCCEEDED(SHLimitInputEdit(GetDlgItem(IDC_EDIT_ITEM_NAME), m_shellFolder)));
     }
 
     std::wstring GetEditItemName() const
@@ -109,8 +108,8 @@ private:
     }
 
     // Member variables
-    const VVVItem &       m_item;
+    const VVVItem&        m_item;
     msf::ItemIDList       m_pidlNew;
-    long &                m_wEventId;
+    long&                 m_eventId;
     ATL::CComPtr<IShellFolder> m_shellFolder;
 };

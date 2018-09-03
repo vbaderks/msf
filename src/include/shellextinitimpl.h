@@ -50,7 +50,7 @@ protected:
 
     void CacheFiles(IDataObject* pDataObject)
     {
-        CfHDrop cfhdrop(pDataObject);
+        ClipboardFormatHDrop cfhdrop(pDataObject);
 
         m_filenames.clear();
 

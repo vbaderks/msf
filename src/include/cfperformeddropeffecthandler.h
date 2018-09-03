@@ -14,66 +14,65 @@
 namespace msf
 {
 
-class CCfPerformedDropEffectHandler : public ClipboardFormatHandler
+class ClipboardPerformedDropEffectHandler : public ClipboardFormatHandler
 {
 public:
-    CCfPerformedDropEffectHandler(IPerformedDropEffectSink* pperformeddropeffectsink, IDataObject* pdataobject) :
+    ClipboardPerformedDropEffectHandler(IPerformedDropEffectSink* performedDropEffectSink, IDataObject* dataObject) :
         ClipboardFormatHandler(CFSTR_PERFORMEDDROPEFFECT, false, true),
-        m_rperformeddropeffectsink(pperformeddropeffectsink),
-        m_pdataobject(pdataobject),
-        m_dwEffect(DROPEFFECT_NONE)
+        m_performedDropEffectSink(performedDropEffectSink),
+        m_dataObject(dataObject),
+        m_effect(DROPEFFECT_NONE)
     {
     }
 
-    ~CCfPerformedDropEffectHandler() = default;
-    CCfPerformedDropEffectHandler(const CCfPerformedDropEffectHandler&) = delete;
-    CCfPerformedDropEffectHandler(CCfPerformedDropEffectHandler&&) = delete;
-    CCfPerformedDropEffectHandler& operator=(const CCfPerformedDropEffectHandler&) = delete;
-    CCfPerformedDropEffectHandler& operator=(CCfPerformedDropEffectHandler&&) = delete;
+    ~ClipboardPerformedDropEffectHandler() = default;
+    ClipboardPerformedDropEffectHandler(const ClipboardPerformedDropEffectHandler&) = delete;
+    ClipboardPerformedDropEffectHandler(ClipboardPerformedDropEffectHandler&&) = delete;
+    ClipboardPerformedDropEffectHandler& operator=(const ClipboardPerformedDropEffectHandler&) = delete;
+    ClipboardPerformedDropEffectHandler& operator=(ClipboardPerformedDropEffectHandler&&) = delete;
 
-    void SetData(const FORMATETC& formatetc, STGMEDIUM& stgmedium, bool bRelease) override
+    void SetData(const FORMATETC& formatEtc, STGMEDIUM& storageMedium, bool release) override
     {
-        ATLASSERT(IsValid(formatetc, stgmedium) && "Passed invalid arguments");
-        UNREFERENCED_PARAMETER(formatetc); // not used in release.
+        ATLASSERT(IsValid(formatEtc, storageMedium) && "Passed invalid arguments");
+        UNREFERENCED_PARAMETER(formatEtc); // not used in release.
 
-        util::GlobalLock<DWORD> globallock(stgmedium.hGlobal);
+        util::GlobalLock<DWORD> globalLock(storageMedium.hGlobal);
 
-        m_dwEffect = *globallock.get();
+        m_effect = *globalLock.get();
 
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPerformedDropEffectHandler::SetData (dwEffect=%p)\n", m_dwEffect);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ClipboardPerformedDropEffectHandler::SetData (dwEffect=%p)\n", m_effect);
 
-        if (m_dwEffect == DROPEFFECT_MOVE)
+        if (m_effect == DROPEFFECT_MOVE)
         {
             NotifySink();
         }
 
-        if (bRelease)
+        if (release)
         {
-            ReleaseStgMedium(&stgmedium);
+            ReleaseStgMedium(&storageMedium);
         }
     }
 
-    void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const override
+    void GetData(const FORMATETC&, STGMEDIUM& storageMedium) const override
     {
         StorageMedium medium(GlobalAllocThrow(sizeof(DWORD)));
-        *static_cast<DWORD*>(medium.GetHGlobal()) = m_dwEffect;
-        medium.Detach(stgmedium);
+        *static_cast<DWORD*>(medium.GetHGlobal()) = m_effect;
+        medium.Detach(storageMedium);
     }
 
 private:
-
     void NotifySink() const
     {
-        if (m_rperformeddropeffectsink)
+        if (m_performedDropEffectSink)
         {
-            m_rperformeddropeffectsink->OnDeleteAfterPaste(m_pdataobject);
+            m_performedDropEffectSink->OnDeleteAfterPaste(m_dataObject);
         }
     }
 
     // member variables
-    ATL::CComPtr<IPerformedDropEffectSink> m_rperformeddropeffectsink;
-    IDataObject*                      m_pdataobject;
-    DWORD                             m_dwEffect;
+    ATL::CComPtr<IPerformedDropEffectSink> m_performedDropEffectSink;
+    IDataObject*                      m_dataObject;
+    DWORD                             m_effect;
 };
 
 } // end of msf namespace

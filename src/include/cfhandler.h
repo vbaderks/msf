@@ -5,9 +5,11 @@
 //
 #pragma once
 
+#include "msfbase.h"
 #include "util.h"
 
-namespace msf {
+namespace msf
+{
 
 /// <summary>Base class for the Clipboard format handlers.</summary>
 class ClipboardFormatHandler
@@ -21,7 +23,7 @@ public:
 
     CLIPFORMAT GetClipFormat() const noexcept
     {
-        return m_clipformat;
+        return m_clipFormat;
     }
 
     bool CanGetData() const noexcept
@@ -34,15 +36,15 @@ public:
         return m_bCanSetData;
     }
 
-    virtual HRESULT Validate(const FORMATETC& formatetc) const noexcept
+    virtual HRESULT Validate(const FORMATETC& formatEtc) const noexcept
     {
-        if (formatetc.dwAspect != DVASPECT_CONTENT)
+        if (formatEtc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
 
-        if (!IsBitSet(formatetc.tymed, TYMED_HGLOBAL))
+        if (!IsBitSet(formatEtc.tymed, TYMED_HGLOBAL))
             return DV_E_TYMED;
 
-        if (formatetc.lindex != -1)
+        if (formatEtc.lindex != -1)
             return DV_E_LINDEX;
 
         return S_OK;
@@ -56,30 +58,30 @@ public:
     {
     }
 
-    bool IsValid(const FORMATETC& formatetc, const STGMEDIUM& stgmedium) const noexcept
+    bool IsValid(const FORMATETC& formatEtc, const STGMEDIUM& stgmedium) const noexcept
     {
-        return SUCCEEDED(Validate(formatetc)) && formatetc.tymed == stgmedium.tymed;
+        return SUCCEEDED(Validate(formatEtc)) && formatEtc.tymed == stgmedium.tymed;
     }
 
 protected:
-    ClipboardFormatHandler(CLIPFORMAT clipformat, bool bCanGetData, bool bCanSetData) noexcept :
-        m_clipformat(clipformat),
-        m_bCanGetData(bCanGetData),
-        m_bCanSetData(bCanSetData)
+    ClipboardFormatHandler(CLIPFORMAT clipFormat, bool bCanGetData, bool bCanSetData) noexcept
+        : m_clipFormat(clipFormat),
+          m_bCanGetData(bCanGetData),
+          m_bCanSetData(bCanSetData)
     {
     }
 
-    ClipboardFormatHandler(PCWSTR lpszFormat, bool bCanGetData, bool bCanSetData) :
-        m_clipformat(Win32::RegisterClipboardFormat(lpszFormat)),
-        m_bCanGetData(bCanGetData),
-        m_bCanSetData(bCanSetData)
+    ClipboardFormatHandler(PCWSTR szFormat, bool bCanGetData, bool bCanSetData)
+        : m_clipFormat(Win32::RegisterClipboardFormat(szFormat)),
+          m_bCanGetData(bCanGetData),
+          m_bCanSetData(bCanSetData)
     {
     }
 
 private:
-    CLIPFORMAT m_clipformat;
-    bool       m_bCanGetData;
-    bool       m_bCanSetData;
+    CLIPFORMAT m_clipFormat;
+    bool m_bCanGetData;
+    bool m_bCanSetData;
 };
 
-}
+} // namespace msf

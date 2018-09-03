@@ -110,16 +110,16 @@ public:
 
     // Purpose: called by the default context menu. Gives an option to merge
     //          extra commands into the menu.
-    static HRESULT OnDfmMergeContextMenu(IDataObject* pdataobject, UINT /*uFlags*/, QCMINFO& qcminfo)
+    static HRESULT OnDfmMergeContextMenu(IDataObject* dataObject, UINT /*uFlags*/, QCMINFO& mergeInfo)
     {
-        msf::CCfShellIdList itemlist(pdataobject);
+        msf::CCfShellIdList itemList(dataObject);
 
-        if (itemlist.GetItemCount() == 1 && !VVVItem(itemlist.GetItem(0)).IsFolder())
+        if (itemList.GetItemCount() == 1 && !VVVItem(itemList.GetItem(0)).IsFolder())
         {
             // Add 'open' if only 1 item is selected.
             msf::CMenu menu(true);
             menu.AddDefaultItem(ID_DFM_CMD_OPEN, L"&Open");
-            MergeMenus(qcminfo, menu);
+            MergeMenus(mergeInfo, menu);
 
             // Note: XP will automatic make first menu item the default.
             //       Win98, ME and 2k don't do this, so must add as default item.
@@ -134,12 +134,12 @@ public:
         return msf::LoadResourceString(IDS_SHELLFOLDER_DFM_HELP_BASE + nCmdId);
     }
 
-    HRESULT OnDfmInvokeAddedCommand(HWND hwnd, IDataObject* pdataobject, int nId) const
+    HRESULT OnDfmInvokeAddedCommand(HWND hwnd, IDataObject* dataObject, int nId) const
     {
         switch (nId)
         {
             case ID_DFM_CMD_OPEN:
-                OnOpen(hwnd, pdataobject);
+                OnOpen(hwnd, dataObject);
                 break;
 
             default:
@@ -151,9 +151,9 @@ public:
     }
 
     // Purpose: handle 'open' by showing the name of the selected item.
-    void OnOpen(HWND hwnd, IDataObject* pdataobject) const
+    void OnOpen(HWND hwnd, IDataObject* dataObject) const
     {
-        msf::CCfShellIdList cfshellidlist(pdataobject);
+        msf::CCfShellIdList cfshellidlist(dataObject);
         ATLASSERT(cfshellidlist.GetItemCount() == 1);
 
         const VVVItem item(cfshellidlist.GetItem(0));
@@ -193,8 +193,8 @@ public:
         long wEventId;
         if (VVVPropertySheet(item, this).DoModal(hwnd, wEventId) > 0 && wEventId != 0)
         {
-            VVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
-            vvvfile.SetItem(item);
+            VVVFile vvvFile(GetPathFolderFile(), m_strSubFolder);
+            vvvFile.SetItem(item);
         }
 
         return wEventId;
@@ -212,15 +212,15 @@ public:
     }
 
     // Purpose: called by the standard msf drag handler during drag operations.
-    static bool IsSupportedClipboardFormat(IDataObject* pdataobject)
+    static bool IsSupportedClipboardFormat(IDataObject* dataObject)
     {
-        return msf::CfHDrop::IsFormat(pdataobject);
+        return msf::ClipboardFormatHDrop::IsFormat(dataObject);
     }
 
     // Purpose: called when items are pasted or dropped on the shellfolder.
-    DWORD AddItemsFromDataObject(DWORD dwEffect, IDataObject* pdataobject) const
+    DWORD AddItemsFromDataObject(DWORD dwEffect, IDataObject* dataObject) const
     {
-        msf::CfHDrop cfhdrop(pdataobject);
+        msf::ClipboardFormatHDrop cfhdrop(dataObject);
 
         const auto nFiles = cfhdrop.GetFileCount();
         for (unsigned int i = 0; i < nFiles; ++i)

@@ -34,22 +34,22 @@ public:
     HBITMAP CreateImage(const SIZE& size, DWORD dwRecClrDepth, DWORD /*dwFlags*/) noexcept
     {
         // TODO: fix this function
-        const HBITMAP hbitmap = CreateBitmap(size.cx, size.cy, 1, dwRecClrDepth, nullptr);
+        const HBITMAP bitmap = CreateBitmap(size.cx, size.cy, 1, dwRecClrDepth, nullptr);
 
         const HDC hdc = CreateCompatibleDC(nullptr);
 
-        HGDIOBJ hgdiobjectOriginal = SelectObject(hdc, hbitmap);
+        HGDIOBJ gdiObjectOriginal = SelectObject(hdc, bitmap);
 
-        const HBRUSH hbrush = CreateSolidBrush(RGB(0, 0, 255));
+        const HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
 
         RECT rect = {0, 0, size.cx, size.cx};
-        FillRect(hdc, &rect, hbrush);
+        FillRect(hdc, &rect, brush);
 
-        DeleteObject(hbrush);
-        hgdiobjectOriginal = SelectObject(hdc, hgdiobjectOriginal);
+        DeleteObject(brush);
+        gdiObjectOriginal = SelectObject(hdc, gdiObjectOriginal);
         DeleteDC(hdc);
 
-        return hbitmap;
+        return bitmap;
     }
 };
 

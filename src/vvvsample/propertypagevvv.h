@@ -38,11 +38,11 @@ public:
     explicit PropertyPageVVV(std::wstring strFilename) :
         m_filename(std::move(strFilename))
     {
-        VVVFile vvvfile(m_filename);
+        VVVFile vvvFile(m_filename);
 
         // Retrieve the file data: the sample don't shows the page if this fails.
-        m_label   = vvvfile.GetLabel();
-        m_fileCount = vvvfile.GetFileCount();
+        m_label   = vvvFile.GetLabel();
+        m_fileCount = vvvFile.GetFileCount();
     }
 
     LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)

@@ -17,17 +17,17 @@ namespace msf
 /// The CF_HDROP format is used by the shell to transfer a group of existing files.
 /// The handle refers to a set of DROPFILES structures.
 /// </remarks>
-class CfHDrop
+class ClipboardFormatHDrop
 {
 public:
     /// <summary>Returns true when the data object has the CF_HDROP format.</summary>
-    static bool IsFormat(_In_ IDataObject* pdataobject)
+    static bool IsFormat(_In_ IDataObject* dataObject)
     {
-        FormatEtc formatetc(CF_HDROP);
-        return SUCCEEDED(pdataobject->QueryGetData(&formatetc));
+        FormatEtc formatEtc(CF_HDROP);
+        return SUCCEEDED(dataObject->QueryGetData(&formatEtc));
     }
 
-    explicit CfHDrop(IDataObjectPtr dataobject)
+    explicit ClipboardFormatHDrop(IDataObjectPtr dataobject)
     {
         dataobject.GetData(FormatEtc(CF_HDROP), m_stgmedium);
     }
@@ -56,7 +56,6 @@ public:
     }
 
 private:
-
     StorageMedium m_stgmedium;
 };
 
