@@ -15,6 +15,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DiskCleanupSample", "DiskCleanupSample\DiskCleanupSample.vcxproj", "{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		msf.vcxitems*{3634c2b5-565f-48e7-8c57-fa3c0f4902b1}*SharedItemsImports = 4
+		msf.vcxitems*{4f99d866-93bf-4731-9031-2d783763ab53}*SharedItemsImports = 4
+		msf.vcxitems*{c6aa1388-d5f6-48ae-8b1e-7207d9a71c8a}*SharedItemsImports = 9
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Checked|Win32 = Checked|Win32
 		Checked|x64 = Checked|x64
