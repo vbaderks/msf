@@ -32,7 +32,7 @@ class __declspec(novtable) ShellFolderContextMenu :
     public ContextMenuImpl<ShellFolderContextMenu>
 {
 public:
-    ShellFolderContextMenu() = default;
+    ShellFolderContextMenu() noexcept(false) = default;  // noexcept(false) needed as ATL base class is not defined noexcept.
     ShellFolderContextMenu(const ShellFolderContextMenu&) = delete;
     ShellFolderContextMenu(ShellFolderContextMenu&&) = delete;
     ShellFolderContextMenu& operator=(const ShellFolderContextMenu&) = delete;

@@ -9,9 +9,6 @@ C26429: Use a not_null to indicate that "null" is not a valid value
 C26434 Hides a non-virtual function
  => Rationale: ATL template mechanism uses this technique
 
-C26439 special noexcep funtions
- => Rationale:
-
 C26440 can be declared noexcept
  => Rationale: generates false warnings, can be enabled for analysis purposes.
 

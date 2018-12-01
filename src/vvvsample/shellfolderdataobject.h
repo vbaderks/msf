@@ -41,7 +41,7 @@ public:
     ShellFolderDataObject& operator=(ShellFolderDataObject&&) = delete;
 
 protected:
-    ShellFolderDataObject() = default;
+    ShellFolderDataObject() noexcept(false) = default; // noexcept(false) needed as ATL base class is not defined noexcept.
     ~ShellFolderDataObject() = default;
 
 private:

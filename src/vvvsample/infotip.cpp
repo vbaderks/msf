@@ -52,7 +52,7 @@ public:
     }
 
 protected:
-    InfoTip() = default;
+    InfoTip() noexcept(false) = default; // noexcept(false) needed as ATL base class is not defined noexcept.
     ~InfoTip() = default;
 
 private:

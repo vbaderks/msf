@@ -40,7 +40,7 @@ public:
     END_COM_MAP()
 
 protected:
-    QueryInfo() = default;
+    QueryInfo() noexcept(false) = default; // noexcept(false) needed as ATL base class is not defined noexcept.
     ~QueryInfo() = default;
 
     PCWSTR GetInfoTip(DWORD /* dwFlags */) override

@@ -50,7 +50,7 @@ public:
     }
 
 protected:
-    CopyHook() = default;
+    CopyHook() noexcept(false) = default;  // noexcept(false) needed as ATL base class is not defined noexcept.
     ~CopyHook() = default;
 };
 
