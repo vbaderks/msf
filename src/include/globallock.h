@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for the details of the software licence.
+// See README.TXT for the details of the software license.
 //
 #pragma once
 
@@ -11,7 +11,7 @@ namespace msf {
 namespace util {
 
 template <typename T>
-class GlobalLock
+class GlobalLock final
 {
 public:
     GlobalLock() = default;

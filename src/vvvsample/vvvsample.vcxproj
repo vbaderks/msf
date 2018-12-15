@@ -241,14 +241,6 @@
     <ClCompile Include="vvvitem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\include\contextmenu.rgs" />
-    <None Include="..\include\copyhookfolder.rgs" />
-    <None Include="..\include\extension.rgs" />
-    <None Include="..\include\extractimage_sf.rgs" />
-    <None Include="..\include\iconoverlay.rgs" />
-    <None Include="..\include\infotip.rgs" />
-    <None Include="..\include\propertysheetext.rgs" />
-    <None Include="..\include\shellfolder.rgs" />
     <None Include="sample.def" />
     <None Include="menuicon.bmp" />
     <None Include="vvv.ico" />

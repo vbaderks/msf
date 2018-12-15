@@ -479,7 +479,7 @@ public:
             if (!apidl)
                 return E_POINTER; // note: ppidl is marked with SAL as optional, but docs state that it is required.
 
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::GetAttributesOf (apidl=%d, rgfInOut=%X)\n", apidl, *prgfInOut);
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::GetAttributesOf (instance=%p, apidl=%p, rgfInOut=%X)\n", this, apidl, *prgfInOut);
 
             SFGAOF sfgaof = static_cast<T*>(this)->GetAttributesOfGlobal(cidl, *prgfInOut);
 
@@ -1508,9 +1508,9 @@ protected:
 
         for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {
-            LPCITEMIDLIST pidl = cfshellidlist.GetItem(i);
+            const PCUIDLIST_RELATIVE pidl = cfshellidlist.GetItem(i);
 
-            ChangeNotifyPidl(SHCNE_ATTRIBUTES, SHCNF_FLUSH, ItemIDList(m_pidlFolder, pidl));
+            ChangeNotifyPidl(SHCNE_ATTRIBUTES, SHCNF_FLUSH, ItemIDList{m_pidlFolder, pidl});
         }
     }
 

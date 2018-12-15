@@ -49,7 +49,7 @@ public:
     }
 
 protected:
-    DiskCleanup() = default;
+    DiskCleanup() noexcept(false) = default; // ATL base class constructor is not noexcept
     ~DiskCleanup() = default;
 };
 

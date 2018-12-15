@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for the details of the software licence.
+// See README.TXT for the details of the software license.
 //
 #pragma once
 
@@ -29,12 +29,12 @@ public:
     static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
         PCWSTR szDescription, PCWSTR szCopyHookName) noexcept
     {
-        OleString olestrCLSID;
-        StringFromCLSID(T::GetObjectCLSID(), olestrCLSID);
+        OleString classId;
+        StringFromCLSID(T::GetObjectCLSID(), classId);
 
         ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
         {
-            { L"CLSID", olestrCLSID },
+            {L"CLSID", classId},
             { L"DESCRIPTION", szDescription },
             { L"COPYHOOKNAME", szCopyHookName },
             { nullptr, nullptr }

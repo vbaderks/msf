@@ -1,7 +1,7 @@
 ﻿//
 // (C) Copyright by Victor Derks
 //
-// See README.TXT for the details of the software licence.
+// See README.TXT for the details of the software license.
 //
 #pragma once
 
@@ -22,8 +22,8 @@ public:
     class Icon final
     {
     public:
-        explicit Icon(HICON hicon = nullptr) noexcept :
-            m_hicon(hicon)
+        explicit Icon(HICON icon = nullptr) noexcept :
+            m_icon(icon)
         {
         }
 
@@ -37,34 +37,34 @@ public:
         Icon& operator=(const Icon&) = delete;
         Icon& operator=(Icon&&) = delete;
 
-        Icon& operator=(HICON hicon) noexcept
+        Icon& operator=(HICON icon) noexcept
         {
             dispose();
-            m_hicon = hicon;
+            m_icon = icon;
             return *this;
         }
 
         void release() noexcept
         {
-            m_hicon = nullptr;
+            m_icon = nullptr;
         }
 
         HICON get() const noexcept
         {
-            return m_hicon;
+            return m_icon;
         }
 
     private:
         void dispose() noexcept
         {
-            if (m_hicon)
+            if (m_icon)
             {
-                ATLVERIFY(DestroyIcon(m_hicon));
-                m_hicon = nullptr;
+                ATLVERIFY(DestroyIcon(m_icon));
+                m_icon = nullptr;
             }
         }
 
-        HICON m_hicon;
+        HICON m_icon;
     };
 
     ExtractIcon(const ExtractIcon&) = delete;
@@ -74,21 +74,21 @@ public:
 
     static ATL::CComPtr<IExtractIcon> CreateInstance(const TItem& item)
     {
-        ATL::CComObject<ExtractIcon<TItem> >* pinstance;
-        const HRESULT hr = ATL::CComObject<ExtractIcon<TItem> >::CreateInstance(&pinstance);
+        ATL::CComObject<ExtractIcon<TItem> >* instance;
+        const HRESULT hr = ATL::CComObject<ExtractIcon<TItem> >::CreateInstance(&instance);
         if (FAILED(hr))
             RaiseException(hr);
 
-        ATL::CComPtr<IExtractIcon> extracticon(pinstance);
-        pinstance->Initialize(item);
-        return extracticon;
+        ATL::CComPtr<IExtractIcon> extractIcon(instance);
+        instance->Initialize(item);
+        return extractIcon;
     }
 
     static HICON GetIcon(HIMAGELIST himl, int i, UINT flags = 0)
     {
-        const HICON hicon = ImageList_GetIcon(himl, i, flags);
-        RaiseExceptionIf(!hicon);
-        return hicon;
+        const HICON icon = ImageList_GetIcon(himl, i, flags);
+        RaiseExceptionIf(!icon);
+        return icon;
     }
 
     DECLARE_NOT_AGGREGATABLE(ExtractIcon)

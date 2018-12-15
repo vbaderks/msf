@@ -49,7 +49,7 @@ class CShellItemId
 public:
     CShellItemId(const ShellItemIdMember* members, unsigned int count, bool bAddEmptyId = true) noexcept
     {
-        size_t size = sizeof(short) + GetMembersSize(members, count);
+        const size_t size = sizeof(short) + GetMembersSize(members, count);
 
         _pItemId = static_cast<SHITEMID*>(CoTaskMemAlloc(size + (bAddEmptyId ? sizeof(short) : 0)));
         if (!_pItemId)

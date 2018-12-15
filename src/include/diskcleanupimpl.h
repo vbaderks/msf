@@ -141,7 +141,7 @@ public:
     DiskCleanupImpl& operator=(DiskCleanupImpl&&) = delete;
 
 protected:
-    DiskCleanupImpl()
+    DiskCleanupImpl() noexcept(false)
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"DiskCleanupImpl::DiskCleanupImpl (instance=%p)\n", this);
     }

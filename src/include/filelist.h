@@ -15,7 +15,7 @@ namespace msf
 {
 
 class FileList :
-    public CComObjectRootEx<CComSingleThreadModel>,
+    public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ATL::IDataObjectImpl<FileList>
 {
 public:
@@ -25,13 +25,12 @@ public:
         COM_INTERFACE_ENTRY(IDataObject)
     END_COM_MAP()
 
-    static CComPtr<FileList> CreateInstance()
+    static ATL::CComPtr<FileList> CreateInstance()
     {
-        CComObject<FileList>* pinstance;
-        RaiseExceptionIfFailed(
-            CComObject<FileList>::CreateInstance(&pinstance));
+        ATL::CComObject<FileList>* pinstance;
+        RaiseExceptionIfFailed(ATL::CComObject<FileList>::CreateInstance(&pinstance));
 
-        CComPtr<FileList> filelist(pinstance);
+        ATL::CComPtr<FileList> filelist(pinstance);
 
         return filelist;
     }

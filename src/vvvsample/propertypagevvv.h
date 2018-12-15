@@ -38,7 +38,7 @@ public:
     explicit PropertyPageVVV(std::wstring strFilename) :
         m_filename(std::move(strFilename))
     {
-        VVVFile vvvFile(m_filename);
+        const VVVFile vvvFile(m_filename);
 
         // Retrieve the file data: the sample don't shows the page if this fails.
         m_label   = vvvFile.GetLabel();

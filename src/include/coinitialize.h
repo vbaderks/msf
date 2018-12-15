@@ -16,7 +16,7 @@ namespace msf::util
 {
 
 /// <summary>Scope based COM initialization class (based on RAII pattern).</summary>
-class CoInitializer
+class CoInitializer final
 {
 public:
     CoInitializer()

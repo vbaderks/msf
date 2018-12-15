@@ -20,7 +20,8 @@ namespace msf
 class CCfShellIdListHandler : public ClipboardFormatHandler
 {
 public:
-    CCfShellIdListHandler(LPCITEMIDLIST pidlFolder, std::vector<CPidl>& pidls) :
+    CCfShellIdListHandler(LPCITEMIDLIST pidlFolder, std::vector<ItemIDList>& pidls)
+        :
         ClipboardFormatHandler(CFSTR_SHELLIDLIST, true, false),
         m_pidlFolder(pidlFolder),
         m_pidls(pidls)
@@ -46,11 +47,11 @@ public:
 
     void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const override
     {
-        UINT sizeheader = static_cast<UINT>(sizeof(CIDA) + (sizeof(UINT) * m_pidls.size()));
+        const UINT sizeheader = static_cast<UINT>(sizeof(CIDA) + (sizeof(UINT) * m_pidls.size()));
 
         UINT size = sizeheader + m_pidlFolder.GetSize();
 
-        for (CPidls::const_iterator it = m_pidls.begin(); it != m_pidls.end(); ++it)
+        for (auto it = m_pidls.begin(); it != m_pidls.end(); ++it)
         {
             size += it->GetSize();
         }
@@ -74,7 +75,7 @@ public:
 
 private:
 
-    unsigned int AddPidlToCida(CIDA* pcida, const CPidl& pidl, UINT index, UINT offset) const noexcept
+    unsigned int AddPidlToCida(CIDA* pcida, const ItemIDList& pidl, UINT index, UINT offset) const noexcept
     {
         pcida->aoffset[index] = offset;
 
@@ -83,8 +84,8 @@ private:
         return size;
     }
 
-    CPidl   m_pidlFolder;
-    std::vector<CPidl>& m_pidls;
+    ItemIDList m_pidlFolder;
+    std::vector<ItemIDList>& m_pidls;
 };
 
 } // end of msf namespace

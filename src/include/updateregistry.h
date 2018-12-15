@@ -8,6 +8,7 @@
 #include "msfbase.h"
 #include "olestring.h"
 #include "strutil.h"
+#include <string>
 
 
 namespace msf

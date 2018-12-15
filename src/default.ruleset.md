@@ -45,6 +45,9 @@ C26485: Do not pass an array as a single pointer
 C26486: Lifetime problem.
 -> Rationale: many false warnings.
 
+C26487: Don't return a pointer that may be invalid (lifetime.4).
+-> Rationale: many false warnings (VS 2019 16.0.0 Preview 1.1)
+
 C26489: Don't derence a pointer that may be invalid
 -> Rationale: many false warnings
 
