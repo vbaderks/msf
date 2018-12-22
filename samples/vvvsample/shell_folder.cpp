@@ -3,7 +3,7 @@
 //
 // See README.TXT for the details of the software license.
 //
-#include "stdafx.h"
+#include "pch.h"
 
 // ReSharper disable once CppUnusedIncludeDirective
 #include "shell_folder_class_id.h"

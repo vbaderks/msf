@@ -5,7 +5,7 @@
 //
 
 
-#include "stdafx.h"
+#include "pch.h"
 
 ////#include "resource.h"
 #include <disk_cleanup_impl.h>

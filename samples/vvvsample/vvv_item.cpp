@@ -4,7 +4,7 @@
 // See README.TXT for detailed details of the software license.
 //
 
-#include "stdafx.h"
+#include "pch.h"
 
 #include "vvv_item.h"
 #include "columns.h"

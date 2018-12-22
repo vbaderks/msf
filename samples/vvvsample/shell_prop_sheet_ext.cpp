@@ -4,7 +4,7 @@
 // See README.TXT for the details of the software license.
 //
 
-#include "stdafx.h"
+#include "pch.h"
 
 #include "property_page_vvv.h"
 #include "resource.h"

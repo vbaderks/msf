@@ -3,7 +3,7 @@
 //
 // See README.TXT for the details of the software license.
 //
-#include "stdafx.h"
+#include "pch.h"
 
 #include "edit_with_notepad_command.h"
 #include "about_msf_command.h"

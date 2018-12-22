@@ -4,7 +4,7 @@
 // See README.TXT for the details of the software license.
 //
 
-#include "stdafx.h"
+#include "pch.h"
 
 #include "shell_folder_class_id.h"
 #include "resource.h"
