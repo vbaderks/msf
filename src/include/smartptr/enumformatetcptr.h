@@ -5,12 +5,9 @@
 //
 #pragma once
 
+#include "msf_base.h"
 
-#include "msfbase.h"
-
-
-namespace msf
-{
+namespace msf {
 
 class IEnumFORMATETCPtr : public ::IEnumFORMATETCPtr
 {
@@ -32,6 +29,5 @@ public:
         return hr == S_OK;
     }
 };
-
 
 } // end msf namespace

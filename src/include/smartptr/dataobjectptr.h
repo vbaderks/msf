@@ -6,9 +6,9 @@
 #pragma once
 
 
-#include "msfbase.h"
+#include "msf_base.h"
 #include "util.h"
-#include "formatetc.h"
+#include "format_etc.h"
 #include "enumformatetcptr.h"
 
 

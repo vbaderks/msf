@@ -18,10 +18,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="diskcleanup.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="disk_cleanup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

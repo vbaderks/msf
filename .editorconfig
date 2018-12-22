@@ -13,3 +13,7 @@ indent_size = 4
 [*.{cpp,h,in}]
 curly_bracket_next_line = true
 indent_brace_style = Allman
+
+# Resource Files
+[*.rc]
+charset = undef

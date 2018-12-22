@@ -221,14 +221,14 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="contextmenu.cpp" />
-    <ClCompile Include="copyhook.cpp" />
-    <ClCompile Include="extractimage.cpp" />
-    <ClCompile Include="iconoverlay.cpp" />
-    <ClCompile Include="infotip.cpp" />
+    <ClCompile Include="context_menu.cpp" />
+    <ClCompile Include="copy_hook.cpp" />
+    <ClCompile Include="extract_image.cpp" />
+    <ClCompile Include="icon_overlay.cpp" />
+    <ClCompile Include="info_tip.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="shellfolder.cpp" />
-    <ClCompile Include="shellpropsheetext.cpp" />
+    <ClCompile Include="shell_folder.cpp" />
+    <ClCompile Include="shell_prop_sheet_ext.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Checked|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Checked|x64'">Create</PrecompiledHeader>
@@ -237,8 +237,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="vvvfile.cpp" />
-    <ClCompile Include="vvvitem.cpp" />
+    <ClCompile Include="vvv_file.cpp" />
+    <ClCompile Include="vvv_item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="sample.def" />
@@ -248,22 +248,22 @@
     <None Include="sample2.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="aboutmsfcommand.h" />
-    <ClInclude Include="cffilecontentshandler.h" />
-    <ClInclude Include="cffiledescriptorhandler.h" />
+    <ClInclude Include="about_msf_command.h" />
+    <ClInclude Include="cf_file_contents_handler.h" />
+    <ClInclude Include="cf_file_descriptor_handler.h" />
     <ClInclude Include="columns.h" />
-    <ClInclude Include="editwithnotepadcommand.h" />
-    <ClInclude Include="enumidlist.h" />
-    <ClInclude Include="propertypageitem.h" />
-    <ClInclude Include="propertypagevvv.h" />
+    <ClInclude Include="edit_with_notepad_command.h" />
+    <ClInclude Include="enum_id_list.h" />
+    <ClInclude Include="property_page_item.h" />
+    <ClInclude Include="property_page_vvv.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="shellfolderclsid.h" />
-    <ClInclude Include="shellfolderdataobject.h" />
-    <ClInclude Include="shellfolderviewcb.h" />
+    <ClInclude Include="shell_folder_class_id.h" />
+    <ClInclude Include="shell_folder_data_object.h" />
+    <ClInclude Include="shell_folder_view_cb.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="vvvfile.h" />
-    <ClInclude Include="vvvitem.h" />
-    <ClInclude Include="vvvpropertysheet.h" />
+    <ClInclude Include="vvv_file.h" />
+    <ClInclude Include="vvv_item.h" />
+    <ClInclude Include="vvv_property_sheet.h" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="sample.manifest" />

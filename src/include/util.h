@@ -7,7 +7,7 @@
 
 
 // Purpose: this file contains small helper functions.
-#include "msfbase.h"
+#include "msf_base.h"
 #include <shellapi.h>
 #include <vector>
 

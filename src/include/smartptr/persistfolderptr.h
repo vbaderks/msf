@@ -6,12 +6,10 @@
 #pragma once
 
 
-#include "msfbase.h"
+#include "msf_base.h"
 #include "pidl.h"
 
-
 _COM_SMARTPTR_TYPEDEF(IPersistFolder, __uuidof(IPersistFolder));
-
 
 namespace msf
 {

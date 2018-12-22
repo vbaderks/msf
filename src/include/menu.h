@@ -5,16 +5,14 @@
 //
 #pragma once
 
-
-#include "msfbase.h"
-#include "menuiteminfo.h"
-#include "strutil.h"
-
+#include "msf_base.h"
+#include "menu_item_info.h"
+#include "str_util.h"
 
 namespace msf
 {
 
-// Simple menu wrapper class. For more advanced functionality use WTL or MFC.
+// Simple menu wrapper class. For more advanced functionality use the Windows Template Library (WTL).
 class CMenu final
 {
 public:
