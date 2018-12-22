@@ -359,11 +359,8 @@ public:
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetFolderFlags");
     }
 
-    HRESULT __stdcall GetSortColumns(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, uint32_t cColumnsIn, __RPC__out uint32_t * pcColumnsOut) override
+    HRESULT __stdcall GetSortColumns(__RPC__out_ecount_part(columnCountIn, *columnCountOut) SORTCOLUMN* /*sortColumns*/, [[maybe_unused]] uint32_t columnCountIn, [[maybe_unused]] __RPC__out uint32_t* columnCountOut) override
     {
-        UNREFERENCED_PARAMETER(rgSortColumns);
-        UNREFERENCED_PARAMETER(cColumnsIn);
-        UNREFERENCED_PARAMETER(pcColumnsOut);
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetSortColumns");
     }
 

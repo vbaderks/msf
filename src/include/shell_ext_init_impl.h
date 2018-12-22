@@ -17,21 +17,21 @@ class IShellExtInitImpl : public IShellExtInit
 {
 public:
     IShellExtInitImpl() = default;
+
     IShellExtInitImpl(const IShellExtInitImpl&) = delete;
     IShellExtInitImpl(IShellExtInitImpl&&) = delete;
     IShellExtInitImpl& operator=(const IShellExtInitImpl&) = delete;
     IShellExtInitImpl& operator=(IShellExtInitImpl&&) = delete;
 
     // IShellExtInit
-    HRESULT __stdcall Initialize(_In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* pDataObject, _In_opt_ HKEY /*hkeyProgID*/) noexcept override
+    HRESULT __stdcall Initialize([[maybe_unused]] _In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* dataObject, _In_opt_ HKEY /*hkeyProgID*/) noexcept override
     {
-        UNREFERENCED_PARAMETER(pidlFolder);
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, pDataObject);
-        ATLASSERT(pDataObject && "Invalid argument");
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, dataObject);
+        ATLASSERT(dataObject && "Invalid argument");
 
         try
         {
-            CacheFiles(pDataObject);
+            CacheFiles(dataObject);
             return S_OK;
         }
         catch (...)

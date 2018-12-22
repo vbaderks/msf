@@ -181,11 +181,10 @@ public:
     }
 
     // IPersistFolder3
-    HRESULT __stdcall InitializeEx(__RPC__in_opt IBindCtx* pbc, __RPC__in PCIDLIST_ABSOLUTE pidlRoot, __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* ppfti) noexcept override
+    HRESULT __stdcall InitializeEx([[maybe_unused]] __RPC__in_opt IBindCtx* bindContext, __RPC__in PCIDLIST_ABSOLUTE pidlRoot, [[maybe_unused]] __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* folderTargetInfo) noexcept override
     {
-        UNREFERENCED_PARAMETER(pbc);
-        UNREFERENCED_PARAMETER(ppfti);
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IPersistFolder3::InitializeEx (instance=%p, pcb=%p, pidlRoot=%p, ppfti=%p)\n", this, pbc, pidlRoot, ppfti);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IPersistFolder3::InitializeEx (instance=%p, bindContext=%p, pidlRoot=%p, folderTargetInfo=%p)\n",
+                  this, bindContext, pidlRoot, folderTargetInfo);
 
         // Note: if ppfti is NULL InitializeEx should act as Initialize.
         return Initialize(pidlRoot);
@@ -210,12 +209,9 @@ public:
     }
 
     // IShellDetails
-    HRESULT __stdcall ColumnClick(uint32_t uiColumn) noexcept override
+    HRESULT __stdcall ColumnClick([[maybe_unused]] uint32_t column) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n", this, uiColumn);
-
-        // mark parameters as not used in release build.
-        UNREFERENCED_PARAMETER(uiColumn);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n", this, column);
 
         // Shell 6.0 (Vista and up) can sort by itself, return S_FALSE to trigger this.
         return S_FALSE;
@@ -499,17 +495,11 @@ public:
         }
     }
 
-    HRESULT __stdcall ParseDisplayName(__RPC__in_opt HWND window, LPBC pbc, LPOLESTR pwszDisplayName, __reserved DWORD*, __RPC__deref_out_opt PIDLIST_RELATIVE*, __RPC__inout_opt DWORD* pdwAttributes) noexcept override
+    HRESULT __stdcall ParseDisplayName([[maybe_unused]] __RPC__in_opt HWND window, [[maybe_unused]] LPBC pbc, [[maybe_unused]] LPOLESTR displayName, __reserved DWORD*, __RPC__deref_out_opt PIDLIST_RELATIVE*, [[maybe_unused]] __RPC__inout_opt DWORD* attributes) noexcept override
     {
-        // mark parameters as not used in release build.
-        UNREFERENCED_PARAMETER(window);
-        UNREFERENCED_PARAMETER(pbc);
-        UNREFERENCED_PARAMETER(pwszDisplayName);
-        UNREFERENCED_PARAMETER(pdwAttributes);
-
         #ifdef _DEBUG
-        const DWORD dwAttributes = pdwAttributes == nullptr ? 0 : *pdwAttributes;
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n", window, pbc, pwszDisplayName, dwAttributes);
+        const DWORD attributesToTrace = attributes ? *attributes : 0;
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n", window, pbc, displayName, attributesToTrace);
         #endif
 
         return E_NOTIMPL;
@@ -638,10 +628,9 @@ public:
     }
 
     // IObjectWithFolderEnumMode
-    HRESULT __stdcall SetMode(FOLDER_ENUM_MODE mode) noexcept override
+    HRESULT __stdcall SetMode([[maybe_unused]] FOLDER_ENUM_MODE mode) noexcept override
     {
         // Note: it seems that the shell always passes FEM_VIEW_RESULT.
-        UNREFERENCED_PARAMETER(mode);
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IObjectWithFolderEnumMode::SetMode (feMode=%d, 0=FEM_VIEW_RESULT, 1=FEM_NAVIGATION)\n", mode);
         return S_OK;
     }
@@ -730,14 +719,13 @@ public:
         return S_OK;
     }
 
-    HRESULT __stdcall Drop(_In_ IDataObject* dataObject, DWORD modifierKeyState, POINTL cursor, _In_ DWORD* effect) noexcept override
+    HRESULT __stdcall Drop(_In_ IDataObject* dataObject, DWORD modifierKeyState, POINTL cursorLocation, _In_ DWORD* effect) noexcept override
     {
-        UNREFERENCED_PARAMETER(modifierKeyState);
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IDropTarget::Drop (modifierKeyState=%d, effect=%d)\n", modifierKeyState, *effect);
 
         try
         {
-            *effect = static_cast<T*>(this)->OnDrop(dataObject, modifierKeyState, cursor, *effect);
+            *effect = static_cast<T*>(this)->OnDrop(dataObject, modifierKeyState, cursorLocation, *effect);
             return S_OK;
         }
         catch (...)

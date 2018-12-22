@@ -45,9 +45,8 @@ public:
     {
         if (m_memory)
         {
-            const BOOL bResult = GlobalUnlock(m_memory);
-            ATLASSERT(bResult || GetLastError() == NO_ERROR);
-            UNREFERENCED_PARAMETER(bResult);
+            [[maybe_unused]] const bool result = GlobalUnlock(m_memory);
+            ATLASSERT(result || GetLastError() == NO_ERROR);
             m_memory = nullptr;
             m_p = nullptr;
         }

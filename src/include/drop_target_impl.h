@@ -70,10 +70,8 @@ public:
         ATLTRACENOTIMPL(L"DropTargetImpl::GetCurFile");
     }
 
-    HRESULT __stdcall Load(LPCOLESTR filename, DWORD mode) noexcept override
+    HRESULT __stdcall Load(LPCOLESTR filename, [[maybe_unused]] DWORD mode) noexcept override
     {
-        UNREFERENCED_PARAMETER(mode); // unused in release.
-
         ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, mode, filename);
         try
         {
@@ -143,15 +141,14 @@ public:
         return S_OK;
     }
 
-    HRESULT __stdcall Drop(_In_ IDataObject* dataObject, DWORD grfKeyState, POINTL pt, _In_ DWORD* pdwEffect) noexcept override
+    HRESULT __stdcall Drop(_In_ IDataObject* dataObject, DWORD modifierFlagsfKeyState, POINTL cursorLocation, _In_ DWORD* effect) noexcept override
     {
-        UNREFERENCED_PARAMETER(grfKeyState);
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::Drop (instance=%p, grfKeyState=%d, dwEffect=%d)\n", this, grfKeyState, *pdwEffect);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::IDropTarget::Drop (instance=%p, grfKeyState=%d, effect=%d)\n", this, modifierFlagsfKeyState, *effect);
 
         try
         {
-            // Derived class needs to implement: DWORD OnDrop(IDataObject* dataObject, DWORD grfKeyState, POINTL pt, DWORD dwEffect)
-            *pdwEffect = static_cast<T*>(this)->OnDrop(dataObject, grfKeyState, pt, *pdwEffect);
+            // Derived class needs to implement: DWORD OnDrop(IDataObject* dataObject, DWORD grfKeyState, POINTL cursorLocation, DWORD effect)
+            *effect = static_cast<T*>(this)->OnDrop(dataObject, modifierFlagsfKeyState, cursorLocation, *effect);
             return S_OK;
         }
         catch (...)

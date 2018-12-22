@@ -31,10 +31,9 @@ public:
     ClipboardPerformedDropEffectHandler& operator=(const ClipboardPerformedDropEffectHandler&) = delete;
     ClipboardPerformedDropEffectHandler& operator=(ClipboardPerformedDropEffectHandler&&) = delete;
 
-    void SetData(const FORMATETC& formatEtc, STGMEDIUM& storageMedium, bool release) override
+    void SetData([[maybe_unused]] const FORMATETC& formatEtc, STGMEDIUM& storageMedium, bool release) override
     {
         ATLASSERT(IsValid(formatEtc, storageMedium) && "Passed invalid arguments");
-        UNREFERENCED_PARAMETER(formatEtc); // not used in release.
 
         util::GlobalLock<DWORD> globalLock(storageMedium.hGlobal);
 

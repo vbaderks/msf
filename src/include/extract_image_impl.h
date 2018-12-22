@@ -77,10 +77,8 @@ public:
         ATLTRACENOTIMPL(L"ExtractImageImpl::GetCurFile");
     }
 
-    HRESULT __stdcall Load(LPCOLESTR filename, DWORD mode) noexcept override
+    HRESULT __stdcall Load(LPCOLESTR filename, [[maybe_unused]] DWORD mode) noexcept override
     {
-        UNREFERENCED_PARAMETER(mode); // unused in release.
-
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, mode, filename);
         try
         {

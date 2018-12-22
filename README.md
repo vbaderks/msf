@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The Mini Shell extension Framework (MSF) is a collection of C++14 template classes that can be
+The Mini Shell extension Framework (MSF) is a collection of C++17 template classes that can be
 used under the LGPL licence to create shell extensions for the Microsoft Window Explorer.
 Microsoft Windows Shell Extensions are in essence COM objects. MSF relies on the Microsoft Active Template Library (ATL) to
 provide support for implementing COM objects.
@@ -15,9 +15,9 @@ provide support for implementing COM objects.
 
 ### Supported
 
-* Info Tip Handler (IPersistFile, IQueryInfo) 
-* Property Sheet Handler (IShellExtInitImpl, IShellPropSheetExt) 
-* Shortcut Menu Handler (IContextMenu, IContextMenu2, IContextMenu3) 
+* Info Tip Handler (IPersistFile, IQueryInfo)
+* Property Sheet Handler (IShellExtInitImpl, IShellPropSheetExt)
+* Shortcut Menu Handler (IContextMenu, IContextMenu2, IContextMenu3)
 * Copy Hook Handler (ICopyHook)
 * Icon Overlay Handler (IShellIconOverlayIdentifier)
 * Namespace Extension (IShellView, IShellFolder, IShellFolder2)
@@ -50,9 +50,9 @@ To reduce maintenance effort MSF has 3 support levels:
 * On-demand. These versions are not longer developed or tested, but support is
    not removed from the code base.
 
-* Legacy support. These versions are 
+* Legacy support. These versions are
    not longer actively maintained and support is removed to keep the code clean.
-   The source code in the repository is tagged to make it easy to retrieve 
+   The source code in the repository is tagged to make it easy to retrieve
    old versions that have support for these compilers \ Windows versions.
 
 ### Supported Operating Systems

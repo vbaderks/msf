@@ -6,10 +6,10 @@
 
     <!-- C++ temp files can be redirected. -->
     <IntDir>$(MSBuildThisFileDirectory)..\intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
-  
+
     <PlatformToolset>v141</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-  
+
     <!-- Default character set is Unicode (UTF16), defines _UNICODE and UNICODE. -->
     <CharacterSet>Unicode</CharacterSet>
 
@@ -24,8 +24,8 @@
       <!-- Use all cores to speed up the compilation (MS recommended best practice). -->
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
 
-      <!-- Explicit define that all projects are compiled according the C++14 standard -->
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <!-- Explicit define that all projects are compiled according the C++17 standard -->
+      <LanguageStandard>stdcpp17</LanguageStandard>
 
       <!-- Explicit disable non conforming MSVC compiler options that are not compatible with the C++ standard -->
       <ConformanceMode>true</ConformanceMode>
