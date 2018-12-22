@@ -24,7 +24,7 @@ public:
         const HRESULT result = SetImpl(dataObject, effect);
         if (FAILED(result))
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPasteSucceeded::SetOptional failed, result=%x\n", result);
+            ATLTRACE(L"CfPasteSucceeded::SetOptional failed, result=%x\n", result);
         }
     }
 

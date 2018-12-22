@@ -21,7 +21,7 @@ public:
         switch (uMsg)
         {
         case PSPCB_ADDREF:
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellExtPropertyPageImpl::Callback (instance=%p, uMsg=AddRef)\n", pT);
+            ATLTRACE(L"ShellExtPropertyPageImpl::Callback (instance=%p, uMsg=AddRef)\n", pT);
             ++(pT->m_nRef); // only 5.80 (IE5) and up sends 'addref'.
             break;
 
@@ -29,7 +29,7 @@ public:
             return ATL::CSnapInPropertyPageImpl<T>::PropPageCallback(hWnd, uMsg, ppsp);
 
         case PSPCB_RELEASE:
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellExtPropertyPageImpl::Callback (instance=%p, uMsg=Release)\n", pT);
+            ATLTRACE(L"ShellExtPropertyPageImpl::Callback (instance=%p, uMsg=Release)\n", pT);
             --(pT->m_nRef);
             if (pT->m_nRef <= 0)
                 delete pT;
@@ -52,13 +52,13 @@ protected:
     explicit ShellExtPropertyPageImpl(PCWSTR lpszTitle = nullptr) noexcept :
         ATL::CSnapInPropertyPageImpl<T>(lpszTitle)
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellExtPropertyPageImpl::ShellExtPropertyPageImpl (instance=%p)\n", this);
+        ATLTRACE(L"ShellExtPropertyPageImpl::ShellExtPropertyPageImpl (instance=%p)\n", this);
         ATL::_pAtlModule->Lock(); // property page is not a COM object, but DLL must stay in memory.
     }
 
     ~ShellExtPropertyPageImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellExtPropertyPageImpl::~ShellExtPropertyPageImpl (instance=%p)\n", this);
+        ATLTRACE(L"ShellExtPropertyPageImpl::~ShellExtPropertyPageImpl (instance=%p)\n", this);
         ATL::_pAtlModule->Unlock();
     }
 

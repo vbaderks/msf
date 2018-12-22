@@ -70,12 +70,12 @@ public:
 protected:
     EnumFORMATETC() noexcept
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"CEnumFORMATETC::CEnumFORMATETC (instance=%p)\n", this);
+        ATLTRACE(L"CEnumFORMATETC::CEnumFORMATETC (instance=%p)\n", this);
     }
 
     ~EnumFORMATETC()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"CEnumFORMATETC::~CEnumFORMATETC (instance=%p)\n", this);
+        ATLTRACE(L"CEnumFORMATETC::~CEnumFORMATETC (instance=%p)\n", this);
     }
 
 private:

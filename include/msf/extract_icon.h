@@ -106,7 +106,7 @@ protected:
 
     HRESULT __stdcall GetIconLocation(uint32_t flags, PWSTR /*iconFile*/, uint32_t /*cchMax*/, _Out_ int* index, _Out_ uint32_t* outFlags) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, flags);
+        ATLTRACE(L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, flags);
 
         try
         {
@@ -124,7 +124,7 @@ protected:
 
     HRESULT __stdcall Extract(PCWSTR /*pszFile*/, uint32_t /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, uint32_t nIconSize) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
+        ATLTRACE(L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
 
         try
         {

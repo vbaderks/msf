@@ -39,7 +39,7 @@ public:
 
         m_effect = *globalLock.get();
 
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ClipboardPerformedDropEffectHandler::SetData (dwEffect=%p)\n", m_effect);
+        ATLTRACE(L"ClipboardPerformedDropEffectHandler::SetData (m_effect=%p)\n", m_effect);
 
         if (m_effect == DROPEFFECT_MOVE)
         {

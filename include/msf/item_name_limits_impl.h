@@ -45,7 +45,7 @@ public:
     {
         try
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"IItemNameLimitsImpl::GetValidCharacters\n");
+            ATLTRACE(L"IItemNameLimitsImpl::GetValidCharacters\n");
 
             const wchar_t* pszValidChars = TItemV::GetValidChars();
             if (!pszValidChars)
@@ -78,16 +78,16 @@ public:
     // Purpose: called by the shell to retrieve the max length.
     //          Length can depend on the current string. (UNC pathname has
     //          different length then local path, etc).
-    HRESULT __stdcall GetMaxLength(__RPC__in_string PCWSTR pszName, __RPC__out int* piMaxNameLen) override
+    HRESULT __stdcall GetMaxLength(__RPC__in_string PCWSTR name, __RPC__out int* maxNameLength) override
     {
         try
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"IItemNameLimitsImpl::GetMaxLength, name=%s\n", pszName);
+            ATLTRACE(L"IItemNameLimitsImpl::GetMaxLength, name=%s\n", name);
 
             // The TItem must implement the static function GetMaxItemNameLength.
-            *piMaxNameLen = TItem::GetMaxNameLength(pszName);
+            *maxNameLength = TItem::GetMaxNameLength(name);
 
-            ATLASSERT(*piMaxNameLen >= 0 && "negative length?");
+            ATLASSERT(*maxNameLength >= 0 && "negative length?");
             return S_OK;
         }
         catch (...)

@@ -40,7 +40,7 @@ public:
     // IInitializeWithFile
     HRESULT __stdcall Initialize(PCWSTR filePath, DWORD mode) override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::Initialize (with file) (instance=%p, mode=%d, filename=%s)\n", this, mode, filePath);
+        ATLTRACE(L"InfoTipImpl::Initialize (with file) (instance=%p, mode=%d, filename=%s)\n", this, mode, filePath);
 
         try
         {
@@ -65,12 +65,12 @@ public:
 protected:
     InfoTipImpl() noexcept
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
+        ATLTRACE(L"InfoTipImpl::InfoTipImpl (instance=%p)\n", this);
     }
 
     ~InfoTipImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
+        ATLTRACE(L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
     }
 
     virtual void InitializeCore(PCWSTR filePath, DWORD mode) = 0;

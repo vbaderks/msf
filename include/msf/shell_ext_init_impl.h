@@ -26,7 +26,7 @@ public:
     // IShellExtInit
     HRESULT __stdcall Initialize([[maybe_unused]] _In_opt_ PCIDLIST_ABSOLUTE pidlFolder, _In_opt_ IDataObject* dataObject, _In_opt_ HKEY /*hkeyProgID*/) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, pDataObject=%p)\n", this, pidlFolder, dataObject);
+        ATLTRACE(L"IShellExtInitImpl::IShellExtInit::Initialize (instance=%p, pidlFolder=%p, dataObject=%p)\n", this, pidlFolder, dataObject);
         ATLASSERT(dataObject && "Invalid argument");
 
         try

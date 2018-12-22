@@ -23,7 +23,7 @@ public:
         const HRESULT result = SetImpl(dataObject, effect);
         if (FAILED(result))
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPerformedDropEffect::SetOptional failed, result=%x\n", result);
+            ATLTRACE(L"CfPerformedDropEffect::SetOptional failed, result=%x\n", result);
         }
     }
 

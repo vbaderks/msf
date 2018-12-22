@@ -120,12 +120,12 @@ public:
 protected:
     IEnumIDListImpl() noexcept
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n", this);
+        ATLTRACE(L"IEnumIDListImpl::IEnumIDListImpl (instance=%p)\n", this);
     }
 
     ~IEnumIDListImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n", this);
+        ATLTRACE(L"IEnumIDListImpl::~IEnumIDListImpl (instance=%p)\n", this);
     }
 };
 

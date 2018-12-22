@@ -33,7 +33,7 @@ std::wstring VVVItem::GetDisplayName(SHGDNF shellGetDisplayNameType) const
         return std::to_wstring(GetID()); // return unique string (VVV items are unique by ID)
 
     default:
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"VVVItem::GetDisplayName (shellGetDisplayNameType=%d)\n", shellGetDisplayNameType);
+        ATLTRACE(L"VVVItem::GetDisplayName (shellGetDisplayNameType=%d)\n", shellGetDisplayNameType);
         break;
     }
 

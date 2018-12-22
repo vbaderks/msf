@@ -35,7 +35,7 @@ public:
 #ifdef _DEBUG
         if (!valid)
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"VVVItem::Constructor, PIDL not valid (data_size=%d, s_item_size=%d)\n", GetDataSize(), sizeof(SItemData));
+            ATLTRACE(L"VVVItem::Constructor, PIDL not valid (data_size=%d, s_item_size=%d)\n", GetDataSize(), sizeof(SItemData));
         }
 #endif
         msf::RaiseExceptionIf(!valid);

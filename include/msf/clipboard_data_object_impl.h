@@ -29,7 +29,7 @@ class ClipboardDataObjectImpl : public ATL::IDataObjectImpl<T>
 public:
     ClipboardDataObjectImpl() noexcept
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::ClipboardDataObjectImpl (instance=%p)\n", this);
+        ATLTRACE(L"ClipboardDataObjectImpl::ClipboardDataObjectImpl (instance=%p)\n", this);
     }
 
     void RegisterCfHandler(std::unique_ptr<ClipboardFormatHandler> clipFormatHandler)
@@ -38,17 +38,17 @@ public:
         m_cfhandlers.push_back(clipFormatHandler);
     }
 
-    HRESULT __stdcall EnumFormatEtc(DWORD dwDirection, IEnumFORMATETC** /*enumFormatEtc*/) noexcept override
+    HRESULT __stdcall EnumFormatEtc(DWORD direction, IEnumFORMATETC** /*enumFormatEtc*/) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
+        ATLTRACE(L"ClipboardDataObjectImpl::EnumFormatEtc (direction=%d)\n", direction);
 
         try
         {
-            if (dwDirection != DATADIR_GET && dwDirection != DATADIR_SET)
+            if (direction != DATADIR_GET && direction != DATADIR_SET)
                 return E_INVALIDARG;
 
             std::vector<FORMATETC> formatEtcs;
-            GetRegisteredFormats(formatEtcs, dwDirection);
+            GetRegisteredFormats(formatEtcs, direction);
             GetExternalFormats(formatEtcs);
 
             uint16_t
@@ -61,31 +61,31 @@ public:
         }
     }
 
-    HRESULT __stdcall QueryGetData(FORMATETC* pformatetc) noexcept override
+    HRESULT __stdcall QueryGetData(FORMATETC* formatEtc) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
-            pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str());
+        ATLTRACE(L"ClipboardDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
+                 formatEtc->cfFormat, GetClipboardFormatName(formatEtc->cfFormat).c_str());
 
         try
         {
-            const ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
+            const ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(formatEtc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
                 {
-                    return pcfhandler->Validate(*pformatetc);
+                    return pcfhandler->Validate(*formatEtc);
                 }
             }
             else
             {
-                const CExternalData* externalData = FindExternalData(pformatetc->cfFormat);
+                const CExternalData* externalData = FindExternalData(formatEtc->cfFormat);
                 if (externalData)
                 {
-                    return externalData->Validate(*pformatetc);
+                    return externalData->Validate(*formatEtc);
                 }
             }
 
-            ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
+            ATLTRACE(L"ClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
         catch (...)
@@ -94,34 +94,34 @@ public:
         }
     }
 
-    HRESULT __stdcall GetData(FORMATETC *pformatetc, STGMEDIUM *pstgmedium) noexcept override
+    HRESULT __stdcall GetData(FORMATETC *formatEtc, STGMEDIUM *storageMedium) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData cfformat=%d (%s)\n",
-                  pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str());
+        ATLTRACE(L"ClipboardDataObjectImpl::GetData cfformat=%d (%s)\n",
+                  formatEtc->cfFormat, GetClipboardFormatName(formatEtc->cfFormat).c_str());
 
         try
         {
-            ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
+            ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(formatEtc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanGetData())
                 {
-                    RaiseExceptionIfFailed(pcfhandler->Validate(*pformatetc));
-                    pcfhandler->GetData(*pformatetc, *pstgmedium);
+                    RaiseExceptionIfFailed(pcfhandler->Validate(*formatEtc));
+                    pcfhandler->GetData(*formatEtc, *storageMedium);
                     return S_OK;
                 }
             }
             else
             {
-                CExternalData* pexternaldata = FindExternalData(pformatetc->cfFormat);
+                CExternalData* pexternaldata = FindExternalData(formatEtc->cfFormat);
                 if (pexternaldata)
                 {
-                    pexternaldata->Copy(*pstgmedium);
+                    pexternaldata->Copy(*storageMedium);
                     return S_OK;
                 }
             }
 
-            ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
+            ATLTRACE(L"ClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
         catch (...)
@@ -130,48 +130,48 @@ public:
         }
     }
 
-    HRESULT __stdcall SetData(FORMATETC* pformatetc, STGMEDIUM* pstgmedium, BOOL fRelease) noexcept override
+    HRESULT __stdcall SetData(FORMATETC* formatEtc, STGMEDIUM* storageMedium, BOOL release) noexcept override
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
-                  pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str(), pformatetc->tymed, fRelease);
+        ATLTRACE(L"ClipboardDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
+                  formatEtc->cfFormat, GetClipboardFormatName(formatEtc->cfFormat).c_str(), formatEtc->tymed, release);
 
         try
         {
-            if (pformatetc->ptd)
+            if (formatEtc->ptd)
                 return DV_E_DVTARGETDEVICE;
 
-            if (pformatetc->tymed != pstgmedium->tymed)
+            if (formatEtc->tymed != storageMedium->tymed)
                 return DV_E_TYMED;
 
-            ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(pformatetc->cfFormat);
+            ClipboardFormatHandler* pcfhandler = FindClipFormatHandler(formatEtc->cfFormat);
             if (pcfhandler)
             {
                 if (pcfhandler->CanSetData())
                 {
-                    RaiseExceptionIfFailed(pcfhandler->Validate(*pformatetc));
-                    pcfhandler->SetData(*pformatetc, *pstgmedium, fRelease > 0);
+                    RaiseExceptionIfFailed(pcfhandler->Validate(*formatEtc));
+                    pcfhandler->SetData(*formatEtc, *storageMedium, release);
                     return S_OK;
                 }
 
                 return E_FAIL;
             }
 
-            if (!fRelease || pstgmedium->pUnkForRelease)
+            if (!release || storageMedium->pUnkForRelease)
                 return E_INVALIDARG; // external data can only be set, if we can take ownership.
 
-            if (pstgmedium->tymed != TYMED_HGLOBAL &&
-                pstgmedium->tymed != TYMED_ISTREAM &&
-                pstgmedium->tymed != TYMED_ISTORAGE)
+            if (storageMedium->tymed != TYMED_HGLOBAL &&
+                storageMedium->tymed != TYMED_ISTREAM &&
+                storageMedium->tymed != TYMED_ISTORAGE)
                 return DV_E_TYMED; // only support for HGLOBAL and TYMED_ISTREAM.
 
-            CExternalData* pexternaldata = FindExternalData(pformatetc->cfFormat);
+            CExternalData* pexternaldata = FindExternalData(formatEtc->cfFormat);
             if (pexternaldata)
             {
-                pexternaldata->Update(*pformatetc, *pstgmedium);
+                pexternaldata->Update(*formatEtc, *storageMedium);
             }
             else
             {
-                AddExternalData(*pformatetc, *pstgmedium);
+                AddExternalData(*formatEtc, *storageMedium);
             }
 
             return S_OK;
@@ -186,10 +186,9 @@ public:
     LPDATAADVISEHOLDER m_spDataAdviseHolder;
 
 protected:
-
     ~ClipboardDataObjectImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::~ClipboardDataObjectImpl (instance=%p)\n", this);
+        ATLTRACE(L"ClipboardDataObjectImpl::~ClipboardDataObjectImpl (instance=%p)\n", this);
     }
 
 private:
@@ -271,11 +270,11 @@ private:
         m_externaldatas.push_back(std::make_unique<CExternalData>(formatetc, stgmedium));
     }
 
-    void GetRegisteredFormats(std::vector<FORMATETC>& formatetcs, DWORD dwDirection) const
+    void GetRegisteredFormats(std::vector<FORMATETC>& formatetcs, DWORD direction) const
     {
         for (auto it = m_cfhandlers.begin(); it != m_cfhandlers.end(); ++it)
         {
-            if (dwDirection == DATADIR_GET)
+            if (direction == DATADIR_GET)
             {
                 if ((*it)->CanGetData())
                 {

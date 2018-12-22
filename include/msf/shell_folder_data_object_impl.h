@@ -30,7 +30,7 @@ public:
 
     HRESULT __stdcall GetData(_In_ FORMATETC* pformatetc, _Out_ STGMEDIUM* pstgmedium) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, "ShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
+        ATLTRACE("ShellFolderDataObjectImpl::GetData (cfformat=%d [%s])\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str());
 
         try
@@ -50,13 +50,13 @@ public:
                 const auto hr = m_pidldata->GetData(pformatetc, pstgmedium);
                 if (FAILED(hr))
                 {
-                    ATLTRACE2(ATL::atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData (pidldata failed)\n");
+                    ATLTRACE(L"ClipboardDataObjectImpl::GetData (pidldata failed)\n");
                 }
 
                 return hr;
             }
 
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"ClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
+            ATLTRACE(L"ClipboardDataObjectImpl::GetData (DV_E_FORMATETC)\n");
             return DV_E_FORMATETC;
         }
         catch (...)
@@ -67,7 +67,7 @@ public:
 
     HRESULT __stdcall GetDataHere(_In_ FORMATETC* pformatetc, _Inout_ STGMEDIUM* pmedium) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::GetDataHere (instance=%p)\n", this);
+        ATLTRACE(L"ShellFolderDataObjectImpl::GetDataHere (instance=%p)\n", this);
 
         return m_pidldata->GetDataHere(pformatetc, pmedium);
     }
@@ -77,11 +77,11 @@ public:
         // The docs define pformatetc as [in]. The SDK defines pformatetc as in_opt.
         if (!pformatetc)
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::QueryGetData (!pformatetc)\n");
+            ATLTRACE(L"ShellFolderDataObjectImpl::QueryGetData (!pformatetc)\n");
             return DV_E_FORMATETC;
         }
 
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
+        ATLTRACE(L"ShellFolderDataObjectImpl::QueryGetData, cfformat=%d (%s)\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str());
 
         try
@@ -92,7 +92,7 @@ public:
                 if (pcfhandler->CanGetData())
                     return pcfhandler->Validate(*pformatetc);
 
-                ATLTRACE2(ATL::atlTraceCOM, 0, L"ClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
+                ATLTRACE(L"ClipboardDataObjectImpl::QueryGetData (DV_E_FORMATETC)\n");
                 return DV_E_FORMATETC;
             }
 
@@ -106,14 +106,14 @@ public:
 
     HRESULT __stdcall GetCanonicalFormatEtc(__RPC__in_opt FORMATETC* pformatetc, __RPC__out FORMATETC* pformatetcOut) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::GetCanonicalFormatEtc (instance=%p)\n", this);
+        ATLTRACE(L"ShellFolderDataObjectImpl::GetCanonicalFormatEtc (instance=%p)\n", this);
 
         return m_pidldata->GetCanonicalFormatEtc(pformatetc, pformatetcOut);
     }
 
     HRESULT __stdcall SetData(_In_ FORMATETC* pformatetc, _In_ STGMEDIUM* pstgmedium, BOOL fRelease) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
+        ATLTRACE(L"ShellFolderDataObjectImpl::SetData cfformat=%d (%s), tymed=%d, fRelease=%d\n",
             pformatetc->cfFormat, GetClipboardFormatName(pformatetc->cfFormat).c_str(), pformatetc->tymed, fRelease);
 
         try
@@ -147,7 +147,7 @@ public:
 
     HRESULT __stdcall EnumFormatEtc(DWORD dwDirection, _In_ IEnumFORMATETC** ppenumFormatEtc) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
+        ATLTRACE(L"ShellFolderDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 
         try
         {
@@ -170,21 +170,21 @@ public:
 
     HRESULT __stdcall DAdvise(__RPC__in FORMATETC* pformatetc, DWORD advf, __RPC__in_opt IAdviseSink* pAdvSink, __RPC__out DWORD* pdwConnection) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::DAdvise (instance=%p)\n", this);
+        ATLTRACE(L"ShellFolderDataObjectImpl::DAdvise (instance=%p)\n", this);
 
         return m_pidldata->DAdvise(pformatetc, advf, pAdvSink, pdwConnection);
     }
 
     HRESULT __stdcall DUnadvise(DWORD dwConnection) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::DUnadvise (instance=%p)\n", this);
+        ATLTRACE(L"ShellFolderDataObjectImpl::DUnadvise (instance=%p)\n", this);
 
         return m_pidldata->DUnadvise(dwConnection);
     }
 
     HRESULT __stdcall EnumDAdvise(__RPC__deref_out_opt IEnumSTATDATA** ppenumAdvise) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::EnumDAdvise (instance=%p)\n", this);
+        ATLTRACE(L"ShellFolderDataObjectImpl::EnumDAdvise (instance=%p)\n", this);
 
         return m_pidldata->EnumDAdvise(ppenumAdvise);
     }
@@ -192,12 +192,12 @@ public:
 protected:
     ShellFolderDataObjectImpl() noexcept
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderDataObjectImpl::ShellFolderDataObjectImpl (instance=%p)\n", this);
+        ATLTRACE(L"ShellFolderDataObjectImpl::ShellFolderDataObjectImpl (instance=%p)\n", this);
     }
 
     ~ShellFolderDataObjectImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, "ShellFolderDataObjectImpl::~ShellFolderDataObjectImpl (instance=%p)\n", this);
+        ATLTRACE("ShellFolderDataObjectImpl::~ShellFolderDataObjectImpl (instance=%p)\n", this);
     }
 
     void Init(PCIDLIST_ABSOLUTE pidlFolder, uint32_t cidl, PCUITEMID_CHILD_ARRAY ppidl,

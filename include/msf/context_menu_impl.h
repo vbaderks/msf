@@ -163,7 +163,7 @@ public:
         {
             if (*m_pidCmd >= m_idCmdLast)
             {
-                ATLTRACE2(ATL::atlTraceCOM, 0, L"Menu::CheckID: Out of id space (idCmd=%d, idCmdLast=%d)\n", *m_pidCmd, m_idCmdLast);
+                ATLTRACE(L"Menu::CheckID: Out of id space (idCmd=%d, idCmdLast=%d)\n", *m_pidCmd, m_idCmdLast);
                 RaiseException();
             }
         }
@@ -221,7 +221,7 @@ public:
     // IContextMenu
     HRESULT __stdcall QueryContextMenu( _In_ HMENU menu, uint32_t indexMenu, uint32_t idCmdFirst, uint32_t idCmdLast, uint32_t uFlags) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
+        ATLTRACE(L"ContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
             this, indexMenu, idCmdFirst, idCmdLast, uFlags);
 
         try
@@ -249,7 +249,7 @@ public:
 
     HRESULT __stdcall GetCommandString(UINT_PTR idCmd, uint32_t uFlags, __reserved uint32_t* /* pwReserved */, LPSTR pszName, uint32_t cchMax) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x", this, uFlags);
+        ATLTRACE(L"ContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x", this, uFlags);
 
         try
         {
@@ -259,15 +259,15 @@ public:
 
                 if (uFlags & GCS_UNICODE)
                 {
-                    ATLTRACE2(ATL::atlTraceCOM, 0, L" (unicode help text)\n");
+                    ATLTRACE(L" (unicode help text)\n");
                     return StringCchCopy(reinterpret_cast<wchar_t*>(pszName), cchMax, helpText.c_str());
                 }
 
-                ATLTRACE2(ATL::atlTraceCOM, 0, L" (ansi help text)\n");
+                ATLTRACE(L" (ansi help text)\n");
                 return StringCchCopyA(pszName, cchMax, ATL::CT2CA(helpText.c_str()));
             }
 
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"\n");
+            ATLTRACE(L"\n");
             return E_NOTIMPL;
         }
         catch (...)
@@ -278,7 +278,7 @@ public:
 
     HRESULT __stdcall InvokeCommand(_In_ CMINVOKECOMMANDINFO* pici) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"CContextMenu::IContextMenu::InvokeCommand, instance=%p\n", this);
+        ATLTRACE(L"CContextMenu::IContextMenu::InvokeCommand, instance=%p\n", this);
 
         try
         {
@@ -298,7 +298,7 @@ public:
     // IContextMenu2
     HRESULT __stdcall HandleMenuMsg(uint32_t uMsg, WPARAM wParam, LPARAM lParam) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n");
+        ATLTRACE(L"ContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n");
         return HandleMenuMsg2(uMsg, wParam, lParam, nullptr);
     }
 
@@ -322,19 +322,19 @@ public:
             switch (uMsg)
             {
             case WM_INITMENUPOPUP:
-                ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnInitMenuPopup)\n");
+                ATLTRACE(L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnInitMenuPopup)\n");
                 return static_cast<T*>(this)->OnInitMenuPopup(reinterpret_cast<HMENU>(wParam), LOWORD(lParam));
 
             case WM_DRAWITEM:
-                ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnDrawItem)\n");
+                ATLTRACE(L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnDrawItem)\n");
                 return static_cast<T*>(this)->OnDrawItem(reinterpret_cast<DRAWITEMSTRUCT*>(lParam));
 
             case WM_MEASUREITEM:
-                ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMeasureItem)\n");
+                ATLTRACE(L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMeasureItem)\n");
                 return static_cast<T*>(this)->OnMeasureItem(reinterpret_cast<MEASUREITEMSTRUCT*>(lParam));
 
             case WM_MENUCHAR:
-                ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n");
+                ATLTRACE(L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n");
                 if (!plResult)
                     return E_FAIL;
 
@@ -369,15 +369,14 @@ public:
     }
 
 protected:
-
     ContextMenuImpl() noexcept
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::Constructor (instance=%p)\n", this);
+        ATLTRACE(L"ContextMenuImpl::Constructor (instance=%p)\n", this);
     }
 
     ~ContextMenuImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::~ContextMenuImpl (instance=%p)\n", this);
+        ATLTRACE(L"ContextMenuImpl::~ContextMenuImpl (instance=%p)\n", this);
     }
 
     // Derived classes need to implement this function if they want to extend

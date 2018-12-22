@@ -25,17 +25,17 @@ public:
     }
 
     // IShellIconOverlayIdentifier
-    HRESULT __stdcall IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib) noexcept override
+    HRESULT __stdcall IsMemberOf(PCWSTR path, DWORD attribute) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::IsMemberOf (instance=%p, filename=%s, mode=%d)\n", this, pwszPath, dwAttrib);
+        ATLTRACE(L"IconOverlayImpl::IsMemberOf (instance=%p, filename=%s, mode=%d)\n", this, path, attribute);
 
-        if (!pwszPath)
+        if (!path)
             return E_POINTER;
 
         try
         {
             // Note: IsMemberOfImpl must be implemented by the derived class.
-            return static_cast<T*>(this)->IsMemberOfImpl(pwszPath, dwAttrib) ? S_OK : S_FALSE;
+            return static_cast<T*>(this)->IsMemberOfImpl(path, attribute) ? S_OK : S_FALSE;
         }
         catch (...)
         {
@@ -45,7 +45,7 @@ public:
 
     HRESULT __stdcall GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int* pIndex, DWORD* pdwFlags) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::GetOverlayInfo (instance=%p, pwszIconFile=%s, cchMax=%d, pIndex=%p, pdwFlags=%p)\n", this, pwszIconFile, cchMax, pIndex, pdwFlags);
+        ATLTRACE(L"IconOverlayImpl::GetOverlayInfo (instance=%p, pwszIconFile=%s, cchMax=%d, pIndex=%p, pdwFlags=%p)\n", this, pwszIconFile, cchMax, pIndex, pdwFlags);
 
         if (!pwszIconFile || !pIndex || !pdwFlags)
             return E_POINTER;
@@ -58,16 +58,16 @@ public:
         return S_OK;
     }
 
-    HRESULT __stdcall GetPriority(int* pIPriority) noexcept override
+    HRESULT __stdcall GetPriority(int* priority) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::GetPriority (instance=%p)\n", this);
+        ATLTRACE(L"IconOverlayImpl::GetPriority (instance=%p)\n", this);
 
-        if (!pIPriority)
+        if (!priority)
             return E_POINTER;
 
         // In most cases the value zero (highest priority) is fine.
         // In rare cases multiple Icon overlay handler could be registered for one file type.
-        *pIPriority = m_priority;
+        *priority = m_priority;
         return S_OK;
     }
 
@@ -78,12 +78,12 @@ protected:
     {
         ATLASSERT(iconIndex >= 0);
         ATLASSERT(priority >= 0 && priority <= 100);
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::IconOverlayImpl (instance=%p)\n", this);
+        ATLTRACE(L"IconOverlayImpl::IconOverlayImpl (instance=%p)\n", this);
     }
 
     ~IconOverlayImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IconOverlayImpl::~IconOverlayImpl (instance=%p)\n", this);
+        ATLTRACE(L"IconOverlayImpl::~IconOverlayImpl (instance=%p)\n", this);
     }
 
 private:

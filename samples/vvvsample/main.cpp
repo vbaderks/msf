@@ -44,7 +44,7 @@ __control_entrypoint(DllExport)
 STDAPI DllCanUnloadNow()
 {
     const auto hr = _Module.DllCanUnloadNow();
-    ATLTRACE2(ATL::atlTraceCOM, 0, L"SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload OK)\n", hr);
+    ATLTRACE(L"SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload OK)\n", hr);
     return hr;
 }
 

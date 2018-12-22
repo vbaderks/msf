@@ -51,13 +51,13 @@ public:
 protected:
     CopyHookImpl() noexcept
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ICopyHookImpl::Constructor (instance=%p)\n", this);
+        ATLTRACE(L"ICopyHookImpl::Constructor (instance=%p)\n", this);
     }
 
 
     ~CopyHookImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ICopyHookImpl::~ICopyHookImpl (instance=%p)\n", this);
+        ATLTRACE(L"ICopyHookImpl::~ICopyHookImpl (instance=%p)\n", this);
     }
 
     // ICopyHookImpl only consists of 1 function. So there is little to provide.

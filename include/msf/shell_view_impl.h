@@ -103,12 +103,12 @@ protected:
 
     IShellViewImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellViewImpl::IShellViewImpl (instance=%p)\n", this);
+        ATLTRACE(atlTraceCOM, 0, L"IShellViewImpl::IShellViewImpl (instance=%p)\n", this);
     }
 
     ~IShellViewImpl()
     {
-        ATLTRACE2(atlTraceCOM, 0, L"IShellViewImpl::~IShellViewImpl (instance=%p)\n", this);
+        ATLTRACE(atlTraceCOM, 0, L"IShellViewImpl::~IShellViewImpl (instance=%p)\n", this);
     }
 };
 

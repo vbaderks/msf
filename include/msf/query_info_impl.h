@@ -34,7 +34,7 @@ public:
     {
         try
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::GetInfoTip (instance=%p, (dwFlags=%d)\n", this, dwFlags);
+            ATLTRACE(L"IQueryInfoImpl::GetInfoTip (instance=%p, (dwFlags=%d)\n", this, dwFlags);
             return SHStrDup(GetInfoTip(dwFlags), ppwszTip);
         }
         catch (...)
@@ -46,12 +46,12 @@ public:
 protected:
     IQueryInfoImpl() noexcept
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n", this);
+        ATLTRACE(L"IQueryInfoImpl::IQueryInfoImpl (instance=%p)\n", this);
     }
 
     ~IQueryInfoImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n", this);
+        ATLTRACE(L"IQueryInfoImpl::~IQueryInfoImpl (instance=%p)\n", this);
     }
 
     virtual PCWSTR GetInfoTip(DWORD dwFlags) = 0;

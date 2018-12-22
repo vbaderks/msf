@@ -38,7 +38,7 @@ public:
     ShellFolderContextMenu& operator=(const ShellFolderContextMenu&) = delete;
     ShellFolderContextMenu& operator=(ShellFolderContextMenu&&) = delete;
 
-    static ATL::CComPtr<IContextMenu> CreateInstance(IShellFolderContextMenuSink* pshellfoldercontextmenusink)
+    static ATL::CComPtr<IContextMenu> CreateInstance(IShellFolderContextMenuSink* shellFolderContextMenuSink)
     {
         ATL::CComObject<ShellFolderContextMenu>* pinstance;
         const HRESULT hr = ATL::CComObject<ShellFolderContextMenu>::CreateInstance(&pinstance);
@@ -46,16 +46,16 @@ public:
             RaiseException(hr);
 
         ATL::CComPtr<IContextMenu> contextmenu(pinstance);
-        pinstance->Init(pshellfoldercontextmenusink);
+        pinstance->Init(shellFolderContextMenuSink);
         return contextmenu;
     }
 
-    HRESULT __stdcall InvokeCommand(_In_ CMINVOKECOMMANDINFO* pici) noexcept override
+    HRESULT __stdcall InvokeCommand(_In_ CMINVOKECOMMANDINFO* invokeCommandInfo) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n", this);
+        ATLTRACE(L"ShellFolderContextMenu::IContextMenu::InvokeCommand (instance=%p)\n", this);
 
-        if (strcmp(pici->lpVerb, "paste") == 0)
-            return m_rshellfoldercontextmenusink->OnPasteCmCmd();
+        if (strcmp(invokeCommandInfo->lpVerb, "paste") == 0)
+            return m_shellFolderContextMenuSink->OnPasteCmCmd();
 
         return S_OK;
     }
@@ -70,12 +70,12 @@ protected:
     ~ShellFolderContextMenu() = default;
 
 private:
-    void Init(IShellFolderContextMenuSink* pshellfoldercontextmenusink) noexcept
+    void Init(IShellFolderContextMenuSink* shellFolderContextMenuSink) noexcept
     {
-        m_rshellfoldercontextmenusink = pshellfoldercontextmenusink;
+        m_shellFolderContextMenuSink = shellFolderContextMenuSink;
     }
 
-    ATL::CComPtr<IShellFolderContextMenuSink> m_rshellfoldercontextmenusink;
+    ATL::CComPtr<IShellFolderContextMenuSink> m_shellFolderContextMenuSink;
 };
 
 } // end namespace msf

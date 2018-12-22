@@ -144,12 +144,12 @@ public:
 protected:
     DiskCleanupImpl() noexcept(false)
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"DiskCleanupImpl::DiskCleanupImpl (instance=%p)\n", this);
+        ATLTRACE(L"DiskCleanupImpl::DiskCleanupImpl (instance=%p)\n", this);
     }
 
     ~DiskCleanupImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"DiskCleanupImpl::~DiskCleanupImpl (instance=%p)\n", this);
+        ATLTRACE(L"DiskCleanupImpl::~DiskCleanupImpl (instance=%p)\n", this);
     }
 
 private:

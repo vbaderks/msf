@@ -48,7 +48,7 @@ public:
     // IPersistFile
     HRESULT __stdcall GetClassID(__RPC__out CLSID* classId) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::GetClassID\n");
+        ATLTRACE(L"ExtractImageImpl::GetClassID\n");
 
         if (!classId)
             return E_POINTER;
@@ -79,7 +79,7 @@ public:
 
     HRESULT __stdcall Load(LPCOLESTR filename, [[maybe_unused]] DWORD mode) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, mode, filename);
+        ATLTRACE(L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, mode, filename);
         try
         {
             m_filename = filename;
@@ -97,7 +97,7 @@ public:
     {
         try
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, "ExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
+            ATLTRACE("ExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
 
             Dispose();
             m_bitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
@@ -121,7 +121,7 @@ public:
 
     HRESULT __stdcall Extract(__RPC__deref_out_opt HBITMAP* thumbnail) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, "ExtractImageImpl::Extract (instance=%p)\n", this);
+        ATLTRACE("ExtractImageImpl::Extract (instance=%p)\n", this);
 
         if (!m_bitmap)
             return E_FAIL;
@@ -135,16 +135,16 @@ public:
     // IExtractImage2
     HRESULT __stdcall GetDateStamp(__RPC__in FILETIME* dateStamp) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, dateStamp);
+        ATLTRACE(L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, dateStamp);
 
         if (!dateStamp)
             return E_POINTER;
 
-        WIN32_FILE_ATTRIBUTE_DATA fileattributedata;
-        if (!GetFileAttributesEx(static_cast<T*>(this)->GetPathBuffer().c_str(), GetFileExInfoStandard, &fileattributedata))
+        WIN32_FILE_ATTRIBUTE_DATA fileAttributeData;
+        if (!GetFileAttributesEx(static_cast<T*>(this)->GetPathBuffer().c_str(), GetFileExInfoStandard, &fileAttributeData))
             return E_FAIL;
 
-        *dateStamp = fileattributedata.ftLastWriteTime;
+        *dateStamp = fileAttributeData.ftLastWriteTime;
         return S_OK;
     }
 
@@ -165,12 +165,12 @@ public:
 protected:
     ExtractImageImpl() noexcept
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
+        ATLTRACE(L"ExtractImageImpl::ExtractImageImpl (instance=%p)\n", this);
     }
 
     ~ExtractImageImpl()
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::~ExtractImageImpl (instance=%p)\n", this);
+        ATLTRACE(L"ExtractImageImpl::~ExtractImageImpl (instance=%p)\n", this);
         Dispose();
     }
 
