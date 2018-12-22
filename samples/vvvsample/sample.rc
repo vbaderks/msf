@@ -24,21 +24,21 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // REGISTRY
 //
 
-IDR_INFOTIP             REGISTRY                "../include/info_tip.rgs"
+IDR_INFOTIP             REGISTRY                "msf/registrar_scripts/info_tip.rgs"
 
-IDR_CONTEXTMENU         REGISTRY                "../include/context_menu.rgs"
+IDR_CONTEXTMENU         REGISTRY                "msf/registrar_scripts/context_menu.rgs"
 
-IDR_PROPERTYSHEETEXT    REGISTRY                "../include/property_sheet_ext.rgs"
+IDR_PROPERTYSHEETEXT    REGISTRY                "msf/registrar_scripts/property_sheet_ext.rgs"
 
-IDR_SHELLFOLDER         REGISTRY                "../include/shell_folder.rgs"
+IDR_SHELLFOLDER         REGISTRY                "msf/registrar_scripts/shell_folder.rgs"
 
-IDR_EXTRACTIMAGE        REGISTRY                "../include/extract_image_sf.rgs"
+IDR_EXTRACTIMAGE        REGISTRY                "msf/registrar_scripts/extract_image_sf.rgs"
 
-IDR_COPYHOOK            REGISTRY                "../include/copy_hook_folder.rgs"
+IDR_COPYHOOK            REGISTRY                "msf/registrar_scripts/copy_hook_folder.rgs"
 
-IDR_EXTENSION           REGISTRY                "../include/extension.rgs"
+IDR_EXTENSION           REGISTRY                "msf/registrar_scripts/extension.rgs"
 
-IDR_ICONOVERLAY         REGISTRY                "../include/icon_overlay.rgs"
+IDR_ICONOVERLAY         REGISTRY                "msf/registrar_scripts/icon_overlay.rgs"
 
 
 #ifdef APSTUDIO_INVOKED
