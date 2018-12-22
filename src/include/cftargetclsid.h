@@ -6,37 +6,37 @@
 #pragma once
 
 
-#include "cfeffect.h"
+#include "formatetc.h"
 
 
 namespace msf
 {
 
-class CCfTargetCLSID
+class CCfTargetCLSID final
 {
 public:
 
-    static void Get(IDataObject* pdataobject, CLSID& clsid)
+    static void Get(IDataObject* dataObject, CLSID& clsid)
     {
-        RaiseExceptionIfFailed(GetImpl(pdataobject, clsid));
+        RaiseExceptionIfFailed(GetImpl(dataObject, clsid));
     }
 
 
-    static bool GetOptional(IDataObject* pdataobject, CLSID& clsid)
+    static bool GetOptional(IDataObject* dataObject, CLSID& clsid)
     {
-        HRESULT hr = GetImpl(pdataobject, clsid);
-        return SUCCEEDED(hr);
+        const HRESULT result = GetImpl(dataObject, clsid);
+        return SUCCEEDED(result);
     }
 
 private:
 
-    static HRESULT GetImpl(IDataObject* pdataobject, CLSID& clsid)
+    static HRESULT GetImpl(IDataObject* dataObject, CLSID& clsid)
     {
-        CFormatEtc formatetc(CFSTR_TARGETCLSID);
+        FormatEtc formatEtc(CFSTR_TARGETCLSID);
         StorageMedium medium;
-        HRESULT hr = pdataobject->GetData(&formatetc, &medium);
-        if (FAILED(hr))
-            return hr;
+        const HRESULT result = dataObject->GetData(&formatEtc, &medium);
+        if (FAILED(result))
+            return result;
 
         GlobalLock<CLSID> globallock(medium.hGlobal);
 

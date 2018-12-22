@@ -79,7 +79,7 @@ private:
     {
         pcida->aoffset[index] = offset;
 
-        unsigned int size = pidl.GetSize();
+        const unsigned int size = pidl.GetSize();
         memcpy(reinterpret_cast<BYTE*>(pcida) + offset, pidl.get(), size);
         return size;
     }

@@ -17,13 +17,13 @@ class __declspec(novtable) IBrowserFrameOptionsImpl :
 {
 public:
     // IBrowserFrameOptions
-    HRESULT __stdcall GetFrameOptions(BROWSERFRAMEOPTIONS dwMask, _Out_ BROWSERFRAMEOPTIONS* pdwOptions) noexcept override
+    HRESULT __stdcall GetFrameOptions(BROWSERFRAMEOPTIONS mask, _Out_ BROWSERFRAMEOPTIONS* options) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0,
                   "IBrowserFrameOptionsImpl::GetFrameOptions (instance=%p, dwMask=%d, dwOptions=%d)\n",
-                  this, dwMask, m_browserframeoptions);
+                  this, mask, m_browserFrameOptions);
 
-        *pdwOptions = dwMask & m_browserframeoptions;
+        *options = mask & m_browserFrameOptions;
 
         return S_OK;
     }
@@ -34,14 +34,14 @@ public:
     IBrowserFrameOptionsImpl& operator=(IBrowserFrameOptionsImpl&&) = delete;
 
 protected:
-    explicit IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserframeoptions = BFO_NONE) noexcept :
-        m_browserframeoptions(browserframeoptions)
+    explicit IBrowserFrameOptionsImpl(BROWSERFRAMEOPTIONS browserFrameOptions = BFO_NONE) noexcept :
+        m_browserFrameOptions{browserFrameOptions}
     {
     }
 
     ~IBrowserFrameOptionsImpl() = default;
 
-    BROWSERFRAMEOPTIONS m_browserframeoptions;
+    BROWSERFRAMEOPTIONS m_browserFrameOptions;
 };
 
 } // namespace msf

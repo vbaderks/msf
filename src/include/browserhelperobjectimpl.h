@@ -20,14 +20,14 @@ class __declspec(novtable) CBrowserHelperObjectImpl :
     public IDispEventImpl<1, TDerived, &DIID_DWebBrowserEvents2, &LIBID_SHDocVw, 1, 1>
 {
 public:
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, PCWSTR wszDescription, bool bNoExplorer) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, PCWSTR description, bool bNoExplorer) noexcept
     {
         COleString olestrCLSID;
         ATLVERIFY(SUCCEEDED(::StringFromCLSID(__uuidof(T), olestrCLSID.GetAddress())));
 
         _ATL_REGMAP_ENTRY regmapEntries[]
         {
-            {L"DESCRIPTION", wszDescription},
+            {L"DESCRIPTION", description},
             {L"CLSID", olestrCLSID},
             {L"NOEXPLORER", bNoExplorer ? L"1" : L"0"},
             {nullptr, nullptr}
@@ -36,38 +36,37 @@ public:
         return ATL::_pAtlModule->UpdateRegistryFromResource(IDR_BROWSERHELPEROBJECT, bRegister, regmapEntries);
     }
 
-    HRESULT __stdcall SetSite(IUnknown* pUnkSite) noexcept override
+    HRESULT __stdcall SetSite(IUnknown* site) noexcept override
     {
         // Unadvise from current site.
-        if (m_bAdvised)
+        if (m_advised)
         {
             DispEventUnadvise(m_spUnkSite);
-            m_bAdvised = false;
+            m_advised = false;
         }
 
-        if (pUnkSite)
+        if (site)
         {
-            m_bAdvised = SUCCEEDED(DispEventAdvise(pUnkSite));
+            m_advised = SUCCEEDED(DispEventAdvise(site));
         }
 
-        return IObjectWithSiteImpl<T>::SetSite(pUnkSite);
+        return IObjectWithSiteImpl<T>::SetSite(site);
     }
 
 protected:
-
     ~CBrowserHelperObjectImpl()
     {
         // If COM object is destructed, make sure ref to site is cleared.
         CBrowserHelperObjectImpl<TDerived>::SetSite(nullptr);
     }
 
-    bool IsAttachedSite(IUnknown* pUnkSite) noexcept
+    bool IsAttachedSite(IUnknown* site) noexcept
     {
-        return m_spUnkSite && m_spUnkSite.IsEqualObject(pUnkSite);
+        return m_spUnkSite && m_spUnkSite.IsEqualObject(site);
     }
 
 private:
-    bool m_bAdvised {false};
+    bool m_advised{};
 };
 
 }

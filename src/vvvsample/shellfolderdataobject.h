@@ -50,7 +50,7 @@ private:
     {
         Init(pidlFolder, cidl, ppidl, performedDropEffectSink);
 
-        RegisterClipboardFormatHandler(std::make_unique<CCfFileDescriptorHandler>(this));
+        RegisterClipboardFormatHandler(std::make_unique<CfFileDescriptorHandler>(this));
         RegisterClipboardFormatHandler(std::make_unique<CfFileContentsHandler>(this));
     }
 };

@@ -28,12 +28,12 @@ public:
 
     bool CanGetData() const noexcept
     {
-        return m_bCanGetData;
+        return m_canGetData;
     }
 
     bool CanSetData() const noexcept
     {
-        return m_bCanSetData;
+        return m_canSetData;
     }
 
     virtual HRESULT Validate(const FORMATETC& formatEtc) const noexcept
@@ -54,7 +54,7 @@ public:
     {
     }
 
-    virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*bRelease*/)
+    virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*release*/)
     {
     }
 
@@ -64,24 +64,24 @@ public:
     }
 
 protected:
-    ClipboardFormatHandler(CLIPFORMAT clipFormat, bool bCanGetData, bool bCanSetData) noexcept
+    ClipboardFormatHandler(CLIPFORMAT clipFormat, bool canGetData, bool canSetData) noexcept
         : m_clipFormat(clipFormat),
-          m_bCanGetData(bCanGetData),
-          m_bCanSetData(bCanSetData)
+          m_canGetData(canGetData),
+          m_canSetData(canSetData)
     {
     }
 
-    ClipboardFormatHandler(PCWSTR szFormat, bool bCanGetData, bool bCanSetData)
-        : m_clipFormat(Win32::RegisterClipboardFormat(szFormat)),
-          m_bCanGetData(bCanGetData),
-          m_bCanSetData(bCanSetData)
+    ClipboardFormatHandler(PCWSTR format, bool canGetData, bool canSetData)
+        : m_clipFormat(Win32::RegisterClipboardFormat(format)),
+          m_canGetData(canGetData),
+          m_canSetData(canSetData)
     {
     }
 
 private:
     CLIPFORMAT m_clipFormat;
-    bool m_bCanGetData;
-    bool m_bCanSetData;
+    bool m_canGetData;
+    bool m_canSetData;
 };
 
 } // namespace msf

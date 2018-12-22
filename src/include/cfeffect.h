@@ -13,35 +13,35 @@ namespace msf
 {
 
 /// <summary>Sets the Clipboard format effect into a data object.</summary>
-inline HRESULT SetClipboardFormatEffect(PCWSTR lpszFormat, _In_ IDataObject* pdataobject, DWORD dwEffect)
+inline HRESULT SetClipboardFormatEffect(PCWSTR format, _In_ IDataObject* dataObject, DWORD effect)
 {
-    StorageMedium stgmedium(GlobalAllocThrow(sizeof(DWORD)));
+    StorageMedium medium{GlobalAllocThrow(sizeof(DWORD))};
 
-    *static_cast<DWORD*>(stgmedium.GetHGlobal()) = dwEffect;
+    *static_cast<DWORD*>(medium.GetHGlobal()) = effect;
 
     // Note: the shell expects fRelease to be true.
-    FormatEtc formatetc(Win32::RegisterClipboardFormat(lpszFormat));
-    const HRESULT hr = pdataobject->SetData(&formatetc, &stgmedium, true);
-    if (SUCCEEDED(hr))
+    FormatEtc formatEtc{Win32::RegisterClipboardFormat(format)};
+    const HRESULT result = dataObject->SetData(&formatEtc, &medium, true);
+    if (SUCCEEDED(result))
     {
-        stgmedium.Detach();
+        medium.Detach();
     }
 
-    return hr;
+    return result;
 }
 
 /// <summary>Gets the clipboard format effect from a data object.</summary>
-inline HRESULT GetClipboardFormatEffect(PCWSTR lpszFormat, _In_ IDataObject* pdataobject, DWORD& dwEffect)
+inline HRESULT GetClipboardFormatEffect(PCWSTR format, _In_ IDataObject* dataObject, DWORD& effect)
 {
-    FormatEtc formatetc(Win32::RegisterClipboardFormat(lpszFormat));
+    FormatEtc formatEtc{Win32::RegisterClipboardFormat(format)};
     StorageMedium medium;
-    const HRESULT hr = pdataobject->GetData(&formatetc, &medium);
-    if (FAILED(hr))
-        return hr;
+    const HRESULT result = dataObject->GetData(&formatEtc, &medium);
+    if (FAILED(result))
+        return result;
 
-    util::GlobalLock<DWORD> globallock(medium.hGlobal);
+    util::GlobalLock<DWORD> globalLock{medium.hGlobal};
 
-    dwEffect = *globallock.get();
+    effect = *globalLock.get();
     return S_OK;
 }
 

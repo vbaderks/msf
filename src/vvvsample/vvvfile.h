@@ -21,28 +21,28 @@ public:
     std::wstring GetLabel() const;
     void SetLabel(const std::wstring& label) const;
     unsigned int GetFileCount() const;
-    LPITEMIDLIST GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) const;
+    LPITEMIDLIST GetNextItem(DWORD grfFlags, unsigned int& itemIterator) const;
     void DeleteItems(const std::vector<VVVItem>& items) const;
     void SetItem(const VVVItem& item) const;
 
-    PUIDLIST_RELATIVE AddItem(const std::wstring& strFile) const;
-    PUIDLIST_RELATIVE AddItem(unsigned int nSize, const std::wstring& name) const;
+    PUIDLIST_RELATIVE AddItem(const std::wstring& file) const;
+    PUIDLIST_RELATIVE AddItem(unsigned int size, const std::wstring& name) const;
 
 private:
     void AddItem(const VVVItem& item) const;
     void DeleteItem(const VVVItem& item) const;
 
-    void SetFileCount(unsigned int nNewFileCount) const;
+    void SetFileCount(unsigned int newFileCount) const;
     unsigned int FindFreeEntry() const;
 
     std::wstring GetAppNameDirectory() const;
-    std::wstring GetAppNameItem(unsigned int nID) const;
+    std::wstring GetAppNameItem(unsigned int id) const;
 
-    std::wstring GetPrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName) const;
-    unsigned int GetPrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, int nDefault = -1) const noexcept;
+    std::wstring GetPrivateProfileString(const wchar_t* appName, const wchar_t* keyName) const;
+    unsigned int GetPrivateProfileInt(const wchar_t* appName, const wchar_t* keyName, int defaultValue = -1) const noexcept;
 
-    void WritePrivateProfileString(const wchar_t* lpAppName, const wchar_t* lpKeyName, const wchar_t* lpString) const;
-    void WritePrivateProfileInt(const wchar_t* lpAppName, const wchar_t* lpKeyName, unsigned int nValue) const;
+    void WritePrivateProfileString(const wchar_t* appName, const wchar_t* keyName, const wchar_t* value) const;
+    void WritePrivateProfileInt(const wchar_t* appName, const wchar_t* keyName, unsigned int value) const;
 
     // Member variables
     std::wstring m_filename;

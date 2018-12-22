@@ -14,9 +14,9 @@
 class PropertyPageItem : public ATL::CSnapInPropertyPageImpl<PropertyPageItem>
 {
 public:
-    static HPROPSHEETPAGE CreateInstance(VVVItem& item, long& wEventId, IShellFolder* shellFolder)
+    static HPROPSHEETPAGE CreateInstance(VVVItem& item, long& eventId, IShellFolder* shellFolder)
     {
-        auto page = std::make_unique<PropertyPageItem>(item, wEventId, shellFolder);
+        auto page = std::make_unique<PropertyPageItem>(item, eventId, shellFolder);
         const auto result = page->Create();
         if (result)
         {
@@ -37,9 +37,9 @@ public:
     END_MSG_MAP()
 #pragma warning(pop)
 
-    PropertyPageItem(VVVItem& item, long& wEventId, IShellFolder* shellFolder) :
+    PropertyPageItem(VVVItem& item, long& eventId, IShellFolder* shellFolder) :
         m_item(item),
-        m_eventId(wEventId),
+        m_eventId(eventId),
         m_shellFolder(shellFolder)
     {
     }
@@ -50,7 +50,7 @@ public:
     PropertyPageItem& operator=(const PropertyPageItem&) = delete;
     PropertyPageItem& operator=(PropertyPageItem&&) = delete;
 
-    LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+    LRESULT OnInitDialog(UINT /*messageId*/, WPARAM, LPARAM, BOOL& /*handled*/)
     {
         InitializeStaticString();
         InitializeControls();
@@ -67,8 +67,8 @@ public:
             m_eventId |= SHCNE_RENAMEITEM;
         }
 
-        const unsigned int nSize = GetDlgItemInt(IDC_EDIT_ITEM_SIZE, nullptr, false);
-        if (m_item.GetSize() != nSize)
+        const unsigned int size = GetDlgItemInt(IDC_EDIT_ITEM_SIZE, nullptr, false);
+        if (m_item.GetSize() != size)
         {
             m_eventId |= SHCNE_ATTRIBUTES;
         }
@@ -76,7 +76,7 @@ public:
         if (m_eventId != 0)
         {
             m_pidlNew.Attach(VVVItem::CreateItemIdList(m_item.GetID(),
-                                                       nSize, m_item.IsFolder(), name));
+                                                       size, m_item.IsFolder(), name));
         }
 
         return true;
@@ -101,10 +101,10 @@ private:
 
     std::wstring GetEditItemName() const
     {
-        ATL::CString strName;
-        static_cast<void>(GetDlgItemText(IDC_EDIT_ITEM_NAME, strName));
-        strName.Trim();
-        return strName.GetString();
+        ATL::CString name;
+        static_cast<void>(GetDlgItemText(IDC_EDIT_ITEM_NAME, name));
+        name.Trim();
+        return name.GetString();
     }
 
     // Member variables

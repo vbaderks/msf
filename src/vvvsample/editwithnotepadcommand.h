@@ -12,7 +12,7 @@
 class EditWithNotepadCommand : public msf::ContextMenuCommand
 {
 public:
-    void operator()(const CMINVOKECOMMANDINFO* /* pici */, const std::vector<std::wstring>& filenames) override
+    void operator()(const CMINVOKECOMMANDINFO*, const std::vector<std::wstring>& filenames) override
     {
         ATLASSERT(filenames.size() == 1); // can only handle 1 file.
 

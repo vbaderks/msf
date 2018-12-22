@@ -56,16 +56,16 @@ public:
     }
 
 private:
-    msf::CCfShellIdList* GetCfShellIdList() const
+    msf::CfShellIdList* GetCfShellIdList() const
     {
         if (!m_cfShellIdList)
         {
-            m_cfShellIdList = std::make_unique<msf::CCfShellIdList>(m_dataObject);
+            m_cfShellIdList = std::make_unique<msf::CfShellIdList>(m_dataObject);
         }
 
         return m_cfShellIdList.get();
     }
 
     IDataObject* m_dataObject;
-    mutable std::unique_ptr<msf::CCfShellIdList> m_cfShellIdList;
+    mutable std::unique_ptr<msf::CfShellIdList> m_cfShellIdList;
 };

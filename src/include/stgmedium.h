@@ -47,17 +47,17 @@ public:
     {
     }
 
-    explicit StorageMedium(HGLOBAL hg) noexcept
+    explicit StorageMedium(HGLOBAL global) noexcept
         : STGMEDIUM()
     {
-        SetHGlobal(*this, hg);
+        SetHGlobal(*this, global);
     }
 
     // Purpose: passed in STGMEDIUM will be owned after a bitwise copy.
-    explicit StorageMedium(const STGMEDIUM& stgmedium) noexcept
+    explicit StorageMedium(const STGMEDIUM& storageMedium) noexcept
         : STGMEDIUM()
     {
-        *static_cast<STGMEDIUM*>(this) = stgmedium;
+        *static_cast<STGMEDIUM*>(this) = storageMedium;
     }
 
     ~StorageMedium()

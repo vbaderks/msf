@@ -14,32 +14,32 @@ namespace msf
 {
 
 /// <purpose>Owns a collection of property sheet pages.</purpose>
-class PropSheetHost
+class PropSheetHost final
 {
 public:
     ~PropSheetHost()
     {
-        for (auto hpropsheetpage : _propsheetpages)
+        for (auto propSheetPage : m_propSheetPages)
         {
-            ATLVERIFY(::DestroyPropertySheetPage(hpropsheetpage));
+            ATLVERIFY(::DestroyPropertySheetPage(propSheetPage));
         }
     }
 
-    void Add(HPROPSHEETPAGE hpropsheetpage)
+    void Add(HPROPSHEETPAGE propSheetPage)
     {
-        _propsheetpages.push_back(hpropsheetpage);
+        m_propSheetPages.push_back(propSheetPage);
     }
 
-    static BOOL CALLBACK AddPage(HPROPSHEETPAGE hpropsheetpage, LPARAM lparam)
+    static BOOL CALLBACK AddPage(HPROPSHEETPAGE propSheetPage, LPARAM lparam)
     {
-        PropSheetHost* ppropsheethost = reinterpret_cast<PropSheetHost*>(lparam);
-        ppropsheethost->Add(hpropsheetpage);
-        return TRUE;
+        PropSheetHost* host = reinterpret_cast<PropSheetHost*>(lparam);
+        host->Add(propSheetPage);
+        return true;
     }
 
 private:
 
-    std::vector<HPROPSHEETPAGE> _propsheetpages;
+    std::vector<HPROPSHEETPAGE> m_propSheetPages;
 };
 
 } // end msf namespace

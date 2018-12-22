@@ -51,14 +51,14 @@ public:
     {
         const size_t size = sizeof(short) + GetMembersSize(members, count);
 
-        _pItemId = static_cast<SHITEMID*>(CoTaskMemAlloc(size + (bAddEmptyId ? sizeof(short) : 0)));
-        if (!_pItemId)
+        m_itemId = static_cast<SHITEMID*>(CoTaskMemAlloc(size + (bAddEmptyId ? sizeof(short) : 0)));
+        if (!m_itemId)
             return;
 
         SetSize(size);
 
         // Copy members into allocated SHITEMID.
-        BYTE* p = _pItemId->abID;
+        BYTE* p = m_itemId->abID;
         for (unsigned int i = 0; i < count; ++i)
         {
             memcpy(p, members[i].pdata, members[i].size);
@@ -76,23 +76,23 @@ public:
 
     ~CShellItemId()
     {
-        CoTaskMemFree(_pItemId);
+        CoTaskMemFree(m_itemId);
     }
 
 
     SHITEMID* Detach() noexcept
     {
-        SHITEMID* pItemId = _pItemId;
-        _pItemId = nullptr;
+        SHITEMID* pItemId = m_itemId;
+        m_itemId = nullptr;
         return pItemId;
     }
 
 private:
 
-    void SetSize(size_t size) noexcept
+    void SetSize(size_t size) const noexcept
     {
         ATLASSERT(size <= USHRT_MAX && "size will be sliced!");
-        _pItemId->cb = static_cast<USHORT>(size);
+        m_itemId->cb = static_cast<USHORT>(size);
     }
 
     static size_t GetMembersSize(const ShellItemIdMember* members, unsigned int count) noexcept
@@ -108,54 +108,54 @@ private:
     }
 
 
-    SHITEMID* _pItemId;
+    SHITEMID* m_itemId;
 };
 
 
 class CShellItemIterator
 {
 public:
-    explicit CShellItemIterator(const SHITEMID& itemid) noexcept : _p(itemid.abID)
+    explicit CShellItemIterator(const SHITEMID& itemid) noexcept : m_p(itemid.abID)
     {
 #ifdef _DEBUG
-        _pitemid = &itemid;
+        m_itemId = &itemid;
 #endif
     }
 
     ~CShellItemIterator()
     {
 #ifdef _DEBUG
-        size_t s = static_cast<size_t>(_p - _pitemid->abID);
-        ATLASSERT(s == (_pitemid->cb - sizeof(unsigned short)) && "not all items were retrieved!");
+        const size_t s = static_cast<size_t>(m_p - m_itemId->abID);
+        ATLASSERT(s == (m_itemId->cb - sizeof(unsigned short)) && "not all items were retrieved!");
 #endif
     }
 
 
     bool GetBool() noexcept
     {
-        bool b = *reinterpret_cast<const bool *>(_p);
-        _p += sizeof(b);
+        const bool b = *reinterpret_cast<const bool *>(m_p);
+        m_p += sizeof(b);
         return b;
     }
 
     unsigned int GetUnsignedInt() noexcept
     {
-        unsigned int n = *reinterpret_cast<const unsigned int *>(_p);
-        _p += sizeof(n);
+        constunsigned int n = *reinterpret_cast<const unsigned int*>(m_p);
+        m_p += sizeof(n);
         return n;
     }
 
-    CString GetString() const
+    ATL::CString GetString() const
     {
         // Note: strings are always stored in Unicode to prevent ANSI/Unicode mismatches.
-        return CString(reinterpret_cast<PCWSTR>(_p));
+        return ATL::CString(reinterpret_cast<PCWSTR>(m_p));
     }
 
 private:
-    const BYTE* _p;
+    const BYTE* m_p;
 
 #ifdef _DEBUG
-    const SHITEMID* _pitemid;
+    const SHITEMID* m_itemId;
 #endif
 };
 

@@ -21,7 +21,7 @@ public:
         COM_INTERFACE_ENTRY(IEnumIDList)
     END_COM_MAP()
 
-    static ATL::CComPtr<IEnumIDList> CreateInstance(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
+    static ATL::CComPtr<IEnumIDList> CreateInstance(const std::wstring& filename, const std::wstring& folder, DWORD grfFlags)
     {
         ATL::CComObject<EnumIDList>* instance;
         const HRESULT hr = ATL::CComObject<EnumIDList>::CreateInstance(&instance);
@@ -29,7 +29,7 @@ public:
             msf::RaiseException(hr);
 
         ATL::CComPtr<IEnumIDList> enumIdList(instance);
-        instance->Initialize(strFilename, strFolder, grfFlags);
+        instance->Initialize(filename, folder, grfFlags);
         return enumIdList;
     }
 
@@ -44,9 +44,9 @@ protected:
     }
 
 private:
-    void Initialize(const std::wstring& strFilename, const std::wstring& strFolder, DWORD grfFlags)
+    void Initialize(const std::wstring& filename, const std::wstring& folder, DWORD grfFlags)
     {
-        m_file = std::make_unique<VVVFile>(strFilename, strFolder);
+        m_file = std::make_unique<VVVFile>(filename, folder);
         m_grfFlags = grfFlags;
     }
 

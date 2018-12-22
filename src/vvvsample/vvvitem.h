@@ -17,12 +17,12 @@ public:
         return 10; // note: limit is 10 for easy testing.
     }
 
-    static PUIDLIST_RELATIVE CreateItemIdList(unsigned int nId, unsigned int nSize, bool bFolder, const std::wstring& strName)
+    static PUIDLIST_RELATIVE CreateItemIdList(unsigned int id, unsigned int size, bool folder, const std::wstring& name)
     {
         const PUIDLIST_RELATIVE pidl = msf::ItemIDList::CreateItemIdListWithTerminator(sizeof(SItemData));
 
         InitializeItemData(reinterpret_cast<SItemData*>(pidl->mkid.abID),
-            nId, nSize, bFolder, strName);
+            id, size, folder, name);
 
         return pidl;
     }
@@ -31,14 +31,14 @@ public:
     {
         // Shell item IDs can be passed from external sources, validate
         // It is valid to pass a PIDL that is larger then the original (done by Search functionality in XP).
-        const bool bValid = GetDataSize() >= sizeof(SItemData) && GetItemData().nTypeID == TypeID;
+        const bool valid = GetDataSize() >= sizeof(SItemData) && GetItemData().nTypeID == TypeID;
 #ifdef _DEBUG
         if (!bValid)
         {
             ATLTRACE2(ATL::atlTraceCOM, 0, L"VVVItem::Constructor, PIDL not valid (data_size=%d, s_item_size=%d)\n", GetDataSize(), sizeof(SItemData));
         }
 #endif
-        msf::RaiseExceptionIf(!bValid);
+        msf::RaiseExceptionIf(!valid);
     }
 
     std::wstring GetDisplayName(SHGDNF shellGetDisplayNameType = SHGDN_NORMAL) const;
@@ -47,22 +47,22 @@ public:
 
     unsigned int GetID() const noexcept
     {
-        return GetItemData().nID;
+        return GetItemData().id;
     }
 
     unsigned int GetSize() const noexcept
     {
-        return GetItemData().nSize;
+        return GetItemData().size;
     }
 
     std::wstring GetName() const
     {
-        return GetItemData().wszName;
+        return GetItemData().name;
     }
 
     bool IsFolder() const noexcept
     {
-        return GetItemData().bFolder;
+        return GetItemData().folder;
     }
 
     int Compare(const VVVItem& item, int compareBy, bool bCanonicalOnly) const;
@@ -81,20 +81,20 @@ private:
     struct SItemData
     {
         unsigned short nTypeID;
-        bool         bFolder;
-        unsigned int nID;
-        unsigned int nSize;
-        wchar_t      wszName[MAX_PATH];
+        bool         folder;
+        unsigned int id;
+        unsigned int size;
+        wchar_t      name[MAX_PATH];
     };
     #pragma pack()
 
-    static void InitializeItemData(SItemData* pitemdata, unsigned int nId, unsigned int nSize, bool bFolder, const std::wstring& name)
+    static void InitializeItemData(SItemData* itemData, unsigned int id, unsigned int size, bool folder, const std::wstring& name)
     {
-        pitemdata->nTypeID = TypeID;
-        pitemdata->nID     = nId;
-        pitemdata->bFolder = bFolder;
-        pitemdata->nSize   = nSize;
-        wcscpy_s(pitemdata->wszName, _countof(pitemdata->wszName), name.c_str());
+        itemData->nTypeID = TypeID;
+        itemData->id     = id;
+        itemData->folder = folder;
+        itemData->size   = size;
+        wcscpy_s(itemData->name, _countof(itemData->name), name.c_str());
     }
 
     const SItemData& GetItemData() const noexcept

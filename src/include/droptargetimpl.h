@@ -29,10 +29,10 @@ class __declspec(novtable) DropTargetImpl :
 public:
     /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
     static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) noexcept
+        PCWSTR description, PCWSTR rootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,
-            szDescription, T::GetObjectCLSID(), szRootKey);
+            description, T::GetObjectCLSID(), rootKey);
     }
 
     DropTargetImpl(const DropTargetImpl&) = delete;
@@ -41,14 +41,14 @@ public:
     DropTargetImpl& operator=(DropTargetImpl&&) = delete;
 
     // IPersistFile
-    HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
+    HRESULT __stdcall GetClassID(__RPC__out CLSID* classId) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::GetClassID (instance=%p, pClassID=%p)\n", this, pClassID);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::GetClassID (instance=%p, ClassId=%p)\n", this, classId);
 
-        if (!pClassID)
+        if (!classId)
             return E_POINTER;
 
-        *pClassID = T::GetObjectCLSID();
+        *classId = T::GetObjectCLSID();
         return S_OK;
     }
 
@@ -72,14 +72,14 @@ public:
         ATLTRACENOTIMPL(L"DropTargetImpl::GetCurFile");
     }
 
-    HRESULT __stdcall Load(LPCOLESTR wszFilename, DWORD dwMode) noexcept override
+    HRESULT __stdcall Load(LPCOLESTR filename, DWORD mode) noexcept override
     {
-        UNREFERENCED_PARAMETER(dwMode); // unused in release.
+        UNREFERENCED_PARAMETER(mode); // unused in release.
 
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, wszFilename);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"DropTargetImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, mode, filename);
         try
         {
-            m_filename = wszFilename;
+            m_filename = filename;
             return S_OK;
         }
         catch (...)
@@ -96,7 +96,7 @@ public:
         try
         {
             // Derived class needs to implement: bool IsSupportedClipboardFormat(IDataObject* dataObject)
-            if (dataObject == nullptr || !static_cast<T*>(this)->IsSupportedClipboardFormat(dataObject))
+            if (dataObject || !static_cast<T*>(this)->IsSupportedClipboardFormat(dataObject))
             {
                 *pdwEffect = DROPEFFECT_NONE;
                 m_isCachedSupportedClipboardFormat = false;

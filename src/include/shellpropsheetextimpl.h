@@ -27,9 +27,9 @@ public:
 
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
     static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) noexcept
+        PCWSTR description, PCWSTR rootKey) noexcept
     {
-        return UpdateRegistryFromResource(nResId, bRegister, szDescription, T::GetObjectCLSID(), szRootKey);
+        return UpdateRegistryFromResource(nResId, bRegister, description, T::GetObjectCLSID(), rootKey);
     }
 
     class CAddPage
@@ -41,11 +41,11 @@ public:
         {
         }
 
-        void operator()(HPROPSHEETPAGE hPage) const
+        void operator()(HPROPSHEETPAGE page) const
         {
-            if (!m_pfnAddPage(hPage, m_lParam))
+            if (!m_pfnAddPage(page, m_lParam))
             {
-                ATLVERIFY(::DestroyPropertySheetPage(hPage));
+                ATLVERIFY(::DestroyPropertySheetPage(page));
                 RaiseException(E_FAIL);
             }
         }
@@ -90,7 +90,7 @@ protected:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellPropSheetExtImpl::~ShellPropSheetExtImpl (instance=%p)\n", this);
     }
 
-    virtual void AddPagesCore(const CAddPage& /*addpages*/, const std::vector<std::wstring>& /*filenames*/) = 0;
+    virtual void AddPagesCore(const CAddPage& /*addPages*/, const std::vector<std::wstring>& /*filenames*/) = 0;
 };
 
 } // namespace msf

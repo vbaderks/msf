@@ -37,20 +37,20 @@ public:
         ~Menu() = default;
 
         Menu(HMENU hmenu, UINT indexMenu, UINT& idCmd, UINT idCmdLast, ContextMenuImpl<T>* pmenuhost) noexcept :
-            m_hmenu{hmenu},
+            m_menu{hmenu},
             m_indexMenu{indexMenu},
             m_pidCmd{&idCmd},
             m_idCmdLast{idCmdLast},
-            m_pmenuhost{pmenuhost}
+            m_menuHost{pmenuhost}
         {
         }
 
         Menu(const Menu& other) :
-            m_hmenu{other.m_hmenu},
+            m_menu{other.m_menu},
             m_indexMenu{other.m_indexMenu},
             m_pidCmd{other.m_pidCmd},
             m_idCmdLast{other.m_idCmdLast},
-            m_pmenuhost{other.m_pmenuhost}
+            m_menuHost{other.m_menuHost}
         {
         }
 
@@ -60,11 +60,11 @@ public:
         {
             if (this != &rhs)
             {
-                m_hmenu     = rhs.m_hmenu;
+                m_menu     = rhs.m_menu;
                 m_indexMenu = rhs.m_indexMenu;
                 m_pidCmd    = rhs.m_pidCmd;
                 m_idCmdLast = rhs.m_idCmdLast;
-                m_pmenuhost = rhs.m_pmenuhost;
+                m_menuHost = rhs.m_menuHost;
             }
 
             return *this;
@@ -75,18 +75,18 @@ public:
         // ReSharper disable once CppNonExplicitConversionOperator
         operator HMENU() const
         {
-            return m_hmenu;
+            return m_menu;
         }
 
         // Purpose: Create and add a sub menu to the context menu.
-        Menu AddSubMenu(std::wstring strText, std::wstring strHelp)
+        Menu AddSubMenu(std::wstring text, std::wstring help)
         {
             auto subMenu = CreateSubMenu();
-            const MenuItemInfo menuiteminfo(*m_pidCmd, std::move(strText), subMenu);
-            InsertMenuItem(menuiteminfo, std::move(strHelp),
+            const MenuItemInfo menuiteminfo(*m_pidCmd, std::move(text), subMenu);
+            InsertMenuItem(menuiteminfo, std::move(help),
                            std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(std::unique_ptr<CustomMenuHandler>(nullptr)));
 
-            return Menu(subMenu, 0, *m_pidCmd, m_idCmdLast, m_pmenuhost);
+            return Menu(subMenu, 0, *m_pidCmd, m_idCmdLast, m_menuHost);
         }
 
         // Purpose: alternative format, that loads the strings from the resource.
@@ -103,7 +103,7 @@ public:
             qcustommenuhandler->InitializeItemInfo(menuiteminfo);
             InsertMenuItem(menuiteminfo, std::move(strHelp), std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(qcustommenuhandler));
 
-            return Menu(subMenu, 0, *m_pidCmd, m_idCmdLast, m_pmenuhost);
+            return Menu(subMenu, 0, *m_pidCmd, m_idCmdLast, m_menuHost);
         }
 
         // Purpose: alternative format, that loads the string from the resource.
@@ -121,33 +121,33 @@ public:
 
         // Purpose: alternative format, that loads the strings from the resource.
         void AddItem(UINT nIDText, UINT nIDHelp,
-                     std::unique_ptr<ContextMenuCommand> qcontextcommand)
+                     std::unique_ptr<ContextMenuCommand> contextCommand)
         {
-            AddItem(LoadResourceString(nIDText), LoadResourceString(nIDHelp), std::move(qcontextcommand));
+            AddItem(LoadResourceString(nIDText), LoadResourceString(nIDHelp), std::move(contextCommand));
         }
 
-        void AddItem(std::wstring strHelp,
-                     std::unique_ptr<ContextMenuCommand> qcontextcommand,
+        void AddItem(std::wstring helpText,
+                     std::unique_ptr<ContextMenuCommand> contextCommand,
                      std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
         {
             MenuItemInfo menuiteminfo(*m_pidCmd);
 
             qcustommenuhandler->InitializeItemInfo(menuiteminfo);
-            InsertMenuItem(menuiteminfo, std::move(strHelp), std::move(qcontextcommand), std::move(qcustommenuhandler));
+            InsertMenuItem(menuiteminfo, std::move(helpText), std::move(contextCommand), std::move(qcustommenuhandler));
         }
 
         // Purpose: alternative format, that loads the strings from the resource.
         void AddItem(UINT nIDHelp,
-                     std::unique_ptr<ContextMenuCommand> qcontextcommand,
+                     std::unique_ptr<ContextMenuCommand> contextCommand,
                      std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
         {
-            AddItem(LoadResourceString(nIDHelp), std::move(qcontextcommand), std::move(qcustommenuhandler));
+            AddItem(LoadResourceString(nIDHelp), std::move(contextCommand), std::move(qcustommenuhandler));
         }
 
         void AddSeparator()
         {
             RaiseLastErrorExceptionIf(
-                !InsertMenu(m_hmenu, m_indexMenu, MF_BYPOSITION | MF_SEPARATOR, 0, nullptr));
+                !InsertMenu(m_menu, m_indexMenu, MF_BYPOSITION | MF_SEPARATOR, 0, nullptr));
 
             ++m_indexMenu;
         }
@@ -176,31 +176,31 @@ public:
 
         void InsertMenuItem(const MenuItemInfo& menuiteminfo,
                             std::wstring strHelp,
-                            std::unique_ptr<ContextMenuCommand> qcontextcommand,
+                            std::unique_ptr<ContextMenuCommand> contextCommand,
                             std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
         {
             CheckID();
 
             RaiseLastErrorExceptionIf(
-                !::InsertMenuItem(m_hmenu, m_indexMenu, true, &menuiteminfo));
-            PostAddItem(std::move(strHelp), std::move(qcontextcommand), std::move(qcustommenuhandler));
+                !::InsertMenuItem(m_menu, m_indexMenu, true, &menuiteminfo));
+            PostAddItem(std::move(strHelp), std::move(contextCommand), std::move(qcustommenuhandler));
         }
 
         void PostAddItem(std::wstring strHelp,
-                         std::unique_ptr<ContextMenuCommand> qcontextcommand,
+                         std::unique_ptr<ContextMenuCommand> contextCommand,
                          std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
         {
-            m_pmenuhost->OnAddMenuItem(std::move(strHelp), std::move(qcontextcommand), std::move(qcustommenuhandler));
+            m_menuHost->OnAddMenuItem(std::move(strHelp), std::move(contextCommand), std::move(qcustommenuhandler));
             ++m_indexMenu;
             ++*m_pidCmd;
         }
 
         // Member variables.
-        HMENU m_hmenu{};
+        HMENU m_menu{};
         UINT m_indexMenu{};
         UINT* m_pidCmd{};
         UINT m_idCmdLast{};
-        ContextMenuImpl<T>* m_pmenuhost{};
+        ContextMenuImpl<T>* m_menuHost{};
     };
 
     ContextMenuImpl(const ContextMenuImpl&) = delete;
@@ -217,7 +217,7 @@ public:
     }
 
     // IContextMenu
-    HRESULT __stdcall QueryContextMenu( _In_ HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags) noexcept override
+    HRESULT __stdcall QueryContextMenu( _In_ HMENU menu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
             this, indexMenu, idCmdFirst, idCmdLast, uFlags);
@@ -231,12 +231,12 @@ public:
             ClearMenuItems();
 
             m_idCmdFirst = idCmdFirst;
-            auto nID = m_idCmdFirst;
-            Menu menu(hmenu, indexMenu, nID, idCmdLast, this);
+            auto id = m_idCmdFirst;
+            Menu contextMenu(menu, indexMenu, id, idCmdLast, this);
 
-            QueryContextMenuCore(menu, GetFilenames());
+            QueryContextMenuCore(contextMenu, GetFilenames());
 
-            const auto nAdded = nID - m_idCmdFirst;
+            const auto nAdded = id - m_idCmdFirst;
             return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, static_cast<USHORT>(nAdded));
         }
         catch (...)
@@ -384,34 +384,34 @@ protected:
     {
     }
 
-    HRESULT OnInitMenuPopup(HMENU /*hmenu*/, unsigned short /*nIndex*/) noexcept
+    HRESULT OnInitMenuPopup(HMENU /*menu*/, unsigned short /*index*/) noexcept
     {
         return S_OK;
     }
 
-    HRESULT OnDrawItem(const DRAWITEMSTRUCT* pdrawitem)
+    HRESULT OnDrawItem(const DRAWITEMSTRUCT* drawItem)
     {
-        if (pdrawitem->CtlType != ODT_MENU)
+        if (drawItem->CtlType != ODT_MENU)
             return E_INVALIDARG;
 
-        GetMenuItem(pdrawitem->itemID - m_idCmdFirst).GetCustomMenuHandler().Draw(*pdrawitem);
+        GetMenuItem(drawItem->itemID - m_idCmdFirst).GetCustomMenuHandler().Draw(*drawItem);
         return S_OK;
     }
 
-    HRESULT OnMeasureItem(MEASUREITEMSTRUCT* pmeasureitem)
+    HRESULT OnMeasureItem(MEASUREITEMSTRUCT* measureItem)
     {
-        GetMenuItem(pmeasureitem->itemID - m_idCmdFirst).GetCustomMenuHandler().Measure(*pmeasureitem);
+        GetMenuItem(measureItem->itemID - m_idCmdFirst).GetCustomMenuHandler().Measure(*measureItem);
         return S_OK;
     }
 
-    LRESULT OnMenuChar(HMENU hmenu, unsigned short nChar)
+    LRESULT OnMenuChar(HMENU menu, unsigned short nChar)
     {
         for (auto& menuItem : m_menuItems)
         {
-            LRESULT lresult;
-            if (menuItem.GetCustomMenuHandler().OnMenuChar(hmenu, nChar, lresult))
+            LRESULT result;
+            if (menuItem.GetCustomMenuHandler().OnMenuChar(menu, nChar, result))
             {
-                return lresult;
+                return result;
             }
         }
 

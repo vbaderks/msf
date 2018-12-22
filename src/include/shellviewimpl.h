@@ -18,51 +18,51 @@ class __declspec(novtable) IShellViewImpl :
 {
 public:
     // IShellView
-    HRESULT TranslateAccelerator(MSG* /*pmsg*/)
+    HRESULT TranslateAccelerator(MSG* /*pmsg*/) override
     {
         return S_FALSE; // Tell Explorer to handle the accelerator.
     }
 
-    HRESULT EnableModeless(BOOL /*fEnable*/)
+    HRESULT EnableModeless(BOOL /*fEnable*/) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::EnableModeless");
     }
 
-    HRESULT UIActivate(UINT /*uState*/)
+    HRESULT UIActivate(UINT /*uState*/) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::UIActivate");
     }
 
-    HRESULT Refresh()
+    HRESULT Refresh() override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::Refresh");
     }
 
-    HRESULT CreateViewWindow(IShellView *psvPrevious,
-                             LPCFOLDERSETTINGS pfs,
-                             IShellBrowser *psb,
-                             RECT *prcView,
-                             HWND *phWnd)
+    HRESULT CreateViewWindow(IShellView*,
+                             LPCFOLDERSETTINGS,
+                             IShellBrowser*,
+                             RECT*,
+                             HWND*) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::CreateViewWindow");
     }
 
-    HRESULT DestroyViewWindow()
+    HRESULT DestroyViewWindow() override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::DestroyViewWindow");
     }
 
-    HRESULT GetCurrentInfo(LPFOLDERSETTINGS pfs)
+    HRESULT GetCurrentInfo(LPFOLDERSETTINGS pfs) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::GetCurrentInfo");
     }
 
-    HRESULT AddPropertySheetPages(DWORD dwReserved, LPFNSVADDPROPSHEETPAGE pfn, LPARAM lparam)
+    HRESULT AddPropertySheetPages(DWORD dwReserved, LPFNSVADDPROPSHEETPAGE pfn, LPARAM lparam) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::AddPropertySheetPages");
     }
 
-    HRESULT SaveViewState()
+    HRESULT SaveViewState() override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::SaveViewState");
     }
@@ -72,29 +72,29 @@ public:
         ATLTRACENOTIMPL(L"IShellViewImpl::SelectItem");
     }
 
-    HRESULT GetItemObject(UINT uItem, REFIID riid, void** ppv)
+    HRESULT GetItemObject(UINT uItem, REFIID riid, void** ppv) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::GetItemObject");
     }
 
     // IShellView2
-    HRESULT GetView(SHELLVIEWID* pvid, ULONG uView)
+    HRESULT GetView(SHELLVIEWID* pvid, ULONG uView) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::GetView");
     }
 
-    HRESULT CreateViewWindow2(LPSV2CVW2_PARAMS lpParams)
+    HRESULT CreateViewWindow2(LPSV2CVW2_PARAMS) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::CreateViewWindow2");
     }
 
 
-    HRESULT HandleRename(LPCITEMIDLIST pidlNew)
+    HRESULT HandleRename(LPCITEMIDLIST)
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::HandleRename");
     }
 
-    HRESULT SelectAndPositionItem(LPCITEMIDLIST pidlItem, UINT uFlags,POINT *ppt)
+    HRESULT SelectAndPositionItem(LPCITEMIDLIST, UINT, POINT*)
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::SelectAndPositionItem");
     }

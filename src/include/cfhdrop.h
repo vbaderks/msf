@@ -43,12 +43,12 @@ public:
         return ::DragQueryFile(static_cast<HDROP>(m_stgmedium.hGlobal), static_cast<UINT>(-1), nullptr, 0);
     }
 
-    std::wstring GetFile(unsigned int iFile) const
+    std::wstring GetFile(unsigned int index) const
     {
-        ATLASSERT(iFile < GetFileCount() && "Index out of bounds");
+        ATLASSERT(index < GetFileCount() && "Index out of bounds");
 
         wchar_t szFileName[MAX_PATH];
-        if (!::DragQueryFile(static_cast<HDROP>(m_stgmedium.hGlobal), iFile, szFileName,
+        if (!::DragQueryFile(static_cast<HDROP>(m_stgmedium.hGlobal), index, szFileName,
                              _countof(szFileName)))
             throw _com_error(HRESULT_FROM_WIN32(GetLastError()));
 

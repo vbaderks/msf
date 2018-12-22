@@ -13,9 +13,6 @@
 // Note: MessageBox is not redefined by winuser.inl (by design): need to call explicit IsolationAwareMessageBox
 #define ISOLATION_AWARE_ENABLED 1
 
-// Shell Extensions are COM apartment threaded.
-#define _ATL_APARTMENT_THREADED
-
 #ifdef _DEBUG
 #define _ATL_DEBUG_QI // Trace which interfaces are requested.
 #endif

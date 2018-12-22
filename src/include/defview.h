@@ -245,7 +245,7 @@ public:
         params.prcView  = prcView;
         params.pvid     = nullptr; // todo
 
-        HRESULT hr = CreateViewWindow2(params);
+        const HRESULT hr = CreateViewWindow2(params);
         *phWnd = params.hwndView;
         return hr;
     }
@@ -264,6 +264,7 @@ public:
         UpdateListviewColors();
 
         _rshellbrowser = pParams.psbOwner;
+        return S_OK;
     }
 
 

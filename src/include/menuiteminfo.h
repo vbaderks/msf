@@ -10,7 +10,7 @@
 
 namespace msf {
 
-class MenuItemInfo : public MENUITEMINFO
+class MenuItemInfo final : public MENUITEMINFO
 {
 public:
     MenuItemInfo() noexcept : MENUITEMINFO()
@@ -28,14 +28,14 @@ public:
         SetString(std::move(str));
     }
 
-    MenuItemInfo(UINT id, const std::wstring& str, HMENU hsubmenu) noexcept :  MenuItemInfo(id, str)
+    MenuItemInfo(UINT id, const std::wstring& str, HMENU subMenu) noexcept :  MenuItemInfo(id, str)
     {
-        SetSubMenu(hsubmenu);
+        SetSubMenu(subMenu);
     }
 
-    MenuItemInfo(UINT id, HMENU hsubmenu) noexcept : MenuItemInfo(id)
+    MenuItemInfo(UINT id, HMENU subMenu) noexcept : MenuItemInfo(id)
     {
-        SetSubMenu(hsubmenu);
+        SetSubMenu(subMenu);
     }
 
     ~MenuItemInfo() = default;
@@ -63,10 +63,10 @@ public:
 #pragma warning(pop)
     }
 
-    void SetSubMenu(HMENU hsubmenu) noexcept
+    void SetSubMenu(HMENU subMenu) noexcept
     {
         fMask |= MIIM_SUBMENU;
-        hSubMenu = hsubmenu;
+        hSubMenu = subMenu;
     }
 
     void SetOwnerDraw() noexcept
@@ -74,11 +74,11 @@ public:
         fType |= MFT_OWNERDRAW;
     }
 
-    void SetCheckMarkBmps(HBITMAP hChecked, HBITMAP hUnchecked) noexcept
+    void SetCheckMarkBitmaps(HBITMAP checked, HBITMAP unchecked) noexcept
     {
         fMask |= MIIM_CHECKMARKS;
-        hbmpChecked   = hChecked;
-        hbmpUnchecked = hUnchecked;
+        hbmpChecked   = checked;
+        hbmpUnchecked = unchecked;
     }
 
     void SetState(UINT uiState) noexcept

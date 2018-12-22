@@ -25,76 +25,76 @@ public:
     class PropSheetHeader : public PROPSHEETHEADER
     {
     public:
-        explicit PropSheetHeader(std::wstring caption, DWORD dwflags = 0) :
-            PROPSHEETHEADER{sizeof(PROPSHEETHEADER), dwflags},
+        explicit PropSheetHeader(std::wstring caption, DWORD flags = 0) :
+            PROPSHEETHEADER{sizeof(PROPSHEETHEADER), flags},
             m_caption{std::move(caption)}
         {
             pszCaption = m_caption.c_str();
         }
 
-        void SetPages(std::vector<HPROPSHEETPAGE>& hpages) noexcept
+        void SetPages(std::vector<HPROPSHEETPAGE>& pages) noexcept
         {
-            phpage = hpages.data();
-            nPages = static_cast<UINT>(hpages.size());
+            phpage = pages.data();
+            nPages = static_cast<UINT>(pages.size());
         }
 
     private:
         std::wstring m_caption;
     };
 
-    explicit PropertySheet(std::wstring strCaption, DWORD dwFlags = 0) :
-        m_propertySheetHeader(std::move(strCaption), dwFlags)
+    explicit PropertySheet(std::wstring caption, DWORD flags = 0) :
+        m_propertySheetHeader(std::move(caption), flags)
     {
     }
 
-    explicit PropertySheet(UINT nIDCaption, DWORD dwFlags = 0) :
-        m_propertySheetHeader(LoadResourceString(nIDCaption), dwFlags)
+    explicit PropertySheet(UINT captionId, DWORD flags = 0) :
+        m_propertySheetHeader(LoadResourceString(captionId), flags)
     {
     }
 
     virtual ~PropertySheet()
     {
         // Clean up pages that are added but never used.
-        for (auto hpage : m_hpages)
+        for (auto page : m_pages)
         {
-            ATLVERIFY(DestroyPropertySheetPage(hpage));
+            ATLVERIFY(DestroyPropertySheetPage(page));
         }
     }
 
-    void AddPage(HPROPSHEETPAGE hpage)
+    void AddPage(HPROPSHEETPAGE page)
     {
-        m_hpages.push_back(hpage);
+        m_pages.push_back(page);
     }
 
-    int DoModal(HWND hwndParent) noexcept
+    int DoModal(HWND parentWindow) noexcept
     {
-        m_propertySheetHeader.hwndParent = hwndParent;
-        m_propertySheetHeader.SetPages(m_hpages);
+        m_propertySheetHeader.hwndParent = parentWindow;
+        m_propertySheetHeader.SetPages(m_pages);
 
         const auto result = static_cast<int>(::PropertySheet(&m_propertySheetHeader));
-        m_hpages.clear();
+        m_pages.clear();
         return result;
     }
 
-    long DoModalReturnChanges(HWND hwndParent) noexcept
+    long DoModalReturnChanges(HWND parentWindow) noexcept
     {
-        m_eventID = 0;
-        const auto result = DoModal(hwndParent);
+        m_eventId = 0;
+        const auto result = DoModal(parentWindow);
         if (result <= 0)
             return 0;
 
-        return m_eventID;
+        return m_eventId;
     }
 
     long& GetEventId() noexcept
     {
-        return m_eventID;
+        return m_eventId;
     }
 
 private:
     PropSheetHeader             m_propertySheetHeader;
-    std::vector<HPROPSHEETPAGE> m_hpages;
-    long                        m_eventID{};
+    std::vector<HPROPSHEETPAGE> m_pages;
+    long                        m_eventId{};
 };
 
 } // end msf namespace.

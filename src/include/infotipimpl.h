@@ -19,7 +19,7 @@ namespace msf
 /// The actual InfoTip class need to setup the COM interface map.
 /// The following interfaces should be enabled:
 ///  - IQueryInfo
-/// One of the following for initialization (Vista and up):
+/// One of the following for initialization:
 ///  - IInitializeWithFile
 ///  - IInitializeWithStream
 /// </remarks>
@@ -30,25 +30,24 @@ class __declspec(novtable) InfoTipImpl :
 {
 public:
     /// <summary>Registration function to register the info tip COM object and a ProgId/extension.</summary>
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szRootKey) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, UINT resourceId,
+        PCWSTR description, PCWSTR rootKey) noexcept
     {
-        return UpdateRegistryFromResource(nResId, bRegister,
-            szDescription, T::GetObjectCLSID(), szRootKey);
+        return UpdateRegistryFromResource(resourceId, registerObject,
+            description, T::GetObjectCLSID(), rootKey);
     }
 
     // IInitializeWithFile
-    HRESULT __stdcall Initialize(PCWSTR pszFilePath, DWORD dwMode) override
+    HRESULT __stdcall Initialize(PCWSTR filePath, DWORD mode) override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::Initialize (withfile) (instance=%p, mode=%d, filename=%s)\n", this, dwMode, pszFilePath);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::Initialize (with file) (instance=%p, mode=%d, filename=%s)\n", this, mode, filePath);
 
         try
         {
             if (m_initialized)
                 return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
 
-            // Note: InitializeCore must be implemented by the derived class.
-            InitializeCore(pszFilePath, dwMode);
+            InitializeCore(filePath, mode);
             m_initialized = true;
             return S_OK;
         }
@@ -74,7 +73,7 @@ protected:
         ATLTRACE2(ATL::atlTraceCOM, 0, L"InfoTipImpl::~InfoTipImpl (instance=%p)\n", this);
     }
 
-    virtual void InitializeCore(PCWSTR pszFilePath, DWORD dwMode) = 0;
+    virtual void InitializeCore(PCWSTR filePath, DWORD mode) = 0;
 
 private:
     bool m_initialized{};

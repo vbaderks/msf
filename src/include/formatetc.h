@@ -34,10 +34,10 @@ public:
         CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
     }
 
-    explicit FormatEtc(PCWSTR lpszFormat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
-         DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept : FORMATETC()
+    explicit FormatEtc(PCWSTR format, DWORD tymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
+         DWORD aspect = DVASPECT_CONTENT, LONG index = -1) noexcept : FORMATETC()
     {
-        CommonConstruct(Win32::RegisterClipboardFormat(lpszFormat), dwtymed, pdvtd, dwaspect, index);
+        CommonConstruct(Win32::RegisterClipboardFormat(format), tymed, pdvtd, aspect, index);
     }
 
     ~FormatEtc()
@@ -79,22 +79,22 @@ private:
         lindex   = index;
     }
 
-    static void Copy(FORMATETC& dest, const FORMATETC& src)
+    static void Copy(FORMATETC& destination, const FORMATETC& source)
     {
-        DVTARGETDEVICE* ptd = CopyTargetDevice(src);
-        dest = src;
-        dest.ptd = ptd;
+        DVTARGETDEVICE* targetDevice = CopyTargetDevice(source);
+        destination = source;
+        destination.ptd = targetDevice;
     }
 
-    static DVTARGETDEVICE* CopyTargetDevice(const FORMATETC& src)
+    static DVTARGETDEVICE* CopyTargetDevice(const FORMATETC& source)
     {
-        if (!src.ptd)
+        if (!source.ptd)
             return nullptr;
 
-        auto* ptd = static_cast<DVTARGETDEVICE*>(CoTaskMemAlloc(src.ptd->tdSize));
+        auto* ptd = static_cast<DVTARGETDEVICE*>(CoTaskMemAlloc(source.ptd->tdSize));
         if (!ptd)
             throw std::bad_alloc();
-        memcpy(ptd, src.ptd, src.ptd->tdSize);
+        memcpy(ptd, source.ptd, source.ptd->tdSize);
         return ptd;
     }
 };

@@ -11,11 +11,11 @@
 namespace msf
 {
 
-inline ATL::CComPtr<IEnumFORMATETC> SHCreateStdEnumFmtEtc(UINT cfmt, const FORMATETC* pformatetc)
+inline ATL::CComPtr<IEnumFORMATETC> SHCreateStdEnumFmtEtc(UINT cfmt, const FORMATETC* formatetc)
 {
-    ATL::CComPtr<IEnumFORMATETC> renumformatetc;
-    RaiseExceptionIfFailed(::SHCreateStdEnumFmtEtc(cfmt, pformatetc, &renumformatetc));
-    return renumformatetc;
+    ATL::CComPtr<IEnumFORMATETC> enumformatetc;
+    RaiseExceptionIfFailed(::SHCreateStdEnumFmtEtc(cfmt, formatetc, &enumformatetc));
+    return enumformatetc;
 }
 
 
@@ -28,9 +28,9 @@ public:
         // No init needed.
     }
 
-    static HRESULT copy(FORMATETC* pTo, const FORMATETC* pFrom) noexcept
+    static HRESULT copy(FORMATETC* to, const FORMATETC* from) noexcept
     {
-        *pTo = *pFrom;
+        *to = *from;
         return S_OK;
     }
 
@@ -55,15 +55,15 @@ public:
     EnumFORMATETC& operator=(const EnumFORMATETC&) = delete;
     EnumFORMATETC& operator=(EnumFORMATETC&&) = delete;
 
-    static ATL::CComPtr<EnumFORMATETC> CreateInstance(std::unique_ptr<FormatEtcs> qformatetcs)
+    static ATL::CComPtr<EnumFORMATETC> CreateInstance(std::unique_ptr<FormatEtcs> formatEtcs)
     {
-        ATL::CComObject<EnumFORMATETC>* pEnum;
-        RaiseExceptionIfFailed(ATL::CComObject<EnumFORMATETC>::CreateInstance(&pEnum));
+        ATL::CComObject<EnumFORMATETC>* enumFormatEtc;
+        RaiseExceptionIfFailed(ATL::CComObject<EnumFORMATETC>::CreateInstance(&enumFormatEtc));
 
-        ATL::CComPtr<EnumFORMATETC> renum(pEnum);
-        renum->Initialize(move(qformatetcs));
+        ATL::CComPtr<EnumFORMATETC> enumPtr(enumFormatEtc);
+        enumPtr->Initialize(std::move(formatEtcs));
 
-        return renum;
+        return enumPtr;
     }
 
 protected:
@@ -93,12 +93,12 @@ private:
 // Purpose: alternative for the SHCreateStdEnumFmtEtc function.
 //          Created before I discovered SHCreateStdEnumFmtEtc.
 //          Source can act as sample, or as easy debug alternative.
-inline HRESULT CreateStdEnumFmtEtc(std::unique_ptr<std::vector<FORMATETC> > qformatetcs, IEnumFORMATETC** ppenumFormatEtc)
+inline HRESULT CreateStdEnumFmtEtc(std::unique_ptr<std::vector<FORMATETC>> formatEtcs, IEnumFORMATETC** enumFormatEtc)
 {
     try
     {
-        ATL::CComPtr<EnumFORMATETC> renum = EnumFORMATETC::CreateInstance(std::move(qformatetcs));
-        *ppenumFormatEtc = renum.Detach();
+        ATL::CComPtr<EnumFORMATETC> enumPtr = EnumFORMATETC::CreateInstance(std::move(formatEtcs));
+        *enumFormatEtc = enumPtr.Detach();
 
         return S_OK;
     }

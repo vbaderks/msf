@@ -112,7 +112,7 @@ public:
     //          extra commands into the menu.
     static HRESULT OnDfmMergeContextMenu(IDataObject* dataObject, UINT /*uFlags*/, QCMINFO& mergeInfo)
     {
-        msf::CCfShellIdList itemList(dataObject);
+        msf::CfShellIdList itemList(dataObject);
 
         if (itemList.GetItemCount() == 1 && !VVVItem(itemList.GetItem(0)).IsFolder())
         {
@@ -153,7 +153,7 @@ public:
     // Purpose: handle 'open' by showing the name of the selected item.
     void OnOpen(HWND hwnd, IDataObject* dataObject) const
     {
-        msf::CCfShellIdList cfshellidlist(dataObject);
+        msf::CfShellIdList cfshellidlist(dataObject);
         ATLASSERT(cfshellidlist.GetItemCount() == 1);
 
         const VVVItem item(cfshellidlist.GetItem(0));

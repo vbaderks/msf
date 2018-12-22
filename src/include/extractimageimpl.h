@@ -21,10 +21,10 @@ class __declspec(novtable) ExtractImageImpl :
 public:
     // Registration function to register the extension.
     static HRESULT __stdcall UpdateRegistry(UINT nResId, BOOL bRegister,
-        PCWSTR szDescription, const CLSID& clsidShellFolder, PCWSTR szExtension) noexcept
+        PCWSTR description, const CLSID& clsidShellFolder, PCWSTR szExtension) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,
-            szDescription, T::GetObjectCLSID(), clsidShellFolder, szExtension);
+            description, T::GetObjectCLSID(), clsidShellFolder, szExtension);
     }
 
     // Registration function to register the COM object + the root extension.
@@ -45,14 +45,14 @@ public:
     }
 
     // IPersistFile
-    HRESULT __stdcall GetClassID(__RPC__out CLSID* pClassID) noexcept override
+    HRESULT __stdcall GetClassID(__RPC__out CLSID* classId) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::GetClassID\n");
 
-        if (!pClassID)
+        if (!classId)
             return E_POINTER;
 
-        *pClassID = T::GetObjectCLSID();
+        *classId = T::GetObjectCLSID();
         return S_OK;
     }
 
@@ -76,14 +76,14 @@ public:
         ATLTRACENOTIMPL(L"ExtractImageImpl::GetCurFile");
     }
 
-    HRESULT __stdcall Load(LPCOLESTR filename, DWORD dwMode) noexcept override
+    HRESULT __stdcall Load(LPCOLESTR filename, DWORD mode) noexcept override
     {
-        UNREFERENCED_PARAMETER(dwMode); // unused in release.
+        UNREFERENCED_PARAMETER(mode); // unused in release.
 
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, dwMode, filename);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::Load (instance=%p, mode=%d, filename=%s)\n", this, mode, filename);
         try
         {
-            m_strFilename = filename;
+            m_filename = filename;
             return S_OK;
         }
         catch (...)
@@ -101,7 +101,7 @@ public:
             ATLTRACE2(ATL::atlTraceCOM, 0, "ExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
 
             Dispose();
-            m_hbitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
+            m_bitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
 
             RaiseExceptionIfFailed(StringCchCopy(pszPathBuffer, cch, static_cast<T*>(this)->GetPathBuffer().c_str()));
             *pdwFlags |= IEIFLAG_CACHE;
@@ -120,32 +120,32 @@ public:
         }
     }
 
-    HRESULT __stdcall Extract(__RPC__deref_out_opt HBITMAP* phBmpThumbnail) noexcept override
+    HRESULT __stdcall Extract(__RPC__deref_out_opt HBITMAP* thumbnail) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, "ExtractImageImpl::Extract (instance=%p)\n", this);
 
-        if (!m_hbitmap)
+        if (!m_bitmap)
             return E_FAIL;
 
-        *phBmpThumbnail = m_hbitmap;
-        m_hbitmap = nullptr;
+        *thumbnail = m_bitmap;
+        m_bitmap = nullptr;
 
         return S_OK;
     }
 
     // IExtractImage2
-    HRESULT __stdcall GetDateStamp(__RPC__in FILETIME* pDateStamp) noexcept override
+    HRESULT __stdcall GetDateStamp(__RPC__in FILETIME* dateStamp) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, pDateStamp);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, dateStamp);
 
-        if (!pDateStamp)
+        if (!dateStamp)
             return E_POINTER;
 
         WIN32_FILE_ATTRIBUTE_DATA fileattributedata;
         if (!GetFileAttributesEx(static_cast<T*>(this)->GetPathBuffer().c_str(), GetFileExInfoStandard, &fileattributedata))
             return E_FAIL;
 
-        *pDateStamp = fileattributedata.ftLastWriteTime;
+        *dateStamp = fileattributedata.ftLastWriteTime;
         return S_OK;
     }
 
@@ -155,7 +155,7 @@ public:
     //          then set by IPersistFile::Load.
     const std::wstring& GetPathBuffer() const noexcept
     {
-        return m_strFilename;
+        return m_filename;
     }
 
     ExtractImageImpl(const ExtractImageImpl&) = delete;
@@ -177,16 +177,16 @@ protected:
 
     void Dispose() noexcept
     {
-        if (m_hbitmap)
+        if (m_bitmap)
         {
-            ATLVERIFY(DeleteObject(m_hbitmap));
-            m_hbitmap = nullptr;
+            ATLVERIFY(DeleteObject(m_bitmap));
+            m_bitmap = nullptr;
         }
     }
 
     // member variables.
-    std::wstring m_strFilename;
-    HBITMAP      m_hbitmap{};
+    std::wstring m_filename;
+    HBITMAP      m_bitmap{};
 };
 
 } // namespace msf

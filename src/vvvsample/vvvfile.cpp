@@ -62,16 +62,16 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
 
         if (nActive == 1)
         {
-            const auto bFolder = GetPrivateProfileInt(strAppName.c_str(), TSZ_FOLDER) == 1;
+            const auto folder = GetPrivateProfileInt(strAppName.c_str(), TSZ_FOLDER) == 1;
 
-            if ((msf::IsBitSet(grfFlags, SHCONTF_NONFOLDERS) && !bFolder) ||
-                (msf::IsBitSet(grfFlags, SHCONTF_FOLDERS) && bFolder))
+            if ((msf::IsBitSet(grfFlags, SHCONTF_NONFOLDERS) && !folder) ||
+                (msf::IsBitSet(grfFlags, SHCONTF_FOLDERS) && folder))
             {
-                const auto nSize = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
-                msf::RaiseExceptionIf(nSize == static_cast<UINT>(-1));
+                const auto size = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
+                msf::RaiseExceptionIf(size == static_cast<UINT>(-1));
                 const auto strName = GetPrivateProfileString(strAppName.c_str(), TSZ_NAME);
 
-                return VVVItem::CreateItemIdList(nItemIterator, nSize, bFolder, strName);
+                return VVVItem::CreateItemIdList(nItemIterator, size, folder, strName);
             }
         }
     }
@@ -107,11 +107,11 @@ PUIDLIST_RELATIVE VVVFile::AddItem(const std::wstring& strFile) const
 }
 
 
-PUIDLIST_RELATIVE VVVFile::AddItem(unsigned int nSize, const std::wstring& name) const
+PUIDLIST_RELATIVE VVVFile::AddItem(unsigned int size, const std::wstring& name) const
 {
     const auto nId = FindFreeEntry();
 
-    msf::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, nSize, false, name));
+    msf::ItemIDList pidlItem(VVVItem::CreateItemIdList(nId, size, false, name));
     AddItem(VVVItem(pidlItem.GetRelative()));
 
     return pidlItem.DetachRelative();
@@ -170,10 +170,10 @@ wstring VVVFile::GetAppNameDirectory() const
 }
 
 
-wstring VVVFile::GetAppNameItem(unsigned int nID) const
+wstring VVVFile::GetAppNameItem(unsigned int id) const
 {
     ATL::CString strAppName;
-    strAppName.Format(TSZ_FILE_FORMAT, nID);
+    strAppName.Format(TSZ_FILE_FORMAT, id);
 
     if (!m_folder.empty())
     {

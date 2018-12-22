@@ -16,7 +16,8 @@ class GlobalLock final
 public:
     GlobalLock() = default;
 
-    explicit GlobalLock(HGLOBAL hMem) : m_p(GlobalLockThrow(hMem)), m_hMem(hMem)
+    explicit GlobalLock(HGLOBAL memory)
+        : m_p(GlobalLockThrow(memory)), m_memory(memory)
     {
     }
 
@@ -30,24 +31,24 @@ public:
     GlobalLock& operator=(const GlobalLock&) = delete;
     GlobalLock& operator=(GlobalLock&&) = delete;
 
-    void Attach(HGLOBAL hMem)
+    void Attach(HGLOBAL memory)
     {
-        void* p = GlobalLockThrow(hMem);
+        void* p = GlobalLockThrow(memory);
 
         Dispose();
 
         m_p = p;
-        m_hMem = hMem;
+        m_memory = memory;
     }
 
     void Dispose() noexcept
     {
-        if (m_hMem)
+        if (m_memory)
         {
-            const BOOL bResult = GlobalUnlock(m_hMem);
+            const BOOL bResult = GlobalUnlock(m_memory);
             ATLASSERT(bResult || GetLastError() == NO_ERROR);
             UNREFERENCED_PARAMETER(bResult);
-            m_hMem = nullptr;
+            m_memory = nullptr;
             m_p = nullptr;
         }
     }
@@ -61,20 +62,19 @@ public:
 #pragma warning(pop)
 
 private:
-
-    static void* GlobalLockThrow(HGLOBAL hMem)
+    static void* GlobalLockThrow(HGLOBAL memory)
     {
-        if (!hMem)
+        if (!memory)
             return nullptr;
 
-        void* p = ::GlobalLock(hMem);
+        void* p = ::GlobalLock(memory);
         RaiseLastErrorExceptionIf(!p);
         return p;
     }
 
     // Member variables
     void* m_p{};
-    HGLOBAL m_hMem{};
+    HGLOBAL m_memory{};
 };
 
 }

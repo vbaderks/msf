@@ -10,33 +10,33 @@
 namespace msf
 {
 
-class CCfPreferredDropEffect
+class CfPreferredDropEffect
 {
 public:
 
-    static DWORD Get(IDataObject* pdataobject)
+    static DWORD Get(IDataObject* dataObject)
     {
-        DWORD dwEffect;
-        RaiseExceptionIfFailed(GetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect));
+        DWORD effect;
+        RaiseExceptionIfFailed(GetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, dataObject, effect));
 
-        return dwEffect;
+        return effect;
     }
 
-    static DWORD GetOptional(IDataObject* pdataobject, DWORD dwEffectDefault = DROPEFFECT_NONE)
+    static DWORD GetOptional(IDataObject* dataObject, DWORD dwEffectDefault = DROPEFFECT_NONE)
     {
-        DWORD dwEffect;
+        DWORD effect;
 
-        const HRESULT hr = GetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect);
-        if (SUCCEEDED(hr))
-            return dwEffect;
+        const HRESULT result = GetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, dataObject, effect);
+        if (SUCCEEDED(result))
+            return effect;
 
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPreferredDropEffect::GetOptional failed, hr=%x\n", hr);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPreferredDropEffect::GetOptional failed, hr=%x\n", result);
         return dwEffectDefault;
     }
 
-    static void Set(IDataObject* pdataobject, DWORD dwEffect)
+    static void Set(IDataObject* dataObject, DWORD effect)
     {
-        RaiseExceptionIfFailed(SetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, pdataobject, dwEffect));
+        RaiseExceptionIfFailed(SetClipboardFormatEffect(CFSTR_PREFERREDDROPEFFECT, dataObject, effect));
     }
 };
 

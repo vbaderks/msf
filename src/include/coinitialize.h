@@ -5,10 +5,6 @@
 //
 #pragma once
 
-#if (!defined(_WIN32_WINNT) || (_WIN32_WINNT < 0x0400))
-    #error WIN32_NT must be at least version 4.0 (0x400) to access CoInitaliseEx
-#endif
-
 #include "msfbase.h"
 #include <objbase.h>
 

@@ -14,18 +14,18 @@
 namespace msf
 {
 
-// Simple hmenu wrapper class. For more advanced functionality use WTL or MFC.
+// Simple menu wrapper class. For more advanced functionality use WTL or MFC.
 class CMenu final
 {
 public:
     explicit CMenu(bool bCreate = true) noexcept :
-        m_hmenu(bCreate ? CreateMenu() : nullptr)
+        m_menu(bCreate ? CreateMenu() : nullptr)
     {
     }
 
     ~CMenu()
     {
-        ATLVERIFY(DestroyMenu(m_hmenu));
+        ATLVERIFY(DestroyMenu(m_menu));
     }
 
     CMenu(const CMenu&) = delete;
@@ -44,21 +44,21 @@ public:
         InsertMenuItem(menuiteminfo, GetMenuItemCount());
     }
 
-    void AddDefaultItem(UINT id, const std::wstring& strText) const
+    void AddDefaultItem(UINT id, const std::wstring& text) const
     {
-        MenuItemInfo menuiteminfo(id, strText);
-        menuiteminfo.SetState(MFS_DEFAULT);
-        InsertMenuItem(menuiteminfo, GetMenuItemCount());
+        MenuItemInfo info(id, text);
+        info.SetState(MFS_DEFAULT);
+        InsertMenuItem(info, GetMenuItemCount());
     }
 
-    void InsertMenuItem(const MenuItemInfo& menuiteminfo, UINT uItem, bool bByPosition = true) const
+    void InsertMenuItem(const MenuItemInfo& info, UINT uItem, bool byPosition = true) const
     {
-        RaiseLastErrorExceptionIf(!::InsertMenuItem(m_hmenu, uItem, bByPosition, &menuiteminfo));
+        RaiseLastErrorExceptionIf(!::InsertMenuItem(m_menu, uItem, byPosition, &info));
     }
 
     UINT GetMenuItemCount() const
     {
-        const int count = ::GetMenuItemCount(m_hmenu);
+        const int count = ::GetMenuItemCount(m_menu);
         RaiseLastErrorExceptionIf(count == -1);
         return static_cast<UINT>(count);
     }
@@ -66,19 +66,19 @@ public:
     // ReSharper disable once CppNonExplicitConversionOperator
     operator HMENU() const noexcept
     {
-        return m_hmenu;
+        return m_menu;
     }
 
 private:
     static HMENU CreateMenu()
     {
-        const HMENU hmenu = ::CreateMenu();
-        RaiseLastErrorExceptionIf(!hmenu);
-        return hmenu;
+        const HMENU menu = ::CreateMenu();
+        RaiseLastErrorExceptionIf(!menu);
+        return menu;
     }
 
     // Member variables.
-    HMENU m_hmenu;
+    HMENU m_menu;
 };
 
 } // end msf namespace

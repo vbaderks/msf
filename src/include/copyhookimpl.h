@@ -5,7 +5,7 @@
 //
 #pragma once
 
-#include <shlobj.h>
+#include "msfbase.h"
 #include "olestring.h"
 #include "updateregistry.h"
 
@@ -26,21 +26,21 @@ class __declspec(novtable) CopyHookImpl :
     public ICopyHook
 {
 public:
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR szCopyHookName) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, UINT resourceId,
+        PCWSTR description, PCWSTR copyHookName) noexcept
     {
         OleString classId;
         StringFromCLSID(T::GetObjectCLSID(), classId);
 
-        ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
+        ATL::_ATL_REGMAP_ENTRY entries[] =
         {
             {L"CLSID", classId},
-            { L"DESCRIPTION", szDescription },
-            { L"COPYHOOKNAME", szCopyHookName },
+            { L"DESCRIPTION", description },
+            { L"COPYHOOKNAME", copyHookName },
             { nullptr, nullptr }
         };
 
-        return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
+        return ATL::_pAtlModule->UpdateRegistryFromResource(resourceId, registerObject, entries);
     }
 
     CopyHookImpl(const CopyHookImpl&) = delete;

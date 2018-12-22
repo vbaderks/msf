@@ -62,11 +62,11 @@ protected:
         ATL::_pAtlModule->Unlock();
     }
 
-    std::wstring GetDlgItemText(int nID) const
+    std::wstring GetDlgItemText(int id) const
     {
         // Use ATL's implementation of GetDlgItemText.
         ATL::CString str;
-        ATL::CSnapInPropertyPageImpl<T>::GetDlgItemText(nID, str);
+        ATL::CSnapInPropertyPageImpl<T>::GetDlgItemText(id, str);
         return str.GetString();
     }
 

@@ -30,17 +30,17 @@ public:
     }
 
     // Purpose: called by OS to require the size of the menu item.
-    virtual void Measure(MEASUREITEMSTRUCT& /*measureitem*/)
+    virtual void Measure(MEASUREITEMSTRUCT& /*measureItem*/)
     {
     }
 
     // Purpose: called by the OS when the item must be draw.
-    virtual void Draw(const DRAWITEMSTRUCT& /*drawitem*/)
+    virtual void Draw(const DRAWITEMSTRUCT& /*drawItem*/)
     {
     }
 
     // Purpose: override this function to handle accelerator keys
-    virtual bool OnMenuChar(HMENU /*hmenu*/, unsigned short /*nChar*/, LRESULT& /*lresult*/)
+    virtual bool OnMenuChar(HMENU /*menu*/, unsigned short /*char*/, LRESULT& /*result*/)
     {
         return false; // not handled.
     }

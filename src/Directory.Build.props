@@ -87,6 +87,7 @@
       <PreprocessorDefinitions>
         WIN32;
         _WINDOWS;
+        WIN32_LEAN_AND_MEAN;
         NOMINMAX;
         _ATL_EX_CONVERSION_MACROS_ONLY;
         _ATL_CSTRING_EXPLICIT_CONSTRUCTORS;

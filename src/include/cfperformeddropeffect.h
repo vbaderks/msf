@@ -5,38 +5,32 @@
 //
 #pragma once
 
-
 #include "cfeffect.h"
-
 
 namespace msf
 {
 
-
 class CCfPerformedDropEffect
 {
 public:
-
-    static void Set(IDataObject* pdataobject, DWORD dwEffect)
+    static void Set(IDataObject* dataObject, DWORD effect)
     {
-        RaiseExceptionIfFailed(SetImpl(pdataobject, dwEffect));
+        RaiseExceptionIfFailed(SetImpl(dataObject, effect));
     }
 
-
-    static void SetOptional(IDataObject* pdataobject, DWORD dwEffect)
+    static void SetOptional(IDataObject* dataObject, DWORD effect)
     {
-        const HRESULT hr = SetImpl(pdataobject, dwEffect);
-        if (FAILED(hr))
+        const HRESULT result = SetImpl(dataObject, effect);
+        if (FAILED(result))
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPerformedDropEffect::SetOptional failed, hr=%x\n", hr);
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPerformedDropEffect::SetOptional failed, result=%x\n", result);
         }
     }
 
 private:
-
-    static HRESULT SetImpl(IDataObject* pdataobject, DWORD dwEffect)
+    static HRESULT SetImpl(IDataObject* dataObject, DWORD effect)
     {
-        return SetClipboardFormatEffect(CFSTR_PERFORMEDDROPEFFECT, pdataobject, dwEffect);
+        return SetClipboardFormatEffect(CFSTR_PERFORMEDDROPEFFECT, dataObject, effect);
     }
 };
 

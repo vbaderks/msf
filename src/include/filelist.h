@@ -53,9 +53,9 @@ public:
         }
     }
 
-    void Add(const wchar_t* szFilename)
+    void Add(const wchar_t* filename)
     {
-        m_filenames.push_back(szFilename);
+        m_filenames.emplace_back(filename);
     }
 
     LPDATAADVISEHOLDER m_spDataAdviseHolder;
@@ -64,17 +64,17 @@ protected:
     ~FileList() = default;
 
 private:
-    static void ValidateFormatEtc(const FORMATETC* pformatetc)
+    static void ValidateFormatEtc(const FORMATETC* formatEtc)
     {
-        RaiseExceptionIf(pformatetc->cfFormat != CF_HDROP, DV_E_FORMATETC);
-        RaiseExceptionIf(pformatetc->dwAspect != DVASPECT_CONTENT, DV_E_DVASPECT);
-        RaiseExceptionIf(pformatetc->lindex != -1, DV_E_LINDEX);
-        RaiseExceptionIf(pformatetc->tymed != TYMED_HGLOBAL, DV_E_TYMED);
+        RaiseExceptionIf(formatEtc->cfFormat != CF_HDROP, DV_E_FORMATETC);
+        RaiseExceptionIf(formatEtc->dwAspect != DVASPECT_CONTENT, DV_E_DVASPECT);
+        RaiseExceptionIf(formatEtc->lindex != -1, DV_E_LINDEX);
+        RaiseExceptionIf(formatEtc->tymed != TYMED_HGLOBAL, DV_E_TYMED);
     }
 
     HGLOBAL CreateData() const
     {
-        HGLOBAL hg = GlobalAllocThrow(GetDataSize());
+        const HGLOBAL hg = GlobalAllocThrow(GetDataSize());
 
         DROPFILES* pdropfiles = static_cast<DROPFILES*>(hg);
 

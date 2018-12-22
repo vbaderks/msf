@@ -11,19 +11,19 @@ HKCR
             
             ShellFolder
             {
-				val Attributes = d 1744830880
+                val Attributes = d 1744830880
             }
-			ForceRemove 'Implemented Categories'
-			{
-				{00021490-0000-0000-C000-000000000046}
-			}
+            ForceRemove 'Implemented Categories'
+            {
+                {00021490-0000-0000-C000-000000000046}
+            }
         }
     }
 
     NoRemove '%ROOTTYPE%' = s '%DESCRIPTION%'
     {
         ForceRemove CLSID = s '%CLSID%'
-        val FriendlyTypeName = s '@%MODULE%,-%FRIENDLYTYPENAME%'
+        val FriendlyTypeName = s '@%MODULE%,-%FRIENDLY_TYPE_NAME%'
         DefaultIcon = s '%MODULE%'
         ForceRemove Shell
         {

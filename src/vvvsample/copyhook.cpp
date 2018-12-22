@@ -37,10 +37,10 @@ public:
     CopyHook& operator=(CopyHook&&) = delete;
 
     // ICopyHook overrides
-    UINT __stdcall CopyCallback(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ PCWSTR pszSrcFile, DWORD /*dwSrcAttribs*/,
-                                _In_opt_ PCWSTR /*pszDestFile*/, DWORD /*dwDestAttribs*/) noexcept final
+    UINT __stdcall CopyCallback(_In_opt_ HWND hwnd, UINT wFunc, UINT /*wFlags*/, _In_ PCWSTR sourceFile, DWORD /*sourceAttributes*/,
+                                _In_opt_ PCWSTR /*destinationFile*/, DWORD /*destinationAttributes*/) noexcept final
     {
-        if (wFunc == FO_DELETE && ATL::CString(pszSrcFile).Find(L"VVV") != -1)
+        if (wFunc == FO_DELETE && ATL::CString(sourceFile).Find(L"VVV") != -1)
         {
             return IsolationAwareMessageBox(hwnd, msf::LoadResourceString(IDS_COPYHOOK_QUESTION).c_str(),
                 msf::LoadResourceString(IDS_COPYHOOK_CAPTION).c_str(), MB_YESNOCANCEL);

@@ -111,7 +111,7 @@ public:
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Reset");
     }
 
-    HRESULT __stdcall Clone(__RPC__deref_out_opt IEnumIDList** /*ppenum*/) override
+    HRESULT __stdcall Clone(__RPC__deref_out_opt IEnumIDList** /*enum*/) override
     {
         // Note: function not used by explorer \ system folder view.
         ATLTRACENOTIMPL(L"IEnumIDListImpl::Clone");

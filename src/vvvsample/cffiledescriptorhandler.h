@@ -12,24 +12,24 @@
 // Note: owner of the instance of this class must keep passed data object alive.
 //       This class doesn't do increases the reference count to prevent circular referencing.
 
-class CCfFileDescriptorHandler : public msf::ClipboardFormatHandler
+class CfFileDescriptorHandler final : public msf::ClipboardFormatHandler
 {
 public:
-    explicit CCfFileDescriptorHandler(IDataObject* dataObject) :
+    explicit CfFileDescriptorHandler(IDataObject* dataObject) :
         ClipboardFormatHandler(CFSTR_FILEDESCRIPTOR, true, false),
         m_dataObject(dataObject)
     {
     }
 
-    ~CCfFileDescriptorHandler() = default;
-    CCfFileDescriptorHandler(const CCfFileDescriptorHandler&) = delete;
-    CCfFileDescriptorHandler(CCfFileDescriptorHandler&&) = delete;
-    CCfFileDescriptorHandler& operator=(const CCfFileDescriptorHandler&) = delete;
-    CCfFileDescriptorHandler& operator=(CCfFileDescriptorHandler&&) = delete;
+    ~CfFileDescriptorHandler() = default;
+    CfFileDescriptorHandler(const CfFileDescriptorHandler&) = delete;
+    CfFileDescriptorHandler(CfFileDescriptorHandler&&) = delete;
+    CfFileDescriptorHandler& operator=(const CfFileDescriptorHandler&) = delete;
+    CfFileDescriptorHandler& operator=(CfFileDescriptorHandler&&) = delete;
 
     void GetData(const FORMATETC&, STGMEDIUM& medium) const override
     {
-        msf::CCfShellIdList cfshellidlist(m_dataObject);
+        msf::CfShellIdList cfshellidlist(m_dataObject);
 
         // Note: FILEGROUPDESCRIPTOR provides the count and 1 FILEDESCRIPTOR.
         const size_t size = sizeof(FILEGROUPDESCRIPTOR) + ((cfshellidlist.GetItemCount() - 1) * sizeof(FILEDESCRIPTOR)); // -V119

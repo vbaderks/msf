@@ -11,29 +11,27 @@ namespace msf
 {
 
 /// <summary>Collection of static helper functions to update settings in a data object.</summary>
-class CCfPasteSucceeded
+class CfPasteSucceeded
 {
 public:
-
-    static void Set(_In_ IDataObject* pdataobject, DWORD dwEffect)
+    static void Set(_In_ IDataObject* dataObject, DWORD effect)
     {
-        RaiseExceptionIfFailed(SetImpl(pdataobject, dwEffect));
+        RaiseExceptionIfFailed(SetImpl(dataObject, effect));
     }
 
-    static void SetOptional(_In_ IDataObject* pdataobject, DWORD dwEffect)
+    static void SetOptional(_In_ IDataObject* dataObject, DWORD effect)
     {
-        const HRESULT hr = SetImpl(pdataobject, dwEffect);
-        if (FAILED(hr))
+        const HRESULT result = SetImpl(dataObject, effect);
+        if (FAILED(result))
         {
-            ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPasteSucceeded::SetOptional failed, hr=%x\n", hr);
+            ATLTRACE2(ATL::atlTraceCOM, 0, L"CCfPasteSucceeded::SetOptional failed, result=%x\n", result);
         }
     }
 
 private:
-
-    static HRESULT SetImpl(_In_ IDataObject* pdataobject, DWORD dwEffect)
+    static HRESULT SetImpl(_In_ IDataObject* dataObject, DWORD effect)
     {
-        return SetClipboardFormatEffect(CFSTR_PASTESUCCEEDED, pdataobject, dwEffect);
+        return SetClipboardFormatEffect(CFSTR_PASTESUCCEEDED, dataObject, effect);
     }
 };
 

@@ -61,7 +61,7 @@ public:
     void InitializeItemInfo(MenuItemInfo& menuItemInfo) override
     {
         menuItemInfo.SetString(m_text);
-        menuItemInfo.SetCheckMarkBmps(nullptr, m_bitmap.GetHandle());
+        menuItemInfo.SetCheckMarkBitmaps(nullptr, m_bitmap.GetHandle());
     }
 
 private:

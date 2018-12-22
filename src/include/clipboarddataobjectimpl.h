@@ -9,9 +9,10 @@
 #include "msfbase.h"
 #include "cfhandler.h"
 #include "enumformatetc.h"
-#include "formatetc.h"
 #include "stgmedium.h"
+
 #include <atlctl.h> // for IDataObjectImpl
+
 #include <memory>
 #include <algorithm>
 
@@ -37,7 +38,7 @@ public:
         m_cfhandlers.push_back(clipFormatHandler);
     }
 
-    HRESULT __stdcall EnumFormatEtc(DWORD dwDirection, IEnumFORMATETC** /*ppenumFormatEtc*/) noexcept override
+    HRESULT __stdcall EnumFormatEtc(DWORD dwDirection, IEnumFORMATETC** /*enumFormatEtc*/) noexcept override
     {
         ATLTRACE2(atlTraceCOM, 0, L"ClipboardDataObjectImpl::EnumFormatEtc (dwDirection=%d)\n", dwDirection);
 
@@ -46,11 +47,11 @@ public:
             if (dwDirection != DATADIR_GET && dwDirection != DATADIR_SET)
                 return E_INVALIDARG;
 
-            std::vector<FORMATETC> formatetcs;
-            GetRegisteredFormats(formatetcs, dwDirection);
-            GetExternalFormats(formatetcs);
+            std::vector<FORMATETC> formatEtcs;
+            GetRegisteredFormats(formatEtcs, dwDirection);
+            GetExternalFormats(formatEtcs);
 
-            SHCreateStdEnumFmtEtc(static_cast<UINT>(formatetcs.size()), formatetcs.data());
+            SHCreateStdEnumFmtEtc(static_cast<UINT>(formatEtcs.size()), formatEtcs.data());
             return S_OK;
         }
         catch (...)
@@ -76,10 +77,10 @@ public:
             }
             else
             {
-                const CExternalData* pexternaldata = FindExternalData(pformatetc->cfFormat);
-                if (pexternaldata)
+                const CExternalData* externalData = FindExternalData(pformatetc->cfFormat);
+                if (externalData)
                 {
-                    return pexternaldata->Validate(*pformatetc);
+                    return externalData->Validate(*pformatetc);
                 }
             }
 

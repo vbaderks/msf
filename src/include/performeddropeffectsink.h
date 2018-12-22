@@ -10,7 +10,7 @@ namespace msf
 
 struct IPerformedDropEffectSink : IUnknown
 {
-    virtual void OnDeleteAfterPaste(IDataObject* pdataobject) = 0;
+    virtual void OnDeleteAfterPaste(IDataObject* dataObject) = 0;
 
     IPerformedDropEffectSink(const IPerformedDropEffectSink&) = delete;
     IPerformedDropEffectSink(IPerformedDropEffectSink&&) = delete;

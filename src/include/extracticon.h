@@ -84,9 +84,9 @@ public:
         return extractIcon;
     }
 
-    static HICON GetIcon(HIMAGELIST himl, int i, UINT flags = 0)
+    static HICON GetIcon(HIMAGELIST imageList, int i, UINT flags = 0)
     {
-        const HICON icon = ImageList_GetIcon(himl, i, flags);
+        const HICON icon = ImageList_GetIcon(imageList, i, flags);
         RaiseExceptionIf(!icon);
         return icon;
     }
@@ -98,10 +98,7 @@ public:
     END_COM_MAP()
 
 protected:
-    ExtractIcon() noexcept : m_nIconIndex(-1), m_uFlags(0)
-    {
-    }
-
+    ExtractIcon() = default;
     ~ExtractIcon() = default;
 
     void Initialize(const TItem& item)
@@ -109,16 +106,16 @@ protected:
         m_pidl.CloneFrom(item.GetItemIdList());
     }
 
-    HRESULT __stdcall GetIconLocation(UINT uFlags, PWSTR /*szIconFile*/, UINT /*cchMax*/, _Out_ int* piIndex, _Out_ UINT* pwFlags) noexcept override
+    HRESULT __stdcall GetIconLocation(UINT flags, PWSTR /*iconFile*/, UINT /*cchMax*/, _Out_ int* index, _Out_ UINT* outFlags) noexcept override
     {
-        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, uFlags);
+        ATLTRACE2(ATL::atlTraceCOM, 0, L"ExtractIcon::GetIconLocation, instance=%p, uFlags=%x\n", this, flags);
 
         try
         {
-            m_nIconIndex = TItem(m_pidl.GetRelative()).GetIconOf(uFlags);
+            m_iconIndex = TItem(m_pidl.GetRelative()).GetIconOf(flags);
 
-            *piIndex = 0; // must initialize index as it is a required out parameter.
-            *pwFlags = GIL_NOTFILENAME;
+            *index = 0; // must initialize index as it is a required out parameter.
+            *outFlags = GIL_NOTFILENAME;
             return S_OK;
         }
         catch (...)
@@ -133,7 +130,7 @@ protected:
 
         try
         {
-            if (m_nIconIndex == -1)
+            if (m_iconIndex == -1)
                 return E_INVALIDARG; // GetIconLocation not called.
 
             HIMAGELIST himLarge;
@@ -146,7 +143,7 @@ protected:
                 if (LOWORD(nIconSize) != 32)
                     return E_INVALIDARG;
 
-                iconLarge = GetIcon(himLarge, m_nIconIndex);
+                iconLarge = GetIcon(himLarge, m_iconIndex);
                 *phiconLarge = iconLarge.get();
             }
 
@@ -155,7 +152,7 @@ protected:
                 if (HIWORD(nIconSize) != 16)
                     return E_INVALIDARG;
 
-                *phiconSmall = GetIcon(himSmall, m_nIconIndex);
+                *phiconSmall = GetIcon(himSmall, m_iconIndex);
             }
 
             iconLarge.release();
@@ -170,8 +167,8 @@ protected:
 
 private:
     // Member variables.
-    int   m_nIconIndex;
-    UINT  m_uFlags;
+    int m_iconIndex{-1};
+    UINT m_uFlags{};
     ItemIDList m_pidl;
 };
 

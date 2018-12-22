@@ -20,15 +20,15 @@ inline void StringFromCLSID(REFCLSID classId, OleString& oleString) noexcept
 }
 
 
-inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR szDescription, const CLSID& clsid) noexcept
+inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR description, const CLSID& clsid) noexcept
 {
-    OleString olestrCLSID;
-    StringFromCLSID(clsid, olestrCLSID);
+    OleString classId;
+    StringFromCLSID(clsid, classId);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
-        { L"DESCRIPTION", szDescription },
-        { L"CLSID", olestrCLSID },
+        { L"DESCRIPTION", description },
+        { L"CLSID", classId },
         { nullptr, nullptr }
     };
 
@@ -38,16 +38,16 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR sz
 
 /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
-    PCWSTR szDescription, const CLSID& clsid, PCWSTR szRootExt) noexcept
+    PCWSTR szDescription, const CLSID& clsid, PCWSTR rootExt) noexcept
 {
-    OleString olestrCLSID;
-    StringFromCLSID(clsid, olestrCLSID);
+    OleString classId;
+    StringFromCLSID(clsid, classId);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"DESCRIPTION", szDescription },
-        { L"CLSID", olestrCLSID },
-        { L"ROOTTYPE", szRootExt },
+        { L"CLSID", classId },
+        { L"ROOTTYPE", rootExt },
         { nullptr, nullptr }
     };
 
@@ -57,12 +57,12 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
 
 /// <summary>Registration function to register the extension based on the root extension.</summary>
 inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegister,
-    PCWSTR szExtension, PCWSTR szProgId) noexcept
+    PCWSTR extension, PCWSTR progId) noexcept
 {
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
-        { L"EXTENSION", szExtension },
-        { L"PROGID", szProgId },
+        { L"EXTENSION", extension },
+        { L"PROGID", progId },
         { nullptr, nullptr }
     };
 
@@ -73,18 +73,18 @@ inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegiste
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     PCWSTR szShellExtDescription, const CLSID& clsid, const CLSID& clsidShellFolder, PCWSTR szExtension) noexcept
 {
-    OleString olestrCLSID;
-    StringFromCLSID(clsid, olestrCLSID);
+    OleString classId;
+    StringFromCLSID(clsid, classId);
 
-    OleString olestrClsidShellFolder;
-    StringFromCLSID(clsidShellFolder, olestrClsidShellFolder);
+    OleString classIdShellFolder;
+    StringFromCLSID(clsidShellFolder, classIdShellFolder);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"DESCRIPTION", szShellExtDescription },
         { L"EXTENSION", szExtension },
-        { L"CLSID", olestrCLSID },
-        { L"CLSIDSHELLFOLDER", olestrClsidShellFolder },
+        { L"CLSID", classId },
+        { L"CLSIDSHELLFOLDER", classIdShellFolder },
         { nullptr, nullptr }
     };
 
@@ -95,17 +95,17 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
 inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
     PCWSTR szShellExtDescription, const CLSID& clsid, PCWSTR szExtension, UINT nFriendlyTypeNameId) noexcept
 {
-    OleString olestrCLSID;
-    StringFromCLSID(clsid, olestrCLSID);
+    OleString classId;
+    StringFromCLSID(clsid, classId);
 
-    const auto strFriendlyTypenameId = std::to_wstring(nFriendlyTypeNameId);
+    const auto friendlyTypenameId = std::to_wstring(nFriendlyTypeNameId);
 
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
     {
         { L"DESCRIPTION", szShellExtDescription },
         { L"EXTENSION", szExtension },
-        { L"CLSID", olestrCLSID },
-        { L"FRIENDLYTYPENAME", strFriendlyTypenameId.c_str() },
+        { L"CLSID", classId },
+        { L"FRIENDLYTYPENAME", friendlyTypenameId.c_str() },
         { nullptr, nullptr }
     };
 
