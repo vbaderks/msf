@@ -97,7 +97,7 @@ private:
 
     size_t GetDataSize() const
     {
-        UINT nchars = 0;
+        uint32_t nchars = 0;
 
         for (const auto& fileName : m_filenames)
         {

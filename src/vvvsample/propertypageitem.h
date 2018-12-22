@@ -50,7 +50,7 @@ public:
     PropertyPageItem& operator=(const PropertyPageItem&) = delete;
     PropertyPageItem& operator=(PropertyPageItem&&) = delete;
 
-    LRESULT OnInitDialog(UINT /*messageId*/, WPARAM, LPARAM, BOOL& /*handled*/)
+    LRESULT OnInitDialog(uint32_t /*messageId*/, WPARAM, LPARAM, BOOL& /*handled*/)
     {
         InitializeStaticString();
         InitializeControls();

@@ -37,7 +37,7 @@ public:
         const HGLOBAL hg = msf::GlobalAllocThrow(size);
         auto* fileGroupDescriptor = static_cast<FILEGROUPDESCRIPTOR*>(hg);
 
-        fileGroupDescriptor->cItems = static_cast<UINT>(cfshellidlist.GetItemCount());
+        fileGroupDescriptor->cItems = static_cast<uint32_t>(cfshellidlist.GetItemCount());
         for (unsigned int i = 0; i < fileGroupDescriptor->cItems; ++i)
         {
             FILEDESCRIPTOR& fd = fileGroupDescriptor->fgd[i];

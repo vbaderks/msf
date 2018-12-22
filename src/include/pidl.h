@@ -181,7 +181,7 @@ public:
         return get();
     }
 
-    UINT GetSize() const noexcept
+    uint32_t GetSize() const noexcept
     {
         return ILGetSize(GetRelative());
     }

@@ -157,7 +157,7 @@ public:
             GetRegisteredFormats(dwDirection, formatEtcs);
             GetPidlDataFormats(dwDirection, formatEtcs);
 
-            *ppenumFormatEtc = SHCreateStdEnumFmtEtc(static_cast<UINT>(formatEtcs.size()), formatEtcs.data()).Detach();
+            *ppenumFormatEtc = SHCreateStdEnumFmtEtc(static_cast<uint32_t>(formatEtcs.size()), formatEtcs.data()).Detach();
 
             return S_OK;
         }
@@ -199,7 +199,7 @@ protected:
         ATLTRACE2(ATL::atlTraceCOM, 0, "ShellFolderDataObjectImpl::~ShellFolderDataObjectImpl (instance=%p)\n", this);
     }
 
-    void Init(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl,
+    void Init(PCIDLIST_ABSOLUTE pidlFolder, uint32_t cidl, PCUITEMID_CHILD_ARRAY ppidl,
         IPerformedDropEffectSink* pperformeddropeffectsink = nullptr)
     {
         m_pidldata = static_cast<IDataObject*>(CIDLData_CreateFromIDArray(pidlFolder, cidl, reinterpret_cast<PCUIDLIST_RELATIVE_ARRAY>(ppidl)));

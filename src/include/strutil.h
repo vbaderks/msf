@@ -14,14 +14,14 @@
 namespace msf {
 
 /// <summary>Load a resource string.</summary>
-inline std::wstring LoadResourceString(UINT id)
+inline std::wstring LoadResourceString(uint32_t id)
 {
     ATL::CString str;
     ATLVERIFY(str.LoadString(id));
     return str.GetString();
 }
 
-inline std::wstring FormatResourceMessage(UINT messageID, ...)
+inline std::wstring FormatResourceMessage(uint32_t messageID, ...)
 {
     va_list args;
 

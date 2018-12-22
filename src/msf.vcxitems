@@ -33,7 +33,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\copyhookimpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\custommenuhandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\defview.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)include\dfmdefines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\diskcleanupimpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\droptargetimpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\enumformatetc.h" />

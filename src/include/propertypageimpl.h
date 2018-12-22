@@ -14,7 +14,7 @@ template <typename T>
 class __declspec(novtable) ShellExtPropertyPageImpl : public ATL::CSnapInPropertyPageImpl<T>
 {
 public:
-    static UINT CALLBACK PropPageCallback(HWND hWnd, UINT uMsg, LPPROPSHEETPAGE ppsp)
+    static uint32_t CALLBACK PropPageCallback(HWND hWnd, uint32_t uMsg, LPPROPSHEETPAGE ppsp)
     {
         ShellExtPropertyPageImpl<T>* pT = reinterpret_cast<T*>(ppsp->lParam);
 

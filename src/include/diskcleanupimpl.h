@@ -18,7 +18,7 @@ class __declspec(novtable) DiskCleanupImpl : public IEmptyVolumeCache2
 {
 public:
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
-    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, UINT resourceId,
+    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, uint32_t resourceId,
         PCWSTR description, PCWSTR rootKey) noexcept
     {
         return UpdateRegistryFromResource(resourceId, registerObject, description, T::GetObjectCLSID(), rootKey);

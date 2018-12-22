@@ -36,7 +36,7 @@ public:
         if (!msf::IsBitSet(formatEtc.tymed, TYMED_HGLOBAL))
             return DV_E_TYMED;
 
-        if (static_cast<UINT>(formatEtc.lindex) >= GetCfShellIdList()->GetItemCount())
+        if (static_cast<uint32_t>(formatEtc.lindex) >= GetCfShellIdList()->GetItemCount())
             return DV_E_LINDEX;
 
         return S_OK;
@@ -46,7 +46,7 @@ public:
     {
         ATLASSERT(SUCCEEDED(Validate(formatEtc)));
 
-        const VVVItem vvvItem(GetCfShellIdList()->GetItem(static_cast<UINT>(formatEtc.lindex)));
+        const VVVItem vvvItem(GetCfShellIdList()->GetItem(static_cast<uint32_t>(formatEtc.lindex)));
 
         const size_t size = std::min(vvvItem.GetSize(), MAX_VVV_ITEM_SIZE);
         const HGLOBAL hg = msf::GlobalAllocThrow(size);

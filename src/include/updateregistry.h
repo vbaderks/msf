@@ -20,7 +20,7 @@ inline void StringFromCLSID(REFCLSID classId, OleString& oleString) noexcept
 }
 
 
-inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR description, const CLSID& clsid) noexcept
+inline HRESULT UpdateRegistryFromResource(uint32_t nResId, BOOL bRegister, PCWSTR description, const CLSID& clsid) noexcept
 {
     OleString classId;
     StringFromCLSID(clsid, classId);
@@ -37,7 +37,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister, PCWSTR de
 
 
 /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
-inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
+inline HRESULT UpdateRegistryFromResource(uint32_t nResId, BOOL bRegister,
     PCWSTR szDescription, const CLSID& clsid, PCWSTR rootExt) noexcept
 {
     OleString classId;
@@ -56,7 +56,7 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
 
 
 /// <summary>Registration function to register the extension based on the root extension.</summary>
-inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegister,
+inline HRESULT UpdateRegistryConnectExtensionToProgId(uint32_t nResId, BOOL bRegister,
     PCWSTR extension, PCWSTR progId) noexcept
 {
     ATL::_ATL_REGMAP_ENTRY regmapEntries[] =
@@ -70,7 +70,7 @@ inline HRESULT UpdateRegistryConnectExtensionToProgId(UINT nResId, BOOL bRegiste
 }
 
 
-inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
+inline HRESULT UpdateRegistryFromResource(uint32_t nResId, BOOL bRegister,
     PCWSTR szShellExtDescription, const CLSID& clsid, const CLSID& clsidShellFolder, PCWSTR szExtension) noexcept
 {
     OleString classId;
@@ -92,8 +92,8 @@ inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
 }
 
 
-inline HRESULT UpdateRegistryFromResource(UINT nResId, BOOL bRegister,
-    PCWSTR szShellExtDescription, const CLSID& clsid, PCWSTR szExtension, UINT nFriendlyTypeNameId) noexcept
+inline HRESULT UpdateRegistryFromResource(uint32_t nResId, BOOL bRegister,
+    PCWSTR szShellExtDescription, const CLSID& clsid, PCWSTR szExtension, uint32_t nFriendlyTypeNameId) noexcept
 {
     OleString classId;
     StringFromCLSID(clsid, classId);

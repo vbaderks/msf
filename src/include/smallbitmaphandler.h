@@ -46,13 +46,13 @@ public:
         HBITMAP m_handle;
     };
 
-    SmallBitmapHandler(std::wstring text, UINT resourceID) noexcept :
+    SmallBitmapHandler(std::wstring text, uint32_t resourceID) noexcept :
         m_text(std::move(text)),
         m_bitmap(LoadBitmap(resourceID))
     {
     }
 
-    SmallBitmapHandler(UINT textID, UINT resourceID) :
+    SmallBitmapHandler(uint32_t textID, uint32_t resourceID) :
         m_text(LoadResourceString(textID)),
         m_bitmap(LoadBitmap(resourceID))
     {
@@ -65,7 +65,7 @@ public:
     }
 
 private:
-    static HBITMAP LoadBitmap(UINT resourceID) noexcept
+    static HBITMAP LoadBitmap(uint32_t resourceID) noexcept
     {
         HBITMAP__* const bitmap = ::LoadBitmap(ATL::_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceID));
         ATLASSERT(bitmap && "Failed to load the bitmap, check resource id, etc");

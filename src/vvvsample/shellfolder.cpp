@@ -19,7 +19,7 @@ using std::wstring;
 using std::make_unique;
 
 // Defines for the item context menu.
-constexpr UINT ID_DFM_CMD_OPEN = 0;
+constexpr uint32_t ID_DFM_CMD_OPEN = 0;
 
 class __declspec(novtable) ShellFolder :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
@@ -80,7 +80,7 @@ public:
 
     // Purpose: called by msf/shell when a number of items are selected and a IDataObject
     //          that contains the items is required.
-    ATL::CComPtr<IDataObject> CreateDataObject(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl)
+    ATL::CComPtr<IDataObject> CreateDataObject(PCIDLIST_ABSOLUTE pidlFolder, uint32_t cidl, PCUITEMID_CHILD_ARRAY ppidl)
     {
         return ShellFolderDataObject::CreateInstance(pidlFolder, cidl, ppidl, this);
     }
@@ -110,7 +110,7 @@ public:
 
     // Purpose: called by the default context menu. Gives an option to merge
     //          extra commands into the menu.
-    static HRESULT OnDfmMergeContextMenu(IDataObject* dataObject, UINT /*uFlags*/, QCMINFO& mergeInfo)
+    static HRESULT OnDfmMergeContextMenu(IDataObject* dataObject, uint32_t /*uFlags*/, QCMINFO& mergeInfo)
     {
         msf::CfShellIdList itemList(dataObject);
 
@@ -254,7 +254,7 @@ private:
     static bool UserConfirmsFileDelete(HWND hwnd, const std::vector<VVVItem>& items)
     {
         ATL::CString strMessage;
-        UINT nCaptionResId;
+        uint32_t nCaptionResId;
 
         if (items.size() == 1)
         {

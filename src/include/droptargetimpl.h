@@ -28,7 +28,7 @@ class __declspec(novtable) DropTargetImpl :
 {
 public:
     /// <summary>Registration function to register the infotip COM object and a ProgId/extension.</summary>
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, uint32_t nResId,
         PCWSTR description, PCWSTR rootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,

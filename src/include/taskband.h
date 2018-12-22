@@ -25,8 +25,8 @@ struct IShellItemArray : IUnknown
 {
     STDMETHOD(BindToHandler)(IBindCtx* pbc, REFGUID rbhid, REFIID riid, void** ppvOut) = 0;
     STDMETHOD(GetAttrributes)(int nEnum, DWORD dwRequested, DWORD* pdwResult) = 0;
-    STDMETHOD(GetCount)(UINT* pCount) = 0;
-    STDMETHOD(GetItemAt)(UINT nIndex, IShellItem** ppItem) = 0;
+    STDMETHOD(GetCount)(uint32_t* pCount) = 0;
+    STDMETHOD(GetItemAt)(uint32_t nIndex, IShellItem** ppItem) = 0;
     STDMETHOD(EnumItems)(IEnumShellItems**) = 0;
 };
 #endif

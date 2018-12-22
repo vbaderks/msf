@@ -81,8 +81,8 @@ public:
     ShellFolderImpl& operator=(ShellFolderImpl&&) = delete;
 
     // Registration function to register the COM object + the root extension.
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
-        PCWSTR szDescription, PCWSTR rootExt, UINT friendlyTypeNameId) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, uint32_t nResId,
+        PCWSTR szDescription, PCWSTR rootExt, uint32_t friendlyTypeNameId) noexcept
     {
         OleString classId;
         StringFromCLSID(T::GetObjectCLSID(), classId);
@@ -109,7 +109,7 @@ public:
     }
 
     // Purpose: small helper to support 'type' system.
-    static void ChangeNotifyPidl(long wEventId, UINT uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = nullptr) noexcept
+    static void ChangeNotifyPidl(long wEventId, uint32_t uFlags, LPCITEMIDLIST pidl1, LPCITEMIDLIST pidl2 = nullptr) noexcept
     {
         SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
     }
@@ -214,7 +214,7 @@ public:
     }
 
     // IShellDetails
-    HRESULT __stdcall ColumnClick(UINT uiColumn) noexcept override
+    HRESULT __stdcall ColumnClick(uint32_t uiColumn) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::IShellDetails::ColumnClick (instance=%p, column=%d)\n", this, uiColumn);
 
@@ -394,7 +394,7 @@ public:
 
     // Purpose: The shell will call this function to get an object that can be applied
     //          to a collection of items contained in the folder.
-    HRESULT __stdcall GetUIObjectOf(__RPC__in_opt HWND window, UINT idListCount, __RPC__in_ecount_full_opt(idListCount) PCUITEMID_CHILD_ARRAY childItem, __RPC__in REFIID interfaceId, __reserved UINT* /*reserved*/, __RPC__deref_out_opt void** ppv) noexcept override
+    HRESULT __stdcall GetUIObjectOf(__RPC__in_opt HWND window, uint32_t idListCount, __RPC__in_ecount_full_opt(idListCount) PCUITEMID_CHILD_ARRAY childItem, __RPC__in REFIID interfaceId, __reserved uint32_t* /*reserved*/, __RPC__deref_out_opt void** ppv) noexcept override
     {
         try
         {
@@ -472,7 +472,7 @@ public:
     }
 
     // Purpose: The shell uses this function to retrieve info about what can be done with an item.
-    HRESULT __stdcall GetAttributesOf(UINT idListCount, __RPC__in_ecount_full_opt(idListCount) PCUITEMID_CHILD_ARRAY apidl, __RPC__inout SFGAOF* prgfInOut) noexcept override
+    HRESULT __stdcall GetAttributesOf(uint32_t idListCount, __RPC__in_ecount_full_opt(idListCount) PCUITEMID_CHILD_ARRAY apidl, __RPC__inout SFGAOF* prgfInOut) noexcept override
     {
         try
         {
@@ -487,7 +487,7 @@ public:
             {
                 sfgaof = 0xFFFFFFFF;
 
-                for (UINT i = 0; i < idListCount; ++i)
+                for (uint32_t i = 0; i < idListCount; ++i)
                 {
                     sfgaof &= static_cast<T*>(this)->GetAttributeOf(idListCount, TItem(apidl[i]), *prgfInOut);
                 }
@@ -590,7 +590,7 @@ public:
         return S_OK;
     }
 
-    HRESULT __stdcall GetDefaultColumnState(UINT column, __RPC__out SHCOLSTATEF* columnStateFlags) noexcept override
+    HRESULT __stdcall GetDefaultColumnState(uint32_t column, __RPC__out SHCOLSTATEF* columnStateFlags) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::GetDefaultColumnState (iColumn=%d)\n", column);
 
@@ -606,7 +606,7 @@ public:
         ATLTRACENOTIMPL(L"ShellFolderImpl::GetDetailsEx");
     }
 
-    HRESULT __stdcall MapColumnToSCID(UINT /*iColumn*/, __RPC__out SHCOLUMNID* /*pscid*/) noexcept override
+    HRESULT __stdcall MapColumnToSCID(uint32_t /*iColumn*/, __RPC__out SHCOLUMNID* /*pscid*/) noexcept override
     {
         ATLTRACENOTIMPL(L"ShellFolderImpl::MapColumnToSCID");
     }
@@ -614,7 +614,7 @@ public:
     // Purpose: The Shell will call this function to retrieve column header names and
     //          the individual names of the items in the folder.
     // Note: Some windows versions use GetDisplayName to get column 0.
-    HRESULT __stdcall GetDetailsOf(__RPC__in_opt PCUITEMID_CHILD childItem, UINT column, __RPC__out SHELLDETAILS* shellDetails) noexcept override
+    HRESULT __stdcall GetDetailsOf(__RPC__in_opt PCUITEMID_CHILD childItem, uint32_t column, __RPC__out SHELLDETAILS* shellDetails) noexcept override
     {
         try
         {
@@ -663,7 +663,7 @@ public:
     // IShellIcon
     // Purpose: There are 2 ways for the shell to get a icon for the 'view.'
     //          This functions call is preferred by the shell as it slightly faster.
-    HRESULT __stdcall GetIconOf(__RPC__in PCUITEMID_CHILD childItem, UINT flags, __RPC__out int* pIconIndex) noexcept override
+    HRESULT __stdcall GetIconOf(__RPC__in PCUITEMID_CHILD childItem, uint32_t flags, __RPC__out int* pIconIndex) noexcept override
     {
         try
         {
@@ -844,7 +844,7 @@ protected:
     // Purpose: called by the shell when it needs a context menu. There are 2 reasons for this:
     // 1) To display the context menu
     // 2) To act as a command sink for menu commands
-    ATL::CComPtr<IContextMenu> CreateItemContextMenu(HWND window, UINT idListCount, PCUITEMID_CHILD_ARRAY childItem)
+    ATL::CComPtr<IContextMenu> CreateItemContextMenu(HWND window, uint32_t idListCount, PCUITEMID_CHILD_ARRAY childItem)
     {
         ATL::CComPtr<IContextMenu> contextmenu;
 
@@ -857,7 +857,7 @@ protected:
 
     // Purpose: Called by the shell when it needs to pack a IDlist into a data object.
     //          Override this function to provide your own DataObject.
-    ATL::CComPtr<IDataObject> CreateDataObject(PCIDLIST_ABSOLUTE pidlFolder, UINT idListCount, PCUITEMID_CHILD_ARRAY childItem)
+    ATL::CComPtr<IDataObject> CreateDataObject(PCIDLIST_ABSOLUTE pidlFolder, uint32_t idListCount, PCUITEMID_CHILD_ARRAY childItem)
     {
         return CIDLData_CreateFromIDArray(pidlFolder, idListCount, reinterpret_cast<PCUIDLIST_RELATIVE_ARRAY>(childItem));
     }
@@ -903,13 +903,13 @@ protected:
 
     // Purpose: default callback, used to receive a command from CDefFolderMenu_Create2.
     static HRESULT CALLBACK OnDfmCommand(IShellFolder* psf, HWND window, IDataObject* dataObject,
-                                         UINT messageId, WPARAM wParam, LPARAM lParam)
+                                         uint32_t messageId, WPARAM wParam, LPARAM lParam)
     {
         return static_cast<T*>(psf)->OnDfmCommand(window, dataObject, messageId, wParam, lParam);
     }
 
     HRESULT OnDfmCommand(HWND window, IDataObject* dataObject,
-                         UINT messageId, WPARAM wParam, LPARAM lParam)
+                         uint32_t messageId, WPARAM wParam, LPARAM lParam)
     {
         try
         {
@@ -917,7 +917,7 @@ protected:
             {
                 case DFM_MERGECONTEXTMENU:
                     ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::OnDfmCommand (uMsg=MergeContextMenu, wParam=%d, lParam=%p)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnDfmMergeContextMenu(dataObject, static_cast<UINT>(wParam), *reinterpret_cast<QCMINFO*>(lParam));
+                    return static_cast<T*>(this)->OnDfmMergeContextMenu(dataObject, static_cast<uint32_t>(wParam), *reinterpret_cast<QCMINFO*>(lParam));
 
                 case DFM_INVOKECOMMAND:
                      ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::OnDfmInvokeCommand (wParam=%d, lParam=%s)\n", wParam, lParam);
@@ -989,7 +989,7 @@ protected:
     }
 
     // Purpose: override this function to extend the default DFM menu.
-    HRESULT OnDfmMergeContextMenu(IDataObject* /*dataObject*/, UINT /*flags*/, QCMINFO& /*qcminfo*/)
+    HRESULT OnDfmMergeContextMenu(IDataObject* /*dataObject*/, uint32_t /*flags*/, QCMINFO& /*qcminfo*/)
     {
         return E_NOTIMPL;
     }
@@ -1254,7 +1254,7 @@ protected:
         return 0;
     }
 
-    void GetColumnDetailsOf(UINT column, SHELLDETAILS* shellDetails) noexcept
+    void GetColumnDetailsOf(uint32_t column, SHELLDETAILS* shellDetails) noexcept
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderImpl::GetColumnDetailsOf (column=%d, cxChar=%d)\n", column, shellDetails->cxChar);
 
@@ -1262,7 +1262,7 @@ protected:
         StrToStrRet(m_columnInfos[column].m_name.c_str(), &shellDetails->str);
     }
 
-    void GetItemDetailsOf(UINT column, PCUITEMID_CHILD childItem, SHELLDETAILS* shellDetails) const
+    void GetItemDetailsOf(uint32_t column, PCUITEMID_CHILD childItem, SHELLDETAILS* shellDetails) const
     {
         TItem item(childItem);
 
@@ -1378,13 +1378,13 @@ protected:
         m_columnInfos.push_back(columnInfo);
     }
 
-    void RegisterColumn(UINT resourceID, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
+    void RegisterColumn(uint32_t resourceID, int fmt, SHCOLSTATEF csFlags = SHCOLSTATE_TYPE_STR | SHCOLSTATE_ONBYDEFAULT)
     {
         RegisterColumn(LoadResourceString(resourceID).c_str(), fmt, csFlags);
     }
 
     // Implement this function and return the attributes or SFGAO_UNDEFINED
-    SFGAOF GetAttributesOfGlobal(UINT /*cidl*/, SFGAOF /*sfgofMask*/) const noexcept
+    SFGAOF GetAttributesOfGlobal(uint32_t /*cidl*/, SFGAOF /*sfgofMask*/) const noexcept
     {
         // As default implementation, return SFGAO_UNDEFINED to start the
         // loop to ask attributes for every item explicit.
@@ -1458,7 +1458,7 @@ protected:
     {
         const size_t itemCount = cfshellidlist.GetItemCount();
 
-        SFGAOF sfgaof = static_cast<const T*>(this)->GetAttributesOfGlobal(static_cast<UINT>(itemCount), sfgaofMask);
+        SFGAOF sfgaof = static_cast<const T*>(this)->GetAttributesOfGlobal(static_cast<uint32_t>(itemCount), sfgaofMask);
         if (sfgaof == SFGAO_UNDEFINED)
         {
             sfgaof = 0xFFFFFFFF;
@@ -1467,7 +1467,7 @@ protected:
             {
                 PCUIDLIST_RELATIVE childItem = cfshellidlist.GetItem(i);
                 TItem item(childItem);
-                sfgaof &= static_cast<const T*>(this)->GetAttributeOf(static_cast<UINT>(itemCount), item, sfgaofMask);
+                sfgaof &= static_cast<const T*>(this)->GetAttributeOf(static_cast<uint32_t>(itemCount), item, sfgaofMask);
 
                 if (!IsBitSet(sfgaof, sfgaofMask))
                     return false; // no need to continue the search.
@@ -1484,7 +1484,7 @@ protected:
         ChangeNotifyPidl(SHCNE_CREATE, SHCNF_FLUSH, ItemIDList(m_pidlFolder, item));
     }
 
-    void ReportChangeNotify(const std::vector<TItem>& items, long eventId, UINT uFlags = SHCNF_FLUSH) const
+    void ReportChangeNotify(const std::vector<TItem>& items, long eventId, uint32_t uFlags = SHCNF_FLUSH) const
     {
         for (auto item : items)
         {
@@ -1492,7 +1492,7 @@ protected:
         }
     }
 
-    void ReportChangeNotify(const CfShellIdList& cfshellidlist, long eventId, UINT flags = SHCNF_FLUSH) const
+    void ReportChangeNotify(const CfShellIdList& cfshellidlist, long eventId, uint32_t flags = SHCNF_FLUSH) const
     {
         for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
         {

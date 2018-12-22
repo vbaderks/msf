@@ -66,9 +66,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\defview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)include\dfmdefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)include\diskcleanupimpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>

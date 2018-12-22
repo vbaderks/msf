@@ -30,7 +30,7 @@ public:
     ShellFolderViewCBImpl& operator=(ShellFolderViewCBImpl&&) = delete;
 
     // IShellFolderViewCB
-    HRESULT __stdcall MessageSFVCB(UINT uMsg, WPARAM wParam, LPARAM lParam) override
+    HRESULT __stdcall MessageSFVCB(uint32_t uMsg, WPARAM wParam, LPARAM lParam) override
     {
         try
         {
@@ -99,7 +99,7 @@ public:
 
             case SFVM_DEFITEMCOUNT:
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IShellFolderViewCB::MessageSFVCB (OnDefItemCount)\n");
-                return static_cast<T*>(this)->OnDefItemCount(reinterpret_cast<UINT*>(lParam));
+                return static_cast<T*>(this)->OnDefItemCount(reinterpret_cast<uint32_t*>(lParam));
 
             case SFVM_DEFVIEWMODE:
                 ATLTRACE2(ATL::atlTraceCOM, 0, L"ShellFolderViewCBImpl::IShellFolderViewCB::MessageSFVCB (OnDefViewMode)\n");
@@ -349,7 +349,7 @@ public:
         return S_OK;
     }
 
-    HRESULT __stdcall GetIconSize(__RPC__out UINT * /*puIconSize*/) override
+    HRESULT __stdcall GetIconSize(__RPC__out uint32_t * /*puIconSize*/) override
     {
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetIconSize");
     }
@@ -359,7 +359,7 @@ public:
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetFolderFlags");
     }
 
-    HRESULT __stdcall GetSortColumns(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, UINT cColumnsIn, __RPC__out UINT * pcColumnsOut) override
+    HRESULT __stdcall GetSortColumns(__RPC__out_ecount_part(cColumnsIn, *pcColumnsOut) SORTCOLUMN * rgSortColumns, uint32_t cColumnsIn, __RPC__out uint32_t * pcColumnsOut) override
     {
         UNREFERENCED_PARAMETER(rgSortColumns);
         UNREFERENCED_PARAMETER(cColumnsIn);
@@ -367,7 +367,7 @@ public:
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetSortColumns");
     }
 
-    HRESULT __stdcall GetGroupSubsetCount(__RPC__out UINT * /*pcVisibleRows*/) override
+    HRESULT __stdcall GetGroupSubsetCount(__RPC__out uint32_t * /*pcVisibleRows*/) override
     {
         ATLTRACENOTIMPL(L"ShellFolderViewCBImpl::IFolderViewSettings::GetGroupSubsetCount");
     }
@@ -457,7 +457,7 @@ protected:
         return E_NOTIMPL;
     }
 
-    HRESULT OnDefItemCount(UINT* /*pcItems*/) noexcept
+    HRESULT OnDefItemCount(uint32_t* /*pcItems*/) noexcept
     {
         return E_NOTIMPL;
     }
@@ -532,7 +532,7 @@ protected:
         return S_OK;
     }
 
-    HRESULT OnColumnClick(UINT /*uiColumn*/) noexcept
+    HRESULT OnColumnClick(uint32_t /*uiColumn*/) noexcept
     {
         return S_FALSE;
     }

@@ -26,7 +26,7 @@ class __declspec(novtable) CopyHookImpl :
     public ICopyHook
 {
 public:
-    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, UINT resourceId,
+    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, uint32_t resourceId,
         PCWSTR description, PCWSTR copyHookName) noexcept
     {
         OleString classId;

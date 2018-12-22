@@ -28,7 +28,7 @@ public:
     }
 
 
-    HRESULT CallCB(UINT uMsg, WPARAM wParam, LPARAM lParam)
+    HRESULT CallCB(uint32_t uMsg, WPARAM wParam, LPARAM lParam)
     {
         if (!_rshellfolderviewcb)
             return E_FAIL;

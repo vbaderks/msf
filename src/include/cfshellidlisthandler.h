@@ -47,9 +47,9 @@ public:
 
     void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const override
     {
-        const UINT sizeheader = static_cast<UINT>(sizeof(CIDA) + (sizeof(UINT) * m_pidls.size()));
+        const uint32_t sizeheader = static_cast<uint32_t>(sizeof(CIDA) + (sizeof(uint32_t) * m_pidls.size()));
 
-        UINT size = sizeheader + m_pidlFolder.GetSize();
+        uint32_t size = sizeheader + m_pidlFolder.GetSize();
 
         for (auto it = m_pidls.begin(); it != m_pidls.end(); ++it)
         {
@@ -60,12 +60,12 @@ public:
 
         CIDA* pcida = static_cast<CIDA*>(medium.GetHGlobal());
 
-        pcida->cidl = static_cast<UINT>(m_pidls.size());
+        pcida->cidl = static_cast<uint32_t>(m_pidls.size());
 
-        UINT offset = sizeheader;
+        uint32_t offset = sizeheader;
         offset += AddPidlToCida(pcida, m_pidlFolder, 0, offset);
 
-        for (UINT i = 0; i < m_pidls.size(); ++i)
+        for (uint32_t i = 0; i < m_pidls.size(); ++i)
         {
             offset += AddPidlToCida(pcida, m_pidls[i], i + 1, offset);
         }
@@ -75,7 +75,7 @@ public:
 
 private:
 
-    unsigned int AddPidlToCida(CIDA* pcida, const ItemIDList& pidl, UINT index, UINT offset) const noexcept
+    unsigned int AddPidlToCida(CIDA* pcida, const ItemIDList& pidl, uint32_t index, uint32_t offset) const noexcept
     {
         pcida->aoffset[index] = offset;
 

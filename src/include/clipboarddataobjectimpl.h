@@ -51,7 +51,8 @@ public:
             GetRegisteredFormats(formatEtcs, dwDirection);
             GetExternalFormats(formatEtcs);
 
-            SHCreateStdEnumFmtEtc(static_cast<UINT>(formatEtcs.size()), formatEtcs.data());
+            uint16_t
+            SHCreateStdEnumFmtEtc(static_cast<uint32_t>(formatEtcs.size()), formatEtcs.data());
             return S_OK;
         }
         catch (...)

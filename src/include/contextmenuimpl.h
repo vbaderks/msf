@@ -36,7 +36,7 @@ public:
         Menu() = default;
         ~Menu() = default;
 
-        Menu(HMENU hmenu, UINT indexMenu, UINT& idCmd, UINT idCmdLast, ContextMenuImpl<T>* pmenuhost) noexcept :
+        Menu(HMENU hmenu, uint32_t indexMenu, uint32_t& idCmd, uint32_t idCmdLast, ContextMenuImpl<T>* pmenuhost) noexcept :
             m_menu{hmenu},
             m_indexMenu{indexMenu},
             m_pidCmd{&idCmd},
@@ -90,7 +90,7 @@ public:
         }
 
         // Purpose: alternative format, that loads the strings from the resource.
-        Menu AddSubMenu(UINT nIDText, UINT nIDHelp)
+        Menu AddSubMenu(uint32_t nIDText, uint32_t nIDHelp)
         {
             return AddSubMenu(LoadResourceString(nIDText).c_str(), LoadResourceString(nIDHelp).c_str());
         }
@@ -107,7 +107,7 @@ public:
         }
 
         // Purpose: alternative format, that loads the string from the resource.
-        Menu AddSubMenu(UINT nIDHelp, std::unique_ptr<CustomMenuHandler> custommenuhandler)
+        Menu AddSubMenu(uint32_t nIDHelp, std::unique_ptr<CustomMenuHandler> custommenuhandler)
         {
             return AddSubMenu(LoadResourceString(nIDHelp), std::move(custommenuhandler));
         }
@@ -120,7 +120,7 @@ public:
         }
 
         // Purpose: alternative format, that loads the strings from the resource.
-        void AddItem(UINT nIDText, UINT nIDHelp,
+        void AddItem(uint32_t nIDText, uint32_t nIDHelp,
                      std::unique_ptr<ContextMenuCommand> contextCommand)
         {
             AddItem(LoadResourceString(nIDText), LoadResourceString(nIDHelp), std::move(contextCommand));
@@ -137,7 +137,7 @@ public:
         }
 
         // Purpose: alternative format, that loads the strings from the resource.
-        void AddItem(UINT nIDHelp,
+        void AddItem(uint32_t nIDHelp,
                      std::unique_ptr<ContextMenuCommand> contextCommand,
                      std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
         {
@@ -197,9 +197,9 @@ public:
 
         // Member variables.
         HMENU m_menu{};
-        UINT m_indexMenu{};
-        UINT* m_pidCmd{};
-        UINT m_idCmdLast{};
+        uint32_t m_indexMenu{};
+        uint32_t* m_pidCmd{};
+        uint32_t m_idCmdLast{};
         ContextMenuImpl<T>* m_menuHost{};
     };
 
@@ -209,7 +209,7 @@ public:
     ContextMenuImpl& operator=(ContextMenuImpl&&) = delete;
 
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, uint32_t nResId,
         PCWSTR szDescription, PCWSTR szRootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister,
@@ -217,7 +217,7 @@ public:
     }
 
     // IContextMenu
-    HRESULT __stdcall QueryContextMenu( _In_ HMENU menu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags) noexcept override
+    HRESULT __stdcall QueryContextMenu( _In_ HMENU menu, uint32_t indexMenu, uint32_t idCmdFirst, uint32_t idCmdLast, uint32_t uFlags) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::QueryContextMenu, instance=%p, iM=%d, idFirst=%d, idLast=%d, flag=%x\n",
             this, indexMenu, idCmdFirst, idCmdLast, uFlags);
@@ -245,7 +245,7 @@ public:
         }
     }
 
-    HRESULT __stdcall GetCommandString(UINT_PTR idCmd, UINT uFlags, __reserved UINT* /* pwReserved */, LPSTR pszName, UINT cchMax) noexcept override
+    HRESULT __stdcall GetCommandString(UINT_PTR idCmd, uint32_t uFlags, __reserved uint32_t* /* pwReserved */, LPSTR pszName, uint32_t cchMax) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu::GetCommandString, instance=%p, flags=%x", this, uFlags);
 
@@ -253,7 +253,7 @@ public:
         {
             if ((uFlags & (GCS_HELPTEXTA & GCS_HELPTEXTW)) != 0)
             {
-                const auto& helpText = GetMenuItem(static_cast<UINT>(idCmd)).GetHelpText();
+                const auto& helpText = GetMenuItem(static_cast<uint32_t>(idCmd)).GetHelpText();
 
                 if (uFlags & GCS_UNICODE)
                 {
@@ -294,7 +294,7 @@ public:
     }
 
     // IContextMenu2
-    HRESULT __stdcall HandleMenuMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) noexcept override
+    HRESULT __stdcall HandleMenuMsg(uint32_t uMsg, WPARAM wParam, LPARAM lParam) noexcept override
     {
         ATLTRACE2(ATL::atlTraceCOM, 0, L"ContextMenuImpl::IContextMenu2::HandleMenuMsg (forwarding to HandleMenuMsg2)\n");
         return HandleMenuMsg2(uMsg, wParam, lParam, nullptr);
@@ -307,7 +307,7 @@ public:
     //       WM_MENUCHAR but this is not true (seen on XP sp2).
     //       HandleMenuMsg2 is called also directly for WM_INITMENUPOPUP, etc when
     //       the shell detects that IContextMenu3 is supported.
-    HRESULT __stdcall HandleMenuMsg2(UINT uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult) noexcept override
+    HRESULT __stdcall HandleMenuMsg2(uint32_t uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult) noexcept override
     {
         try
         {
@@ -457,7 +457,7 @@ private:
         m_menuItems.clear();
     }
 
-    const MenuItem& GetMenuItem(UINT nIndex)
+    const MenuItem& GetMenuItem(uint32_t nIndex)
     {
         RaiseExceptionIf(nIndex >= m_menuItems.size(), E_INVALIDARG);
         return m_menuItems[nIndex];

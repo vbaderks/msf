@@ -28,7 +28,7 @@ public:
         ATLTRACENOTIMPL(L"IShellViewImpl::EnableModeless");
     }
 
-    HRESULT UIActivate(UINT /*uState*/) override
+    HRESULT UIActivate(uint32_t /*uState*/) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::UIActivate");
     }
@@ -72,7 +72,7 @@ public:
         ATLTRACENOTIMPL(L"IShellViewImpl::SelectItem");
     }
 
-    HRESULT GetItemObject(UINT uItem, REFIID riid, void** ppv) override
+    HRESULT GetItemObject(uint32_t uItem, REFIID riid, void** ppv) override
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::GetItemObject");
     }
@@ -94,7 +94,7 @@ public:
         ATLTRACENOTIMPL(L"IShellViewImpl::HandleRename");
     }
 
-    HRESULT SelectAndPositionItem(LPCITEMIDLIST, UINT, POINT*)
+    HRESULT SelectAndPositionItem(LPCITEMIDLIST, uint32_t, POINT*)
     {
         ATLTRACENOTIMPL(L"IShellViewImpl::SelectAndPositionItem");
     }

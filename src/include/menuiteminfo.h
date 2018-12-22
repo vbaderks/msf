@@ -18,22 +18,22 @@ public:
         cbSize = sizeof(MENUITEMINFO);
     }
 
-    explicit MenuItemInfo(UINT id) noexcept : MenuItemInfo()
+    explicit MenuItemInfo(uint32_t id) noexcept : MenuItemInfo()
     {
         SetID(id);
     }
 
-    MenuItemInfo(UINT id, std::wstring str) noexcept : MenuItemInfo(id)
+    MenuItemInfo(uint32_t id, std::wstring str) noexcept : MenuItemInfo(id)
     {
         SetString(std::move(str));
     }
 
-    MenuItemInfo(UINT id, const std::wstring& str, HMENU subMenu) noexcept :  MenuItemInfo(id, str)
+    MenuItemInfo(uint32_t id, const std::wstring& str, HMENU subMenu) noexcept :  MenuItemInfo(id, str)
     {
         SetSubMenu(subMenu);
     }
 
-    MenuItemInfo(UINT id, HMENU subMenu) noexcept : MenuItemInfo(id)
+    MenuItemInfo(uint32_t id, HMENU subMenu) noexcept : MenuItemInfo(id)
     {
         SetSubMenu(subMenu);
     }
@@ -44,7 +44,7 @@ public:
     MenuItemInfo& operator=(const MenuItemInfo&) = delete;
     MenuItemInfo& operator=(MenuItemInfo&&) = delete;
 
-    void SetID(UINT id) noexcept
+    void SetID(uint32_t id) noexcept
     {
         fMask |= MIIM_ID;
         wID = id;
@@ -81,7 +81,7 @@ public:
         hbmpUnchecked = unchecked;
     }
 
-    void SetState(UINT uiState) noexcept
+    void SetState(uint32_t uiState) noexcept
     {
         fMask |= MIIM_STATE;
         fState = uiState;

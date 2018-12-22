@@ -45,7 +45,7 @@ public:
         m_fileCount = vvvFile.GetFileCount();
     }
 
-    LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+    LRESULT OnInitDialog(uint32_t /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
     {
         InitializeStaticString();
         InitializeControls();

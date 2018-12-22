@@ -37,7 +37,7 @@ void VVVFile::SetLabel(const std::wstring& label) const
 unsigned int VVVFile::GetFileCount() const
 {
     const auto nCount = GetPrivateProfileInt(TSZ_APP_NAME_DIRECTORY, TSZ_FILE_COUNT);
-    msf::RaiseExceptionIf(nCount == static_cast<UINT>(-1));
+    msf::RaiseExceptionIf(nCount == static_cast<uint32_t>(-1));
 
     return nCount;
 }
@@ -68,7 +68,7 @@ LPITEMIDLIST VVVFile::GetNextItem(DWORD grfFlags, unsigned int& nItemIterator) c
                 (msf::IsBitSet(grfFlags, SHCONTF_FOLDERS) && folder))
             {
                 const auto size = GetPrivateProfileInt(strAppName.c_str(), TSZ_SIZE);
-                msf::RaiseExceptionIf(size == static_cast<UINT>(-1));
+                msf::RaiseExceptionIf(size == static_cast<uint32_t>(-1));
                 const auto strName = GetPrivateProfileString(strAppName.c_str(), TSZ_NAME);
 
                 return VVVItem::CreateItemIdList(nItemIterator, size, folder, strName);

@@ -216,7 +216,7 @@ inline ATL::CString GetAppPath(const ATL::CString& strApp)
 /// The shell itself uses GMEM_FIXED, which is easier to use as there
 /// is no need to lock/unlock (GMEM_FIXED is of course still just movable virtual memory).
 /// </remarks>
-inline HGLOBAL GlobalAllocThrow(SIZE_T dwBytes, UINT uFlags = GMEM_FIXED)
+inline HGLOBAL GlobalAllocThrow(SIZE_T dwBytes, uint32_t uFlags = GMEM_FIXED)
 {
     const auto hg = GlobalAlloc(uFlags, dwBytes);
     RaiseExceptionIf(!hg, E_OUTOFMEMORY);
@@ -237,7 +237,7 @@ public:
 };
 
 
-inline std::wstring GetClipboardFormatName(UINT format)
+inline std::wstring GetClipboardFormatName(uint32_t format)
 {
     switch (format)
     {

@@ -20,7 +20,7 @@ public:
     IconOverlayImpl& operator=(IconOverlayImpl&&) = delete;
 
     /// <summary>Registration function to register the COM object.</summary>
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId, PCWSTR description) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, uint32_t nResId, PCWSTR description) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister, description, T::GetObjectCLSID());
     }

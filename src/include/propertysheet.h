@@ -35,7 +35,7 @@ public:
         void SetPages(std::vector<HPROPSHEETPAGE>& pages) noexcept
         {
             phpage = pages.data();
-            nPages = static_cast<UINT>(pages.size());
+            nPages = static_cast<uint32_t>(pages.size());
         }
 
     private:
@@ -47,7 +47,7 @@ public:
     {
     }
 
-    explicit PropertySheet(UINT captionId, DWORD flags = 0) :
+    explicit PropertySheet(uint32_t captionId, DWORD flags = 0) :
         m_propertySheetHeader(LoadResourceString(captionId), flags)
     {
     }

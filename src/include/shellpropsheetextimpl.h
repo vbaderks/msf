@@ -26,7 +26,7 @@ public:
     ShellPropSheetExtImpl& operator=(ShellPropSheetExtImpl&&) = delete;
 
     /// <summary>Registration function to register the COM object and a ProgId/extension.</summary>
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, UINT nResId,
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, uint32_t nResId,
         PCWSTR description, PCWSTR rootKey) noexcept
     {
         return UpdateRegistryFromResource(nResId, bRegister, description, T::GetObjectCLSID(), rootKey);

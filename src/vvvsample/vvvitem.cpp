@@ -84,7 +84,7 @@ int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/
 }
 
 
-wstring VVVItem::GetItemDetailsOf(UINT columnIndex) const
+wstring VVVItem::GetItemDetailsOf(uint32_t columnIndex) const
 {
     switch (columnIndex)
     {
@@ -113,7 +113,7 @@ std::wstring VVVItem::GetInfoTipText() const
 }
 
 
-int VVVItem::GetIconOf(UINT flags) const noexcept
+int VVVItem::GetIconOf(uint32_t flags) const noexcept
 {
     if (IsFolder())
         return msf::IsBitSet(flags, GIL_OPENICON) ?

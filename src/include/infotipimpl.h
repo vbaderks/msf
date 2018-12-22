@@ -30,7 +30,7 @@ class __declspec(novtable) InfoTipImpl :
 {
 public:
     /// <summary>Registration function to register the info tip COM object and a ProgId/extension.</summary>
-    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, UINT resourceId,
+    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, uint32_t resourceId,
         PCWSTR description, PCWSTR rootKey) noexcept
     {
         return UpdateRegistryFromResource(resourceId, registerObject,

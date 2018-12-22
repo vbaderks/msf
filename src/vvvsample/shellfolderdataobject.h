@@ -22,7 +22,7 @@ public:
         COM_INTERFACE_ENTRY(IDataObject)
     END_COM_MAP()
 
-    static ATL::CComPtr<IDataObject> CreateInstance(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl,
+    static ATL::CComPtr<IDataObject> CreateInstance(PCIDLIST_ABSOLUTE pidlFolder, uint32_t cidl,
         PCUITEMID_CHILD_ARRAY ppidl, msf::IPerformedDropEffectSink* performedDropEffectSink)
     {
         ATL::CComObject<ShellFolderDataObject>* instance;
@@ -45,7 +45,7 @@ protected:
     ~ShellFolderDataObject() = default;
 
 private:
-    void Initialize(PCIDLIST_ABSOLUTE pidlFolder, UINT cidl, PCUITEMID_CHILD_ARRAY ppidl,
+    void Initialize(PCIDLIST_ABSOLUTE pidlFolder, uint32_t cidl, PCUITEMID_CHILD_ARRAY ppidl,
                     msf::IPerformedDropEffectSink* performedDropEffectSink)
     {
         Init(pidlFolder, cidl, ppidl, performedDropEffectSink);

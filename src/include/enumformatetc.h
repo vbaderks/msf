@@ -11,7 +11,7 @@
 namespace msf
 {
 
-inline ATL::CComPtr<IEnumFORMATETC> SHCreateStdEnumFmtEtc(UINT cfmt, const FORMATETC* formatetc)
+inline ATL::CComPtr<IEnumFORMATETC> SHCreateStdEnumFmtEtc(uint32_t cfmt, const FORMATETC* formatetc)
 {
     ATL::CComPtr<IEnumFORMATETC> enumformatetc;
     RaiseExceptionIfFailed(::SHCreateStdEnumFmtEtc(cfmt, formatetc, &enumformatetc));

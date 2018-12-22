@@ -66,9 +66,9 @@ public:
     }
 
     int Compare(const VVVItem& item, int compareBy, bool bCanonicalOnly) const;
-    std::wstring GetItemDetailsOf(UINT columnIndex) const;
+    std::wstring GetItemDetailsOf(uint32_t columnIndex) const;
     std::wstring GetInfoTipText() const;
-    int GetIconOf(UINT flags) const noexcept;
+    int GetIconOf(uint32_t flags) const noexcept;
 
 private:
 

@@ -33,34 +33,34 @@ public:
     CMenu& operator=(const CMenu&) = delete;
     CMenu& operator=(CMenu&&) = delete;
 
-    void AddItem(UINT id, UINT nIDText) const
+    void AddItem(uint32_t id, uint32_t nIDText) const
     {
         AddItem(id, LoadResourceString(nIDText));
     }
 
-    void AddItem(UINT id, const std::wstring& strText) const
+    void AddItem(uint32_t id, const std::wstring& strText) const
     {
         const MenuItemInfo menuiteminfo(id, strText);
         InsertMenuItem(menuiteminfo, GetMenuItemCount());
     }
 
-    void AddDefaultItem(UINT id, const std::wstring& text) const
+    void AddDefaultItem(uint32_t id, const std::wstring& text) const
     {
         MenuItemInfo info(id, text);
         info.SetState(MFS_DEFAULT);
         InsertMenuItem(info, GetMenuItemCount());
     }
 
-    void InsertMenuItem(const MenuItemInfo& info, UINT uItem, bool byPosition = true) const
+    void InsertMenuItem(const MenuItemInfo& info, uint32_t uItem, bool byPosition = true) const
     {
         RaiseLastErrorExceptionIf(!::InsertMenuItem(m_menu, uItem, byPosition, &info));
     }
 
-    UINT GetMenuItemCount() const
+    uint32_t GetMenuItemCount() const
     {
         const int count = ::GetMenuItemCount(m_menu);
         RaiseLastErrorExceptionIf(count == -1);
-        return static_cast<UINT>(count);
+        return static_cast<uint32_t>(count);
     }
 
     // ReSharper disable once CppNonExplicitConversionOperator
