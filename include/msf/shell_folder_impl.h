@@ -77,8 +77,8 @@ public:
     ShellFolderImpl& operator=(ShellFolderImpl&&) = delete;
 
     // Registration function to register the COM object + the root extension.
-    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, uint32_t nResId,
-        PCWSTR szDescription, PCWSTR rootExt, uint32_t friendlyTypeNameId) noexcept
+    static HRESULT __stdcall UpdateRegistry(BOOL bRegister, uint32_t resourceId,
+        PCWSTR description, PCWSTR rootType, uint32_t friendlyTypeNameId) noexcept
     {
         OleString classId;
         StringFromCLSID(T::GetObjectCLSID(), classId);
@@ -86,13 +86,13 @@ public:
         const auto friendlyTypeName = std::to_wstring(friendlyTypeNameId);
 
         ATL::_ATL_REGMAP_ENTRY regmapEntries[] = {
-            { L"DESCRIPTION", szDescription },
-            { L"CLSID", classId },
-            { L"ROOTTYPE", rootExt },
-            { L"FRIENDLY_TYPE_NAME", friendlyTypeName.c_str() },
-            { nullptr, nullptr } };
+            {L"DESCRIPTION", description},
+            {L"CLSID", classId },
+            {L"ROOT_TYPE", rootType},
+            {L"FRIENDLY_TYPE_NAME", friendlyTypeName.c_str()},
+            {nullptr, nullptr}};
 
-        return ATL::_pAtlModule->UpdateRegistryFromResource(nResId, bRegister, regmapEntries);
+        return ATL::_pAtlModule->UpdateRegistryFromResource(resourceId, bRegister, regmapEntries);
     }
 
     static ATL::CString SHGetPathFromIDList(PCIDLIST_ABSOLUTE idList)
@@ -110,18 +110,18 @@ public:
         SHChangeNotify(wEventId, uFlags | SHCNF_IDLIST, pidl1, pidl2);
     }
 
-    static void StrToStrRet(const wchar_t* sz, STRRET* pstrret)
+    static void StrToStrRet(const wchar_t* sz, STRRET* stringReturn)
     {
-        pstrret->uType = STRRET_WSTR;
-        RaiseExceptionIfFailed(SHStrDup(sz, &pstrret->pOleStr));
+        stringReturn->uType = STRRET_WSTR;
+        RaiseExceptionIfFailed(SHStrDup(sz, &stringReturn->pOleStr));
     }
 
-    static void MergeMenus(QCMINFO& qcminfo, HMENU menu,
+    static void MergeMenus(QCMINFO& queryInfo, HMENU menu,
         ULONG uFlags = MM_ADDSEPARATOR | MM_SUBMENUSHAVEIDS | MM_DONTREMOVESEPS) noexcept
     {
-        qcminfo.idCmdFirst =
-            Shell_MergeMenus(qcminfo.hmenu, menu, qcminfo.indexMenu,
-                             qcminfo.idCmdFirst, qcminfo.idCmdLast, uFlags);
+        queryInfo.idCmdFirst =
+            Shell_MergeMenus(queryInfo.hmenu, menu, queryInfo.indexMenu,
+                             queryInfo.idCmdFirst, queryInfo.idCmdLast, uFlags);
     }
 
     static ATL::CComPtr<T> CreateInstance()
@@ -241,11 +241,11 @@ public:
                 pidlSubFolder = ItemIDList::GetNextItem(pidlSubFolder);
             }
 
-            ATL::CComPtr<T> rinstance = CreateInstance();
-            RaiseExceptionIfFailed(rinstance->Initialize(GetRootFolder()));
-            rinstance->InitializeSubFolder(items);
+            ATL::CComPtr<T> instance = CreateInstance();
+            RaiseExceptionIfFailed(instance->Initialize(GetRootFolder()));
+            instance->InitializeSubFolder(items);
 
-            return rinstance->QueryInterface(interfaceId, ppRetVal);
+            return instance->QueryInterface(interfaceId, ppRetVal);
         }
         catch (...)
         {
@@ -266,7 +266,7 @@ public:
         {
             if (pidl1->mkid.cb == 0 && pidl2->mkid.cb == 0)
             {
-                // Win98 sometimes tries to compare empty pidls.
+                // Win98 sometimes tries to compare empty items.
                 ATLTRACE(L"ShellFolderImpl::IShellFolder::CompareIDs (lparam=%d, pidl1=%p, pidl2=%p)\n",
                     lParam, pidl1, pidl2);
                 return E_INVALIDARG;
@@ -321,49 +321,49 @@ public:
 
             if (interfaceId == __uuidof(IShellDetails))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellDetails)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=IShellDetails)\n", this);
                 return static_cast<T*>(this)->QueryInterface(interfaceId, ppRetVal);
             }
 
             if (interfaceId == __uuidof(IShellView))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellView)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=IShellView)\n", this);
                 *ppRetVal = static_cast<T*>(this)->CreateShellFolderView().Detach();
             }
             else if (interfaceId == __uuidof(IDropTarget))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IDropTarget)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=IDropTarget)\n", this);
                 *ppRetVal = static_cast<T*>(this)->CreateDropTarget().Detach();
             }
             else if (interfaceId == __uuidof(IContextMenu))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IContextMenu)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=IContextMenu)\n", this);
                 *ppRetVal = static_cast<T*>(this)->CreateFolderContextMenu().Detach();
             }
             else if (interfaceId == __uuidof(ITopViewAwareItem))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=ITopViewAwareItem)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=ITopViewAwareItem)\n", this);
                 *ppRetVal = nullptr; // ITopViewAwareItem is an undocumented interface, purpose not clear.
             }
             else if (interfaceId == __uuidof(IFrameLayoutDefinition))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IFrameLayoutDefinition)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=IFrameLayoutDefinition)\n", this);
                 *ppRetVal = nullptr; // IFrameLayoutDefinition is an undocumented interface, purpose not clear.
             }
             else if (interfaceId == __uuidof(IConnectionFactory))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IConnectionFactory)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=IConnectionFactory)\n", this);
                 *ppRetVal = nullptr; // IConnectionFactory is an undocumented interface, purpose not clear.
             }
             else if (interfaceId == __uuidof(IShellUndocumented93))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumented93)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=IShellUndocumented93)\n", this);
                 // stack trace analysis: Called when CDefView class initializes the CDefCollection.
                 *ppRetVal = nullptr; // IShellUndocumented93 is an undocumented interface, purpose not clear.
             }
             else if (interfaceId == __uuidof(IShellUndocumentedCA))
             {
-                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, riid=IShellUndocumentedCA)\n", this);
+                ATLTRACE(L"ShellFolderImpl::IShellFolder::CreateViewObject (instance=%p, interfaceId=IShellUndocumentedCA)\n", this);
                 // stack trace analysis: called from CShellItem::BindToHandler to hook an kind of interrupt source.
                 *ppRetVal = nullptr; // IShellUndocumentedCA is an undocumented interface, purpose not clear.
             }

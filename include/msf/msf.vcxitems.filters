@@ -9,96 +9,270 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)browser_frame_options_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)browser_helper_object_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_effect.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_handler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_hdrop.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_paste_succeeded.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_performed_drop_effect.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_performed_drop_effect_handler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_preferred_drop_effect.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_shell_id_list.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_shell_id_list_handler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)cf_target_class_id.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)clipboard_data_object_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)co_initialize.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)context_command.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)context_menu_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)copy_hook_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)custom_menu_handler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)def_view.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)disk_cleanup_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)drop_target_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)enum_format_etc.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)enum_id_list_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)extract_icon.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)extract_image_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)file_list.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)format_etc.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)global_lock.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)icon_overlay_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)idldatacreatefromidarray.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ifolder_type.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)iframe_layout_definition.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)image_list_index.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)info_tip_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ishell_folder_3.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ishell_folder_searchable.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ishell_folder_searchable_callback.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ishell_folder_view_type.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)item_base.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)item_name_limits_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)itop_view_aware_item.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)macros.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)menu.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)menu_item_info.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)msf.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)msf_base.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ole_string.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)performed_drop_effect_sink.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)pidl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)property_page_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)property_sheet.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)prop_sheet_host.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)query_info.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)query_info_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)sfvm_defines.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_ext_init_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_folder_context_menu.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_folder_data_object_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_folder_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_folder_view_cb_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_item_id.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_prop_sheet_ext_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_uuids.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)shell_view_impl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)small_bitmap_handler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)stg_medium.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)str_util.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)task_band.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)test_runner.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)test_util.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)update_registry.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)util.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)version.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)browser_frame_options_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)browser_helper_object_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_hdrop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_paste_succeeded.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_performed_drop_effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_performed_drop_effect_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_preferred_drop_effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_shell_id_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_shell_id_list_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cf_target_class_id.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)clipboard_data_object_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)co_initialize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)context_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)context_menu_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)copy_hook_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)custom_menu_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)def_view.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)disk_cleanup_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)drop_target_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)enum_format_etc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)enum_id_list_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)extract_icon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)extract_image_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)file_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)format_etc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)global_lock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)icon_overlay_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)idldatacreatefromidarray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ifolder_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)iframe_layout_definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)image_list_index.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)info_tip_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ishell_folder_3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ishell_folder_searchable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ishell_folder_searchable_callback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ishell_folder_view_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)item_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)item_name_limits_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)itop_view_aware_item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)menu_item_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)msf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)msf_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ole_string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)performed_drop_effect_sink.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)pidl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)prop_sheet_host.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)property_page_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)property_sheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)query_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)query_info_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)sfvm_defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_ext_init_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_folder_context_menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_folder_data_object_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_folder_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_folder_view_cb_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_item_id.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_prop_sheet_ext_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_uuids.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)shell_view_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)small_bitmap_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)stg_medium.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)str_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)task_band.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)test_runner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)test_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)update_registry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\browser_helper_object.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\context_menu.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\context_menu_sf.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\copy_hook_folder.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\extension.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\extract_image_sf.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\icon_overlay.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\info_tip.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\info_tip_sf.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\property_sheet_ext.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\property_sheet_ext_sf.rgs" />
     <None Include="$(MSBuildThisFileDirectory)registrar_scripts\shell32_missing.def" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\shell_folder.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\shell_folder_vista.rgs" />
-    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\shell_folder_win98.rgs" />
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\context_menu.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\context_menu_sf.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\copy_hook_folder.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\browser_helper_object.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\extension.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\extract_image_sf.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\icon_overlay.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\info_tip.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\info_tip_sf.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\property_sheet_ext.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\property_sheet_ext_sf.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\shell_folder.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\shell_folder_vista.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)registrar_scripts\shell_folder_win98.rgs">
+      <Filter>Registrar Scripts</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="$(MSBuildThisFileDirectory)shell32missing.lib" />

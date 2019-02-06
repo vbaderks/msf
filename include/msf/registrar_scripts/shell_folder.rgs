@@ -1,4 +1,4 @@
-HKCR
+﻿HKCR
 {
     NoRemove CLSID
     {
@@ -20,7 +20,7 @@ HKCR
         }
     }
 
-    NoRemove '%ROOTTYPE%' = s '%DESCRIPTION%'
+    NoRemove '%ROOT_TYPE%' = s '%DESCRIPTION%'
     {
         ForceRemove CLSID = s '%CLSID%'
         val FriendlyTypeName = s '@%MODULE%,-%FRIENDLY_TYPE_NAME%'
