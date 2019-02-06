@@ -8,7 +8,8 @@
     <IntDir>$(MSBuildThisFileDirectory)intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
 
     <PlatformToolset>v141</PlatformToolset>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+
+    <WindowsTargetPlatformVersion Condition="'$(MSBuildVersion)' &lt;= '16.0'">10.0.17763.0</WindowsTargetPlatformVersion>
 
     <!-- Default character set is Unicode (UTF16), defines _UNICODE and UNICODE. -->
     <CharacterSet>Unicode</CharacterSet>

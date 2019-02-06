@@ -59,7 +59,7 @@ public:
         m_strCache = std::move(str);
 
 #pragma warning(push)
-#pragma warning(disable: 26465) // Don't cast away const
+#pragma warning(disable: 26465 26492) // Don't cast away const
         dwTypeData = const_cast<wchar_t*>(m_strCache.c_str());
 #pragma warning(pop)
     }

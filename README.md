@@ -1,4 +1,4 @@
-# Mini Shell extension Framework (MSF)
+﻿# Mini Shell extension Framework (MSF)
 
 ## Build Status
 
@@ -24,7 +24,7 @@ provide support for implementing COM objects.
 
 ### Legacy
 
-The list below are shell extension types not used anymore in recent Windows verions.
+The list below are shell extension types not used anymore in recent Windows versions.
 
 * Column Provider (IColumnProvider). Not used anymore by Windows Vista or newer.
 
@@ -75,6 +75,7 @@ To reduce maintenance effort MSF has 3 support levels:
 
 ### Supported Compilers
 
+* Visual Studio 2019 Preview 2 (ATL 14.0)
 * Visual Studio 2017 (ATL 14.0)
 
 ### Legacy Compilers
