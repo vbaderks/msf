@@ -40,7 +40,7 @@ protected:
     QueryInfo() noexcept(false) = default; // noexcept(false) needed as ATL base class is not defined noexcept.
     ~QueryInfo() = default;
 
-    PCWSTR GetInfoTip(DWORD /* dwFlags */) override
+    PCWSTR GetInfoTip(DWORD /* dwFlags */) noexcept(false) override
     {
         return m_infoTipText.c_str();
     }

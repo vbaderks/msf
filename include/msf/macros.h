@@ -8,6 +8,8 @@
 
 #include <stdexcept>
 
+#define MSF_WARNING_SUPPRESS(x) __pragma(warning(push)) __pragma(warning(disable : x)) // NOLINT(misc-macro-parentheses, bugprone-macro-parentheses)
+#define MSF_WARNING_UNSUPPRESS() __pragma(warning(pop))
 
 namespace msf
 {

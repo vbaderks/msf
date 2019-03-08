@@ -52,13 +52,12 @@ public:
         }
     }
 
-#pragma warning(push)
-#pragma warning(disable: 26473) // Don't cast between pointer types where the source type and the target type are the same
+    MSF_WARNING_SUPPRESS(26473) // Don't cast between pointer types where the source type and the target type are the same
     T* get() const noexcept
     {
         return static_cast<T*>(m_p);
     }
-#pragma warning(pop)
+    MSF_WARNING_UNSUPPRESS()
 
 private:
     static void* GlobalLockThrow(HGLOBAL memory)

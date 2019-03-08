@@ -16,7 +16,7 @@ namespace msf
 class CMenu final
 {
 public:
-    explicit CMenu(bool bCreate = true) noexcept :
+    explicit CMenu(bool bCreate = true) noexcept(false) :
         m_menu(bCreate ? CreateMenu() : nullptr)
     {
     }

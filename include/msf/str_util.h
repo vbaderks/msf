@@ -26,10 +26,9 @@ inline std::wstring FormatResourceMessage(uint32_t messageID, ...)
 {
     va_list args;
 
-#pragma warning(push)
-#pragma warning(disable : 26492) // Don't use const_cast to cast away const (type.3).
+    MSF_WARNING_SUPPRESS(26492) // Don't use const_cast to cast away const (type.3).
     va_start(args, messageID);
-#pragma warning(pop)
+    MSF_WARNING_UNSUPPRESS()
 
     PWSTR lpMsgBuf{};
     const auto size = FormatMessageW(

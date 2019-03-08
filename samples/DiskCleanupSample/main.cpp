@@ -7,11 +7,13 @@
 #include "pch.h"
 
 
-class Module : public ATL::CAtlDllModuleT<Module>
+class Module final : public ATL::CAtlDllModuleT<Module>
 {
 };
 
+MSF_WARNING_SUPPRESS(26426) // Global initializer calls a non-constexpr function 'Module::Module'
 Module _AtlModule;
+MSF_WARNING_UNSUPPRESS()
 
 
 // DLL Entry Point

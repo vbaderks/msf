@@ -40,6 +40,7 @@ public:
     }
 
     ~MenuItemInfo() = default;
+
     MenuItemInfo(const MenuItemInfo&) = delete;
     MenuItemInfo(MenuItemInfo&&) = delete;
     MenuItemInfo& operator=(const MenuItemInfo&) = delete;
@@ -58,10 +59,9 @@ public:
 
         m_strCache = std::move(str);
 
-#pragma warning(push)
-#pragma warning(disable: 26465 26492) // Don't cast away const
+        MSF_WARNING_SUPPRESS(26465 26492) // Don't cast away const
         dwTypeData = const_cast<wchar_t*>(m_strCache.c_str());
-#pragma warning(pop)
+        MSF_WARNING_UNSUPPRESS()
     }
 
     void SetSubMenu(HMENU subMenu) noexcept

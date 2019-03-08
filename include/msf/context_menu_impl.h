@@ -381,7 +381,7 @@ protected:
 
     // Derived classes need to implement this function if they want to extend
     // the context menu.
-    virtual void QueryContextMenuCore(Menu& /*menu*/, const std::vector<std::wstring>& /*filenames*/)
+    virtual void QueryContextMenuCore(Menu& /*menu*/, const std::vector<std::wstring>& /*filenames*/) noexcept(false)
     {
     }
 
@@ -425,7 +425,7 @@ private:
     public:
         MenuItem(std::wstring helpText,
                  std::unique_ptr<ContextMenuCommand> contextCommand,
-                 std::unique_ptr<CustomMenuHandler> customMenuHandler) :
+                 std::unique_ptr<CustomMenuHandler> customMenuHandler) noexcept :
             m_helpText{ std::move(helpText) },
             m_contextCommand{ std::move(contextCommand) },
             m_customMenuHandler{ std::move(customMenuHandler) }

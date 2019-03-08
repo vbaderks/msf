@@ -93,7 +93,7 @@ inline HRESULT UpdateRegistryFromResource(uint32_t nResId, BOOL bRegister,
 
 
 inline HRESULT UpdateRegistryFromResource(uint32_t nResId, BOOL bRegister,
-    PCWSTR szShellExtDescription, const CLSID& clsid, PCWSTR szExtension, uint32_t nFriendlyTypeNameId) noexcept
+    PCWSTR szShellExtDescription, const CLSID& clsid, PCWSTR szExtension, uint32_t nFriendlyTypeNameId)
 {
     OleString classId;
     StringFromCLSID(clsid, classId);

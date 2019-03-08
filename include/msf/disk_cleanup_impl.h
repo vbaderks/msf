@@ -126,12 +126,12 @@ public:
         }
     }
 
-    void ShowPropertiesCore(HWND /*hwnd*/)
+    void ShowPropertiesCore(HWND /*hwnd*/) noexcept
     {
     }
 
     // Override this function and return true when the disk cleanup handler should only run once.
-    bool DeactivateCore()
+    bool DeactivateCore() noexcept
     {
         return false;
     }

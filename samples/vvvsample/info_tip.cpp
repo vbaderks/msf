@@ -46,7 +46,7 @@ public:
 
     // Purpose: called by the shell/msf when it needs the text for the info tip.
     //          The string is used for the tooltip and the text in the status bar.
-    PCWSTR GetInfoTip(DWORD /* dwFlags */) final
+    PCWSTR GetInfoTip(DWORD /* dwFlags */) noexcept(false) final
     {
         return m_infoTip.c_str();
     }

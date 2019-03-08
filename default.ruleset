@@ -2,12 +2,8 @@
 <RuleSet Name="Default Rules for MSF code" Description="These rules define the standards rules for all MSF projects." ToolsVersion="15.0">
   <IncludeAll Action="Error" />
   <Rules AnalyzerId="Microsoft.Analyzers.NativeCodeAnalysis" RuleNamespace="Microsoft.Rules.Native">
-    <Rule Id="C26050" Action="None" />
-    <Rule Id="C26052" Action="None" />
-    <Rule Id="C26426" Action="None" />
     <Rule Id="C26429" Action="None" />
     <Rule Id="C26434" Action="None" />
-    <Rule Id="C26440" Action="None" />
     <Rule Id="C26446" Action="None" />
     <Rule Id="C26447" Action="None" />
     <Rule Id="C26466" Action="None" />

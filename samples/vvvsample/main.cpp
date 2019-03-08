@@ -13,8 +13,10 @@
 class Module : public ATL::CAtlDllModuleT<Module>
 {
 };
-Module _Module;
 
+MSF_WARNING_SUPPRESS(26426) // Global initializer calls a non-constexpr function 'Module::Module'
+Module _Module;
+MSF_WARNING_UNSUPPRESS()
 
 // Purpose: DLL Entry Point
 extern "C" BOOL __stdcall DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)

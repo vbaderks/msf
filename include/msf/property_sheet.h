@@ -25,7 +25,7 @@ public:
     class PropSheetHeader : public PROPSHEETHEADER
     {
     public:
-        explicit PropSheetHeader(std::wstring caption, DWORD flags = 0) :
+        explicit PropSheetHeader(std::wstring caption, DWORD flags = 0) noexcept :
             PROPSHEETHEADER{sizeof(PROPSHEETHEADER), flags},
             m_caption{std::move(caption)}
         {

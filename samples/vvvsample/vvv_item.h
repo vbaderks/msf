@@ -88,7 +88,7 @@ private:
     };
     #pragma pack()
 
-    static void InitializeItemData(SItemData* itemData, unsigned int id, unsigned int size, bool folder, const std::wstring& name)
+    static void InitializeItemData(SItemData* itemData, unsigned int id, unsigned int size, bool folder, const std::wstring& name) noexcept
     {
         itemData->nTypeID = TypeID;
         itemData->id     = id;

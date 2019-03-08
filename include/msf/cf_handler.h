@@ -15,9 +15,10 @@ namespace msf
 class ClipboardFormatHandler
 {
 public:
+    virtual ~ClipboardFormatHandler() = default;
+
     ClipboardFormatHandler(const ClipboardFormatHandler&) = delete;
     ClipboardFormatHandler(ClipboardFormatHandler&&) = delete;
-    virtual ~ClipboardFormatHandler() = default;
     ClipboardFormatHandler& operator=(const ClipboardFormatHandler&) = delete;
     ClipboardFormatHandler& operator=(ClipboardFormatHandler&&) = delete;
 
@@ -50,11 +51,11 @@ public:
         return S_OK;
     }
 
-    virtual void GetData(const FORMATETC&, STGMEDIUM&) const
+    virtual void GetData(const FORMATETC&, STGMEDIUM&) const noexcept(false)
     {
     }
 
-    virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*release*/)
+    virtual void SetData(const FORMATETC&, STGMEDIUM&, bool /*release*/) noexcept(false)
     {
     }
 

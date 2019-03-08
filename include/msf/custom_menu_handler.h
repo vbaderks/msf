@@ -22,23 +22,23 @@ public:
     CustomMenuHandler& operator=(const CustomMenuHandler&) = delete;
     CustomMenuHandler& operator=(CustomMenuHandler&&) = delete;
 
-    virtual void InitializeItemInfo(MenuItemInfo& menuiteminfo)
+    virtual void InitializeItemInfo(MenuItemInfo& menuIteminfo) noexcept(false)
     {
-        menuiteminfo.SetOwnerDraw();
+        menuIteminfo.SetOwnerDraw();
     }
 
     // Purpose: called by OS to require the size of the menu item.
-    virtual void Measure(MEASUREITEMSTRUCT& /*measureItem*/)
+    virtual void Measure(MEASUREITEMSTRUCT& /*measureItem*/) noexcept(false)
     {
     }
 
     // Purpose: called by the OS when the item must be draw.
-    virtual void Draw(const DRAWITEMSTRUCT& /*drawItem*/)
+    virtual void Draw(const DRAWITEMSTRUCT& /*drawItem*/) noexcept(false)
     {
     }
 
     // Purpose: override this function to handle accelerator keys
-    virtual bool OnMenuChar(HMENU /*menu*/, unsigned short /*char*/, LRESULT& /*result*/)
+    virtual bool OnMenuChar(HMENU /*menu*/, unsigned short /*char*/, LRESULT& /*result*/) noexcept(false)
     {
         return false; // not handled.
     }

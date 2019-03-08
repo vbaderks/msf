@@ -63,13 +63,12 @@ inline std::wstring FormatLastError(DWORD dwLastError)
 #ifdef ISOLATION_AWARE_ENABLED
 
 // Purpose: Helper function to enable visual Windows XP styles.
-inline void IsolationAwareDllMain(DWORD dwReason)
+inline void IsolationAwareDllMain(DWORD dwReason) noexcept
 {
     switch (dwReason)
     {
     case DLL_PROCESS_ATTACH:
         // Note1: IsolationawareInit will leak a HINSTANCE LoadLibrary handle.
-        // Note2: IsolationAwareInit will fail on a OS that doesn't support it (win98, nt4, etc)
         IsolationAwareInit();
         break;
 

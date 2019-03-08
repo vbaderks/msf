@@ -34,17 +34,17 @@ public:
     DiskCleanup& operator=(const DiskCleanup&) = delete;
     DiskCleanup& operator=(DiskCleanup&&) = delete;
 
-    bool InitializeCore(HKEY /*hkRegKey*/, PCWSTR /*pcwszVolume*/, PCWSTR /*pcwszKeyName*/, PWSTR* /*ppwszDisplayName*/, PWSTR* /*ppwszDescription*/, PWSTR* /*ppwszBtnText*/, DWORD* /*pdwFlags*/)
+    bool InitializeCore(HKEY /*hkRegKey*/, PCWSTR /*pcwszVolume*/, PCWSTR /*pcwszKeyName*/, PWSTR* /*ppwszDisplayName*/, PWSTR* /*ppwszDescription*/, PWSTR* /*ppwszBtnText*/, DWORD* /*pdwFlags*/) noexcept
     {
         return false;
     }
 
-    bool GetSpaceUsedCore(DWORDLONG* /*pdwlSpaceUsed*/, IEmptyVolumeCacheCallBack* /*picb*/)
+    bool GetSpaceUsedCore(DWORDLONG* /*pdwlSpaceUsed*/, IEmptyVolumeCacheCallBack* /*picb*/) noexcept
     {
         return false;
     }
 
-    void PurgeCore(DWORDLONG /*dwSpaceToFree*/, IEmptyVolumeCacheCallBack* /*picb*/)
+    void PurgeCore(DWORDLONG /*dwSpaceToFree*/, IEmptyVolumeCacheCallBack* /*picb*/) noexcept
     {
     }
 
