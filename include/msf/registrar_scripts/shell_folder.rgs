@@ -1,4 +1,4 @@
-﻿HKCR
+HKCR
 {
     NoRemove CLSID
     {

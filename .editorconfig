@@ -17,3 +17,7 @@ indent_brace_style = Allman
 # Resource Files
 [*.rc]
 charset = undef
+
+# ATL Registrar files
+[*.rgs]
+charset = utf-8
