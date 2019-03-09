@@ -30,11 +30,6 @@ public:
             L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);
     }
 
-    InfoTip(const InfoTip&) = delete;
-    InfoTip(InfoTip&&) = delete;
-    InfoTip& operator=(const InfoTip&) = delete;
-    InfoTip& operator=(InfoTip&&) = delete;
-
     void InitializeCore(PCWSTR filename, DWORD /*dwMode*/) final
     {
         VVVFile vvvFile{ filename };
@@ -50,6 +45,11 @@ public:
     {
         return m_infoTip.c_str();
     }
+
+    InfoTip(const InfoTip&) = delete;
+    InfoTip(InfoTip&&) = delete;
+    InfoTip& operator=(const InfoTip&) = delete;
+    InfoTip& operator=(InfoTip&&) = delete;
 
 protected:
     InfoTip() noexcept(false) = default; // noexcept(false) needed as ATL base class is not defined noexcept.
