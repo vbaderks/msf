@@ -27,15 +27,21 @@ extern "C" BOOL __stdcall DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lp
     // Enable/Disable dynamic isolation aware code (Windows XP and up theme support)
     msf::IsolationAwareDllMain(dwReason);
 
+    switch (dwReason)
+    {
+    case DLL_PROCESS_ATTACH:
 #ifdef DEBUG
-    // Increase the default level to 4 to see all trace messages.
-    ATL::CTrace::SetLevel(4);
+        // Increase the default level to 4 to see all trace messages.
+        ATL::CTrace::SetLevel(4);
 #endif
 
-    if (dwReason == DLL_PROCESS_ATTACH)
-    {
         // Optimization: don't notify when a thread is created.
         ATLVERIFY(DisableThreadLibraryCalls(hInstance));
+        break;
+
+    case DLL_PROCESS_DETACH:
+        ATLTRACE(L"vvvsample::DllMain DLL_PROCESS_DETACH");
+        break;
     }
 
     return true;
@@ -46,7 +52,7 @@ __control_entrypoint(DllExport)
 STDAPI DllCanUnloadNow()
 {
     const auto hr = _Module.DllCanUnloadNow();
-    ATLTRACE(L"SampleShellExtension::DllCanUnloadNow hr = %d (0 = S_OK -> unload OK)\n", hr);
+    ATLTRACE(L"vvvsample::DllCanUnloadNow hr = %d (0 = S_OK -> unload OK)\n", hr);
     return hr;
 }
 
@@ -63,11 +69,17 @@ STDAPI DllRegisterServer()
 {
     auto hr = _Module.DllRegisterServer(/* bRegTypeLib = */ false);
     if (FAILED(hr))
+    {
+        ATLTRACE(L"vvvsample::DllRegisterServer failed (1) hr = %d\n", hr);
         return hr;
+    }
 
     hr = msf::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, true, wszVVVExtension, wszVVVFileRootExt);
     if (FAILED(hr))
+    {
+        ATLTRACE(L"vvvsample::DllRegisterServer failed (2) hr = %d\n", hr);
         return hr;
+    }
 
     // Notify the shell that .vvv file association has changed.
     SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);

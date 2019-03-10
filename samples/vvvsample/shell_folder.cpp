@@ -5,18 +5,17 @@
 //
 #include "pch.h"
 
-// ReSharper disable once CppUnusedIncludeDirective
-#include "shell_folder_class_id.h"
-#include "shell_folder_view_cb.h"
-#include "shell_folder_data_object.h"
 #include "enum_id_list.h"
-#include "vvv_item.h"
-#include "vvv_file.h"
-#include "vvv_property_sheet.h"
 #include "resource.h"
+#include "shell_folder_class_id.h"
+#include "shell_folder_data_object.h"
+#include "shell_folder_view_cb.h"
+#include "vvv_file.h"
+#include "vvv_item.h"
+#include "vvv_property_sheet.h"
 
-using std::wstring;
 using std::make_unique;
+using std::wstring;
 
 // Defines for the item context menu.
 constexpr uint32_t ID_DFM_CMD_OPEN = 0;
@@ -35,15 +34,15 @@ public:
         COM_INTERFACE_ENTRY(IPersistFolder2)
         COM_INTERFACE_ENTRY(IPersistFolder3)
         COM_INTERFACE_ENTRY(IPersistIDList)
-        COM_INTERFACE_ENTRY(IShellFolder)  // included in this sample for backwards (win9x) compatibility.
+        COM_INTERFACE_ENTRY(IShellFolder) // included in this sample for backwards (win9x) compatibility.
         COM_INTERFACE_ENTRY(IShellFolder2)
         COM_INTERFACE_ENTRY(IShellDetails) // included in this sample for backwards (win9x) compatibility.
         COM_INTERFACE_ENTRY(IBrowserFrameOptions)
         COM_INTERFACE_ENTRY(IShellIcon)
         COM_INTERFACE_ENTRY(IItemNameLimits)
-        COM_INTERFACE_ENTRY(IDropTarget)   // enable drag and drop support.
+        COM_INTERFACE_ENTRY(IDropTarget)               // enable drag and drop support.
         COM_INTERFACE_ENTRY(IObjectWithFolderEnumMode) // used by Windows 7 and up
-        COM_INTERFACE_ENTRY(IExplorerPaneVisibility) // used by Windows Vista and up.
+        COM_INTERFACE_ENTRY(IExplorerPaneVisibility)   // used by Windows Vista and up.
     END_COM_MAP()
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
@@ -138,13 +137,13 @@ public:
     {
         switch (nId)
         {
-            case ID_DFM_CMD_OPEN:
-                OnOpen(hwnd, dataObject);
-                break;
+        case ID_DFM_CMD_OPEN:
+            OnOpen(hwnd, dataObject);
+            break;
 
-            default:
-                ATLASSERT(false); // unknown command id detected.
-                break;
+        default:
+            ATLASSERT(false); // unknown command id detected.
+            break;
         }
 
         return S_OK;
@@ -161,7 +160,7 @@ public:
         if (item.IsFolder())
         {
             GetShellBrowser().BrowseObject(item.GetItemIdList(),
-                SBSP_DEFBROWSER | SBSP_RELATIVE);
+                                           SBSP_DEFBROWSER | SBSP_RELATIVE);
         }
         else
         {
@@ -232,15 +231,22 @@ public:
         return dwEffect;
     }
 
-    static void OnError(HRESULT hr, HWND hwnd, ErrorContext /*errorContext*/)
+    static void OnError(HRESULT hr, HWND hwnd, ErrorContext /*errorContext*/) noexcept
     {
-        auto message = msf::LoadResourceString(IDS_SHELLFOLDER_CANNOT_PERFORM) + msf::FormatLastError(static_cast<DWORD>(hr));
-        IsolationAwareMessageBox(hwnd, message.c_str(),
-            msf::LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
+        try
+        {
+            auto message = msf::LoadResourceString(IDS_SHELLFOLDER_CANNOT_PERFORM) + msf::FormatLastError(static_cast<DWORD>(hr));
+            IsolationAwareMessageBox(hwnd, message.c_str(),
+                                     msf::LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
+        }
+        catch (...)
+        {
+            // Suppress all exceptions (should be none), to prevent that an exception escapes from this noexcept function.
+            assert(false);
+        }
     }
 
 protected:
-
     ShellFolder() noexcept
     {
         // Register the columns the folder supports in 'detailed' mode.
@@ -268,7 +274,7 @@ private:
         }
 
         return IsolationAwareMessageBox(hwnd, strMessage,
-            msf::LoadResourceString(nCaptionResId).c_str(), MB_YESNO | MB_ICONQUESTION) == IDYES;
+                                        msf::LoadResourceString(nCaptionResId).c_str(), MB_YESNO | MB_ICONQUESTION) == IDYES;
     }
 
     void AddItem(const wstring& strFile) const

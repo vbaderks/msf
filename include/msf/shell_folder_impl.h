@@ -146,16 +146,16 @@ public:
         return S_OK;
     }
 
-    HRESULT __stdcall Initialize(__RPC__in PCIDLIST_ABSOLUTE childItem) noexcept override
+    HRESULT __stdcall Initialize(__RPC__in PCIDLIST_ABSOLUTE folder) noexcept override
     {
         try
         {
-            ATLTRACE(L"ShellFolderImpl::IPersistFolder::Initialize (instance=%p, pidl=%p)\n", this, childItem);
+            ATLTRACE(L"ShellFolderImpl::IPersistFolder::Initialize (instance=%p, folder=%p)\n", this, folder);
 
-            if (!childItem)
+            if (!folder)
                 return E_INVALIDARG;
 
-            m_pidlFolder.CloneFrom(childItem);
+            m_pidlFolder.CloneFrom(folder);
             return S_OK;
         }
         catch (...)
@@ -165,13 +165,13 @@ public:
     }
 
     // IPersistFolder2
-    HRESULT __stdcall GetCurFolder(__RPC__deref_out_opt PIDLIST_ABSOLUTE* childItem) noexcept override
+    HRESULT __stdcall GetCurFolder(__RPC__deref_out_opt PIDLIST_ABSOLUTE* folder) noexcept override
     {
         try
         {
             ATLTRACE(L"ShellFolderImpl::IPersistFolder2::GetCurFolder (instance=%p)\n", this);
 
-            *childItem = m_pidlFolder.CloneFull();
+            *folder = m_pidlFolder.CloneFull();
             return S_OK;
         }
         catch (...)
@@ -181,13 +181,13 @@ public:
     }
 
     // IPersistFolder3
-    HRESULT __stdcall InitializeEx([[maybe_unused]] __RPC__in_opt IBindCtx* bindContext, __RPC__in PCIDLIST_ABSOLUTE pidlRoot, [[maybe_unused]] __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* folderTargetInfo) noexcept override
+    HRESULT __stdcall InitializeEx([[maybe_unused]] __RPC__in_opt IBindCtx* bindContext, __RPC__in PCIDLIST_ABSOLUTE folder, [[maybe_unused]] __RPC__in_opt const PERSIST_FOLDER_TARGET_INFO* folderTargetInfo) noexcept override
     {
-        ATLTRACE(L"ShellFolderImpl::IPersistFolder3::InitializeEx (instance=%p, bindContext=%p, pidlRoot=%p, folderTargetInfo=%p)\n",
-                  this, bindContext, pidlRoot, folderTargetInfo);
+        ATLTRACE(L"ShellFolderImpl::IPersistFolder3::InitializeEx (instance=%p, bindContext=%p, folder=%p, folderTargetInfo=%p)\n",
+                 this, bindContext, folder, folderTargetInfo);
 
-        // Note: if ppfti is NULL InitializeEx should act as Initialize.
-        return Initialize(pidlRoot);
+        // Note: if folderTargetInfo is NULL InitializeEx should act as IPersistFolder::Initialize.
+        return Initialize(folder);
     }
 
     HRESULT __stdcall GetFolderTargetInfo(__RPC__out PERSIST_FOLDER_TARGET_INFO* /* ppfti */) noexcept override
@@ -804,7 +804,7 @@ protected:
     }
 
     // Note: override this function to get different compare functionality.
-    int CompareItems(LPARAM lParam, const TItem& item1, const TItem& item2) const
+    int CompareItems(LPARAM lParam, const TItem& item1, const TItem& item2) const noexcept
     {
         if (IsBitSet(static_cast<ULONG>(lParam), SHCIDS_ALLFIELDS))
         {
@@ -817,7 +817,7 @@ protected:
 
     std::wstring GetPathFolderFile() const
     {
-        return std::wstring(SHGetPathFromIDList(m_pidlFolder.GetAbsolute())); // TODO: use SHGetPathFromIDListEx?
+        return std::wstring(SHGetPathFromIDList(m_pidlFolder.GetAbsolute()));
     }
 
     PIDLIST_ABSOLUTE GetRootFolder() const noexcept
@@ -863,7 +863,7 @@ protected:
     // Purpose: Called by shell/MSF through the CompareItems function.
     //          MSF will compare column by column.
     //          Override this function if needed.
-    int CompareIDsAllFields(const TItem& item1, const TItem& item2) const
+    int CompareIDsAllFields(const TItem& item1, const TItem& item2) const noexcept
     {
         int nResult = 0; // if there are no columns, items are always equal.
 
@@ -1387,7 +1387,7 @@ protected:
         RaiseException();
     }
 
-    HRESULT OnErrorHandler(HRESULT result, HWND window, ErrorContext errorContext)
+    HRESULT OnErrorHandler(HRESULT result, HWND window, ErrorContext errorContext) noexcept
     {
         if (window)
         {

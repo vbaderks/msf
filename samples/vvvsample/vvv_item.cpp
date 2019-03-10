@@ -67,7 +67,7 @@ SFGAOF VVVItem::GetAttributeOf(bool bSingleSelect, bool bReadOnly) const noexcep
 }
 
 
-int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/) const
+int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/) const noexcept
 {
     switch (compareBy)
     {
@@ -79,7 +79,7 @@ int VVVItem::Compare(const VVVItem& item, int compareBy, bool /*bCanonicalOnly*/
 
     default:
         ATLASSERT(!"Illegal nCompare option detected");
-        msf::RaiseException();
+        return 1; // invalid compare option are just never equal.
     }
 }
 

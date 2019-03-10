@@ -65,7 +65,7 @@ public:
         return GetItemData().folder;
     }
 
-    int Compare(const VVVItem& item, int compareBy, bool bCanonicalOnly) const;
+    int Compare(const VVVItem& item, int compareBy, bool bCanonicalOnly) const noexcept;
     std::wstring GetItemDetailsOf(uint32_t columnIndex) const;
     std::wstring GetInfoTipText() const;
     int GetIconOf(uint32_t flags) const noexcept;
