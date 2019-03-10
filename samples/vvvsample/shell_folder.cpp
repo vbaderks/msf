@@ -217,18 +217,18 @@ public:
     }
 
     // Purpose: called when items are pasted or dropped on the shellfolder.
-    DWORD AddItemsFromDataObject(DWORD dwEffect, IDataObject* dataObject) const
+    DWORD AddItemsFromDataObject(DWORD effectMask, IDataObject* dataObject) const
     {
-        msf::ClipboardFormatHDrop cfhdrop(dataObject);
+        msf::ClipboardFormatHDrop clipboardFormat(dataObject);
 
-        const auto nFiles = cfhdrop.GetFileCount();
-        for (unsigned int i = 0; i < nFiles; ++i)
+        const auto fileCount = clipboardFormat.GetFileCount();
+        for (unsigned int i = 0; i < fileCount; ++i)
         {
-            AddItem(wstring(cfhdrop.GetFile(i)));
+            AddItem(clipboardFormat.GetFile(i));
         }
 
-        // The VVV sample cannot use optimized move. Just return dwEffect as passed.
-        return dwEffect;
+        // The VVV sample cannot use optimized move. Just return effectMask as passed.
+        return effectMask;
     }
 
     static void OnError(HRESULT hr, HWND hwnd, ErrorContext /*errorContext*/) noexcept
@@ -242,7 +242,7 @@ public:
         catch (...)
         {
             // Suppress all exceptions (should be none), to prevent that an exception escapes from this noexcept function.
-            assert(false);
+            ATLASSERT(false);
         }
     }
 
