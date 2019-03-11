@@ -76,32 +76,30 @@ public:
         return pidlNext;
     }
 
-    ItemIDList() noexcept : m_pidl(nullptr)
+    ItemIDList() = default;
+
+    explicit ItemIDList(PUIDLIST_RELATIVE itemIDList) noexcept
+        : m_pidl(static_cast<LPITEMIDLIST>(itemIDList))
     {
     }
 
-    explicit ItemIDList(PUIDLIST_RELATIVE itemIDList) noexcept :
-        m_pidl(static_cast<LPITEMIDLIST>(itemIDList))
+    ItemIDList(_In_opt_ PCIDLIST_ABSOLUTE pidl1, _In_opt_ PCUIDLIST_RELATIVE pidl2)
+        : m_pidl(Combine(pidl1, pidl2))
     {
     }
 
-    ItemIDList(_In_opt_ PCIDLIST_ABSOLUTE pidl1, _In_opt_ PCUIDLIST_RELATIVE pidl2) :
-        m_pidl(Combine(pidl1, pidl2))
+    ItemIDList(const ItemIDList& pidl1, PCUIDLIST_RELATIVE pidl2)
+        : m_pidl(Combine(pidl1.GetAbsolute(), pidl2))
     {
     }
 
-    ItemIDList(const ItemIDList& pidl1, PCUIDLIST_RELATIVE pidl2) :
-        m_pidl(Combine(pidl1.GetAbsolute(), pidl2))
+    ItemIDList(const ItemIDList& pidl1, const ItemIDList& pidl2)
+        : m_pidl(Combine(pidl1.GetAbsolute(), pidl2.GetRelative()))
     {
     }
 
-    ItemIDList(const ItemIDList& pidl1, const ItemIDList& pidl2) :
-        m_pidl(Combine(pidl1.GetAbsolute(), pidl2.GetRelative()))
-    {
-    }
-
-    explicit ItemIDList(PCWSTR pszPath) :
-        m_pidl(CreateFromPath(pszPath))
+    explicit ItemIDList(PCWSTR pszPath)
+        : m_pidl(CreateFromPath(pszPath))
     {
     }
 
@@ -196,6 +194,11 @@ public:
         return static_cast<PIDLIST_ABSOLUTE>(m_pidl);
     }
 
+    bool IsEmpty() const noexcept
+    {
+        return ILIsEmpty(GetRelative());
+    }
+
     // Purpose: Address operator to be used for passing address to be used as an out-parameter.
     LPITEMIDLIST* operator&() noexcept
     {
@@ -205,7 +208,7 @@ public:
     }
 
 private:
-    LPITEMIDLIST m_pidl;
+    LPITEMIDLIST m_pidl{};
 };
 
 } // namespace msf

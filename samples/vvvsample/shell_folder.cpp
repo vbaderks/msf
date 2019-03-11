@@ -88,13 +88,13 @@ public:
     //          all items  The shell will walk all IDs and then release the enum.
     ATL::CComPtr<IEnumIDList> CreateEnumIDList(HWND /*hwnd*/, DWORD grfFlags) const
     {
-        return EnumIDList::CreateInstance(GetPathFolderFile(), m_strSubFolder, grfFlags);
+        return EnumIDList::CreateInstance(GetPathJunctionPoint(), m_strSubFolder, grfFlags);
     }
 
     // Purpose: called by msf when there is no global settings for all items.
     SFGAOF GetAttributeOf(unsigned int cidl, const VVVItem& item, SFGAOF /*sfgofMask*/) const
     {
-        return item.GetAttributeOf(cidl == 1, IsReadOnly(GetPathFolderFile()));
+        return item.GetAttributeOf(cidl == 1, IsReadOnly(GetPathJunctionPoint()));
     }
 
     // Purpose: called by msf to tell the shell which panes to show.
@@ -176,7 +176,7 @@ public:
 
         msf::ItemIDList pidl(VVVItem::CreateItemIdList(item.GetID(), item.GetSize(), item.IsFolder(), szNewName));
 
-        VVVFile(GetPathFolderFile(), m_strSubFolder).SetItem(VVVItem(pidl.GetRelative()));
+        VVVFile(GetPathJunctionPoint(), m_strSubFolder).SetItem(VVVItem(pidl.GetRelative()));
 
         return pidl.DetachRelative();
     }
@@ -192,7 +192,7 @@ public:
         long wEventId;
         if (VVVPropertySheet(item, this).DoModal(hwnd, wEventId) > 0 && wEventId != 0)
         {
-            VVVFile vvvFile(GetPathFolderFile(), m_strSubFolder);
+            VVVFile vvvFile(GetPathJunctionPoint(), m_strSubFolder);
             vvvFile.SetItem(item);
         }
 
@@ -205,7 +205,7 @@ public:
         if (!hwnd && !UserConfirmsFileDelete(hwnd, items))
             return 0; // user wants to abort the file deletion process.
 
-        VVVFile(GetPathFolderFile(), m_strSubFolder).DeleteItems(items);
+        VVVFile(GetPathJunctionPoint(), m_strSubFolder).DeleteItems(items);
 
         return SHCNE_DELETE;
     }
@@ -279,7 +279,7 @@ private:
 
     void AddItem(const wstring& strFile) const
     {
-        VVVFile vvvfile(GetPathFolderFile(), m_strSubFolder);
+        VVVFile vvvfile(GetPathJunctionPoint(), m_strSubFolder);
 
         msf::ItemIDList pidlItem(vvvfile.AddItem(strFile));
 

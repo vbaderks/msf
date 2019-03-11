@@ -6,44 +6,44 @@
 #pragma once
 
 #include "msf_base.h"
-#include "update_registry.h"
 #include "pidl.h"
+#include "update_registry.h"
 // ReSharper disable once CppUnusedIncludeDirective
-#include "shell_uuids.h"
-#include "dfm_defines.h"
-#include "cf_shell_id_list.h"
-#include "cf_preferred_drop_effect.h"
-#include "cf_performed_drop_effect.h"
 #include "cf_paste_succeeded.h"
-#include "performed_drop_effect_sink.h"
-#include "idldatacreatefromidarray.h"
-#include "itop_view_aware_item.h"
-#include "iframe_layout_definition.h"
-#include "shell_folder_context_menu.h"
-#include "query_info.h"
+#include "cf_performed_drop_effect.h"
+#include "cf_preferred_drop_effect.h"
+#include "cf_shell_id_list.h"
+#include "dfm_defines.h"
 #include "extract_icon.h"
+#include "idldatacreatefromidarray.h"
+#include "iframe_layout_definition.h"
+#include "itop_view_aware_item.h"
+#include "performed_drop_effect_sink.h"
+#include "query_info.h"
+#include "shell_folder_context_menu.h"
+#include "shell_uuids.h"
 #include "smartptr/shellbrowserptr.h"
 
 namespace msf
 {
 
 #ifndef WM_GETISHELLBROWSER
-   #define WM_GETISHELLBROWSER (WM_USER + 7)
+    #define WM_GETISHELLBROWSER (WM_USER + 7)
 #endif
 
 const SFGAOF SFGAO_UNDEFINED = 0xFFFFFFFF;
 
-struct __declspec(uuid("6FE2B64C-5012-4B88-BB9D-7CE4F45E3751")) IConnectionFactory;    // Undocumented interface, seen on Windows 8
-struct __declspec(uuid("93F81976-6A0D-42C3-94DD-AA258A155470")) IShellUndocumented93;  // Seen on Windows 8
-struct __declspec(uuid("CAD9AE9F-56E2-40F1-AFB6-3813E320DCFD")) IShellUndocumentedCA;  // Seen on Windows 8
+struct __declspec(uuid("6FE2B64C-5012-4B88-BB9D-7CE4F45E3751")) IConnectionFactory;   // Undocumented interface, seen on Windows 8
+struct __declspec(uuid("93F81976-6A0D-42C3-94DD-AA258A155470")) IShellUndocumented93; // Seen on Windows 8
+struct __declspec(uuid("CAD9AE9F-56E2-40F1-AFB6-3813E320DCFD")) IShellUndocumentedCA; // Seen on Windows 8
 
 // The definitions in ShlGuid have no __declspec. Create 'MSF' definitions to make '==' easy.
-struct __declspec(uuid("CB316B22-25F7-42B8-8A09-540D23A43C2F")) EP_NavPane;       // The pane on the left side of the Windows Explorer window that hosts the folders tree and Favorites
-struct __declspec(uuid("D27524A8-C9F2-4834-A106-DF8889FD4F37")) EP_Ribbon;        // The ribbon. New in Windows 8. Not defined in Win 7 SDK.
-struct __declspec(uuid("893C63D1-45C8-4D17-BE19-223BE71BE365")) EP_PreviewPane;   // Pane on the right of the Windows Explorer window that shows a large reading preview of the file.
-struct __declspec(uuid("43ABF98B-89B8-472D-B9CE-E69B8229F019")) EP_DetailsPane;   // Pane showing metadata along the bottom of the Windows Explorer window.
+struct __declspec(uuid("CB316B22-25F7-42B8-8A09-540D23A43C2F")) EP_NavPane;     // The pane on the left side of the Windows Explorer window that hosts the folders tree and Favorites
+struct __declspec(uuid("D27524A8-C9F2-4834-A106-DF8889FD4F37")) EP_Ribbon;      // The ribbon. New in Windows 8. Not defined in Win 7 SDK.
+struct __declspec(uuid("893C63D1-45C8-4D17-BE19-223BE71BE365")) EP_PreviewPane; // Pane on the right of the Windows Explorer window that shows a large reading preview of the file.
+struct __declspec(uuid("43ABF98B-89B8-472D-B9CE-E69B8229F019")) EP_DetailsPane; // Pane showing metadata along the bottom of the Windows Explorer window.
 
-template <typename T, typename TItem>
+template<typename T, typename TItem>
 class __declspec(novtable) ShellFolderImpl :
     public IPersistFolder3,
     public IPersistIDList,
@@ -59,16 +59,16 @@ class __declspec(novtable) ShellFolderImpl :
 public:
     enum class ErrorContext
     {
-        Unknown           = 0,
-        CreateEnumIDList  = 1,
-        OnSetNameOf       = 2,
-        OnProperties      = 3,
-        OnDelete          = 4,
-        OnCopy            = 5,
-        OnCut             = 6,
-        OnDrop            = 7,
-        OnPaste           = 8,
-        OnInvokeAddedCmd  = 9
+        Unknown = 0,
+        CreateEnumIDList = 1,
+        OnSetNameOf = 2,
+        OnProperties = 3,
+        OnDelete = 4,
+        OnCopy = 5,
+        OnCut = 6,
+        OnDrop = 7,
+        OnPaste = 8,
+        OnInvokeAddedCmd = 9
     };
 
     ShellFolderImpl(const ShellFolderImpl&) = delete;
@@ -78,7 +78,7 @@ public:
 
     // Registration function to register the COM object + the root extension.
     static HRESULT __stdcall UpdateRegistry(BOOL bRegister, uint32_t resourceId,
-        PCWSTR description, PCWSTR rootType, uint32_t friendlyTypeNameId) noexcept
+                                            PCWSTR description, PCWSTR rootType, uint32_t friendlyTypeNameId) noexcept
     {
         OleString classId;
         StringFromCLSID(T::GetObjectCLSID(), classId);
@@ -87,7 +87,7 @@ public:
 
         ATL::_ATL_REGMAP_ENTRY regmapEntries[] = {
             {L"DESCRIPTION", description},
-            {L"CLSID", classId },
+            {L"CLSID", classId},
             {L"ROOT_TYPE", rootType},
             {L"FRIENDLY_TYPE_NAME", friendlyTypeName.c_str()},
             {nullptr, nullptr}};
@@ -117,7 +117,7 @@ public:
     }
 
     static void MergeMenus(QCMINFO& queryInfo, HMENU menu,
-        ULONG uFlags = MM_ADDSEPARATOR | MM_SUBMENUSHAVEIDS | MM_DONTREMOVESEPS) noexcept
+                           ULONG uFlags = MM_ADDSEPARATOR | MM_SUBMENUSHAVEIDS | MM_DONTREMOVESEPS) noexcept
     {
         queryInfo.idCmdFirst =
             Shell_MergeMenus(queryInfo.hmenu, menu, queryInfo.indexMenu,
@@ -156,6 +156,11 @@ public:
                 return E_INVALIDARG;
 
             m_pidlFolder.CloneFrom(folder);
+            if (m_junctionPoint.IsEmpty())
+            {
+                m_junctionPoint.CloneFrom(folder);
+            }
+
             return S_OK;
         }
         catch (...)
@@ -220,11 +225,11 @@ public:
     // IShellFolder
 
     // Purpose: The shell calls this function to get the IShellFolder interface of a sub folder.
-    HRESULT __stdcall BindToObject(__RPC__in PCUIDLIST_RELATIVE pidlSubFolder, __RPC__in_opt LPBC, __RPC__in REFIID interfaceId, __RPC__deref_out_opt void** ppRetVal) noexcept override
+    HRESULT __stdcall BindToObject(__RPC__in PCUIDLIST_RELATIVE subFolder, __RPC__in_opt IBindCtx*, __RPC__in REFIID interfaceId, __RPC__deref_out_opt void** ppRetVal) noexcept override
     {
         try
         {
-            ATLTRACE(L"ShellFolderImpl::IShellFolder::BindToObject (instance=%p)\n", this);
+            ATLTRACE(L"ShellFolderImpl::IShellFolder::BindToObject (instance=%p, subFolder=%p)\n", this, subFolder);
 
             // Quick check if requested interface is supported at all (on our self).
             const HRESULT result = static_cast<T*>(this)->QueryInterface(interfaceId, ppRetVal);
@@ -233,19 +238,22 @@ public:
 
             static_cast<IUnknown*>(*ppRetVal)->Release();
 
+            ItemIDList bindFolder(GetRootFolder(), subFolder);
+
             // Get all sub folder items.
             std::vector<TItem> items;
-            while (pidlSubFolder)
+            while (subFolder)
             {
-                items.push_back(TItem(pidlSubFolder));
-                pidlSubFolder = ItemIDList::GetNextItem(pidlSubFolder);
+                items.push_back(TItem(subFolder));
+                subFolder = ItemIDList::GetNextItem(subFolder);
             }
 
             ATL::CComPtr<T> instance = CreateInstance();
-            RaiseExceptionIfFailed(instance->Initialize(GetRootFolder()));
+            instance->m_junctionPoint.Attach(m_junctionPoint.CloneFull());
+            RaiseExceptionIfFailed(instance->Initialize(bindFolder.GetAbsolute()));
             instance->InitializeSubFolder(items);
 
-            return instance->QueryInterface(interfaceId, ppRetVal);
+            return static_cast<T*>(instance)->QueryInterface(interfaceId, ppRetVal);
         }
         catch (...)
         {
@@ -268,7 +276,7 @@ public:
             {
                 // Win98 sometimes tries to compare empty items.
                 ATLTRACE(L"ShellFolderImpl::IShellFolder::CompareIDs (lparam=%d, pidl1=%p, pidl2=%p)\n",
-                    lParam, pidl1, pidl2);
+                         lParam, pidl1, pidl2);
                 return E_INVALIDARG;
             }
 
@@ -279,7 +287,7 @@ public:
                 TItem item2(pidl2);
 
                 ATLTRACE(L"ShellFolderImpl::IShellFolder::CompareIDs (lparam=%X, name1=%s, name2=%s)\n",
-                    lParam, item1.GetDisplayName(SHGDN_NORMAL).c_str(), item2.GetDisplayName(SHGDN_NORMAL).c_str());
+                         lParam, item1.GetDisplayName(SHGDN_NORMAL).c_str(), item2.GetDisplayName(SHGDN_NORMAL).c_str());
 
                 nResult = static_cast<T*>(this)->CompareItems(lParam, item1, item2);
                 if (nResult != 0)
@@ -429,9 +437,9 @@ public:
             else
             {
                 ATLTRACE(L"ShellFolderImpl::IShellFolder::GetUIObjectOf (instance=%p, idListCount=%d, interfaceId=?)\n", this, idListCount);
-                #ifdef _ATL_DEBUG_QI
+#ifdef _ATL_DEBUG_QI
                 ATL::AtlDumpIID(interfaceId, L"ShellFolderImpl::IShellFolder::GetUIObjectOf", E_NOINTERFACE);
-                #endif //  _ATL_DEBUG_QI
+#endif //  _ATL_DEBUG_QI
 
                 *ppv = nullptr;
             }
@@ -454,7 +462,7 @@ public:
             StrToStrRet(item.GetDisplayName(shgdnf).c_str(), lpname);
 
             ATLTRACE(L"ShellFolderImpl::GetDisplayNameOf (instance=%p, shgdnf=%x, name=%s)\n",
-                      this, shgdnf, item.GetDisplayName(shgdnf).c_str());
+                     this, shgdnf, item.GetDisplayName(shgdnf).c_str());
             return S_OK;
         }
         catch (...)
@@ -497,10 +505,10 @@ public:
 
     HRESULT __stdcall ParseDisplayName([[maybe_unused]] __RPC__in_opt HWND window, [[maybe_unused]] LPBC pbc, [[maybe_unused]] LPOLESTR displayName, __reserved DWORD*, __RPC__deref_out_opt PIDLIST_RELATIVE*, [[maybe_unused]] __RPC__inout_opt DWORD* attributes) noexcept override
     {
-        #ifdef _DEBUG
+#ifdef _DEBUG
         const DWORD attributesToTrace = attributes ? *attributes : 0;
         ATLTRACE(L"ShellFolderImpl::ParseDisplayName (hwnd=%d, pcb=%p, dname=%s, attrib=%d)\n", window, pbc, displayName, attributesToTrace);
-        #endif
+#endif
 
         return E_NOTIMPL;
     }
@@ -520,7 +528,7 @@ public:
             ItemIDList pidlNewItem(static_cast<T*>(this)->OnSetNameOf(hwndOwner, TItem(childItem), pszNewName, uFlags));
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, 0,
-                ItemIDList(m_pidlFolder, static_cast<PCUIDLIST_RELATIVE>(childItem)), ItemIDList(m_pidlFolder, pidlNewItem));
+                             ItemIDList(m_pidlFolder, static_cast<PCUIDLIST_RELATIVE>(childItem)), ItemIDList(m_pidlFolder, pidlNewItem));
 
             if (ppidlOut)
             {
@@ -543,7 +551,7 @@ public:
         try
         {
             ATLTRACE(L"ShellFolderImpl::EnumObjects (hwnd=%d, grfFlags=%d, path=%s)\n",
-                      window, grfFlags, GetPathFolderFile().c_str());
+                     window, grfFlags, GetPathJunctionPoint().c_str());
             if (ppRetVal == nullptr)
                 return E_POINTER;
 
@@ -570,7 +578,7 @@ public:
     {
         ATLTRACE(L"ShellFolderImpl::GetDefaultColumn\n");
 
-        *pSort    = m_sort;
+        *pSort = m_sort;
         *pDisplay = m_display;
 
         return S_OK;
@@ -635,7 +643,7 @@ public:
         return S_OK;
     }
 
-    HRESULT __stdcall GetMode(__RPC__out FOLDER_ENUM_MODE *mode) noexcept override
+    HRESULT __stdcall GetMode(__RPC__out FOLDER_ENUM_MODE* mode) noexcept override
     {
         ATLTRACE(L"ShellFolderImpl::IObjectWithFolderEnumMode::GetMode (pfeMode=%p)\n", mode);
 
@@ -765,11 +773,9 @@ public:
     }
 
 protected:
-    explicit ShellFolderImpl(ULONG sort = 0, ULONG display = 0) noexcept :
-        m_sort(sort),
-        m_display(display),
-        m_ownerWindow(nullptr),
-        m_cachedIsSupportedClipboardFormat(false)
+    explicit ShellFolderImpl(ULONG sort = 0, ULONG display = 0) noexcept
+        : m_sort(sort),
+          m_display(display)
     {
         ATLTRACE(L"ShellFolderImpl::ShellFolderImpl (instance=%p)\n", this);
     }
@@ -815,9 +821,9 @@ protected:
                              static_cast<USHORT>(lParam), IsBitSet(static_cast<ULONG>(lParam), SHCIDS_CANONICALONLY));
     }
 
-    std::wstring GetPathFolderFile() const
+    std::wstring GetPathJunctionPoint() const
     {
-        return std::wstring(SHGetPathFromIDList(m_pidlFolder.GetAbsolute()));
+        return std::wstring(SHGetPathFromIDList(m_junctionPoint.GetAbsolute()));
     }
 
     PIDLIST_ABSOLUTE GetRootFolder() const noexcept
@@ -899,69 +905,69 @@ protected:
         {
             switch (messageId)
             {
-                case DFM_MERGECONTEXTMENU:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=MergeContextMenu, wParam=%d, lParam=%p)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnDfmMergeContextMenu(dataObject, static_cast<uint32_t>(wParam), *reinterpret_cast<QCMINFO*>(lParam));
+            case DFM_MERGECONTEXTMENU:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=MergeContextMenu, wParam=%d, lParam=%p)\n", wParam, lParam);
+                return static_cast<T*>(this)->OnDfmMergeContextMenu(dataObject, static_cast<uint32_t>(wParam), *reinterpret_cast<QCMINFO*>(lParam));
 
-                case DFM_INVOKECOMMAND:
-                     ATLTRACE(L"ShellFolderImpl::OnDfmInvokeCommand (wParam=%d, lParam=%s)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnDfmInvokeCommand(window, dataObject, static_cast<int>(wParam), reinterpret_cast<wchar_t*>(lParam));
+            case DFM_INVOKECOMMAND:
+                ATLTRACE(L"ShellFolderImpl::OnDfmInvokeCommand (wParam=%d, lParam=%s)\n", wParam, lParam);
+                return static_cast<T*>(this)->OnDfmInvokeCommand(window, dataObject, static_cast<int>(wParam), reinterpret_cast<wchar_t*>(lParam));
 
-                case DFM_GETDEFSTATICID:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetDefStaticID, wParam=%d, lParam=%p)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnDfmGetStaticID(reinterpret_cast<int*>(lParam));
+            case DFM_GETDEFSTATICID:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetDefStaticID, wParam=%d, lParam=%p)\n", wParam, lParam);
+                return static_cast<T*>(this)->OnDfmGetStaticID(reinterpret_cast<int*>(lParam));
 
-                case DFM_CREATE:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=Create, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnDfmCreate();
+            case DFM_CREATE:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=Create, wParam=%d, lParam=%d)\n", wParam, lParam);
+                return static_cast<T*>(this)->OnDfmCreate();
 
-                case DFM_GETHELPTEXT:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetHelpTextA, nCmdId=%hu)\n", LOWORD(wParam));
-                    return static_cast<T*>(this)->OnDfmGetHelpTextA(LOWORD(wParam), reinterpret_cast<char*>(lParam), HIWORD(wParam));
+            case DFM_GETHELPTEXT:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetHelpTextA, nCmdId=%hu)\n", LOWORD(wParam));
+                return static_cast<T*>(this)->OnDfmGetHelpTextA(LOWORD(wParam), reinterpret_cast<char*>(lParam), HIWORD(wParam));
 
-                case DFM_GETHELPTEXTW:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetHelpTextW, nCmdId=%hu)\n", LOWORD(wParam));
-                    return static_cast<T*>(this)->OnDfmGetHelpTextW(LOWORD(wParam), reinterpret_cast<wchar_t*>(lParam), HIWORD(wParam));
+            case DFM_GETHELPTEXTW:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetHelpTextW, nCmdId=%hu)\n", LOWORD(wParam));
+                return static_cast<T*>(this)->OnDfmGetHelpTextW(LOWORD(wParam), reinterpret_cast<wchar_t*>(lParam), HIWORD(wParam));
 
-                case DFM_WM_MEASUREITEM:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=MeasureItem, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnDfmMeasureItem();
+            case DFM_WM_MEASUREITEM:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=MeasureItem, wParam=%d, lParam=%d)\n", wParam, lParam);
+                return static_cast<T*>(this)->OnDfmMeasureItem();
 
-                case DFM_WM_DRAWITEM:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=DrawItem, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnDfmDrawItem();
+            case DFM_WM_DRAWITEM:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=DrawItem, wParam=%d, lParam=%d)\n", wParam, lParam);
+                return static_cast<T*>(this)->OnDfmDrawItem();
 
-                case DFM_GETVERBW:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetVerbW, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnGetVerbW();
+            case DFM_GETVERBW:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetVerbW, wParam=%d, lParam=%d)\n", wParam, lParam);
+                return static_cast<T*>(this)->OnGetVerbW();
 
-                case DFM_GETVERBA:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetVerbA, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    return static_cast<T*>(this)->OnGetVerbA();
+            case DFM_GETVERBA:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=GetVerbA, wParam=%d, lParam=%d)\n", wParam, lParam);
+                return static_cast<T*>(this)->OnGetVerbA();
 
-                case DFM_DESTROY:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnDestruct, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    break;
+            case DFM_DESTROY:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnDestruct, wParam=%d, lParam=%d)\n", wParam, lParam);
+                break;
 
-                case DFM_MERGECONTEXTMENU_TOP:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnPreCreate, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    break;
+            case DFM_MERGECONTEXTMENU_TOP:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnPreCreate, wParam=%d, lParam=%d)\n", wParam, lParam);
+                break;
 
-                case DFM_INVOKECOMMANDEX:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnPreInvokeCmd, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    break;
+            case DFM_INVOKECOMMANDEX:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnPreInvokeCmd, wParam=%d, lParam=%d)\n", wParam, lParam);
+                break;
 
-                case DFM_MERGECONTEXTMENU_BOTTOM:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnQueryMenu, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    break;
+            case DFM_MERGECONTEXTMENU_BOTTOM:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnQueryMenu, wParam=%d, lParam=%d)\n", wParam, lParam);
+                break;
 
-                case DFM_WM_INITMENUPOPUP:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnInitMenuPopup, wParam=%d, lParam=%d)\n", wParam, lParam);
-                    break;
+            case DFM_WM_INITMENUPOPUP:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand (uMsg=OnInitMenuPopup, wParam=%d, lParam=%d)\n", wParam, lParam);
+                break;
 
-                default:
-                    ATLTRACE(L"ShellFolderImpl::OnDfmCommand Undocumented (uMsg=%d, wParam=%d, lParam=%d)\n", messageId, wParam, lParam);
-                    break;
+            default:
+                ATLTRACE(L"ShellFolderImpl::OnDfmCommand Undocumented (uMsg=%d, wParam=%d, lParam=%d)\n", messageId, wParam, lParam);
+                break;
             }
 
             return E_NOTIMPL;
@@ -1251,8 +1257,8 @@ protected:
         TItem item(childItem);
 
         ATLTRACE(L"ShellFolderImpl::GetItemDetailsOf (name=%s, iColumn=%d, str=%s)\n",
-                  item.GetDisplayName(SHGDN_NORMAL).c_str(), column,
-                  item.GetItemDetailsOf(column).c_str());
+                 item.GetDisplayName(SHGDN_NORMAL).c_str(), column,
+                 item.GetItemDetailsOf(column).c_str());
 
         StrToStrRet(item.GetItemDetailsOf(column).c_str(), &shellDetails->str);
     }
@@ -1277,7 +1283,7 @@ protected:
     {
         ATL::CComPtr<IDropTarget> dropTarget;
 
-        static_cast<T*>(this)->QueryInterface(__uuidof(IDropTarget), reinterpret_cast<void **>(&dropTarget));
+        static_cast<T*>(this)->QueryInterface(__uuidof(IDropTarget), reinterpret_cast<void**>(&dropTarget));
         return dropTarget;
     }
 
@@ -1312,7 +1318,7 @@ protected:
     DWORD OnDrop(IDataObject* dataObject, DWORD modifierKeyState, POINTL /*cursor*/, DWORD effect)
     {
         if ((effect & (DROPEFFECT_MOVE | DROPEFFECT_COPY)) == 0 ||
-             !dataObject || !static_cast<T*>(this)->IsSupportedClipboardFormat(dataObject))
+            !dataObject || !static_cast<T*>(this)->IsSupportedClipboardFormat(dataObject))
             return DROPEFFECT_NONE;
 
         effect = static_cast<T*>(this)->AddItemsFromDataObject(effect, dataObject);
@@ -1343,13 +1349,13 @@ protected:
     class ColumnInfo final
     {
     public:
-        ColumnInfo(std::wstring name, int fmt, SHCOLSTATEF csFlags) noexcept :
-            m_name(std::move(name)), m_fmt(fmt), m_csFlags(csFlags)
+        ColumnInfo(std::wstring name, int fmt, SHCOLSTATEF csFlags) noexcept
+            : m_name(std::move(name)), m_fmt(fmt), m_csFlags(csFlags)
         {
         }
 
         std::wstring m_name;
-        int         m_fmt;
+        int m_fmt;
         SHCOLSTATEF m_csFlags;
     };
 
@@ -1502,7 +1508,7 @@ protected:
             const PCUIDLIST_RELATIVE pidlOld = cfshellidlist.GetItem(i);
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, SHCNF_FLUSH,
-                ItemIDList(m_pidlFolder, pidlOld), ItemIDList(m_pidlFolder, itemsNew[i].GetItemIdList()));
+                             ItemIDList(m_pidlFolder, pidlOld), ItemIDList(m_pidlFolder, itemsNew[i].GetItemIdList()));
         }
     }
 
@@ -1568,6 +1574,7 @@ private:
     }
 
     ItemIDList m_pidlFolder;
+    ItemIDList m_junctionPoint;
     std::vector<ColumnInfo> m_columnInfos;
     HWND m_ownerWindow{};
     bool m_cachedIsSupportedClipboardFormat{};
