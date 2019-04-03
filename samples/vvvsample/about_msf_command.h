@@ -10,7 +10,7 @@
 #include <msf.h>
 
 
-class AboutMSFCommand : public msf::ContextMenuCommand
+class AboutMSFCommand final : public msf::ContextMenuCommand
 {
 public:
     void operator()(const CMINVOKECOMMANDINFO* pici, const std::vector<std::wstring>& /* fileNames */) override

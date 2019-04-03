@@ -13,7 +13,7 @@
 // Note: owner of the instance of this class must keep passed data object alive.
 //       This class doesn't do increase the reference count to prevent circular referencing.
 
-class CfFileContentsHandler : public msf::ClipboardFormatHandler
+class CfFileContentsHandler final : public msf::ClipboardFormatHandler
 {
 public:
     explicit CfFileContentsHandler(IDataObject* dataObjectOuter) :
@@ -36,7 +36,7 @@ public:
         if (!msf::IsBitSet(formatEtc.tymed, TYMED_HGLOBAL))
             return DV_E_TYMED;
 
-        if (static_cast<uint32_t>(formatEtc.lindex) >= GetCfShellIdList()->GetItemCount())
+        if (static_cast<uint32_t>(formatEtc.lindex) >= GetCfShellIdList()->size())
             return DV_E_LINDEX;
 
         return S_OK;

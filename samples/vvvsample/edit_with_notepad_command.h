@@ -9,7 +9,7 @@
 #include <msf.h>
 
 
-class EditWithNotepadCommand : public msf::ContextMenuCommand
+class EditWithNotepadCommand final : public msf::ContextMenuCommand
 {
 public:
     void operator()(const CMINVOKECOMMANDINFO*, const std::vector<std::wstring>& filenames) override

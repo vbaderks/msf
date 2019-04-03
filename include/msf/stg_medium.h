@@ -22,23 +22,23 @@ namespace msf {
 class StorageMedium final : public STGMEDIUM
 {
 public:
-    static HGLOBAL GlobalClone(HGLOBAL hglobIn)
+    static HGLOBAL GlobalClone(HGLOBAL source)
     {
-        if (!hglobIn)
+        if (!source)
             return nullptr;
 
-        util::GlobalLock<void> globallock(hglobIn);
+        const util::GlobalLock<void> globalLock(source);
 
-        const size_t cb = GlobalSize(hglobIn);
-        const HGLOBAL hglobOut = GlobalAllocThrow(cb);
-        CopyMemory(hglobOut, globallock.get(), cb);
-        return hglobOut;
+        const size_t size = GlobalSize(source);
+        const HGLOBAL result = GlobalAllocThrow(size);
+        CopyMemory(result, globalLock.get(), size);
+        return result;
     }
 
-    static void SetHGlobal(STGMEDIUM& stgmedium, HGLOBAL hglobal) noexcept
+    static void SetHGlobal(STGMEDIUM& stgmedium, HGLOBAL globalBuffer) noexcept
     {
         stgmedium.tymed          = TYMED_HGLOBAL;
-        stgmedium.hGlobal        = hglobal;
+        stgmedium.hGlobal        = globalBuffer;
         stgmedium.pUnkForRelease = nullptr;
     }
 
@@ -73,7 +73,7 @@ public:
     StorageMedium& operator=(const StorageMedium&) = delete;
     StorageMedium& operator=(StorageMedium&&) = delete;
 
-    HGLOBAL GetHGlobal() const noexcept
+    [[nodiscard]] HGLOBAL GetHGlobal() const noexcept
     {
         ATLASSERT(tymed == TYMED_HGLOBAL && "Can only get hglobal if correct type");
         return hGlobal;

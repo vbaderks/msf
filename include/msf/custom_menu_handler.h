@@ -22,9 +22,9 @@ public:
     CustomMenuHandler& operator=(const CustomMenuHandler&) = delete;
     CustomMenuHandler& operator=(CustomMenuHandler&&) = delete;
 
-    virtual void InitializeItemInfo(MenuItemInfo& menuIteminfo) noexcept(false)
+    virtual void InitializeItemInfo(MenuItemInfo& menuItemInfo) noexcept(false)
     {
-        menuIteminfo.SetOwnerDraw();
+        menuItemInfo.SetOwnerDraw();
     }
 
     // Purpose: called by OS to require the size of the menu item.

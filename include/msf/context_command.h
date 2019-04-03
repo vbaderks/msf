@@ -14,10 +14,10 @@ class ContextMenuCommand
 public:
     virtual ~ContextMenuCommand() = default;
 
-    ContextMenuCommand(const ContextMenuCommand& other) = delete;
-    ContextMenuCommand(ContextMenuCommand&& other) = delete;
+    ContextMenuCommand(const ContextMenuCommand&) = delete;
+    ContextMenuCommand(ContextMenuCommand&&) = delete;
     ContextMenuCommand& operator=(const ContextMenuCommand&) = delete;
-    ContextMenuCommand& operator=(ContextMenuCommand&& other) = delete;
+    ContextMenuCommand& operator=(ContextMenuCommand&&) = delete;
 
     virtual void operator()(const CMINVOKECOMMANDINFO*, const std::vector<std::wstring>& /*filenames*/) = 0;
 

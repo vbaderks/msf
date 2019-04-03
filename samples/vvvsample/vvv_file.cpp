@@ -11,7 +11,7 @@
 #include <filesystem>
 
 using std::wstring;
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 const wchar_t* TSZ_APP_NAME_DIRECTORY = L"directory";
 const wchar_t* TSZ_FILE_COUNT         = L"filecount";
@@ -94,7 +94,7 @@ void VVVFile::DeleteItems(const std::vector<VVVItem>& items) const
 
 void VVVFile::SetItem(const VVVItem& item) const
 {
-    auto strAppNameItem = GetAppNameItem(item.GetID());
+    const auto strAppNameItem = GetAppNameItem(item.GetID());
 
     WritePrivateProfileString(strAppNameItem.c_str(), TSZ_NAME, item.GetName().c_str());
     WritePrivateProfileInt(strAppNameItem.c_str(), TSZ_SIZE, item.GetSize());
@@ -129,7 +129,7 @@ void VVVFile::AddItem(const VVVItem& item) const
 
 void VVVFile::DeleteItem(const VVVItem& item) const
 {
-    auto strAppNameItem = GetAppNameItem(item.GetID());
+    const auto strAppNameItem = GetAppNameItem(item.GetID());
     ATLASSERT(GetPrivateProfileInt(strAppNameItem.c_str(), TSZ_ACTIVE) == 1); // item was already deleted!
     WritePrivateProfileInt(strAppNameItem.c_str(), TSZ_ACTIVE, 0);
 }

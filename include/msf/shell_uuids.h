@@ -6,7 +6,7 @@
 #pragma once
 
 
-// The Win32 SDK header files don't attach GUIDs to some of the shell 
+// The Win32 SDK header files don't attach GUIDs to some of the shell
 // interfaces or sometimes the visual C++ comdef.h file hides the SDK comdef.h file
 
 struct __declspec(uuid("000214E4-0000-0000-C000-000000000046")) IContextMenu;

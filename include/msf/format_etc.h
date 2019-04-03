@@ -29,9 +29,9 @@ public:
     }
 
     explicit FormatEtc(CLIPFORMAT cfformat, DWORD dwtymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,
-        DWORD dwaspect = DVASPECT_CONTENT, LONG index = -1) noexcept : FORMATETC()
+        DWORD aspect = DVASPECT_CONTENT, LONG index = -1) noexcept : FORMATETC()
     {
-        CommonConstruct(cfformat, dwtymed, pdvtd, dwaspect, index);
+        CommonConstruct(cfformat, dwtymed, pdvtd, aspect, index);
     }
 
     explicit FormatEtc(PCWSTR format, DWORD tymed = TYMED_HGLOBAL, DVTARGETDEVICE* pdvtd = nullptr,

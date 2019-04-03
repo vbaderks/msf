@@ -46,7 +46,7 @@ public:
         return pidl;
     }
 
-    static PUIDLIST_RELATIVE CreateItemIdListWithTerminator(size_t sizeItem)
+    [[nodiscard]] static PUIDLIST_RELATIVE CreateItemIdListWithTerminator(size_t sizeItem)
     {
         const size_t size = sizeof(short) + sizeItem;
 
@@ -54,8 +54,8 @@ public:
         if (!pidl)
             RaiseException(E_OUTOFMEMORY);
 
-        LPSHITEMID const pshitemid = &(pidl->mkid);
-        pshitemid->cb = static_cast<USHORT>(size);
+        LPSHITEMID const shellItemId = &(pidl->mkid);
+        shellItemId->cb = static_cast<USHORT>(size);
 
         PUIDLIST_RELATIVE const pidlTerminator = ILGetNext(pidl);
         LPSHITEMID const pItemIdTerminator = &(pidlTerminator->mkid);

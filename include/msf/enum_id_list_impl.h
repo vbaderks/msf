@@ -45,7 +45,7 @@ public:
                 ++m_nCount;
             }
 
-            ULONG size() const noexcept
+            [[nodiscard]] ULONG size() const noexcept
             {
                 return m_nCount;
             }

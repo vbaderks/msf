@@ -9,6 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "msf", "include\msf\msf.vcxi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A931BB65-8220-49A1-9576-FF587FA23042}"
 	ProjectSection(SolutionItems) = preProject
+		.clang-format = .clang-format
 		.editorconfig = .editorconfig
 		cpp.hint = cpp.hint
 		default.ruleset = default.ruleset
@@ -77,7 +78,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {275E6426-CA41-4BF4-8EAF-3AAEA3B4E80E}
 		SolutionGuid = {55525444-7D72-45A1-B8F0-08F066B60B23}
+		        SolutionGuid = {275E6426-CA41-4BF4-8EAF-3AAEA3B4E80E}
 	EndGlobalSection
 EndGlobal

@@ -214,7 +214,7 @@ protected:
     }
 
 private:
-    ClipboardFormatHandler* FindClipFormatHandler(CLIPFORMAT clipFormat) const noexcept
+    [[nodiscard]] ClipboardFormatHandler* FindClipFormatHandler(CLIPFORMAT clipFormat) const noexcept
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
             [=](const std::unique_ptr<ClipboardFormatHandler>& clipFormatHandler) noexcept
@@ -224,22 +224,22 @@ private:
         return handler == m_cfhandlers.end() ? nullptr : (*handler).get();
     }
 
-    void GetRegisteredFormats(DWORD dwDirection, std::vector<FormatEtc>& formatetcs) const
+    void GetRegisteredFormats(DWORD direction, std::vector<FormatEtc>& formatEtcs) const
     {
-        for (auto& handler : m_cfhandlers)
+        for (const auto& handler : m_cfhandlers)
         {
-            if (dwDirection == DATADIR_GET)
+            if (direction == DATADIR_GET)
             {
                 if (handler->CanGetData())
                 {
-                    formatetcs.push_back(FormatEtc(handler->GetClipFormat()));
+                    formatEtcs.push_back(FormatEtc(handler->GetClipFormat()));
                 }
             }
             else
             {
                 if (handler->CanSetData())
                 {
-                    formatetcs.push_back(FormatEtc(handler->GetClipFormat()));
+                    formatEtcs.push_back(FormatEtc(handler->GetClipFormat()));
                 }
             }
         }
@@ -249,10 +249,10 @@ private:
     {
         IEnumFORMATETCPtr enumFormatEtc = m_pidldata.EnumFormatEtc(dwDirection);
 
-        FormatEtc formatetc;
-        while (enumFormatEtc.Next(formatetc))
+        FormatEtc formatEtc;
+        while (enumFormatEtc.Next(formatEtc))
         {
-            formatEtcs.push_back(formatetc);
+            formatEtcs.push_back(formatEtc);
         }
     }
 

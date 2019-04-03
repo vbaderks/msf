@@ -31,15 +31,15 @@ public:
 
     void GetData(const FORMATETC&, STGMEDIUM& medium) const override
     {
-        msf::CfShellIdList cfshellidlist(m_dataObject);
+        const msf::CfShellIdList cfshellidlist{m_dataObject};
 
         // Note: FILEGROUPDESCRIPTOR provides the count and 1 FILEDESCRIPTOR.
-        const size_t size = sizeof(FILEGROUPDESCRIPTOR) + ((cfshellidlist.GetItemCount() - 1) * sizeof(FILEDESCRIPTOR)); // -V119
+        const size_t size = sizeof(FILEGROUPDESCRIPTOR) + ((cfshellidlist.size() - 1) * sizeof(FILEDESCRIPTOR)); // -V119
 
         const HGLOBAL hg = msf::GlobalAllocThrow(size);
         auto* fileGroupDescriptor = static_cast<FILEGROUPDESCRIPTOR*>(hg);
 
-        fileGroupDescriptor->cItems = static_cast<uint32_t>(cfshellidlist.GetItemCount());
+        fileGroupDescriptor->cItems = static_cast<uint32_t>(cfshellidlist.size());
         for (unsigned int i = 0; i < fileGroupDescriptor->cItems; ++i)
         {
             FILEDESCRIPTOR& fd = fileGroupDescriptor->fgd[i];

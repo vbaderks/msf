@@ -5,8 +5,6 @@
 //
 #pragma once
 
-#include <shlobj.h>
-
 // Undocumented IShellFolderViewCB callback notifications IDs.
 // Most info was collected from public domain info on the Internet.
 constexpr uint32_t SFVM_SELECTIONCHANGED            =   8;

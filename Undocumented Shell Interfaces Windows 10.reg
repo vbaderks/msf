@@ -8,9 +8,30 @@ Windows Registry Editor Version 5.00
 ; Note: Interfaces are sorted by GUID.
 
 
-; IShellIconOverlayIdentifier
-[HKEY_CLASSES_ROOT\Interface\{0C6C4200-C589-11D0-999A-00C04FD655E1}]
-@="IShellIconOverlayIdentifier"
+; IQueryInfo
+[HKEY_CLASSES_ROOT\Interface\{00021500-0000-0000-C000-000000000046}]
+@="IQueryInfo"
 
-[HKEY_CLASSES_ROOT\Interface\{0C6C4200-C589-11D0-999A-00C04FD655E1}\NumMethods]
-@="3"
+[HKEY_CLASSES_ROOT\Interface\{00021500-0000-0000-c000-000000000046}\NumMethods]
+@="5"
+
+; IShellFolderViewCB
+[HKEY_CLASSES_ROOT\Interface\{2047E320-F2A9-11CE-AE65-08002B2E1262}]
+@="IShellFolderViewCB"
+
+[HKEY_CLASSES_ROOT\Interface\{2047E320-F2A9-11CE-AE65-08002B2E1262}\NumMethods]
+@="1"
+
+; IShellIconOverlay
+[HKEY_CLASSES_ROOT\Interface\{7D688A70-C613-11D0-999B-00C04FD655E1}]
+@="IShellIconOverlay"
+
+[HKEY_CLASSES_ROOT\Interface\{7D688A70-C613-11D0-999B-00C04FD655E1}\NumMethods]
+@="5"
+
+; IShellInitUndocumentedWin10
+[HKEY_CLASSES_ROOT\Interface\{C73748E3-E2B5-44E7-ABC2-B43761FBD97C}]
+@="IShellInitUndocumentedWin10"
+
+[HKEY_CLASSES_ROOT\Interface\{C73748E3-E2B5-44E7-ABC2-B43761FBD97C}\NumMethods]
+@="1"

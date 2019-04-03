@@ -14,9 +14,9 @@ namespace msf
 
 inline ATL::CComPtr<IEnumFORMATETC> SHCreateStdEnumFmtEtc(uint32_t cfmt, const FORMATETC* formatetc)
 {
-    ATL::CComPtr<IEnumFORMATETC> enumformatetc;
-    RaiseExceptionIfFailed(::SHCreateStdEnumFmtEtc(cfmt, formatetc, &enumformatetc));
-    return enumformatetc;
+    ATL::CComPtr<IEnumFORMATETC> enumFormatEtc;
+    RaiseExceptionIfFailed(::SHCreateStdEnumFmtEtc(cfmt, formatetc, &enumFormatEtc));
+    return enumFormatEtc;
 }
 
 
@@ -45,7 +45,7 @@ class EnumFORMATETC :
     public ATL::CComEnumOnSTL<IEnumFORMATETC,
                               &IID_IEnumFORMATETC,    // name and IID of enumerator interface
                               FORMATETC,              // type of object to return
-                              FormatEtcToFormatEtc,  // copy policy class
+                              FormatEtcToFormatEtc,   // copy policy class
                               std::vector<FORMATETC>> // type of collection holding the data
 {
 public:

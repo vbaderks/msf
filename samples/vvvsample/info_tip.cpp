@@ -32,7 +32,7 @@ public:
 
     void InitializeCore(PCWSTR filename, DWORD /*dwMode*/) final
     {
-        VVVFile vvvFile{ filename };
+        const VVVFile vvvFile{filename};
 
         m_infoTip =
             msf::LoadResourceString(IDS_SHELLEXT_LABEL) + L": " + vvvFile.GetLabel() + L"\n" +

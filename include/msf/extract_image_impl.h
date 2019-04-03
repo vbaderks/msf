@@ -93,14 +93,14 @@ public:
 
     // IExtractImage
     HRESULT __stdcall GetLocation(PWSTR pszPathBuffer, DWORD cch, __RPC__inout_opt DWORD* pdwPriority,
-                                  __RPC__in const SIZE* psize, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags) noexcept override
+                                  __RPC__in const SIZE* size, DWORD dwRecClrDepth, __RPC__inout DWORD* pdwFlags) noexcept override
     {
         try
         {
             ATLTRACE("ExtractImageImpl::GetLocation (instance=%p, flags=%d)\n", this, *pdwFlags);
 
             Dispose();
-            m_bitmap = static_cast<T*>(this)->CreateImage(*psize, dwRecClrDepth, *pdwFlags);
+            m_bitmap = static_cast<T*>(this)->CreateImage(*size, dwRecClrDepth, *pdwFlags);
 
             RaiseExceptionIfFailed(StringCchCopy(pszPathBuffer, cch, static_cast<T*>(this)->GetPathBuffer().c_str()));
             *pdwFlags |= IEIFLAG_CACHE;
@@ -135,7 +135,7 @@ public:
     // IExtractImage2
     HRESULT __stdcall GetDateStamp(__RPC__in FILETIME* dateStamp) noexcept override
     {
-        ATLTRACE(L"ExtractImageImpl::GetDateStamp (instance=%p, pdatastamp=%p)\n", this, dateStamp);
+        ATLTRACE(L"ExtractImageImpl::GetDateStamp (instance=%p, dateStamp=%p)\n", this, dateStamp);
 
         if (!dateStamp)
             return E_POINTER;
@@ -152,7 +152,7 @@ public:
     //          extract the image from. Can be used to optimize
     //          cases were the image is extracted from a different file
     //          then set by IPersistFile::Load.
-    const std::wstring& GetPathBuffer() const noexcept
+    [[nodiscard]] const std::wstring& GetPathBuffer() const noexcept
     {
         return m_filename;
     }

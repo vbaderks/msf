@@ -21,7 +21,7 @@ public:
     {
     public:
         explicit Icon(HICON icon = nullptr) noexcept :
-            m_icon(icon)
+            m_icon{icon}
         {
         }
 
@@ -47,7 +47,7 @@ public:
             m_icon = nullptr;
         }
 
-        HICON get() const noexcept
+        [[nodiscard]] HICON get() const noexcept
         {
             return m_icon;
         }
@@ -122,9 +122,9 @@ protected:
         }
     }
 
-    HRESULT __stdcall Extract(PCWSTR /*pszFile*/, uint32_t /*nIconIndex*/, _Out_opt_ HICON* phiconLarge, _Out_opt_ HICON* phiconSmall, uint32_t nIconSize) noexcept override
+    HRESULT __stdcall Extract(PCWSTR /*pszFile*/, uint32_t /*nIconIndex*/, _Out_opt_ HICON* hiconLarge, _Out_opt_ HICON* phiconSmall, uint32_t nIconSize) noexcept override
     {
-        ATLTRACE(L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, phiconLarge, phiconSmall);
+        ATLTRACE(L"ExtractIcon::Extract, instance=%p, pl=%p, ps=%p\n", this, hiconLarge, phiconSmall);
 
         try
         {
@@ -136,13 +136,13 @@ protected:
             RaiseExceptionIf(!Shell_GetImageLists(&himLarge, &himSmall));
 
             Icon iconLarge;
-            if (phiconLarge)
+            if (hiconLarge)
             {
                 if (LOWORD(nIconSize) != 32)
                     return E_INVALIDARG;
 
                 iconLarge = GetIcon(himLarge, m_iconIndex);
-                *phiconLarge = iconLarge.get();
+                *hiconLarge = iconLarge.get();
             }
 
             if (phiconSmall)

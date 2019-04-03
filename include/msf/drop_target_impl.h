@@ -141,14 +141,14 @@ public:
         return S_OK;
     }
 
-    HRESULT __stdcall Drop(_In_ IDataObject* dataObject, DWORD modifierFlagsfKeyState, POINTL cursorLocation, _In_ DWORD* effect) noexcept override
+    HRESULT __stdcall Drop(_In_ IDataObject* dataObject, DWORD modifierFlagsKeyState, POINTL cursorLocation, _In_ DWORD* effect) noexcept override
     {
-        ATLTRACE(L"DropTargetImpl::IDropTarget::Drop (instance=%p, grfKeyState=%d, effect=%d)\n", this, modifierFlagsfKeyState, *effect);
+        ATLTRACE(L"DropTargetImpl::IDropTarget::Drop (instance=%p, grfKeyState=%d, effect=%d)\n", this, modifierFlagsKeyState, *effect);
 
         try
         {
             // Derived class needs to implement: DWORD OnDrop(IDataObject* dataObject, DWORD grfKeyState, POINTL cursorLocation, DWORD effect)
-            *effect = static_cast<T*>(this)->OnDrop(dataObject, modifierFlagsfKeyState, cursorLocation, *effect);
+            *effect = static_cast<T*>(this)->OnDrop(dataObject, modifierFlagsKeyState, cursorLocation, *effect);
             return S_OK;
         }
         catch (...)

@@ -21,17 +21,16 @@
 #include "performed_drop_effect_sink.h"
 #include "query_info.h"
 #include "shell_folder_context_menu.h"
-#include "shell_uuids.h"
 #include "smartptr/shellbrowserptr.h"
 
 namespace msf
 {
 
 #ifndef WM_GETISHELLBROWSER
-    #define WM_GETISHELLBROWSER (WM_USER + 7)
+constexpr uint32_t WM_GETISHELLBROWSER = WM_USER + 7;
 #endif
 
-const SFGAOF SFGAO_UNDEFINED = 0xFFFFFFFF;
+constexpr SFGAOF SFGAO_UNDEFINED = 0xFFFFFFFF;
 
 struct __declspec(uuid("6FE2B64C-5012-4B88-BB9D-7CE4F45E3751")) IConnectionFactory;   // Undocumented interface, seen on Windows 8
 struct __declspec(uuid("93F81976-6A0D-42C3-94DD-AA258A155470")) IShellUndocumented93; // Seen on Windows 8
@@ -112,16 +111,16 @@ public:
 
     static void StrToStrRet(const wchar_t* sz, STRRET* stringReturn)
     {
-        stringReturn->uType = STRRET_WSTR;
         RaiseExceptionIfFailed(SHStrDup(sz, &stringReturn->pOleStr));
+        stringReturn->uType = STRRET_WSTR;
     }
 
     static void MergeMenus(QCMINFO& queryInfo, HMENU menu,
-                           ULONG uFlags = MM_ADDSEPARATOR | MM_SUBMENUSHAVEIDS | MM_DONTREMOVESEPS) noexcept
+                           ULONG options = MM_ADDSEPARATOR | MM_SUBMENUSHAVEIDS | MM_DONTREMOVESEPS) noexcept
     {
         queryInfo.idCmdFirst =
             Shell_MergeMenus(queryInfo.hmenu, menu, queryInfo.indexMenu,
-                             queryInfo.idCmdFirst, queryInfo.idCmdLast, uFlags);
+                             queryInfo.idCmdFirst, queryInfo.idCmdLast, options);
     }
 
     static ATL::CComPtr<T> CreateInstance()
@@ -454,15 +453,15 @@ public:
 
     // Purpose: The Shell will call this function to get the name (string) of the item.
     //          (column 0 in details view mode).
-    HRESULT __stdcall GetDisplayNameOf(__RPC__in_opt PCUITEMID_CHILD childItem, SHGDNF shgdnf, __RPC__out LPSTRRET lpname) noexcept override
+    HRESULT __stdcall GetDisplayNameOf(__RPC__in_opt PCUITEMID_CHILD childItem, SHGDNF shellDisplayNameFlags, __RPC__out STRRET* name) noexcept override
     {
         try
         {
             TItem item(childItem);
-            StrToStrRet(item.GetDisplayName(shgdnf).c_str(), lpname);
+            StrToStrRet(item.GetDisplayName(shellDisplayNameFlags).c_str(), name);
 
-            ATLTRACE(L"ShellFolderImpl::GetDisplayNameOf (instance=%p, shgdnf=%x, name=%s)\n",
-                     this, shgdnf, item.GetDisplayName(shgdnf).c_str());
+            ATLTRACE(L"ShellFolderImpl::GetDisplayNameOf (instance=%p, shellDisplayNameFlags=%x, name=%s)\n",
+                     this, shellDisplayNameFlags, item.GetDisplayName(shellDisplayNameFlags).c_str());
             return S_OK;
         }
         catch (...)
@@ -513,7 +512,7 @@ public:
         return E_NOTIMPL;
     }
 
-    HRESULT __stdcall SetNameOf(_In_opt_ HWND hwndOwner, _In_ PCUITEMID_CHILD childItem, _In_ const OLECHAR* pszNewName, SHGDNF uFlags, _Outptr_opt_ PITEMID_CHILD* ppidlOut) noexcept override
+    HRESULT __stdcall SetNameOf(_In_opt_ HWND hwndOwner, _In_ PCUITEMID_CHILD childItem, _In_ const OLECHAR* pszNewName, SHGDNF flags, _Outptr_opt_ PITEMID_CHILD* ppidlOut) noexcept override
     {
         ATLTRACE(L"ShellFolderImpl::SetNameOf (hwnd=%d, szName=%s)\n", hwndOwner, pszNewName);
 
@@ -525,7 +524,7 @@ public:
                 *ppidlOut = nullptr;
             }
 
-            ItemIDList pidlNewItem(static_cast<T*>(this)->OnSetNameOf(hwndOwner, TItem(childItem), pszNewName, uFlags));
+            ItemIDList pidlNewItem(static_cast<T*>(this)->OnSetNameOf(hwndOwner, TItem(childItem), pszNewName, flags));
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, 0,
                              ItemIDList(m_pidlFolder, static_cast<PCUIDLIST_RELATIVE>(childItem)), ItemIDList(m_pidlFolder, pidlNewItem));
@@ -1106,25 +1105,25 @@ protected:
     {
         try
         {
-            CfShellIdList cfshellidlist(dataObject);
+            const CfShellIdList shellItemIds(dataObject);
 
-            if (cfshellidlist.IsEmpty())
+            if (shellItemIds.empty())
             {
                 ATLTRACE(L"ShellFolderImpl::OnDfmCmdProperties (nothing to do, list is empty)\n");
             }
             else
             {
                 std::vector<TItem> items;
-                RetrieveItems(cfshellidlist, items);
+                RetrieveItems(shellItemIds, items);
 
-                VerifyAttribute(cfshellidlist, SFGAO_HASPROPSHEET);
+                VerifyAttribute(shellItemIds, SFGAO_HASPROPSHEET);
 
                 const long eventId = static_cast<T*>(this)->OnProperties(window, items);
 
                 if (IsBitSet(eventId, SHCNE_RENAMEITEM))
                 {
                     ATLTRACE(L"ShellFolderImpl::OnDfmCmdProperties (firing SHCNE_RENAMEITEM)\n");
-                    ReportRenameChangeNotify(cfshellidlist, items);
+                    ReportRenameChangeNotify(shellItemIds, items);
                 }
 
                 if (IsBitSet(eventId, SHCNE_ATTRIBUTES))
@@ -1146,25 +1145,25 @@ protected:
     //          Override this function to handle special delete requirements.
     void OnDeleteFromDataObject(HWND window, _In_ IDataObject* dataObject)
     {
-        CfShellIdList cfshellidlist(dataObject);
+        const CfShellIdList shellItemIds(dataObject);
 
-        if (cfshellidlist.IsEmpty())
+        if (shellItemIds.empty())
         {
             ATLTRACE(L"ShellFolderImpl::OnDeleteFromDataObject (nothing to do, list is empty)\n");
         }
         else
         {
             std::vector<TItem> items;
-            RetrieveItems(cfshellidlist, items);
+            RetrieveItems(shellItemIds, items);
 
-            VerifyAttribute(cfshellidlist, SFGAO_CANDELETE);
+            VerifyAttribute(shellItemIds, SFGAO_CANDELETE);
 
             const long wEventId = static_cast<T*>(this)->OnDelete(window, items);
 
             if (IsBitSet(wEventId, SHCNE_DELETE))
             {
                 ATLTRACE(L"ShellFolderImpl::OnDeleteFromDataObject (firing SHCNE_DELETEs)\n");
-                ReportChangeNotify(cfshellidlist, SHCNE_DELETE);
+                ReportChangeNotify(shellItemIds, SHCNE_DELETE);
             }
 
             if (IsBitSet(wEventId, SHCNE_UPDATEDIR))
@@ -1415,11 +1414,11 @@ protected:
         RetrieveItems(cfShellIdList, items);
     }
 
-    void RetrieveItems(const CfShellIdList& cfshellidlist, std::vector<TItem>& items) const
+    void RetrieveItems(const CfShellIdList& shellItemIds, std::vector<TItem>& items) const
     {
-        for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
+        for (size_t i = 0; i < shellItemIds.size(); ++i)
         {
-            PCUIDLIST_RELATIVE childItem = cfshellidlist.GetItem(i);
+            PCUIDLIST_RELATIVE childItem = shellItemIds.GetItem(i);
             TItem item(childItem);
             items.push_back(item);
         }
@@ -1427,23 +1426,23 @@ protected:
 
     void VerifyAttribute(IDataObject* dataObject, SFGAOF sfgaofMask) const
     {
-        const CfShellIdList cfshellidlist(dataObject);
+        const CfShellIdList shellItemIds(dataObject);
 
-        VerifyAttribute(cfshellidlist, sfgaofMask);
+        VerifyAttribute(shellItemIds, sfgaofMask);
     }
 
-    void VerifyAttribute(const CfShellIdList& cfshellidlist, SFGAOF sfgaofMask) const
+    void VerifyAttribute(const CfShellIdList& shellItemIds, SFGAOF sfgaofMask) const
     {
-        if (!HasAttributesOf(cfshellidlist, sfgaofMask))
+        if (!HasAttributesOf(shellItemIds, sfgaofMask))
         {
             ATLTRACE(L"ShellFolderImpl::VerifyAttribute failure\n");
             RaiseException(E_INVALIDARG);
         }
     }
 
-    bool HasAttributesOf(const CfShellIdList& cfshellidlist, SFGAOF sfgaofMask) const
+    [[nodiscard]] bool HasAttributesOf(const CfShellIdList& shellItemIds, SFGAOF sfgaofMask) const
     {
-        const size_t itemCount = cfshellidlist.GetItemCount();
+        const size_t itemCount = shellItemIds.size();
 
         SFGAOF sfgaof = static_cast<const T*>(this)->GetAttributesOfGlobal(static_cast<uint32_t>(itemCount), sfgaofMask);
         if (sfgaof == SFGAO_UNDEFINED)
@@ -1452,7 +1451,7 @@ protected:
 
             for (size_t i = 0; i < itemCount; ++i)
             {
-                PCUIDLIST_RELATIVE childItem = cfshellidlist.GetItem(i);
+                PCUIDLIST_RELATIVE childItem = shellItemIds.GetItem(i);
                 TItem item(childItem);
                 sfgaof &= static_cast<const T*>(this)->GetAttributeOf(static_cast<uint32_t>(itemCount), item, sfgaofMask);
 
@@ -1471,19 +1470,19 @@ protected:
         ChangeNotifyPidl(SHCNE_CREATE, SHCNF_FLUSH, ItemIDList(m_pidlFolder, item));
     }
 
-    void ReportChangeNotify(const std::vector<TItem>& items, long eventId, uint32_t uFlags = SHCNF_FLUSH) const
+    void ReportChangeNotify(const std::vector<TItem>& items, long eventId, uint32_t flags = SHCNF_FLUSH) const
     {
         for (auto item : items)
         {
-            ChangeNotifyPidl(eventId, uFlags, ItemIDList(m_pidlFolder, item.GetItemIdList()));
+            ChangeNotifyPidl(eventId, flags, ItemIDList(m_pidlFolder, item.GetItemIdList()));
         }
     }
 
-    void ReportChangeNotify(const CfShellIdList& cfshellidlist, long eventId, uint32_t flags = SHCNF_FLUSH) const
+    void ReportChangeNotify(const CfShellIdList& items, long eventId, uint32_t flags = SHCNF_FLUSH) const
     {
-        for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
+        for (size_t i = 0; i < items.size(); ++i)
         {
-            const PCUIDLIST_RELATIVE childItem = cfshellidlist.GetItem(i);
+            const PCUIDLIST_RELATIVE childItem = items.GetItem(i);
 
             ChangeNotifyPidl(eventId, flags, ItemIDList(m_pidlFolder.GetAbsolute(), childItem));
         }
@@ -1491,21 +1490,21 @@ protected:
 
     void ReportUpdateItemChangeNotify(IDataObject* dataObject) const
     {
-        CfShellIdList cfshellidlist(dataObject);
+        const CfShellIdList items(dataObject);
 
-        for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
+        for (size_t i = 0; i < items.size(); ++i)
         {
-            const PCUIDLIST_RELATIVE childItem = cfshellidlist.GetItem(i);
+            const PCUIDLIST_RELATIVE childItem = items.GetItem(i);
 
             ChangeNotifyPidl(SHCNE_ATTRIBUTES, SHCNF_FLUSH, ItemIDList{m_pidlFolder, childItem});
         }
     }
 
-    void ReportRenameChangeNotify(const CfShellIdList& cfshellidlist, const std::vector<TItem>& itemsNew) const
+    void ReportRenameChangeNotify(const CfShellIdList& items, const std::vector<TItem>& itemsNew) const
     {
-        for (size_t i = 0; i < cfshellidlist.GetItemCount(); ++i)
+        for (size_t i = 0; i < items.size(); ++i)
         {
-            const PCUIDLIST_RELATIVE pidlOld = cfshellidlist.GetItem(i);
+            const PCUIDLIST_RELATIVE pidlOld = items.GetItem(i);
 
             ChangeNotifyPidl(SHCNE_RENAMEITEM, SHCNF_FLUSH,
                              ItemIDList(m_pidlFolder, pidlOld), ItemIDList(m_pidlFolder, itemsNew[i].GetItemIdList()));
@@ -1513,12 +1512,12 @@ protected:
     }
 
     // Note: if hwndOwner is NULL, errors should only be returned as COM failures.
-    HWND GetHwndOwner() const noexcept
+    [[nodiscard]] HWND GetHwndOwner() const noexcept
     {
         return m_ownerWindow;
     }
 
-    IShellBrowserPtr GetShellBrowser() const
+    [[nodiscard]] IShellBrowserPtr GetShellBrowser() const
     {
         const auto shellBrowser = reinterpret_cast<IShellBrowser*>(SendMessage(m_ownerWindow, WM_GETISHELLBROWSER, 0, 0));
         RaiseExceptionIf(shellBrowser == nullptr);
@@ -1554,7 +1553,7 @@ private:
         return OnErrorHandler(result, window, errorContext);
     }
 
-    ATL::CString GetExplorerPaneName(_In_ REFEXPLORERPANE explorerPane)
+    static ATL::CString GetExplorerPaneName(_In_ REFEXPLORERPANE explorerPane)
     {
         if (explorerPane == __uuidof(EP_NavPane))
             return L"EP_NavPane";

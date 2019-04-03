@@ -30,14 +30,12 @@ public:
 
     enum { IDD = IDD_PROPERTY_PAGE_ITEM };
 
-
-#pragma warning(push)
-#pragma warning(disable: 26433) // use override
+    MSF_WARNING_SUPPRESS(26433) // use override
     BEGIN_MSG_MAP(PropertyPageItem)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
         CHAIN_MSG_MAP(CSnapInPropertyPageImpl<PropertyPageItem>)
     END_MSG_MAP()
-#pragma warning(pop)
+    MSF_WARNING_UNSUPPRESS()
 
     PropertyPageItem(VVVItem& item, long& eventId, IShellFolder* shellFolder) :
         m_item(item),
@@ -101,7 +99,7 @@ private:
         ATLVERIFY(SUCCEEDED(SHLimitInputEdit(GetDlgItem(IDC_EDIT_ITEM_NAME), m_shellFolder)));
     }
 
-    std::wstring GetEditItemName() const
+    [[nodiscard]] std::wstring GetEditItemName() const
     {
         ATL::CString name;
         static_cast<void>(GetDlgItemText(IDC_EDIT_ITEM_NAME, name));

@@ -45,12 +45,12 @@ inline void RaiseLastErrorExceptionIf(bool bTest)
     RaiseExceptionIf(bTest, HRESULT_FROM_WIN32(GetLastError()));
 }
 
-constexpr bool IsBitSet(unsigned long lValue, unsigned long lTestMask)
+[[nodiscard]] constexpr bool IsBitSet(unsigned long value, unsigned long testMask) noexcept
 {
-    return (lValue & lTestMask) != 0;
+    return (value & testMask) != 0;
 }
 
-inline __declspec(noinline) HRESULT ExceptionToHResult() noexcept
+[[nodiscard]] inline __declspec(noinline) HRESULT ExceptionToHResult() noexcept
 {
     try
     {

@@ -30,20 +30,20 @@ public:
     public:
         static HMENU CreateSubMenu()
         {
-            const auto hmenu = CreatePopupMenu();
-            RaiseLastErrorExceptionIf(!hmenu);
-            return hmenu;
+            const auto menu = CreatePopupMenu();
+            RaiseLastErrorExceptionIf(!menu);
+            return menu;
         }
 
         Menu() = default;
         ~Menu() = default;
 
-        Menu(HMENU hmenu, uint32_t indexMenu, uint32_t& idCmd, uint32_t idCmdLast, ContextMenuImpl<T>* pmenuhost) noexcept :
-            m_menu{hmenu},
+        Menu(HMENU menu, uint32_t indexMenu, uint32_t& idCmd, uint32_t idCmdLast, ContextMenuImpl<T>* menuHost) noexcept :
+            m_menu{menu},
             m_indexMenu{indexMenu},
             m_pidCmd{&idCmd},
             m_idCmdLast{idCmdLast},
-            m_menuHost{pmenuhost}
+            m_menuHost{menuHost}
         {
         }
 
@@ -62,17 +62,17 @@ public:
         {
             if (this != &rhs)
             {
-                m_menu     = rhs.m_menu;
+                m_menu      = rhs.m_menu;
                 m_indexMenu = rhs.m_indexMenu;
                 m_pidCmd    = rhs.m_pidCmd;
                 m_idCmdLast = rhs.m_idCmdLast;
-                m_menuHost = rhs.m_menuHost;
+                m_menuHost  = rhs.m_menuHost;
             }
 
             return *this;
         }
 
-        Menu& operator=(Menu&& other) = delete;
+        Menu& operator=(Menu&&) = delete;
 
         // ReSharper disable once CppNonExplicitConversionOperator
         operator HMENU() const
@@ -98,12 +98,12 @@ public:
         }
 
         // Purpose: create and add a owner drawn custom sub menu to the context menu.
-        Menu AddSubMenu(std::wstring strHelp, std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
+        Menu AddSubMenu(std::wstring strHelp, std::unique_ptr<CustomMenuHandler> customMenuHandler)
         {
             auto subMenu = CreateSubMenu();
             MenuItemInfo menuiteminfo(*m_pidCmd, subMenu);
-            qcustommenuhandler->InitializeItemInfo(menuiteminfo);
-            InsertMenuItem(menuiteminfo, std::move(strHelp), std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(qcustommenuhandler));
+            customMenuHandler->InitializeItemInfo(menuiteminfo);
+            InsertMenuItem(menuiteminfo, std::move(strHelp), std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(customMenuHandler));
 
             return Menu(subMenu, 0, *m_pidCmd, m_idCmdLast, m_menuHost);
         }
@@ -130,20 +130,20 @@ public:
 
         void AddItem(std::wstring helpText,
                      std::unique_ptr<ContextMenuCommand> contextCommand,
-                     std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
+                     std::unique_ptr<CustomMenuHandler> customMenuHandler)
         {
-            MenuItemInfo menuiteminfo(*m_pidCmd);
+            MenuItemInfo menuItemInfo(*m_pidCmd);
 
-            qcustommenuhandler->InitializeItemInfo(menuiteminfo);
-            InsertMenuItem(menuiteminfo, std::move(helpText), std::move(contextCommand), std::move(qcustommenuhandler));
+            customMenuHandler->InitializeItemInfo(menuItemInfo);
+            InsertMenuItem(menuItemInfo, std::move(helpText), std::move(contextCommand), std::move(customMenuHandler));
         }
 
         // Purpose: alternative format, that loads the strings from the resource.
         void AddItem(uint32_t nIDHelp,
                      std::unique_ptr<ContextMenuCommand> contextCommand,
-                     std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
+                     std::unique_ptr<CustomMenuHandler> customMenuHandler)
         {
-            AddItem(LoadResourceString(nIDHelp), std::move(contextCommand), std::move(qcustommenuhandler));
+            AddItem(LoadResourceString(nIDHelp), std::move(contextCommand), std::move(customMenuHandler));
         }
 
         void AddSeparator()
@@ -170,29 +170,29 @@ public:
 
         void AddItem(HMENU hSubmenu, std::wstring strText, std::wstring strHelp)
         {
-            MenuItemInfo menuiteminfo(*m_pidCmd, std::move(strText));
+            MenuItemInfo menuItemInfo(*m_pidCmd, std::move(strText));
 
-            menuiteminfo.SetSubMenu(hSubmenu);
-            InsertMenuItem(menuiteminfo, std::move(strHelp), std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(std::unique_ptr<CustomMenuHandler>(nullptr)));
+            menuItemInfo.SetSubMenu(hSubmenu);
+            InsertMenuItem(menuItemInfo, std::move(strHelp), std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(std::unique_ptr<CustomMenuHandler>(nullptr)));
         }
 
-        void InsertMenuItem(const MenuItemInfo& menuiteminfo,
+        void InsertMenuItem(const MenuItemInfo& menuItemInfo,
                             std::wstring strHelp,
                             std::unique_ptr<ContextMenuCommand> contextCommand,
-                            std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
+                            std::unique_ptr<CustomMenuHandler> customMenuHandler)
         {
             CheckID();
 
             RaiseLastErrorExceptionIf(
-                !::InsertMenuItem(m_menu, m_indexMenu, true, &menuiteminfo));
-            PostAddItem(std::move(strHelp), std::move(contextCommand), std::move(qcustommenuhandler));
+                !::InsertMenuItem(m_menu, m_indexMenu, true, &menuItemInfo));
+            PostAddItem(std::move(strHelp), std::move(contextCommand), std::move(customMenuHandler));
         }
 
         void PostAddItem(std::wstring strHelp,
                          std::unique_ptr<ContextMenuCommand> contextCommand,
-                         std::unique_ptr<CustomMenuHandler> qcustommenuhandler)
+                         std::unique_ptr<CustomMenuHandler> customMenuHandler)
         {
-            m_menuHost->OnAddMenuItem(std::move(strHelp), std::move(contextCommand), std::move(qcustommenuhandler));
+            m_menuHost->OnAddMenuItem(std::move(strHelp), std::move(contextCommand), std::move(customMenuHandler));
             ++m_indexMenu;
             ++*m_pidCmd;
         }
@@ -309,17 +309,17 @@ public:
     //       WM_MENUCHAR but this is not true (seen on XP sp2).
     //       HandleMenuMsg2 is called also directly for WM_INITMENUPOPUP, etc when
     //       the shell detects that IContextMenu3 is supported.
-    HRESULT __stdcall HandleMenuMsg2(uint32_t uMsg, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* plResult) noexcept override
+    HRESULT __stdcall HandleMenuMsg2(uint32_t message, WPARAM wParam, LPARAM lParam,  _Out_opt_ LRESULT* result) noexcept override
     {
         try
         {
             // Always initialize out parameters.
-            if (plResult)
+            if (result)
             {
-                *plResult = 0;
+                *result = 0;
             }
 
-            switch (uMsg)
+            switch (message)
             {
             case WM_INITMENUPOPUP:
                 ATLTRACE(L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnInitMenuPopup)\n");
@@ -335,10 +335,10 @@ public:
 
             case WM_MENUCHAR:
                 ATLTRACE(L"ContextMenuImpl::IContextMenu3::HandleMenuMsg2 (OnMenuChar)\n");
-                if (!plResult)
+                if (!result)
                     return E_FAIL;
 
-                *plResult = static_cast<T*>(this)->OnMenuChar(reinterpret_cast<HMENU>(lParam), LOWORD(wParam));
+                *result = static_cast<T*>(this)->OnMenuChar(reinterpret_cast<HMENU>(lParam), LOWORD(wParam));
                 return S_OK;
 
             default:

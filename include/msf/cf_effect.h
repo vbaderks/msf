@@ -39,7 +39,7 @@ inline HRESULT GetClipboardFormatEffect(PCWSTR format, _In_ IDataObject* dataObj
     if (FAILED(result))
         return result;
 
-    util::GlobalLock<DWORD> globalLock{medium.hGlobal};
+    const util::GlobalLock<DWORD> globalLock{medium.hGlobal};
 
     effect = *globalLock.get();
     return S_OK;

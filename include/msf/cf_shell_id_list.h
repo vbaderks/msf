@@ -30,26 +30,26 @@ public:
         m_globalLock.Dispose();
     }
 
-    CfShellIdList(const CfShellIdList& other) = delete;
-    CfShellIdList(CfShellIdList&& other) = delete;
+    CfShellIdList(const CfShellIdList&) = delete;
+    CfShellIdList(CfShellIdList&&) = delete;
     CfShellIdList& operator=(const CfShellIdList&) = delete;
-    CfShellIdList& operator=(CfShellIdList&& other) = delete;
+    CfShellIdList& operator=(CfShellIdList&&) = delete;
 
-    bool IsEmpty() const noexcept
+    [[nodiscard]] bool empty() const noexcept
     {
-        return GetItemCount() == 0;
+        return size() == 0;
     }
 
-    size_t GetItemCount() const noexcept
+    [[nodiscard]] size_t size() const noexcept
     {
         return static_cast<size_t>(m_globalLock.get()->cidl);
     }
 
-    PCIDLIST_RELATIVE GetItem(size_t index) const noexcept
+    [[nodiscard]] PCIDLIST_RELATIVE GetItem(size_t index) const noexcept
     {
-        const CIDA* pcida = m_globalLock.get();
+        const CIDA* item = m_globalLock.get();
         return reinterpret_cast<PCIDLIST_RELATIVE>
-            (reinterpret_cast<const BYTE*>(pcida) + pcida->aoffset[index + 1]);
+            (reinterpret_cast<const BYTE*>(item) + item->aoffset[index + 1]);
     }
 
 private:

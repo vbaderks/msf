@@ -29,7 +29,7 @@ class __declspec(novtable) ShellFolder :
 {
 public:
     BEGIN_COM_MAP(ShellFolder)
-        COM_INTERFACE_ENTRY2(IPersist, IPersistFolder2)
+        COM_INTERFACE_ENTRY2(IPersist, IPersistFolder) // Needed as IPersistFolder and IPersistIDList derive both from IPersist.
         COM_INTERFACE_ENTRY(IPersistFolder)
         COM_INTERFACE_ENTRY(IPersistFolder2)
         COM_INTERFACE_ENTRY(IPersistFolder3)
@@ -113,7 +113,7 @@ public:
     {
         msf::CfShellIdList itemList(dataObject);
 
-        if (itemList.GetItemCount() == 1 && !VVVItem(itemList.GetItem(0)).IsFolder())
+        if (itemList.size() == 1 && !VVVItem(itemList.GetItem(0)).IsFolder())
         {
             // Add 'open' if only 1 item is selected.
             msf::CMenu menu(true);
@@ -153,7 +153,7 @@ public:
     void OnOpen(HWND hwnd, IDataObject* dataObject) const
     {
         msf::CfShellIdList cfshellidlist(dataObject);
-        ATLASSERT(cfshellidlist.GetItemCount() == 1);
+        ATLASSERT(cfshellidlist.size() == 1);
 
         const VVVItem item(cfshellidlist.GetItem(0));
 
