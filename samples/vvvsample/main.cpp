@@ -64,7 +64,9 @@ STDAPI DllGetClassObject(_In_ REFCLSID classId, _In_ REFIID interfaceId, _Outptr
 }
 
 // Purpose: Adds entries to the system registry
+#if WDK_NTDDI_VERSION < 0x0A000007 // = ABRACADABRA_WIN10_19H1
 __control_entrypoint(DllExport)
+#endif
 STDAPI DllRegisterServer()
 {
     auto hr = _Module.DllRegisterServer(/* bRegTypeLib = */ false);
@@ -87,8 +89,10 @@ STDAPI DllRegisterServer()
     return S_OK;
 }
 
-// Purpose: Removes entries from the system registry
+// Purpose: Remove entries from the system registry
+#if WDK_NTDDI_VERSION < 0x0A000007 // = ABRACADABRA_WIN10_19H1
 __control_entrypoint(DllExport)
+#endif
 STDAPI DllUnregisterServer()
 {
     _Module.DllUnregisterServer(); // note: will fail if already unregistered; not an issue.

@@ -36,7 +36,9 @@ STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID
 }
 
 // DllRegisterServer - Adds entries to the system registry.
-_Use_decl_annotations_
+#if WDK_NTDDI_VERSION < 0x0A000007 // = ABRACADABRA_WIN10_19H1
+__control_entrypoint(DllExport)
+#endif
 STDAPI DllRegisterServer()
 {
     // registers object, typelib and all interfaces in typelib
@@ -44,7 +46,9 @@ STDAPI DllRegisterServer()
 }
 
 // DllUnregisterServer - Removes entries from the system registry.
-_Use_decl_annotations_
+#if WDK_NTDDI_VERSION < 0x0A000007 // = ABRACADABRA_WIN10_19H1
+__control_entrypoint(DllExport)
+#endif
 STDAPI DllUnregisterServer()
 {
     return _AtlModule.DllUnregisterServer();

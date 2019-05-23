@@ -75,7 +75,7 @@ To reduce maintenance effort MSF has 3 support levels:
 
 ### Supported Compilers
 
-* Visual Studio 2019 Preview 2 (ATL 14.0)
+* Visual Studio 2019 16.1 (ATL 14.0)
 * Visual Studio 2017 (ATL 14.0)
 
 ### Legacy Compilers
@@ -91,4 +91,4 @@ Support has been removed from latest release. Recommendation is to upgrade the c
 * Visual Studio .NET 2003 (ATL 7.1)
 * Visual Studio .NET 2002 (ATL 7.0), needs latest Windows SDK
 
-Note: Latest source code is only validated with Visual Studio 2017 and tested on Windows 10 x64.
+Note: Latest source code is only validated with Visual Studio 2019 and tested on Windows 10 x64.
