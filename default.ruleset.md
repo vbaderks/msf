@@ -50,3 +50,6 @@ C26490: Don't use reinterpret_cast
 
 C26494: Variable 'x' is uninitialized. Always initialize an object
 -> Rationale: many false warnings, other analyzers are better.
+
+C26812: The enum type '...' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
+-> Rationale: false warnings generated for enums from Windows SDK (VS 2019 16.3.0 Preview 3)
