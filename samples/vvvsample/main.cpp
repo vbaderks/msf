@@ -42,6 +42,10 @@ extern "C" BOOL __stdcall DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lp
     case DLL_PROCESS_DETACH:
         ATLTRACE(L"vvvsample::DllMain DLL_PROCESS_DETACH");
         break;
+
+    default:
+        // Do nothing for the rest of the cases
+        break;
     }
 
     return true;
