@@ -32,18 +32,18 @@ public:
         dataobject.GetData(FormatEtc(CF_HDROP), m_stgmedium);
     }
 
-    bool IsEmpty() const noexcept
+    [[nodiscard]] bool IsEmpty() const noexcept
     {
         return GetFileCount() == 0;
     }
 
-    unsigned int GetFileCount() const noexcept
+    [[nodiscard]] uint32_t GetFileCount() const noexcept
     {
         ATLASSERT(m_stgmedium.tymed == TYMED_HGLOBAL && "Unable to retrieve filecount");
         return ::DragQueryFile(static_cast<HDROP>(m_stgmedium.hGlobal), static_cast<uint32_t>(-1), nullptr, 0);
     }
 
-    std::wstring GetFile(unsigned int index) const
+    [[nodiscard]] std::wstring GetFile(unsigned int index) const
     {
         ATLASSERT(index < GetFileCount() && "Index out of bounds");
 

@@ -10,7 +10,7 @@
 
 #include <msf.h>
 
-class PropertyPageVVV : public msf::ShellExtPropertyPageImpl<PropertyPageVVV>
+class PropertyPageVVV final : public msf::ShellExtPropertyPageImpl<PropertyPageVVV>
 {
 public:
     static HPROPSHEETPAGE CreateInstance(std::wstring filename)
@@ -63,7 +63,7 @@ public:
 
     BOOL OnApply()
     {
-        auto label = GetLabel();
+        const auto label = GetLabel();
         if (label.empty())
             return false; // an empty name is invalid (in our VVV example).
 
@@ -75,8 +75,8 @@ public:
         }
         catch (const _com_error& e)
         {
-            auto message = msf::LoadResourceString(IDS_PROPERTYPAGE_UNABLE_TO_UPDATE) +
-                msf::FormatLastError(static_cast<DWORD>(e.Error()));
+            const auto message = msf::LoadResourceString(IDS_PROPERTYPAGE_UNABLE_TO_UPDATE) +
+                                 msf::FormatLastError(static_cast<DWORD>(e.Error()));
             IsolationAwareMessageBox(GetParent().m_hWnd, message.c_str(), msf::LoadResourceString(IDS_SHELLEXT_ERROR_CAPTION).c_str(), MB_OK | MB_ICONERROR);
         }
 
@@ -98,7 +98,7 @@ private:
         ATLVERIFY(SetDlgItemInt(IDC_EDIT_FILECOUNT, m_fileCount));
     }
 
-    std::wstring GetLabel() const
+    [[nodiscard]] std::wstring GetLabel() const
     {
         auto label = GetDlgItemText(IDC_EDIT_LABEL);
         msf::trim(label);

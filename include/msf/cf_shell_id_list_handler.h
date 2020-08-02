@@ -30,7 +30,7 @@ public:
 
     CCfShellIdListHandler& operator=(const CCfShellIdListHandler&) = delete;
 
-    HRESULT Validate(const FORMATETC& formatetc) const override
+    [[nodiscard]] HRESULT Validate(const FORMATETC& formatetc) const override
     {
         if (formatetc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;

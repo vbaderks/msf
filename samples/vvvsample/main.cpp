@@ -10,7 +10,7 @@
 
 
 // ATL COM DLLs require a single "module" instance.
-class Module : public ATL::CAtlDllModuleT<Module>
+class Module final : public ATL::CAtlDllModuleT<Module>
 {
 };
 

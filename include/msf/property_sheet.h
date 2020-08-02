@@ -22,7 +22,7 @@ public:
     PropertySheet& operator=(const PropertySheet&) = delete;
     PropertySheet& operator=(PropertySheet&&) = delete;
 
-    class PropSheetHeader : public PROPSHEETHEADER
+    class PropSheetHeader final : public PROPSHEETHEADER
     {
     public:
         explicit PropSheetHeader(std::wstring caption, DWORD flags = 0) noexcept :
@@ -42,7 +42,7 @@ public:
         std::wstring m_caption;
     };
 
-    explicit PropertySheet(std::wstring caption, DWORD flags = 0) :
+    explicit PropertySheet(std::wstring caption, DWORD flags = 0) noexcept :
         m_propertySheetHeader(std::move(caption), flags)
     {
     }
@@ -55,7 +55,7 @@ public:
     virtual ~PropertySheet()
     {
         // Clean up pages that are added but never used.
-        for (auto page : m_pages)
+        for (auto* page : m_pages)
         {
             ATLVERIFY(DestroyPropertySheetPage(page));
         }

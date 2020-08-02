@@ -432,17 +432,17 @@ private:
         {
         }
 
-        const std::wstring& GetHelpText() const noexcept
+        [[nodiscard]] const std::wstring& GetHelpText() const noexcept
         {
             return m_helpText;
         }
 
-        ContextMenuCommand& GetContextCommand() const noexcept
+        [[nodiscard]] ContextMenuCommand& GetContextCommand() const noexcept
         {
             return *m_contextCommand;
         }
 
-        CustomMenuHandler& GetCustomMenuHandler() const noexcept
+        [[nodiscard]] CustomMenuHandler& GetCustomMenuHandler() const noexcept
         {
             return *m_customMenuHandler;
         }
@@ -466,7 +466,7 @@ private:
 
     // Member variables
     std::vector<MenuItem> m_menuItems;
-    unsigned int m_idCmdFirst{};
+    uint32_t m_idCmdFirst{};
 };
 
 } // end namespace msf

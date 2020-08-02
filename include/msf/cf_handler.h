@@ -22,22 +22,22 @@ public:
     ClipboardFormatHandler& operator=(const ClipboardFormatHandler&) = delete;
     ClipboardFormatHandler& operator=(ClipboardFormatHandler&&) = delete;
 
-    CLIPFORMAT GetClipFormat() const noexcept
+    [[nodiscard]] CLIPFORMAT GetClipFormat() const noexcept
     {
         return m_clipFormat;
     }
 
-    bool CanGetData() const noexcept
+    [[nodiscard]] bool CanGetData() const noexcept
     {
         return m_canGetData;
     }
 
-    bool CanSetData() const noexcept
+    [[nodiscard]] bool CanSetData() const noexcept
     {
         return m_canSetData;
     }
 
-    virtual HRESULT Validate(const FORMATETC& formatEtc) const noexcept
+    [[nodiscard]] virtual HRESULT Validate(const FORMATETC& formatEtc) const noexcept
     {
         if (formatEtc.dwAspect != DVASPECT_CONTENT)
             return DV_E_DVASPECT;
@@ -59,23 +59,23 @@ public:
     {
     }
 
-    bool IsValid(const FORMATETC& formatEtc, const STGMEDIUM& stgmedium) const noexcept
+    [[nodiscard]] bool IsValid(const FORMATETC& formatEtc, const STGMEDIUM& stgmedium) const noexcept
     {
         return SUCCEEDED(Validate(formatEtc)) && formatEtc.tymed == stgmedium.tymed;
     }
 
 protected:
     ClipboardFormatHandler(CLIPFORMAT clipFormat, bool canGetData, bool canSetData) noexcept
-        : m_clipFormat(clipFormat),
-          m_canGetData(canGetData),
-          m_canSetData(canSetData)
+        : m_clipFormat{clipFormat},
+          m_canGetData{canGetData},
+          m_canSetData{canSetData}
     {
     }
 
     ClipboardFormatHandler(PCWSTR format, bool canGetData, bool canSetData)
-        : m_clipFormat(Win32::RegisterClipboardFormat(format)),
-          m_canGetData(canGetData),
-          m_canSetData(canSetData)
+        : m_clipFormat{Win32::RegisterClipboardFormat(format)},
+          m_canGetData{canGetData},
+          m_canSetData{canSetData}
     {
     }
 

@@ -44,7 +44,7 @@ public:
     }
 
 
-    CTestRunner(const test_t* ptests, unsigned int nTests) :
+    CTestRunner(const test_t* ptests, unsigned int nTests) noexcept :
         _ptests(ptests), _nTests(nTests)
     {
     }
@@ -68,7 +68,7 @@ public:
             {
                 bWaitForKeypress = false;
                 int nLoop = 0;
-                (void) _stscanf(argv[2], L"%d", &nLoop);
+                static_cast<void>(_stscanf(argv[2], L"%d", &nLoop));
                 for (int i = 0; i < nLoop; ++i)
                 {
                     PerformTest(argv[1]);
@@ -84,14 +84,16 @@ public:
         std::tcout << L"\nAll test(s) completed, press any key to quit" << std::endl;
 
         if (bWaitForKeypress)
-            (void) _getch();
+        {
+            static_cast<void>(_getch());
+        }
 
         return EXIT_SUCCESS;
     }
 
 
 private:
-    void PerformTest(const test_t& test)
+    static void PerformTest(const test_t& test)
     {
         std::tcout << L"Performing test: " << test.szName;
         try
@@ -106,7 +108,7 @@ private:
     }
 
 
-    void PerformTest(const wchar_t* szName)
+    void PerformTest(const wchar_t* szName) const
     {
         for (unsigned int i = 0; i < _nTests; ++i)
         {
@@ -121,7 +123,7 @@ private:
     }
 
 
-    void PerformAllTests()
+    void PerformAllTests() const
     {
         for (unsigned int i = 0; i < _nTests; ++i)
         {

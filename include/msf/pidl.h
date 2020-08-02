@@ -145,12 +145,12 @@ public:
         Attach(Clone(pidl));
     }
 
-    PIDLIST_RELATIVE Clone() const
+    [[nodiscard]] PIDLIST_RELATIVE Clone() const
     {
         return Clone(GetRelative());
     }
 
-    PIDLIST_ABSOLUTE CloneFull() const
+    [[nodiscard]] PIDLIST_ABSOLUTE CloneFull() const
     {
         return CloneFull(GetAbsolute());
     }
@@ -163,7 +163,7 @@ public:
         m_pidl = pidl;
     }
 
-    LPITEMIDLIST get() const noexcept
+    [[nodiscard]] LPITEMIDLIST get() const noexcept
     {
         return m_pidl;
     }
@@ -179,28 +179,28 @@ public:
         return get();
     }
 
-    uint32_t GetSize() const noexcept
+    [[nodiscard]] uint32_t GetSize() const noexcept
     {
         return ILGetSize(GetRelative());
     }
 
-    PIDLIST_RELATIVE GetRelative() const noexcept
+    [[nodiscard]] PIDLIST_RELATIVE GetRelative() const noexcept
     {
         return static_cast<PIDLIST_RELATIVE>(m_pidl);
     }
 
-    PIDLIST_ABSOLUTE GetAbsolute() const noexcept
+    [[nodiscard]] PIDLIST_ABSOLUTE GetAbsolute() const noexcept
     {
         return static_cast<PIDLIST_ABSOLUTE>(m_pidl);
     }
 
-    bool IsEmpty() const noexcept
+    [[nodiscard]] bool IsEmpty() const noexcept
     {
         return ILIsEmpty(GetRelative());
     }
 
     // Purpose: Address operator to be used for passing address to be used as an out-parameter.
-    LPITEMIDLIST* operator&() noexcept
+    [[nodiscard]] LPITEMIDLIST* operator&() noexcept
     {
         CoTaskMemFree(m_pidl);
         m_pidl = nullptr;

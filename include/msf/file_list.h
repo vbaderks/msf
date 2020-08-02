@@ -72,17 +72,17 @@ private:
         RaiseExceptionIf(formatEtc->tymed != TYMED_HGLOBAL, DV_E_TYMED);
     }
 
-    HGLOBAL CreateData() const
+    uint32_t HGLOBAL CreateData() const
     {
         const HGLOBAL hg = GlobalAllocThrow(GetDataSize());
 
-        DROPFILES* pdropfiles = static_cast<DROPFILES*>(hg);
+        DROPFILES* dropFiles = static_cast<DROPFILES*>(hg);
 
-        pdropfiles->pFiles = sizeof(DROPFILES);
-        pdropfiles->fWide = TRUE;
+        dropFiles->pFiles = sizeof(DROPFILES);
+        dropFiles->fWide = true;
 
         // copy filenames into data block.
-        wchar_t* pszBuf = reinterpret_cast<wchar_t*>(reinterpret_cast<BYTE*>(pdropfiles) +sizeof(DROPFILES));
+        wchar_t* pszBuf = reinterpret_cast<wchar_t*>(reinterpret_cast<BYTE*>(dropFiles) +sizeof(DROPFILES));
 
         for (auto fileName : m_filenames)
         {
@@ -97,14 +97,14 @@ private:
 
     size_t GetDataSize() const
     {
-        uint32_t nchars = 0;
+        uint32_t char_count{};
 
         for (const auto& fileName : m_filenames)
         {
-            nchars += fileName.GetLength() + 1;
+            char_count += fileName.GetLength() + 1;
         }
 
-        return sizeof(DROPFILES) + (sizeof(wchar_t) * (nchars + 1));
+        return sizeof(DROPFILES) + (sizeof(wchar_t) * (char_count + 1));
     }
 
     std::vector<std::wstring> m_filenames;

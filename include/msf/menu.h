@@ -36,10 +36,10 @@ public:
         AddItem(id, LoadResourceString(nIDText));
     }
 
-    void AddItem(uint32_t id, const std::wstring& strText) const
+    void AddItem(uint32_t id, const std::wstring& text) const
     {
-        const MenuItemInfo menuiteminfo(id, strText);
-        InsertMenuItem(menuiteminfo, GetMenuItemCount());
+        const MenuItemInfo menuItemInfo(id, text);
+        InsertMenuItem(menuItemInfo, GetMenuItemCount());
     }
 
     void AddDefaultItem(uint32_t id, const std::wstring& text) const
@@ -54,7 +54,7 @@ public:
         RaiseLastErrorExceptionIf(!::InsertMenuItem(m_menu, uItem, byPosition, &info));
     }
 
-    uint32_t GetMenuItemCount() const
+    [[nodiscard]] uint32_t GetMenuItemCount() const
     {
         const int count = ::GetMenuItemCount(m_menu);
         RaiseLastErrorExceptionIf(count == -1);
@@ -68,7 +68,7 @@ public:
     }
 
 private:
-    static HMENU CreateMenu()
+    [[nodiscard]] static HMENU CreateMenu()
     {
         const HMENU menu = ::CreateMenu();
         RaiseLastErrorExceptionIf(!menu);

@@ -201,17 +201,17 @@ private:
         {
         }
 
-        CLIPFORMAT GetClipFormat() const noexcept
+        [[nodiscard]] CLIPFORMAT GetClipFormat() const noexcept
         {
             return m_formatetc.cfFormat;
         }
 
-        const FORMATETC& GetFormatetc() const noexcept
+        [[nodiscard]] const FORMATETC& GetFormatetc() const noexcept
         {
             return m_formatetc;
         }
 
-        HRESULT Validate(const FORMATETC& formatetc) const noexcept
+        [[nodiscard]] HRESULT Validate(const FORMATETC& formatetc) const noexcept
         {
             if (formatetc.dwAspect != DVASPECT_CONTENT)
                 return DV_E_DVASPECT;
@@ -241,7 +241,7 @@ private:
         StorageMedium m_stgmedium;
     };
 
-    ClipboardFormatHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const noexcept
+    [[nodiscard]] ClipboardFormatHandler* FindClipFormatHandler(CLIPFORMAT clipformat) const noexcept
     {
         auto handler = std::find_if(m_cfhandlers.begin(), m_cfhandlers.end(),
             [=](ClipboardFormatHandler* cfHandler)

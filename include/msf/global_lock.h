@@ -53,7 +53,7 @@ public:
     }
 
     MSF_WARNING_SUPPRESS(26473) // Don't cast between pointer types where the source type and the target type are the same
-    T* get() const noexcept
+    [[nodiscard]] T* get() const noexcept
     {
         return static_cast<T*>(m_p);
     }

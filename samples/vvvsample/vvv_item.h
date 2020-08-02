@@ -5,11 +5,9 @@
 //
 #pragma once
 
-
 #include <msf.h>
 
-
-class VVVItem : public msf::ItemBase
+class VVVItem final : public msf::ItemBase
 {
 public:
     static int GetMaxNameLength(PCWSTR /*pszName*/) noexcept
@@ -41,34 +39,34 @@ public:
         msf::RaiseExceptionIf(!valid);
     }
 
-    std::wstring GetDisplayName(SHGDNF shellGetDisplayNameType = SHGDN_NORMAL) const;
+    [[nodiscard]] std::wstring GetDisplayName(SHGDNF shellGetDisplayNameType = SHGDN_NORMAL) const;
 
-    SFGAOF GetAttributeOf(bool bSingleSelect, bool bReadOnly) const noexcept;
+    [[nodiscard]] SFGAOF GetAttributeOf(bool bSingleSelect, bool bReadOnly) const noexcept;
 
-    unsigned int GetID() const noexcept
+    [[nodiscard]] unsigned int GetID() const noexcept
     {
         return GetItemData().id;
     }
 
-    unsigned int GetSize() const noexcept
+    [[nodiscard]] unsigned int GetSize() const noexcept
     {
         return GetItemData().size;
     }
 
-    std::wstring GetName() const
+    [[nodiscard]] std::wstring GetName() const
     {
         return GetItemData().name;
     }
 
-    bool IsFolder() const noexcept
+    [[nodiscard]] bool IsFolder() const noexcept
     {
         return GetItemData().folder;
     }
 
-    int Compare(const VVVItem& item, int compareBy, bool bCanonicalOnly) const noexcept;
-    std::wstring GetItemDetailsOf(uint32_t columnIndex) const;
-    std::wstring GetInfoTipText() const;
-    int GetIconOf(uint32_t flags) const noexcept;
+    [[nodiscard]] int Compare(const VVVItem& item, int compareBy, bool bCanonicalOnly) const noexcept;
+    [[nodiscard]] std::wstring GetItemDetailsOf(uint32_t columnIndex) const;
+    [[nodiscard]] std::wstring GetInfoTipText() const;
+    [[nodiscard]] int GetIconOf(uint32_t flags) const noexcept;
 
 private:
 
@@ -97,10 +95,10 @@ private:
         wcscpy_s(itemData->name, _countof(itemData->name), name.c_str());
     }
 
-    const SItemData& GetItemData() const noexcept
+    [[nodiscard]] const SItemData& GetItemData() const noexcept
     {
         return *static_cast<const SItemData*>(GetData());
     }
 
-    int CompareByName(const VVVItem& item) const noexcept;
+    [[nodiscard]] int CompareByName(const VVVItem& item) const noexcept;
 };
