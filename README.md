@@ -47,9 +47,6 @@ To reduce maintenance effort MSF has 3 support levels:
   The thought behind it is that most people that create shell extensions are
   using the latest available compiler and target the latest version of Windows.
 
-* On-demand. These versions are not longer developed or tested, but support is
-   not removed from the code base.
-
 * Legacy support. These versions are
    not longer actively maintained and support is removed to keep the code clean.
    The source code in the repository is tagged to make it easy to retrieve
@@ -59,14 +56,11 @@ To reduce maintenance effort MSF has 3 support levels:
 
 * Windows 10
 
-### On-demand Operating Systems
-
-* Windows 7
-
 ### Legacy Operating Systems
 
 * Windows 8.1
 * Windows 8.0
+* Windows 7
 * Windows Vista
 * Windows XP
 * Windows 2000
@@ -75,13 +69,13 @@ To reduce maintenance effort MSF has 3 support levels:
 
 ### Supported Compilers
 
-* Visual Studio 2019 16.1 (ATL 14.0)
-* Visual Studio 2017 (ATL 14.0)
+* Visual Studio 2019 16.6 (ATL 14.0) and newer
 
 ### Legacy Compilers
 
 Support has been removed from latest release. Recommendation is to upgrade the compiler, but older release are available in the history of the repository.
 
+* Visual Studio 2017 (ATL 14.0)
 * Visual Studio 2015 Update 3 (ATL 14.0)
 * Visual Studio 2013 Update 5 (ATL 12.0)
 * Visual Studio 2012 Update 5 (ATL 11.0)
