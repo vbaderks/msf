@@ -22,10 +22,9 @@ platform:
 - x64
 
 before_build:
-- msbuild -ver
-- echo %PATH%
-- call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+#- msbuild -ver
+#- echo %PATH%
+#- call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
 
-build:
-  project: msf.sln
-  verbosity: normal
+build_script:
+- msbuild "C:\projects\msf\msf.sln" /m" /v:minimal -p:Configuration=%CONFIGURATION%
