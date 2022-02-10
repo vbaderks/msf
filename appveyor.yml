@@ -27,4 +27,4 @@ before_build:
 #- call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 build_script:
-- msbuild "C:\projects\msf\msf.sln" /m" /v:minimal -p:Configuration=%CONFIGURATION%
+- msbuild "C:\projects\msf\msf.sln" /m" /p:Configuration=%CONFIGURATION%
