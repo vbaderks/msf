@@ -5,7 +5,7 @@
 //
 #pragma once
 
-#include "msfbase.h"
+#include "msf_base.h"
 
 #undef  INTERFACE
 #define INTERFACE IShellFolderSearchableCallback

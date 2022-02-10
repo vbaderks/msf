@@ -9,7 +9,7 @@
 
 namespace msf {
 
-class SmallBitmapHandler : public CustomMenuHandler
+class SmallBitmapHandler final : public CustomMenuHandler
 {
 public:
     // Purpose: small helper class to free managed handle.
@@ -34,7 +34,7 @@ public:
         Bitmap& operator=(const Bitmap&) = delete;
         Bitmap& operator=(Bitmap&&) = delete;
 
-        HBITMAP GetHandle() const noexcept
+        [[nodiscard]] HBITMAP GetHandle() const noexcept
         {
             return m_handle;
         }
@@ -62,7 +62,7 @@ public:
     }
 
 private:
-    static HBITMAP LoadBitmap(uint32_t resourceId) noexcept
+    [[nodiscard]] static HBITMAP LoadBitmap(uint32_t resourceId) noexcept
     {
         HBITMAP__* const bitmap = ::LoadBitmap(ATL::_AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(resourceId));
         ATLASSERT(bitmap && "Failed to load the bitmap, check resource id, etc");

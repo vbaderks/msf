@@ -7,7 +7,7 @@
 
 
 // Purpose: this file contains small unit test helper functions. 
-#include "msfbase.h"
+#include "msf_base.h"
 #include "macros.h"
 
 
@@ -16,8 +16,8 @@ namespace msf
 
 inline void RaiseExceptionIfImplemented(HRESULT hr)
 {
-	if (hr != E_NOTIMPL)
-		RaiseException(hr);
+    if (hr != E_NOTIMPL)
+        RaiseException(hr);
 }
 
 } // end msf namespace.

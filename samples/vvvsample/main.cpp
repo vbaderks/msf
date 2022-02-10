@@ -101,7 +101,7 @@ STDAPI DllUnregisterServer()
 {
     _Module.DllUnregisterServer(); // note: will fail if already unregistered; not an issue.
 
-    msf::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, false, wszVVVExtension, wszVVVFileRootExt);
+    std::ignore = msf::UpdateRegistryConnectExtensionToProgId(IDR_EXTENSION, false, wszVVVExtension, wszVVVFileRootExt);
 
     // Notify the shell that .vvv file association has changed.
     SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);

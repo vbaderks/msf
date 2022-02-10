@@ -6,8 +6,8 @@
 #pragma once
 
 
-#include "msfbase.h"
-#include "stgmedium.h"
+#include "msf_base.h"
+#include "stg_medium.h"
 #include <atlctl.h>
 
 

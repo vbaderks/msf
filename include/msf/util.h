@@ -134,7 +134,7 @@ inline void CreateProcess(PCWSTR szApplicationName, const std::wstring& cmdLine,
 {
     StartupInfo startupInfo;
     ProcessInformation processInformation;
-    std::vector<wchar_t> cmdLineWritable(cmdLine.begin(), cmdLine.end());
+    std::vector cmdLineWritable(cmdLine.begin(), cmdLine.end());
 
     RaiseLastErrorExceptionIf(!::CreateProcess(szApplicationName, cmdLineWritable.data(),
                                                nullptr, nullptr, false, 0, nullptr, lpCurrentDirectory, &startupInfo, &processInformation));
@@ -203,7 +203,7 @@ inline ATL::CString GetAppPath(const ATL::CString& strApp)
     if (key.Open(HKEY_LOCAL_MACHINE,
                  L"Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + strApp,
                  KEY_READ) != ERROR_SUCCESS)
-        return ATL::CString();
+        return {};
 
     return QueryRegKeyStringValue(key, L"");
 }

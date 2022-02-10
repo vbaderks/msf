@@ -9,8 +9,6 @@
 #include "vvv_file.h"
 #include "resource.h"
 
-using std::wstring;
-
 class __declspec(novtable) __declspec(uuid("EDD37CEF-F1E0-42bb-9AEF-177E0306AA71")) InfoTip :
     public ATL::CComObjectRootEx<ATL::CComSingleThreadModel>,
     public ATL::CComCoClass<InfoTip, &__uuidof(InfoTip)>,
@@ -24,7 +22,7 @@ public:
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    static HRESULT __stdcall UpdateRegistry(BOOL registerInRegistry) noexcept
+    [[nodiscard]] static HRESULT __stdcall UpdateRegistry(BOOL registerInRegistry) noexcept
     {
         return InfoTipImpl<InfoTip>::UpdateRegistry(registerInRegistry, IDR_INFOTIP,
             L"VVV Sample InfoTip ShellExtension", wszVVVFileRootExt);
@@ -41,7 +39,7 @@ public:
 
     // Purpose: called by the shell/msf when it needs the text for the info tip.
     //          The string is used for the tooltip and the text in the status bar.
-    PCWSTR GetInfoTip(DWORD /* dwFlags */) noexcept(false) final
+    [[nodiscard]] PCWSTR GetInfoTip(DWORD /* dwFlags */) noexcept(false) final
     {
         return m_infoTip.c_str();
     }
@@ -56,7 +54,7 @@ protected:
     ~InfoTip() = default;
 
 private:
-    wstring m_infoTip;
+    std::wstring m_infoTip;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(InfoTip), InfoTip)

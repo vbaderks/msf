@@ -11,9 +11,9 @@
 
 // TODO: make this CDefView at least do the 'view' part.
 
-#include "msfbase.h"
-#include "shellviewimpl.h"
-#include "sfvmdefines.h"
+#include "msf_base.h"
+#include "shell_view_impl.h"
+#include "sfvm_defines.h"
 
 
 namespace msf
@@ -137,7 +137,7 @@ public:
     }
 
 private:
-    CComPtr<IShellFolderViewCB> _rshellfolderviewcb;
+    ATL::CComPtr<IShellFolderViewCB> _rshellfolderviewcb;
 };
 
 
@@ -150,7 +150,7 @@ public:
 
         //_callback. // enum done?
     }
-}
+};
 
 
 class CViewState

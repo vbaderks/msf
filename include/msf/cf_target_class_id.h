@@ -6,8 +6,9 @@
 #pragma once
 
 
-#include "formatetc.h"
-
+#include "format_etc.h"
+#include "global_lock.h"
+#include "stg_medium.h"
 
 namespace msf
 {
@@ -29,18 +30,16 @@ public:
     }
 
 private:
-
     static HRESULT GetImpl(IDataObject* dataObject, CLSID& clsid)
     {
         FormatEtc formatEtc(CFSTR_TARGETCLSID);
         StorageMedium medium;
-        const HRESULT result = dataObject->GetData(&formatEtc, &medium);
-        if (FAILED(result))
+        if (const HRESULT result = dataObject->GetData(&formatEtc, &medium); FAILED(result))
             return result;
 
-        GlobalLock<CLSID> globallock(medium.hGlobal);
+        const util::GlobalLock<CLSID> globalLock(medium.hGlobal);
 
-        clsid = *globallock.get();
+        clsid = *globalLock.get();
         return S_OK;
     }
 };

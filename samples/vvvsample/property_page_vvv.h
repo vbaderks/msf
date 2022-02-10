@@ -20,7 +20,7 @@ public:
         if (result)
         {
             // Page will be deleted by ATL base class when the property sheet is done with it.
-            page.release(); // -V530
+            std::ignore = page.release(); // -V530
         }
         return result;
     }
