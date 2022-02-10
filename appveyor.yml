@@ -2,6 +2,9 @@ version: 0.94.{build}
 os: Visual Studio 2022
 clone_depth: 1
 
+# Do not build feature branch with open Pull Requests
+skip_branch_with_pr: true
+
 matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
 
@@ -15,6 +18,8 @@ platform:
 - x64
 
 before_build:
+- msbuild -ver
+- echo %PATH%
 - call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 build_script:
