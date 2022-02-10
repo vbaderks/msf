@@ -24,11 +24,11 @@ inline std::wstring LoadResourceString(uint32_t id)
 
 inline std::wstring FormatResourceMessage(uint32_t messageID, ...)
 {
+    MSF_WARNING_SUPPRESS_NEXT_LINE(26826) // Don't use C-style variable arguments (f.55).
     va_list args;
 
-    MSF_WARNING_SUPPRESS(26492) // Don't use const_cast to cast away const (type.3).
+    MSF_WARNING_SUPPRESS_NEXT_LINE(26826 26492) // Don't use const_cast to cast away const (type.3).
     va_start(args, messageID);
-    MSF_WARNING_UNSUPPRESS()
 
     PWSTR lpMsgBuf{};
     const auto size = FormatMessageW(

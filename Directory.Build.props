@@ -7,9 +7,7 @@
     <!-- C++ temp files can be redirected. -->
     <IntDir>$(MSBuildThisFileDirectory)intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
 
-    <PlatformToolset>v141</PlatformToolset>
-
-    <WindowsTargetPlatformVersion Condition="'$(MSBuildVersion)' &lt;= '16.0'">10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10</WindowsTargetPlatformVersion>
 
     <!-- Default character set is Unicode (UTF16), defines _UNICODE and UNICODE. -->
     <CharacterSet>Unicode</CharacterSet>
@@ -31,13 +29,22 @@
       <!-- Explicit disable non conforming MSVC compiler options that are not compatible with the C++ standard -->
       <ConformanceMode>true</ConformanceMode>
 
-      <!-- To ensure high quality C++ code use Warning level All and treat warnings as errors to ensure warnings are fixed promptly. -->
-      <WarningLevel>EnableAllWarnings</WarningLevel>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel> <!-- Explicit set the 'external' warning level to W0 (Supported since Visual Studio 2019 16.10) -->
+      <TreatWarningAsError>true</TreatWarningAsError> <!-- Treat warnings as errors to ensure warnings are fixed promptly. -->
 
       <!--
         __cplusplus = Use the correct value for the __cplusplus macro
         throwingNew = Communicate with the compiler that only the throwing variant of operator new is used.
+        utf-8 = interpret all source files as UTF-8 (Required as MSVC relies on UTF-8 signature, which is not used)
+        ZH:SHA_256 = Use an SHA-256 hash for the checksum.in debug info
+      -->
+      <AdditionalOptions>/Zc:__cplusplus /Zc:throwingNew /utf-8 /ZH:SHA_256</AdditionalOptions>
+
+      <!-- To ensure high quality C++ code use Warning level All in checked builds. -->
+      <WarningLevel Condition="'$(Configuration)'=='Checked'">EnableAllWarnings</WarningLevel>
+
+      <!--
         Disable level All warnings that are not useful:
         C4061 = enumerator 'identifier' in switch of enum 'enumeration' is not explicitly handled by a case label
         C4191 = operator/operation' : unsafe conversion from 'type of expression' to 'type required'
@@ -65,8 +72,7 @@
         C5042 = 'declaration': function declarations at block scope cannot be specified 'inline' in standard C++; remove 'inline' specifier
         C5045 = Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
       -->
-      <AdditionalOptions>
-        /Zc:__cplusplus /Zc:throwingNew
+      <AdditionalOptions Condition="'$(Configuration)'=='Checked'">
         /wd4061 /wd4191
         /wd4263 /wd4264 /wd4265 /wd4266
         /wd4365
@@ -75,6 +81,7 @@
         /wd4623 /wd4625 /wd4626 /wd4668
         /wd4710 /wd4711 /wd4738 /wd4774 /wd4820
         /wd5026 /wd5027 /wd5039 /wd5042 /wd5045
+        %(AdditionalOptions)
       </AdditionalOptions>
 
       <!--

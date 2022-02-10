@@ -36,12 +36,6 @@ struct __declspec(uuid("6FE2B64C-5012-4B88-BB9D-7CE4F45E3751")) IConnectionFacto
 struct __declspec(uuid("93F81976-6A0D-42C3-94DD-AA258A155470")) IShellUndocumented93; // Seen on Windows 8
 struct __declspec(uuid("CAD9AE9F-56E2-40F1-AFB6-3813E320DCFD")) IShellUndocumentedCA; // Seen on Windows 8
 
-// The definitions in ShlGuid have no __declspec. Create 'MSF' definitions to make '==' easy.
-struct __declspec(uuid("CB316B22-25F7-42B8-8A09-540D23A43C2F")) EP_NavPane;     // The pane on the left side of the Windows Explorer window that hosts the folders tree and Favorites
-struct __declspec(uuid("D27524A8-C9F2-4834-A106-DF8889FD4F37")) EP_Ribbon;      // The ribbon. New in Windows 8. Not defined in Win 7 SDK.
-struct __declspec(uuid("893C63D1-45C8-4D17-BE19-223BE71BE365")) EP_PreviewPane; // Pane on the right of the Windows Explorer window that shows a large reading preview of the file.
-struct __declspec(uuid("43ABF98B-89B8-472D-B9CE-E69B8229F019")) EP_DetailsPane; // Pane showing metadata along the bottom of the Windows Explorer window.
-
 template<typename T, typename TItem>
 class __declspec(novtable) ShellFolderImpl :
     public IPersistFolder3,
@@ -1555,16 +1549,16 @@ private:
 
     static ATL::CString GetExplorerPaneName(_In_ REFEXPLORERPANE explorerPane)
     {
-        if (explorerPane == __uuidof(EP_NavPane))
+        if (explorerPane == EP_NavPane)
             return L"EP_NavPane";
 
-        if (explorerPane == __uuidof(EP_PreviewPane))
+        if (explorerPane == EP_PreviewPane)
             return L"EP_PreviewPane";
 
-        if (explorerPane == __uuidof(EP_DetailsPane))
+        if (explorerPane == EP_DetailsPane)
             return L"EP_DetailsPane";
 
-        if (explorerPane == __uuidof(EP_Ribbon))
+        if (explorerPane == EP_Ribbon)
             return L"EP_Ribbon";
 
         OleString epId;
