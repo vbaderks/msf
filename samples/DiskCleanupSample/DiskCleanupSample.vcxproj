@@ -30,7 +30,6 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3634C2B5-565F-48E7-8C57-FA3C0F4902B1}</ProjectGuid>
     <Keyword>AtlProj</Keyword>
-    <WindowsTargetPlatformVersion Condition="'$(MSBuildVersion)' &gt;= '16.0'">10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>

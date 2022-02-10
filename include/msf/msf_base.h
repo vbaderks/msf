@@ -20,42 +20,24 @@
 #define STRICT_TYPED_ITEMIDS
 #endif
 
-
 // Win32 include files.
-#pragma warning(push)
-#pragma warning(disable : 4946) // reinterpret_cast used between related classes  (VS2019)
 #include <shlobj.h>
 #include <shobjidl.h>
-#pragma warning(pop)
-
 
 // Note: comdef.h will create only smart pointers for defined interfaces. Include all required
 //       Win32 header files before including comdef.h
-#pragma warning(push)
-#pragma warning(disable : 4619) // #pragma warning : there is no warning number '5204'
-#pragma warning(disable : 5204) // class has virtual functions, but its trivial destructor is not virtual;
 #include <comdef.h>
-#pragma warning(pop)
-
-// Standard ATL include files.
-#pragma warning(push)
-#pragma warning(disable : 4201) // nonstandard extension used : nameless struct / union (VS2019)
-#pragma warning(disable : 4619) // #pragma warning : there is no warning number '5204'
-#pragma warning(disable : 4755) // Conversion rules for arithmetic operations in the comparison  mean that one branch cannot be executed in an inlined function. (VS2017)
-#pragma warning(disable : 4986) // exception specification does not match previous declaration (VS2019)
-#pragma warning(disable : 5204) // class has virtual functions, but its trivial destructor is not virtual;
 
 // Shell Extensions are COM apartment threaded.
 #ifndef _ATL_APARTMENT_THREADED
 #define _ATL_APARTMENT_THREADED
 #endif
 
+// Standard ATL include files.
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlstr.h>
 #include <atlsnap.h>
-
-#pragma warning(pop)
 
 // Core MSF include files
 #include "macros.h"

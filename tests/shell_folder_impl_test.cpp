@@ -218,7 +218,7 @@ public:
     // It is essential to override this function to control which explorer panes are visible as by default no panes are shown.
     static EXPLORERPANESTATE GetPaneState(_In_ REFEXPLORERPANE ep) noexcept
     {
-        if (ep == __uuidof(msf::EP_Ribbon))
+        if (ep == EP_Ribbon)
             return EPS_DEFAULT_ON;
 
         return EPS_DONTCARE;

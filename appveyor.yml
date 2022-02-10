@@ -1,14 +1,30 @@
 version: 0.94.{build}
-os: Visual Studio 2017
+os: Visual Studio 2022
+clone_depth: 1
+
+# Do not build feature branch with open Pull Requests
+skip_branch_with_pr: true
+
+matrix:
+  fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
+
+nuget:
+  account_feed: true
+  project_feed: true
+
 configuration:
 - Debug
 - Release
 - Checked
+
 platform:
 - x86
 - x64
+
 before_build:
-- set PATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin;%PATH%
-build:
-  project: msf.sln
-  verbosity: minimal
+#- msbuild -ver
+#- echo %PATH%
+#- call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+
+build_script:
+- msbuild "C:\projects\msf\msf.sln" /m /p:Configuration=%CONFIGURATION%
