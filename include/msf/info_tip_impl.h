@@ -30,7 +30,7 @@ class __declspec(novtable) InfoTipImpl :
 {
 public:
     /// <summary>Registration function to register the info tip COM object and a ProgId/extension.</summary>
-    static HRESULT __stdcall UpdateRegistry(BOOL registerObject, uint32_t resourceId,
+    [[nodiscard]] static HRESULT __stdcall UpdateRegistry(BOOL registerObject, uint32_t resourceId,
         PCWSTR description, PCWSTR rootKey) noexcept
     {
         return UpdateRegistryFromResource(resourceId, registerObject,
@@ -39,22 +39,20 @@ public:
 
     // IInitializeWithFile
     HRESULT __stdcall Initialize(PCWSTR filePath, DWORD mode) override
+    try
     {
         ATLTRACE(L"InfoTipImpl::Initialize (with file) (instance=%p, mode=%d, filename=%s)\n", this, mode, filePath);
 
-        try
-        {
-            if (m_initialized)
-                return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
+        if (m_initialized)
+            return HRESULT_FROM_WIN32(ERROR_ALREADY_INITIALIZED);
 
-            InitializeCore(filePath, mode);
-            m_initialized = true;
-            return S_OK;
-        }
-        catch (...)
-        {
-            return ExceptionToHResult();
-        }
+        InitializeCore(filePath, mode);
+        m_initialized = true;
+        return S_OK;
+    }
+    catch (...)
+    {
+        return ExceptionToHResult();
     }
 
     InfoTipImpl(const InfoTipImpl&) = delete;

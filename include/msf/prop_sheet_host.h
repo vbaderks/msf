@@ -5,7 +5,7 @@
 //
 #pragma once
 
-#include "msfbase.h"
+#include "msf_base.h"
 #include <vector>
 
 #pragma comment(lib, "comctl32") // required to link DestroyPropertySheetPage.
@@ -19,11 +19,16 @@ class PropSheetHost final
 public:
     ~PropSheetHost()
     {
-        for (auto propSheetPage : m_propSheetPages)
+        for (const auto propSheetPage : m_propSheetPages)
         {
             ATLVERIFY(::DestroyPropertySheetPage(propSheetPage));
         }
     }
+
+    PropSheetHost(const PropSheetHost&) = delete;
+    PropSheetHost(PropSheetHost&&) = default;
+    PropSheetHost& operator=(const PropSheetHost&) = delete;
+    PropSheetHost& operator=(PropSheetHost&&) = default;
 
     void Add(HPROPSHEETPAGE propSheetPage)
     {
@@ -38,7 +43,6 @@ public:
     }
 
 private:
-
     std::vector<HPROPSHEETPAGE> m_propSheetPages;
 };
 

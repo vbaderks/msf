@@ -20,7 +20,7 @@ public:
     OleString& operator=(const OleString&) = delete;
     OleString& operator=(OleString&&) = delete;
 
-    static wchar_t* Dup(PCWSTR pszSrc)
+    [[nodiscard]] static wchar_t* Dup(PCWSTR pszSrc)
     {
         wchar_t* pwz;
         RaiseExceptionIfFailed(SHStrDup(pszSrc, &pwz));
@@ -38,9 +38,9 @@ public:
         return m_string;
     }
 
-    LPOLESTR* GetAddress() noexcept
+    [[nodiscard]] LPOLESTR* GetAddress() noexcept
     {
-        ATLASSERT(!m_string || !"instance already owns a OLE string");
+        ATLASSERT(!m_string); // "instance already owns a OLE string"
         return &m_string;
     }
 

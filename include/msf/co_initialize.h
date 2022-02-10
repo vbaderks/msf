@@ -5,7 +5,7 @@
 //
 #pragma once
 
-#include "msfbase.h"
+#include "msf_base.h"
 #include <objbase.h>
 
 namespace msf::util
@@ -24,6 +24,11 @@ public:
     {
         CoUninitialize();
     }
+
+    CoInitializer(const CoInitializer&) = delete;
+    CoInitializer(CoInitializer&&) = delete;
+    CoInitializer& operator=(const CoInitializer&) = delete;
+    CoInitializer& operator=(CoInitializer&&) = delete;
 };
 
 } // end namespace msf::util.

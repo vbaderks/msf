@@ -5,8 +5,8 @@
 //
 #pragma once
 
-#include "msfbase.h"
-#include "olestring.h"
+#include "msf_base.h"
+#include "ole_string.h"
 
 namespace msf {
 

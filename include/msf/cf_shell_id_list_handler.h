@@ -6,10 +6,10 @@
 #pragma once
 
 
-#include "cfhandler.h"
+#include "cf_handler.h"
 #include "pidl.h"
 #include "util.h"
-#include "stgmedium.h"
+#include "stg_medium.h"
 
 
 namespace msf
@@ -47,9 +47,9 @@ public:
 
     void GetData(const FORMATETC&, STGMEDIUM& stgmedium) const override
     {
-        const uint32_t sizeheader = static_cast<uint32_t>(sizeof(CIDA) + (sizeof(uint32_t) * m_pidls.size()));
+        const uint32_t sizeHeader = static_cast<uint32_t>(sizeof(CIDA) + (sizeof(uint32_t) * m_pidls.size()));
 
-        uint32_t size = sizeheader + m_pidlFolder.GetSize();
+        uint32_t size = sizeHeader + m_pidlFolder.GetSize();
 
         for (auto it = m_pidls.begin(); it != m_pidls.end(); ++it)
         {
@@ -62,7 +62,7 @@ public:
 
         pcida->cidl = static_cast<uint32_t>(m_pidls.size());
 
-        uint32_t offset = sizeheader;
+        uint32_t offset = sizeHeader;
         offset += AddPidlToCida(pcida, m_pidlFolder, 0, offset);
 
         for (uint32_t i = 0; i < m_pidls.size(); ++i)
@@ -74,7 +74,6 @@ public:
     }
 
 private:
-
     unsigned int AddPidlToCida(CIDA* pcida, const ItemIDList& pidl, uint32_t index, uint32_t offset) const noexcept
     {
         pcida->aoffset[index] = offset;

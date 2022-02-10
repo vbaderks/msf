@@ -9,8 +9,6 @@
 #include "about_msf_command.h"
 #include "resource.h"
 
-using std::vector;
-using std::wstring;
 using std::make_unique;
 
 class __declspec(novtable) __declspec(uuid("B498A476-9EB6-46c3-8146-CE77FF7EA063")) ContextMenu :
@@ -37,7 +35,7 @@ public:
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
     // Purpose: called by the implementation class. Request to configure the menu
-    void QueryContextMenuCore(Menu& menu, const vector<wstring>& filenames) override
+    void QueryContextMenuCore(Menu& menu, const std::vector<std::wstring>& filenames) override
     {
         if (ContainsUnknownExtension(filenames))
             return; // only extend the menu when only .vvv files are selected.

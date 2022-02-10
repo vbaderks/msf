@@ -9,7 +9,7 @@
 #include "msf_base.h"
 #include "update_registry.h"
 
-#include <emptyvc.h>
+#include <EmptyVC.h>
 
 
 namespace msf {

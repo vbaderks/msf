@@ -6,7 +6,7 @@
 #pragma once
 
 
-#include "msfbase.h"
+#include "msf_base.h"
 
 
 namespace msf
@@ -140,7 +140,7 @@ public:
 
     unsigned int GetUnsignedInt() noexcept
     {
-        constunsigned int n = *reinterpret_cast<const unsigned int*>(m_p);
+        const unsigned int n = *reinterpret_cast<const unsigned int*>(m_p);
         m_p += sizeof(n);
         return n;
     }

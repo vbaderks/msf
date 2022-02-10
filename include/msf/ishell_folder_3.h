@@ -5,7 +5,7 @@
 //
 #pragma once
 
-#include "msfbase.h"
+#include "msf_base.h"
 
 // INTERFACE: IShellFolder3
 // IShellFolder3 is an undocumented interface introduced in Windows Vista. The definition below is based on info from Geoff Chappell.
@@ -13,7 +13,7 @@
 struct IFilterCondition;
 struct IQueryUnit;
 struct IItemFilter;
-enum FILTERIDLISTTYPE;
+enum FILTERIDLISTTYPE : int32_t;
 
 struct __declspec(novtable) IShellFolder3 : IShellFolder2
 {

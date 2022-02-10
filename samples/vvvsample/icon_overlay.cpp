@@ -33,10 +33,16 @@ public:
         return wcscmp(extension, L".vvvv") == 0;
     }
 
+    IconOverlay(const IconOverlay&) = delete;
+    IconOverlay(IconOverlay&&) = delete;
+    IconOverlay& operator=(const IconOverlay&) = delete;
+    IconOverlay& operator=(IconOverlay&&) = delete;
+
 protected:
     IconOverlay() noexcept : IconOverlayImpl<IconOverlay>(IDI_ICON_OVERLAY)
     {
     }
+    ~IconOverlay() = default;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(IconOverlay), IconOverlay)
