@@ -17,6 +17,9 @@ platform:
 before_build:
 - set PATH=C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin;%PATH%
 
+build_script:
+- msbuild "C:\projects\msf\msf.sln" /m"
+
 build:
   project: msf.sln
   verbosity: normal
