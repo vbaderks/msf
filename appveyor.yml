@@ -17,6 +17,5 @@ platform:
 before_build:
 - call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
 
-build:
-  project: msf.sln
-  verbosity: normal
+build_script:
+- msbuild "C:\projects\msf\msf.sln" /m"
