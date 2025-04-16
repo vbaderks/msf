@@ -67,7 +67,7 @@ protected:
     bool ContainsUnknownExtension(const std::vector<std::wstring>& filenames) const
     {
         return std::find_if(filenames.begin(), filenames.end(),
-            [=](const std::wstring& fileName) { return IsUnknownExtension(fileName); }) != filenames.end();
+            [this](const std::wstring& fileName) { return IsUnknownExtension(fileName); }) != filenames.end();
     }
 
     bool IsUnknownExtension(const std::wstring& fileName) const

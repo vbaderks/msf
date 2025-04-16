@@ -37,17 +37,16 @@ struct __declspec(uuid("93F81976-6A0D-42C3-94DD-AA258A155470")) IShellUndocument
 struct __declspec(uuid("CAD9AE9F-56E2-40F1-AFB6-3813E320DCFD")) IShellUndocumentedCA; // Seen on Windows 8
 
 template<typename T, typename TItem>
-class __declspec(novtable) ShellFolderImpl :
-    public IPersistFolder3,
-    public IPersistIDList,
-    public IShellDetails,
-    public IShellFolder2,
-    public IObjectWithFolderEnumMode,
-    public IShellIcon,
-    public IDropTarget,
-    public IShellFolderContextMenuSink,
-    public IPerformedDropEffectSink,
-    public IExplorerPaneVisibility
+class __declspec(novtable) ShellFolderImpl : public IPersistFolder3,
+                                             public IPersistIDList,
+                                             public IShellDetails,
+                                             public IShellFolder2,
+                                             public IObjectWithFolderEnumMode,
+                                             public IShellIcon,
+                                             public IDropTarget,
+                                             public IShellFolderContextMenuSink,
+                                             public IPerformedDropEffectSink,
+                                             public IExplorerPaneVisibility
 {
 public:
     enum class ErrorContext
@@ -862,7 +861,7 @@ protected:
     // Purpose: Called by shell/MSF through the CompareItems function.
     //          MSF will compare column by column.
     //          Override this function if needed.
-    int CompareIDsAllFields(const TItem& item1, const TItem& item2) const noexcept
+    [[nodiscard]] int CompareIDsAllFields(const TItem& item1, const TItem& item2) const noexcept
     {
         int nResult = 0; // if there are no columns, items are always equal.
 
@@ -1012,7 +1011,7 @@ protected:
                 ATLTRACE(L"ShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_PASTE'\n");
                 return static_cast<T*>(this)->OnDfmCmdPaste(window, dataObject);
 
-            case DFM_CMD_LINK: //DFM_CMD_CREATESHORTCUT:
+            case DFM_CMD_LINK: // DFM_CMD_CREATESHORTCUT:
                 ATLTRACE(L"ShellFolderImpl::OnDfmInvokeCommand 'DFM_CMD_CREATESHORTCUT'\n");
                 return static_cast<T*>(this)->OnDfmCmdCreateShortcut(window, dataObject);
 
@@ -1263,7 +1262,7 @@ protected:
         const ATL::CComPtr<IShellFolderViewCB> shellfolderviewcb =
             static_cast<T*>(this)->CreateShellFolderViewCB();
 
-        SFV_CREATE shellFolderViewCreate{sizeof(SFV_CREATE), this, nullptr, shellfolderviewcb};
+        const SFV_CREATE shellFolderViewCreate{sizeof(SFV_CREATE), this, nullptr, shellfolderviewcb};
 
         ATL::CComPtr<IShellView> shellView;
         RaiseExceptionIfFailed(SHCreateShellFolderView(&shellFolderViewCreate, &shellView));

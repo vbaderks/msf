@@ -2,10 +2,12 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!-- Build to a folder outside the source folders, making it easier to clean. -->
-    <OutDir>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir>$(MSBuildThisFileDirectory)build\bin\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir Condition="'$(Platform)'=='Win32'">$(MSBuildThisFileDirectory)build\bin\x86\$(Configuration)\</OutDir>    
 
     <!-- C++ temp files can be redirected. -->
-    <IntDir>$(MSBuildThisFileDirectory)intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(MSBuildThisFileDirectory)build\intermediate\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Platform)'=='Win32'">$(MSBuildThisFileDirectory)build\intermediate\$(MSBuildProjectName)\x86\$(Configuration)\</IntDir>    
 
     <WindowsTargetPlatformVersion>10</WindowsTargetPlatformVersion>
 
@@ -24,7 +26,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
 
       <!-- Explicit define that all projects are compiled according the C++17 standard -->
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
 
       <!-- Explicit disable non conforming MSVC compiler options that are not compatible with the C++ standard -->
       <ConformanceMode>true</ConformanceMode>
@@ -39,7 +41,7 @@
         utf-8 = interpret all source files as UTF-8 (Required as MSVC relies on UTF-8 signature, which is not used)
         ZH:SHA_256 = Use an SHA-256 hash for the checksum.in debug info
       -->
-      <AdditionalOptions>/Zc:__cplusplus /Zc:throwingNew /utf-8 /ZH:SHA_256</AdditionalOptions>
+      <AdditionalOptions>/Zc:__cplusplus /Zc:throwingNew /utf-8 /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
 
       <!-- To ensure high quality C++ code use Warning level All in checked builds. -->
       <WarningLevel Condition="'$(Configuration)'=='Checked'">EnableAllWarnings</WarningLevel>
@@ -73,9 +75,7 @@
         C5045 = Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
       -->
       <AdditionalOptions Condition="'$(Configuration)'=='Checked'">
-        /wd4061 /wd4191
-        /wd4263 /wd4264 /wd4265 /wd4266
-        /wd4365
+        /wd4061 /wd4191 /wd4263 /wd4264 /wd4265 /wd4266 /wd4365
         /wd4464
         /wd4514 /wd4571 /wd4599
         /wd4623 /wd4625 /wd4626 /wd4668
@@ -93,19 +93,9 @@
         _ATL_NO_HOSTING = will prevent that ATL headers including mshtml.h, which is not strictStrings compatible.
       -->
       <PreprocessorDefinitions>
-        WIN32;
-        _WINDOWS;
-        WIN32_LEAN_AND_MEAN;
-        NOMINMAX;
-        _ATL_EX_CONVERSION_MACROS_ONLY;
-        _ATL_CSTRING_EXPLICIT_CONSTRUCTORS;
-        _ATL_ALL_WARNINGS;
-        _ATL_ALL_USER_WARNINGS;
-        _ATL_ENABLE_PTM_WARNING;
-        _ATL_NO_AUTOMATIC_NAMESPACE;
-        _ATL_CCOMBSTR_EXPLICIT_CONSTRUCTORS;
-        _ATL_NO_HOSTING;
-        _CSTRING_DISABLE_NARROW_WIDE_CONVERSION;
+        WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;NOMINMAX;_ATL_EX_CONVERSION_MACROS_ONLY;_ATL_CSTRING_EXPLICIT_CONSTRUCTORS;
+        _ATL_ALL_WARNINGS;_ATL_ALL_USER_WARNINGS;_ATL_ENABLE_PTM_WARNING;_ATL_NO_AUTOMATIC_NAMESPACE;
+        _ATL_CCOMBSTR_EXPLICIT_CONSTRUCTORS;_ATL_NO_HOSTING;_CSTRING_DISABLE_NARROW_WIDE_CONVERSION;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
 
