@@ -7,8 +7,7 @@
 
 #include "msf_base.h"
 
-namespace msf {
-namespace util {
+namespace msf::util {
 
 template <typename T>
 class GlobalLock final
@@ -75,5 +74,4 @@ private:
     HGLOBAL m_memory{};
 };
 
-}
 }

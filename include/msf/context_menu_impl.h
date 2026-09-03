@@ -97,13 +97,13 @@ public:
             return AddSubMenu(LoadResourceString(nIDText).c_str(), LoadResourceString(nIDHelp).c_str());
         }
 
-        // Purpose: create and add a owner drawn custom sub menu to the context menu.
+        // Purpose: create and add an owner drawn custom sub menu to the context menu.
         Menu AddSubMenu(std::wstring strHelp, std::unique_ptr<CustomMenuHandler> customMenuHandler)
         {
             auto subMenu = CreateSubMenu();
             MenuItemInfo menuiteminfo(*m_pidCmd, subMenu);
             customMenuHandler->InitializeItemInfo(menuiteminfo);
-            InsertMenuItem(menuiteminfo, std::move(strHelp), std::move(std::unique_ptr<ContextMenuCommand>(nullptr)), std::move(customMenuHandler));
+            InsertMenuItem(menuiteminfo, std::move(strHelp), std::unique_ptr<ContextMenuCommand>(nullptr), std::move(customMenuHandler));
 
             return Menu(subMenu, 0, *m_pidCmd, m_idCmdLast, m_menuHost);
         }

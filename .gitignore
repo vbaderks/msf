@@ -2,24 +2,10 @@
 
 # User-specific files
 *.suo            # Ignore Visual Studio User option files
-*.v12.suo
 *.user
-*.userosscache
-*.sln.docstates
-
-# Visual C++ cache files
-ipch/
-*.aps
-*.ncb
-*.opensdf
-*.sdf
-*.cachefile
-*.opendb
-*.db
 
 # Build results
-[Bb]in/
-Intermediate/
+build/
 
 .vs/
 .vscode/
